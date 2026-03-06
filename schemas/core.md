@@ -407,6 +407,8 @@ For a specific question, the agent either:
 - **Searches:** Uses RAG/vector search to find relevant chunks across all Tier 2 files
 - **Both:** RAG finds candidates, agent reads the full file for complete context
 
+**Hierarchical retrieval:** Packs with `summaries/` and `propositions/` directories support multi-granular retrieval. Broad questions match section summaries first; factual questions match atomic propositions; detail questions match content files. This layered approach improves both precision and token efficiency. See type-specific schemas for implementation details.
+
 ### Deep Loading (Tier 3 — On-demand)
 When the task requires full source material:
 - Retelling a story in the person's exact words → load verbatim
@@ -442,5 +444,5 @@ These principles apply to every ExpertPack, regardless of type:
 
 ---
 
-*Schema version: 1.3*
-*Last updated: 2026-02-20*
+*Schema version: 1.4*
+*Last updated: 2026-03-06*
