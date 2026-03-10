@@ -237,6 +237,180 @@ Sounds like Grandpa Bob. Also knows the family's genealogical research.
 
 ---
 
+## Auto-Discovery & Export
+
+An AI agent running on a platform like OpenClaw accumulates knowledge across dozens of files over weeks or months — daily journals, session states, archived memories, project files, tool configs, learned preferences. Most of this raw state is noise for bootstrapping a new instance. The auto-discovery process distills an agent's accumulated knowledge into a structured composite ExpertPack.
+
+### The Problem
+
+A long-running agent's workspace might contain:
+- 50+ daily journal files
+- Memory archives with historical decisions
+- Project status files for multiple products
+- Tool configuration with learned infrastructure knowledge
+- Behavioral patterns refined through hundreds of conversations
+- Relationship context built up over time
+
+Exporting this raw state is useless — it's too large, too noisy, and too platform-specific. What's needed is **distillation**: compress months of accumulated knowledge into structured, deduplicated, classified packs that a new instance can load and immediately be competent.
+
+### Discovery Flow
+
+When an agent is prompted to export itself as an ExpertPack:
+
+```
+1. SCHEMA FETCH
+   Agent reads the public ExpertPack schemas (core.md, person.md, product.md, process.md, composite.md)
+   to understand what pack types exist and what they contain.
+
+2. STATE SCAN
+   Agent inventories its own knowledge base:
+   - Workspace files (SOUL.md, IDENTITY.md, AGENTS.md, TOOLS.md, USER.md, etc.)
+   - Memory files (MEMORY.md, memory/*.md, session-state.md)
+   - Project files (STATUS.md, project-specific docs)
+   - Configuration (cron jobs, integrations, routines)
+   - Conversation history (patterns, not raw transcripts)
+
+3. KNOWLEDGE CLUSTERING
+   Agent classifies each knowledge chunk by domain:
+   - "This is about me (the agent)" → agent pack
+   - "This is about my user" → person pack
+   - "This is about Product X" → product pack
+   - "This is how Process Y works" → process pack
+   Clustering uses structural heuristics (file paths, content type) and
+   semantic analysis (what is this knowledge actually about?).
+
+4. COMPOSITE PROPOSAL
+   Agent presents a proposed manifest to the user:
+   "I've identified:
+    - 1 agent pack (myself — subtype: agent)
+    - 1 person pack (Brian Hearn)
+    - 2 product packs (EasyTerritory, OpenClaw)
+    - 3 process packs (deployment, backup-routines, content-publishing)
+   Shall I proceed? Any adjustments?"
+
+5. USER CONFIRMATION
+   User reviews, adjusts scope (add/remove packs, rename, set access tiers),
+   and confirms.
+
+6. DISTILLATION
+   For each proposed pack, the agent:
+   a. Extracts relevant knowledge from raw state files
+   b. Deduplicates — merges overlapping facts, prefers newest
+   c. Resolves conflicts — flags ambiguities for user review
+   d. Structures — writes EP-compliant files with proper frontmatter,
+      headers, and cross-references per the relevant schema
+   e. Validates — ensures nothing operationally critical was lost
+
+7. COMPOSITE GENERATION
+   Agent creates the composite manifest wiring all packs together:
+   - Agent pack gets role: voice
+   - All others get role: knowledge
+   - Conflict priority order based on knowledge authority
+   - Context tier overrides tuned for the deployment
+
+8. PRIVACY REVIEW
+   Agent flags sensitive content for user review:
+   - API keys, tokens, passwords → NEVER included
+   - Personal details about the user → access tier: private
+   - Infrastructure specifics → access tier: private
+   - General knowledge and patterns → access tier: public
+
+9. PACKAGING
+   Write all packs and the composite to disk. Commit to git.
+   The result is a self-contained composite EP ready for import.
+```
+
+### Distillation Rules
+
+The distillation step is where most of the value is created. Raw state → structured knowledge requires intelligent compression:
+
+**Extraction:** Scan all state files and identify discrete knowledge assertions. A daily journal entry like "Figured out that the Bizzy droplet's SSH rate-limits after 3 rapid connections" becomes a fact in `operational/infrastructure.md` about SSH rate limiting.
+
+**Classification:** For each assertion, determine which pack and section it belongs to. Ambiguous cases (is Caddy config knowledge about infrastructure or about a deployment process?) should be placed in the most actionable location and cross-referenced.
+
+**Deduplication:** The same fact may appear in multiple journal entries, memory files, and session states. Merge into a single canonical assertion. When versions conflict, prefer the most recent unless an older version was explicitly confirmed.
+
+**Compression ratio:** A well-distilled export should be **10–20% the volume** of the raw state while retaining **90%+ of actionable knowledge**. Six months of daily journals about deployment issues becomes a concise `process/deployment/` pack with lessons learned. Hundreds of session-state snapshots become a single `operational/routines.md` with the current operational patterns.
+
+**What to discard:**
+- Transient session state (what was in-progress at a specific moment)
+- Routine heartbeat logs with no actionable findings
+- Duplicate or superseded information
+- Raw conversation transcripts (unless a specific exchange is worth preserving in `verbatim/decisions/`)
+
+**What to always preserve:**
+- Learned behavioral patterns and preferences
+- Infrastructure knowledge and operational procedures
+- Relationship context (especially communication preferences)
+- Safety contracts and guardrails
+- Failure post-mortems and lessons learned
+- Tool expertise and integration knowledge
+
+### Import & Hydration
+
+The reverse of export: given a composite EP, bootstrap a new agent instance.
+
+**Platform-specific hydration** maps EP files to platform state files. For OpenClaw:
+
+| EP Source | OC Target | Notes |
+|-----------|-----------|-------|
+| `agent/{slug}/overview.md` | `SOUL.md` + `IDENTITY.md` | Split identity from personality |
+| `agent/{slug}/mind/values.md` + `operational/safety.md` | `AGENTS.md` | Merge behavioral rules |
+| `agent/{slug}/operational/tools.md` | `TOOLS.md` | Agent configures credentials separately |
+| `agent/{slug}/relationships/people.md` (primary-user) | `USER.md` | Extract primary user entry |
+| `agent/{slug}/operational/routines.md` | `HEARTBEAT.md` + cron jobs | Recreate platform-specific schedules |
+| `agent/{slug}/presentation/` | `SOUL.md` (personality section) | Communication style and modes |
+| `person/{slug}/` | `MEMORY.md` + `memory/` | User knowledge → memory files |
+| `product/{slug}/` | Workspace project files | Product knowledge → reference docs |
+| `process/{slug}/` | Workspace process docs | Process knowledge → runbooks |
+
+**Post-hydration verification:** After import, the agent should be able to:
+1. Correctly identify itself (name, personality, communication style)
+2. Know its primary user (name, preferences, timezone, role)
+3. Describe its available tools and infrastructure
+4. Execute its standard routines (or know what routines to recreate)
+5. Answer questions about its product and process domains
+
+A quick verification prompt: *"Summarize who you are, who you work for, what tools you have, and what your typical day looks like."* A well-hydrated agent should answer all four confidently.
+
+### Example: OpenClaw Instance Export
+
+```yaml
+# composites/easybot-full/manifest.yaml
+name: "EasyBot — Full Instance Export"
+slug: "easybot-full"
+type: "composite"
+version: "1.0.0"
+schema_version: "1.0"
+description: "Complete knowledge export of the EasyBot OpenClaw instance"
+entry_point: "overview.md"
+
+packs:
+  - path: "../packs/easybot"
+    role: voice
+  - path: "../packs/brian-hearn"
+    role: knowledge
+  - path: "../packs/easyterritory"
+    role: knowledge
+  - path: "../packs/openclaw-ops"
+    role: knowledge
+
+conflicts:
+  priority: [easybot, brian-hearn, easyterritory, openclaw-ops]
+  strategy: "flag"
+
+context:
+  overrides:
+    "easybot":
+      always:
+        - operational/safety.md
+    "brian-hearn":
+      on_demand:
+        - verbatim/
+```
+
+---
+
 ## Relationship to Core Schema
 
 Composites follow all [core.md](core.md) principles:
@@ -249,5 +423,5 @@ The key difference: composites contain *references* to packs, not knowledge cont
 
 ---
 
-*Schema version: 1.0*
-*Last updated: 2026-02-19*
+*Schema version: 1.1*
+*Last updated: 2026-03-10*

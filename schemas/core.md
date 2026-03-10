@@ -39,6 +39,10 @@ version: "1.0.0"
 description: "What this pack contains and who it's for"
 entry_point: "overview.md"
 
+# Optional fields
+subtype: "agent"   # Optional subtype that activates type-specific extensions
+                   # Currently defined: "agent" (person type) — see person.md
+
 # Recommended fields
 author: "Who created this pack"
 created: "YYYY-MM-DD"
@@ -55,6 +59,18 @@ context:
 ```
 
 The `type` field determines which type-specific schema applies. See [person.md](person.md), [product.md](product.md), or [process.md](process.md).
+
+### Subtypes
+
+The optional `subtype` field activates extensions within a type-specific schema without creating a new top-level pack type. Subtypes inherit all of their parent type's structure, conventions, and rules — they add or reframe directories and fields for a specialized use case.
+
+Currently defined subtypes:
+
+| Type | Subtype | Schema Reference | Purpose |
+|------|---------|-----------------|---------|
+| person | `agent` | [person.md — Agent Extension](person.md#agent-extension-subtype-agent) | AI agent identity, operational config, and accumulated knowledge |
+
+Subtypes are optional. A pack with no `subtype` field uses the base type schema as-is. When a `subtype` is declared, the agent should read the corresponding extension section in the type schema for additional directories, manifest fields, and behavioral guidance.
 
 ### overview.md
 
@@ -621,5 +637,5 @@ These principles apply to every ExpertPack, regardless of type:
 
 ---
 
-*Schema version: 1.6*
-*Last updated: 2026-03-07*
+*Schema version: 1.7*
+*Last updated: 2026-03-10*
