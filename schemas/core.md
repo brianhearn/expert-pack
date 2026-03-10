@@ -378,6 +378,86 @@ sources:
 
 ---
 
+## Research Coverage (sources/_coverage.md)
+
+Every pack should include a **coverage map** that honestly documents what knowledge sources were checked during pack creation, what was extracted, and what remains untouched. This makes the pack's depth and limitations transparent to consumers and maintainers.
+
+### Why Coverage Tracking Matters
+
+A pack built from 5 web searches and the builder's existing knowledge looks the same as one built from 50 sources — unless coverage is documented. Without a coverage map:
+
+- Consumers can't assess the pack's authority or completeness
+- Maintainers don't know where to focus deepening efforts
+- Gaps are invisible — the pack presents a confident facade over shallow research
+
+### Coverage Map Structure
+
+```markdown
+# Research Coverage — {Pack Name}
+
+Pack version: 1.0.0
+Initial research: YYYY-MM-DD
+Last deepened: YYYY-MM-DD
+Estimated knowledge coverage: {low|medium|high} — {brief justification}
+
+## Source Inventory
+
+### Forums & Communities
+| Source | Status | Value | Notes |
+|--------|--------|-------|-------|
+| r/{subreddit} (XXK members) | ✅ Mined | High | Top 50 threads by upvotes reviewed |
+| {dedicated forum} | ⬜ Identified | Unknown | Not yet accessed |
+
+### Video Content
+| Source | Status | Value | Notes |
+|--------|--------|-------|-------|
+| {YouTube channel} (XXK subs) | 🟡 Sampled | High | 3 of ~40 relevant videos transcribed |
+
+### Trade Publications
+| Source | Status | Value | Notes |
+|--------|--------|-------|-------|
+
+### Manufacturer/Vendor Documentation
+| Source | Status | Value | Notes |
+|--------|--------|-------|-------|
+
+### Regulatory & Standards Bodies
+| Source | Status | Value | Notes |
+|--------|--------|-------|-------|
+
+### Books & Courses
+| Source | Status | Value | Notes |
+|--------|--------|-------|-------|
+
+## Known Gaps
+- {Specific knowledge area known to be thin or missing}
+- {Source identified but not yet mined}
+
+## Priority Sources for Next Pass
+1. {Highest-value unmined source and what it would add}
+2. {Next source}
+```
+
+### Status Key
+
+| Status | Meaning |
+|--------|---------|
+| ✅ Mined | Source thoroughly reviewed and relevant knowledge extracted |
+| 🟡 Sampled | Source partially reviewed — some content extracted, more available |
+| ⬜ Identified | Source known to exist but not yet accessed |
+| ❌ Checked, low value | Source reviewed but contained little unique knowledge |
+
+### Rules
+
+- **Every pack must have a coverage map.** Even a simple one with 5 entries is better than none — it's an honest statement of research depth.
+- **Coverage maps are append-only for sources.** When deepening a pack, update status from ⬜ → 🟡 → ✅ but don't remove sources.
+- **The "Estimated knowledge coverage" is a judgment call,** not a calculated metric. `low` = shallow research, known major gaps. `medium` = key sources covered but long tail untouched. `high` = comprehensive research across multiple source types.
+- **Known Gaps should be specific.** "More research needed" is useless. "Installer forum threads about Enphase IQ8 firmware failure modes not yet mined" is actionable.
+
+**Context tier:** Tier 3 (on-demand). Coverage maps are maintenance metadata, not consumed during normal use.
+
+---
+
 ## Time Variance
 
 Not all facts in a pack have the same shelf life. A string sizing formula is permanent; a panel's price per watt is stale within months. ExpertPacks must distinguish between durable knowledge and time-variant data — and handle each appropriately.
@@ -736,11 +816,12 @@ These principles apply to every ExpertPack, regardless of type:
 | Directory indexes | `_index.md` in every content directory |
 | Context strategy | Three tiers: always → searchable → on-demand, declared in manifest |
 | Retrieval optimization | Summaries (broad), propositions (precise), file splitting, lead summaries (front-loaded answers), and glossary (vocabulary bridging) — use together; see [Retrieval Optimization](#retrieval-optimization) |
-| Time variance | Annotate time-variant facts inline (⏳ + date); maintain `freshness.md` cataloging all volatile data with refresh methods; see [Time Variance](#time-variance) |
+| Research coverage | Every pack includes `sources/_coverage.md` documenting what was checked, what was extracted, and what's untouched; see [Research Coverage](#research-coverage-sources_coveragemd) |
+| Time variance | Annotate time-variant facts inline with `<!-- refresh -->` blocks; maintain `freshness.md` as supplementary index; see [Time Variance](#time-variance) |
 | Conflict resolution | Never overwrite — flag and ask the human |
 | Version control | Git-native, semantic versioning |
 
 ---
 
-*Schema version: 1.9*
+*Schema version: 2.0*
 *Last updated: 2026-03-10*
