@@ -373,38 +373,38 @@ The reverse of export: given a composite EP, bootstrap a new agent instance.
 
 A quick verification prompt: *"Summarize who you are, who you work for, what tools you have, and what your typical day looks like."* A well-hydrated agent should answer all four confidently.
 
-### Example: OpenClaw Instance Export
+### Example: Agent Instance Export
 
 ```yaml
-# composites/easybot-full/manifest.yaml
-name: "EasyBot — Full Instance Export"
-slug: "easybot-full"
+# composites/atlas-full/manifest.yaml
+name: "Atlas — Full Instance Export"
+slug: "atlas-full"
 type: "composite"
 version: "1.0.0"
 schema_version: "1.0"
-description: "Complete knowledge export of the EasyBot OpenClaw instance"
+description: "Complete knowledge export of the Atlas AI assistant instance"
 entry_point: "overview.md"
 
 packs:
-  - path: "../packs/easybot"
+  - path: "../packs/atlas"
     role: voice
-  - path: "../packs/brian-hearn"
+  - path: "../packs/jamie-chen"
     role: knowledge
-  - path: "../packs/easyterritory"
+  - path: "../packs/acme-crm"
     role: knowledge
-  - path: "../packs/openclaw-ops"
+  - path: "../packs/deploy-workflow"
     role: knowledge
 
 conflicts:
-  priority: [easybot, brian-hearn, easyterritory, openclaw-ops]
+  priority: [atlas, jamie-chen, acme-crm, deploy-workflow]
   strategy: "flag"
 
 context:
   overrides:
-    "easybot":
+    "atlas":
       always:
         - operational/safety.md
-    "brian-hearn":
+    "jamie-chen":
       on_demand:
         - verbatim/
 ```
