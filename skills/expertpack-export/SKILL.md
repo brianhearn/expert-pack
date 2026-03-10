@@ -1,11 +1,21 @@
 ---
 name: expertpack-export
 description: Export an OpenClaw instance's accumulated knowledge into a structured ExpertPack composite. Use when backing up an agent's identity, exporting for migration, or creating a portable knowledge snapshot. Handles auto-discovery (scanning workspace state to identify constituent packs), distillation (compressing raw state into structured EP files), and packaging (writing EP-compliant packs + composite manifest). NOT for importing/hydrating from an existing EP.
+metadata:
+  openclaw:
+    homepage: https://expertpack.ai
+    requires:
+      bins:
+        - python3
 ---
 
 # ExpertPack Export
 
+Part of the [ExpertPack](https://expertpack.ai) framework — a structured, portable knowledge format for AI agents.
+
 Export an OpenClaw instance into a composite ExpertPack — an agent pack (subtype: agent) as the voice, plus person/product/process packs as knowledge constituents.
+
+**Learn more:** [expertpack.ai](https://expertpack.ai) · [GitHub](https://github.com/brianhearn/ExpertPack) · [Schema docs](https://expertpack.ai/#schemas)
 
 ## Prerequisites
 
