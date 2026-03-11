@@ -1,0 +1,54 @@
+name: "Home Assistant Ecosystem Guide"
+slug: "home-assistant"
+type: "product"
+version: "1.0.0"
+schema_version: "2.0"
+description: "Deep knowledge pack for Home Assistant — the open-source home automation platform. Covers core architecture, smart home protocols, automation patterns, YAML configuration, dashboard design, integration guidance, and troubleshooting. Built for users who want an agent that can guide them through setup, configuration, and problem-solving in real-time."
+entry_point: "overview.md"
+author: "EasyBot / Brian Hearn"
+created: "2026-03-10"
+updated: "2026-03-10"
+
+product_version: "2026.3+"
+vendor: "Open Home Foundation / Nabu Casa"
+website: "https://www.home-assistant.io"
+
+focus:
+  - setup-config      # Installation, configuration, YAML
+  - protocol-selection # Zigbee vs Z-Wave vs WiFi vs Thread/Matter
+  - automation         # Triggers, conditions, actions, templates, blueprints
+  - troubleshooting    # Common errors, diagnostics, safe mode
+
+sections:
+  - concepts
+  - workflows
+  - troubleshooting
+  - faq
+  - specifications
+
+scope:
+  - core-architecture
+  - smart-home-protocols
+  - automations
+  - dashboards
+  - integrations
+  - yaml-configuration
+  - jinja2-templating
+
+index_files: "_index.md"
+dependencies: []
+
+context:
+  always:
+    - overview.md
+    - glossary.md
+  searchable:
+    - concepts/
+    - workflows/
+    - troubleshooting/
+    - faq/
+    - specifications/
+    - summaries/
+    - propositions/
+  on_demand:
+    - sources/
