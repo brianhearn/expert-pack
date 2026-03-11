@@ -1,0 +1,55 @@
+name: "Blender 3D Creation Suite"
+slug: "blender"
+type: "product"
+version: "1.0.0"
+schema_version: "2.0"
+description: "Deep practitioner knowledge pack for Blender — the open-source 3D creation suite. Covers the entire 3D pipeline: modeling, sculpting, shading, rendering, animation, rigging, simulation, geometry nodes, compositing, and video editing. Built for artists and technical users who want decision frameworks, workflow patterns, and esoteric knowledge that complements the official manual."
+entry_point: "overview.md"
+author: "EasyBot / Brian Hearn"
+created: "2026-03-11"
+updated: "2026-03-11"
+
+product_version: "5.0+ (4.2 LTS also supported)"
+vendor: "Blender Foundation"
+website: "https://www.blender.org"
+documentation: "https://docs.blender.org/manual/en/latest/"
+
+focus:
+  - modeling          # Mesh, curve, and surface modeling
+  - shading-rendering # Materials, EEVEE, Cycles, PBR workflow
+  - animation         # Keyframing, rigging, NLA, constraints
+  - geometry-nodes    # Procedural geometry and simulation
+  - troubleshooting   # Common errors, artifacts, workflow problems
+
+sections:
+  - concepts
+  - workflows
+  - troubleshooting
+
+scope:
+  - modeling
+  - sculpting
+  - animation
+  - rigging
+  - rendering
+  - shading
+  - geometry-nodes
+  - compositing
+  - video-editing
+  - physics
+  - grease-pencil
+  - scripting
+
+index_files: "_index.md"
+dependencies: []
+
+context:
+  always:
+    - overview.md
+    - glossary.md
+  searchable:
+    - concepts/
+    - workflows/
+    - troubleshooting/
+    - sources/
+  on_demand: []
