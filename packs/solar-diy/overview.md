@@ -1,40 +1,34 @@
 # Residential Solar & Battery DIY Guide
 
-> **Lead summary:** This pack covers everything a homeowner needs to plan, spec, install, and maintain a residential solar panel and battery storage system in the US. It includes current product landscapes (panels, inverters, batteries), NEC code compliance, system design calculations, permitting workflows, and practitioner-level troubleshooting. Updated for the 2026 market.
+> **Lead summary:** This composite pack covers the full arc of a residential solar project — from understanding the technology to completing a permitted, code-compliant installation. It combines a **technology reference pack** (what solar equipment IS, how it works, current product landscape) with a **process pack** (how to plan, design, permit, install, and commission a system step by step).
 
-## What This Pack Covers
+## What This Composite Covers
 
-A comprehensive knowledge base for residential solar and battery storage — the kind of deep, specific, practitioner-level detail that goes far beyond "solar is great for your home." This pack answers the questions that matter when you're actually making purchasing decisions and planning an installation.
+Two complementary knowledge bases working together:
+
+### Solar Technology Reference (`product/`)
+The foundational "what is it" knowledge: panel types, battery chemistry, inverter architectures, NEC code requirements, product specifications, and troubleshooting. Use this when comparing products, doing calculations, checking code compliance, or diagnosing problems.
+
+### Solar Installation Process (`process/`)
+The phased "how to do it" journey: seven phases from initial site assessment through long-term operations, plus three major decision frameworks and a gotchas collection. Use this when planning your project, figuring out what to do next, or understanding what you're getting into before you commit.
 
 ## Who It's For
 
-- **Homeowners** planning a solar + battery install (DIY or working with a contractor)
-- **DIY installers** who need code-compliant system design guidance
-- **Solar shoppers** comparing products and getting quotes
-- **Enthusiasts** who want to understand the technology deeply
+- **Homeowners** deciding whether to DIY or hire a contractor
+- **DIY installers** working through a first solar project step by step
+- **Informed buyers** who want to understand what contractors are proposing
+- **Solar enthusiasts** who want deep, practitioner-level knowledge
 
-## Key Topics
+## How to Navigate
 
-- **Solar Panel Landscape** — Current top manufacturers, efficiency ratings, cell technologies (TOPCon vs back-contact vs HJT), warranty terms, and how to compare panels
-- **Battery Storage** — Tesla Powerwall 3, Enphase IQ, FranklinWH, and other systems compared on capacity, power output, surge capability, warranty, and real-world performance
-- **Inverter Types** — Microinverters vs string inverters vs power optimizers, when to use each, and the major brands (Enphase, SolarEdge, SMA, Fronius)
-- **System Design** — String sizing calculations, array sizing for your usage, roof orientation and shading considerations, and the math behind it all
-- **NEC Code Compliance** — Rapid shutdown requirements (690.12), the evolution from NEC 2014 through 2023, UL 3741, and what your jurisdiction requires
-- **Permitting & Interconnection** — The general process for permits, inspections, and utility interconnection agreements
-- **Troubleshooting** — Common installation mistakes, performance issues, monitoring, and maintenance
+**Starting from scratch?** Begin with `process/overview.md` — it maps the full project journey and helps you understand where you are. Then work through the phase files sequentially.
 
-## How to Use This Pack
+**Evaluating products?** Go to `product/specifications/` for current panel, battery, and inverter specs. Read `product/concepts/` for the technology background behind the specs.
 
-Start with the concept files to build your mental model, then use the specification files for product comparisons when making purchasing decisions. The workflow files walk you through system design step-by-step. Troubleshooting files help when things don't go as planned.
+**Stuck on a decision?** Check `process/decisions/` — it covers the three biggest fork-in-the-road choices: DIY vs contractor, inverter topology, and grid configuration.
 
-<!-- refresh
-  decay: fast-moving
-  as_of: 2026-Q1
-  fields: [product_names_in_key_topics, market_year_references]
-  source: see individual specification and concept files for per-field refresh instructions
-  method: "Overview references specific products and market year. When refreshing the pack, update overview text to match current specification files."
--->
+**Something going wrong?** Check `process/gotchas/` for common mistakes and `product/troubleshooting/` for diagnostics.
 
 ## Important Disclaimer
 
-This pack is for educational purposes. Solar installations involve high-voltage electrical work and must comply with local building codes and the National Electrical Code. Always consult with a licensed electrician or certified solar installer for your specific situation. Codes, products, and incentives change — verify current information before purchasing or installing.
+Solar installations involve high-voltage DC and AC electrical work. Systems must comply with local building codes and the National Electrical Code (NEC). Always consult a licensed electrician or certified solar installer for your specific jurisdiction and situation. This pack is educational — verify all code, permit, and product information before proceeding.

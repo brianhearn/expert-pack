@@ -1,56 +1,30 @@
 name: "Residential Solar & Battery DIY Guide"
 slug: "solar-diy"
-type: "product"
-version: "1.0.0"
-schema_version: "2.0"
-description: "Deep knowledge pack for planning, installing, and maintaining residential solar panel and battery storage systems. Covers panel and battery product landscapes, NEC code compliance, system design, permitting, and troubleshooting — the practitioner-level detail that LLMs typically lack."
+type: "composite"
+version: "2.0.0"
+schema_version: "1.0"
+description: "Complete guide to planning, selecting, installing, and maintaining a residential solar + battery system. Combines a solar technology reference pack (what the equipment IS) with a phased installation process pack (how to PLAN and DO it)."
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-10"
-updated: "2026-03-10"
+updated: "2026-03-11"
 
-product_version: "2026 market"
-vendor: "Multi-vendor (industry-wide)"
-website: "https://github.com/brianhearn/ExpertPack"
+packs:
+  - path: "product"
+    role: knowledge
+  - path: "process"
+    role: knowledge
 
-focus:
-  - diy-planning    # Homeowners planning a solar install
-  - product-selection  # Choosing panels, inverters, batteries
-  - code-compliance    # NEC requirements and permitting
-  - troubleshooting    # Common installation and operational issues
-
-sections:
-  - concepts
-  - workflows
-  - specifications
-  - troubleshooting
-  - faq
-  - commercial
-
-scope:
-  - solar-panels
-  - battery-storage
-  - inverters
-  - nec-code
-  - permitting
-  - system-design
-  - monitoring
-
-index_files: "_index.md"
-dependencies: []
+conflicts:
+  priority: [product, process]
+  strategy: "flag"
 
 context:
-  always:
-    - overview.md
-    - glossary.md
-  searchable:
-    - concepts/
-    - workflows/
-    - specifications/
-    - troubleshooting/
-    - faq/
-    - commercial/
-    - summaries/
-    - propositions/
-  on_demand:
-    - sources/
+  overrides:
+    "product":
+      always:
+        - overview.md
+        - glossary.md
+    "process":
+      always:
+        - overview.md

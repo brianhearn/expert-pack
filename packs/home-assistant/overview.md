@@ -1,31 +1,61 @@
-# Home Assistant Ecosystem Guide
+# Home Assistant Smart Home Guide
 
-> **Lead summary:** Home Assistant is an open-source home automation platform that puts local control and privacy first. It runs on local hardware (Raspberry Pi, mini-PC, VM), supports 2000+ integrations, and connects devices across Zigbee, Z-Wave, WiFi, Thread/Matter, Bluetooth, and ESPHome protocols. This pack covers the core architecture, protocol selection, automation design, YAML configuration, and troubleshooting — the practitioner-level knowledge that helps you build a reliable, maintainable smart home.
+## What This Is
 
-## What This Pack Covers
+This is a **composite ExpertPack** — two packs in one:
 
-The deep, structured knowledge you need to go from "I installed Home Assistant" to "I have a well-designed, reliable, and maintainable smart home." This isn't a beginner tutorial — it's the reference guide that answers the questions you hit after the first weekend.
+- **[Product Pack](product/overview.md)** — Deep reference knowledge about the Home Assistant platform itself: its architecture, protocols, automation model, YAML configuration, integrations, dashboards, and troubleshooting.
+- **[Process Pack](process/overview.md)** — A phased, practical guide to *building* a smart home with Home Assistant, from initial hardware selection through a fully hardened, automated home.
 
-## Who It's For
+Together they give you an AI agent that can both *answer technical questions* about Home Assistant and *guide you through the journey* of building and expanding your smart home.
 
-- **Home Assistant users** at any level who want structured reference knowledge
-- **New users** overwhelmed by protocol choices, YAML syntax, and integration options
-- **Intermediate users** wanting to write better automations, understand templates, and troubleshoot effectively
-- **Power users** looking for best practices, architecture patterns, and optimization guidance
-
-## Key Topics
-
-- **Core Architecture** — How HA works: integrations, devices, entities, areas, services. The mental model that makes everything else click.
-- **Smart Home Protocols** — Zigbee vs Z-Wave vs WiFi vs Thread/Matter vs Bluetooth vs ESPHome. Decision framework based on your needs, not hype.
-- **Automation Design** — Triggers, conditions, actions, modes, templates (Jinja2), blueprints. Patterns that work and anti-patterns that break.
-- **YAML Configuration** — When to use YAML vs UI, configuration.yaml structure, includes, packages, secrets management.
-- **Troubleshooting** — Safe mode, log reading, common errors, integration debugging, network diagnostics.
-- **Integration Guidance** — How to evaluate and set up integrations, HACS custom components, common gotchas.
+---
 
 ## How to Use This Pack
 
-Start with **Core Architecture** to build your mental model — everything else builds on understanding entities, devices, and the state machine. Then use the **Protocol Guide** to make informed hardware decisions. The **Automation** and **YAML** sections are where you'll spend the most time as you build out your system.
+### If you're just starting out
+Start with the process pack. Work through the phases in order — they're designed to build on each other without overwhelming you.
 
-## Why an ExpertPack for Home Assistant?
+→ [Process overview](process/overview.md)  
+→ [Phase 1: Planning](process/phases/01-planning.md)
 
-The HA community explicitly notes that books about Home Assistant are "outdated before the first character was printed" — the platform releases monthly and evolves rapidly. An ExpertPack addresses this: durable concepts and patterns that hold across versions, with volatile details (specific integration configs, hardware recommendations) clearly marked for refresh. The agent can guide you through configuration in real-time, cross-reference your choices against best practices, and help troubleshoot issues conversationally.
+### If you need to make a key decision
+The decisions directory distills the major choice points into structured frameworks.
+
+→ [Installation method](process/decisions/installation-method.md) — HA OS vs Container vs Supervised vs Core  
+→ [Protocol selection](process/decisions/protocol-selection.md) — Zigbee vs Z-Wave vs WiFi vs Thread/Matter  
+→ [Hardware selection](process/decisions/hardware-selection.md) — Pi vs mini-PC vs VM
+
+### If you're troubleshooting or looking up concepts
+The product pack is your reference layer. It covers the platform's internals, protocols, automation fundamentals, and common failure modes.
+
+→ [Product overview](product/overview.md)  
+→ [Troubleshooting](product/troubleshooting/_index.md)  
+→ [Concepts](product/concepts/_index.md)
+
+### If you want proven automation patterns
+The process pack includes battle-tested implementation patterns for common automation scenarios.
+
+→ [Motion lighting](process/patterns/motion-lighting.md)  
+→ [Climate control](process/patterns/climate-control.md)  
+→ [Security monitoring](process/patterns/security-monitoring.md)  
+→ [Notification patterns](process/patterns/notification-patterns.md)
+
+---
+
+## Pack Structure
+
+```
+home-assistant/            ← this composite
+├── product/               ← platform reference
+│   ├── concepts/          ← architecture, protocols, automation, YAML, ESPHome, dashboards
+│   ├── troubleshooting/   ← diagnostics, common mistakes
+│   ├── faq/               ← common questions
+│   └── glossary.md        ← terminology
+│
+└── process/               ← building journey
+    ├── phases/            ← 7-phase smart home build (planning → hardening)
+    ├── decisions/         ← key decision frameworks
+    ├── patterns/          ← proven automation patterns
+    └── gotchas/           ← traps to avoid
+```

@@ -1,0 +1,49 @@
+name: "Home Assistant Platform Reference"
+slug: "home-assistant-product"
+type: "product"
+version: "2.0.0"
+schema_version: "2.0"
+description: "Deep reference knowledge for the Home Assistant platform — core architecture, smart home protocols, automation engine, YAML configuration, ESPHome, dashboard design, integrations, presence detection, voice assistant, energy management, networking, backup, troubleshooting, and FAQ. Covers HA 2026.3+."
+entry_point: "overview.md"
+author: "EasyBot / Brian Hearn"
+created: "2026-03-10"
+updated: "2026-03-11"
+
+product_version: "2026.3+"
+vendor: "Open Home Foundation / Nabu Casa"
+website: "https://www.home-assistant.io"
+
+focus:
+  - setup-config
+  - protocol-selection
+  - automation
+  - troubleshooting
+
+sections:
+  - concepts
+  - troubleshooting
+  - faq
+
+scope:
+  - core-architecture
+  - smart-home-protocols
+  - automations
+  - dashboards
+  - integrations
+  - yaml-configuration
+  - jinja2-templating
+
+index_files: "_index.md"
+dependencies: []
+
+context:
+  always:
+    - overview.md
+    - glossary.md
+  searchable:
+    - concepts/
+    - troubleshooting/
+    - faq/
+    - sources/
+  on_demand:
+    - sources/

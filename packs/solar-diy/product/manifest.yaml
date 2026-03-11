@@ -1,0 +1,49 @@
+name: "Solar Technology Reference"
+slug: "solar-diy-product"
+type: "product"
+version: "1.0.0"
+schema_version: "2.0"
+description: "Technology reference for residential solar and battery storage systems. Covers panel types, battery chemistry, inverter architectures, NEC code compliance, product specifications, and troubleshooting — the practitioner-level detail needed for informed product selection and system design."
+entry_point: "overview.md"
+author: "EasyBot / Brian Hearn"
+created: "2026-03-10"
+updated: "2026-03-11"
+
+product_version: "2026 market"
+vendor: "Multi-vendor (industry-wide)"
+website: "https://github.com/brianhearn/ExpertPack"
+
+focus:
+  - product-selection    # Choosing panels, inverters, batteries
+  - code-compliance      # NEC requirements and standards
+  - system-design        # Technical calculations and string sizing
+  - troubleshooting      # Common installation and operational issues
+
+sections:
+  - concepts
+  - specifications
+  - troubleshooting
+  - faq
+
+scope:
+  - solar-panels
+  - battery-storage
+  - inverters
+  - nec-code
+  - electrical-fundamentals
+  - system-design-calculations
+
+index_files: "_index.md"
+dependencies: []
+
+context:
+  always:
+    - overview.md
+    - glossary.md
+  searchable:
+    - concepts/
+    - specifications/
+    - troubleshooting/
+    - faq/
+  on_demand:
+    - sources/

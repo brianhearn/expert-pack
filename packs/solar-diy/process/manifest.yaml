@@ -1,0 +1,33 @@
+name: "Residential Solar Installation Process"
+slug: "solar-diy-process"
+type: "process"
+version: "1.0.0"
+schema_version: "1.0"
+description: "Phased guide for planning and executing a residential solar + battery installation from initial site assessment through long-term operations. Covers seven project phases, three major decision frameworks, and a gotchas collection with common mistakes and surprises."
+entry_point: "overview.md"
+author: "EasyBot / Brian Hearn"
+created: "2026-03-11"
+updated: "2026-03-11"
+
+domain: "residential construction / renewable energy"
+typical_duration: "3-9 months (from decision to grid-tied operation)"
+complexity: "high"
+cost_range: "$15,000–$60,000+ (installed); $8,000–$35,000 (DIY)"
+professional_required: false
+regions: ["US"]
+
+sections:
+  - phases
+  - decisions
+  - gotchas
+
+index_files: "_index.md"
+
+context:
+  always:
+    - overview.md
+  searchable:
+    - phases/
+    - decisions/
+    - gotchas/
+  on_demand: []
