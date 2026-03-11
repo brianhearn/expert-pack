@@ -10,3 +10,7 @@ Core knowledge for understanding and building with Home Assistant. Start with Co
 - [ESPHome Fundamentals](esphome-fundamentals.md) — DIY sensors with ESP32, native API, BLE proxies
 - [Dashboard Design](dashboard-design.md) — Sections layout, Mushroom cards, HACS custom cards
 - [Integration Guide](integrations-guide.md) — IoT classes, top integrations, HACS, evaluation framework
+- [Voice Assistant](voice-assistant.md) — Assist pipeline, local STT/TTS, ESPHome satellites, LLM agents
+- [Energy Management](energy-management.md) — Energy dashboard, kWh sensors, solar, cost tracking, automations
+- [Network Architecture](network-architecture.md) — IoT VLANs, mDNS, Zigbee channels, secure remote access
+- [Backup & Migration](backup-migration.md) — Backups, SD card failures, hardware migration, disaster recovery
