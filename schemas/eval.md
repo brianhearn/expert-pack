@@ -193,6 +193,23 @@ ek_ratio:
 - **GK bloat** above 30% suggests the pack needs an EK-focused pruning pass
 - **EK ratio trending down** between measurements means model training data is absorbing the pack's domain — time to deepen with more tribal knowledge
 
+### Measuring EK Across Pack Types
+
+The standard EK measurement protocol uses `propositions/` files — atomic factual statements that can be converted to probe questions. This works directly for product and process packs. Person packs require adaptation:
+
+**Product packs:** Standard protocol. Extract propositions from concepts, workflows, troubleshooting, specifications. Probe with factual questions.
+
+**Process packs:** Standard protocol with adjustment. Extract propositions from phases, decisions, gotchas, regulations. Some process propositions are procedural ("Phase 3 requires a structural inspection before framing begins") — convert these to "what happens after X?" or "what is required before Y?" style questions.
+
+**Person packs:** Adapted protocol. Person packs store knowledge in `verbatim/`, `mind/`, `facts/`, and `relationships/` — not traditional propositions. To measure EK:
+1. Extract testable claims from `facts/` (biographical data) and `mind/` (beliefs, positions) — these behave like propositions
+2. For `verbatim/` content (stories, reflections), extract the unique factual claims embedded in narratives ("Brian watched the Apollo 11 launch from a sailboat named Dulcinea")
+3. Skip `presentation/` (speech patterns, voice) — these are inherently esoteric and unmeasurable via blind probing
+4. For public figures, EK ratio of `facts/` and known positions may be lower; for private individuals, nearly everything is EK
+5. Report person-pack EK ratio with a note: "EK ratio reflects `facts/` and `mind/` content only; `verbatim/` and `presentation/` are EK by definition and excluded from measurement"
+
+**Composite packs:** Measure each sub-pack independently and report per-sub-pack EK ratios alongside the composite ratio.
+
 ### Pack Health Metrics (Structural)
 
 | Metric | What It Measures | How to Score |
@@ -368,6 +385,6 @@ eval:
 
 ---
 
-*Schema version: 1.1*
+*Schema version: 1.2*
 *Created: 2026-03-05*
 *Last updated: 2026-03-12*

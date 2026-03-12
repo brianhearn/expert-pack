@@ -418,6 +418,11 @@ EK ratio is not just a post-hoc measurement — it should guide hydration decisi
 
 **The principle:** During hydration, every piece of content should pass through an EK filter before receiving full treatment. Content the model already knows gets minimal filing (brief glossary entry or one-line mention). Content the model cannot produce gets maximum effort (full extraction, careful structuring, proposition generation, lead summaries).
 
+**Pack-type considerations:** EK triage intensity varies by content type:
+- **Person packs** are almost entirely EK by nature — private stories, beliefs, voice patterns, and relationships exist nowhere in model weights. Skip blind probing for `verbatim/`, `mind/`, `presentation/`, and `relationships/` content. Probe only `facts/` (biographical data that may be publicly known for public figures) and background context added for scaffolding.
+- **Product packs** have the highest GK contamination risk — documentation, architecture overviews, and technology primers are often well-represented in training data. Probe all documentation-sourced content. Skip probing for expert walkthroughs and code-analysis findings.
+- **Process packs** fall between: official SOPs and standard methodology may be in training data, but practitioner experience, failure modes, timing realities, and regional variations are esoteric. Probe `fundamentals/` and formal process descriptions; skip `gotchas/`, `exceptions/`, and practitioner-contributed content.
+
 ### Common-Knowledge Compaction Rule
 
 When general knowledge *must* be present for completeness (e.g., a glossary term for a well-known technology, a basic concept needed as context for esoteric content), apply **maximum compaction:**
@@ -917,5 +922,5 @@ These principles apply to every ExpertPack, regardless of type:
 
 ---
 
-*Schema version: 2.1*
+*Schema version: 2.2*
 *Last updated: 2026-03-12*

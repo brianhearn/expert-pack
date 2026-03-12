@@ -423,6 +423,29 @@ When the heuristic check doesn't give a clear EK/GK signal:
 
 **When to skip probing:** Expert walkthroughs and conversational ingestion are almost always EK. Don't waste API calls confirming what you already know — tribal knowledge from a domain expert is esoteric by definition. Save probing for documentation ingestion and feedback mining where the EK/GK mix is unpredictable.
 
+### When to Skip Probing
+
+Not all content requires blind probing. Some content types are EK by definition:
+
+**Always EK (skip probing):**
+- Person pack `verbatim/` — the person's own words are definitionally esoteric
+- Person pack `mind/` — personal beliefs, reasoning patterns, tensions
+- Person pack `relationships/` — private relationship context
+- Person pack `presentation/` — speech patterns, voice, mannerisms
+- Expert walkthrough output — tribal knowledge from domain experts
+- Conversational ingestion — private stories, opinions, memories
+
+**Always probe:**
+- Documentation ingestion output — highest GK contamination risk
+- Feedback mining output — mix of specific gotchas (EK) and generic advice (GK)
+- Process pack `fundamentals/` — may overlap with widely-known domain knowledge
+- Background context in any pack type — "what is Zigbee," "what is a trust," "what is UV curing"
+
+**Probe selectively:**
+- Process pack `phases/` — official process steps may be documented publicly; practitioner additions are EK
+- Person pack `facts/` — biographical facts may be publicly known for public figures; private for private individuals
+- Product pack `concepts/` — core concepts vs. undocumented behavior
+
 ### Filing by Classification
 
 | Classification | Treatment | Purpose |
@@ -459,6 +482,13 @@ The solution is not to exclude GK but to **compress it ruthlessly** — enough t
 | Official docs (common patterns) | Low | **Light touch** | Well-known patterns applied to this product |
 | Generic technology explanations | Very Low | **Skip or one-line glossary** | Models already know this |
 | Common best practices | Very Low | **Skip or brief mention** | Widely documented across the internet |
+| Person interviews / story collection | Very High | **Maximum effort — this IS the pack** | Private memories, opinions, voice patterns — definitionally esoteric |
+| Published personal writing (blog, books) | High | **Full treatment** | Original thought and voice, even if publicly accessible |
+| Person's biographical facts (dates, places, career) | Medium | **Standard** | Some is verifiable; what makes it EK is the personal context and connections |
+| Person's commonly-known public positions | Low | **Light touch** | If a famous person's views are widely known, models may already have them |
+| SOPs / runbooks / compliance docs | Medium | **Standard with probing** | Official process may be in training data; the gap between official and actual is EK |
+| Practitioner gotchas / failure modes | Very High | **Extract first** | Learned by experience, rarely documented |
+| Post-mortems / incident reports | High | **Full treatment** | Specific failures, causes, and fixes — models can't invent these |
 
 ### EK Indicators by Method
 
@@ -481,8 +511,15 @@ Each population method has characteristic EK signals:
 - 🔴 Low EK: Generic troubleshooting advice ("have you tried restarting?")
 
 **Conversational Ingestion (Person packs):**
-- 🟢 High EK: Personal stories, opinions, reasoning patterns, relationships — almost all EK
+- 🟢 High EK: Personal stories, private opinions, reasoning patterns, family history, voice/speech patterns — almost all EK
+- 🟢 High EK: Unpublished beliefs, tensions, contradictions the person acknowledges
 - 🔴 Low EK: When the person restates widely-known facts or common positions
+- 🔴 Low EK: For famous/public figures, well-known biographical facts and documented positions
+
+**Observation & Testing (Process packs):**
+- 🟢 High EK: Where the actual process diverges from the documented process
+- 🟢 High EK: Timing realities, seasonal constraints, regional variations
+- 🔴 Low EK: Standard project management practices, generic safety protocols
 
 ### The Common-Knowledge Trap
 
@@ -562,5 +599,5 @@ For detailed source tracking across a body of source materials, use `sources/{so
 
 ---
 
-*Guide version: 1.2*
+*Guide version: 1.3*
 *Last updated: 2026-03-12*
