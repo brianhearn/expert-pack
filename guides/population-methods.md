@@ -6,6 +6,8 @@
 
 ## Philosophy
 
+**The goal of hydration is not to document everything — it's to document what only this pack can provide.** An ExpertPack is valued by its esoteric knowledge (EK) ratio: the proportion of content that frontier LLMs cannot produce on their own (see [AXIOMS.md](../AXIOMS.md) and [core.md — EK Ratio](../schemas/core.md#esoteric-knowledge-ek-ratio)). Every hydration decision should be filtered through this lens: *Does the model already know this? If yes, minimize. If no, maximize.*
+
 An ExpertPack is only as good as its sources. The best packs combine multiple population methods because no single method captures everything:
 
 - **Documentation gives you the intended behavior.** What the product/process/person is *supposed* to do or be.
@@ -380,6 +382,72 @@ These observations come from applying source code extraction to a production sof
 
 ---
 
+## EK Triage — Filtering During Hydration
+
+Every population method produces a mix of esoteric and general knowledge. The EK Triage step filters extracted content before it receives full hydration treatment, ensuring the pack's EK ratio stays high.
+
+### When to Triage
+
+EK triage applies **after extraction, before filing.** You've pulled knowledge from a source — now decide how much effort it deserves before structuring it into pack files.
+
+### The Triage Process
+
+1. **Quick heuristic check** — Most content can be classified without probing. Use the Hydration Priority Matrix below.
+2. **Probe when uncertain** — For content you can't classify by heuristic, ask a frontier model the question cold (no pack context). If it answers correctly → general knowledge, minimize treatment.
+3. **File accordingly:**
+   - **High EK** → Full treatment: dedicated file, lead summary, proposition extraction, careful structuring
+   - **Medium EK** → Standard treatment: include in appropriate file with good headers
+   - **Low EK** → Minimal treatment: one-line glossary entry or brief mention as context for EK content
+   - **Zero EK** → Skip entirely unless needed as scaffolding for esoteric content
+
+### Hydration Priority Matrix
+
+| Source Type | Typical EK Level | Hydration Priority | Rationale |
+|------------|-----------------|-------------------|-----------|
+| Expert tribal knowledge | Very High | **Extract first, maximum effort** | Exists only in human heads; highest risk of loss |
+| Undocumented code behavior | High | **Extract early, full treatment** | Real behavior vs. documented behavior; models don't know the delta |
+| Support tickets / gotchas | High | **High priority** | Real user pain points; models hallucinate workarounds |
+| Internal decision records ("why") | High | **When available, full treatment** | Models can guess "what" but not "why this way" |
+| Product-specific edge cases | Medium–High | **Medium-high** | Interaction quirks, version-specific behavior |
+| Expert-validated corrections | Medium–High | **Medium-high** | Where docs are wrong; models trained on wrong docs repeat the error |
+| Domain-specific configuration | Medium | **Standard** | Settings, thresholds, compatibility matrices |
+| Official docs (unique features) | Medium | **Standard** | Features specific to this product |
+| Official docs (common patterns) | Low | **Light touch** | Well-known patterns applied to this product |
+| Generic technology explanations | Very Low | **Skip or one-line glossary** | Models already know this |
+| Common best practices | Very Low | **Skip or brief mention** | Widely documented across the internet |
+
+### EK Indicators by Method
+
+Each population method has characteristic EK signals:
+
+**Documentation Ingestion:**
+- 🟢 High EK: Product-specific configuration, unique feature behavior, version-specific changes
+- 🔴 Low EK: Generic architecture overviews, technology primers, standard API patterns
+
+**Technical Artifact Analysis:**
+- 🟢 High EK: Undocumented flags, conditional behavior, internal algorithms, error conditions
+- 🔴 Low EK: Standard framework patterns, boilerplate, well-known library usage
+
+**Expert Walkthrough:**
+- 🟢 High EK: Almost everything — tribal knowledge is esoteric by definition
+- 🔴 Low EK: When the expert explains basics they think you need (ask them to skip to the non-obvious)
+
+**Feedback Mining:**
+- 🟢 High EK: Specific error workarounds, product-specific gotchas, undocumented limitations
+- 🔴 Low EK: Generic troubleshooting advice ("have you tried restarting?")
+
+**Conversational Ingestion (Person packs):**
+- 🟢 High EK: Personal stories, opinions, reasoning patterns, relationships — almost all EK
+- 🔴 Low EK: When the person restates widely-known facts or common positions
+
+### The Common-Knowledge Trap
+
+The most common hydration mistake is spending equal effort on general and esoteric knowledge. A 15KB file explaining how Zigbee mesh networking works adds zero value — the model knows this. A 2KB file documenting the specific firmware bug in SiLabs coordinators that drops Aqara sensors after exactly 48 hours is worth more than the entire Zigbee primer.
+
+**Rule of thumb:** If you find yourself writing content that reads like a Wikipedia article, stop. Either the model already knows it, or you're writing for the wrong audience. ExpertPacks are for practitioners who already understand the basics — they need the knowledge that *isn't* on Wikipedia.
+
+---
+
 ## Combining Methods
 
 No single method is sufficient. Here's a practical ordering for building a new pack:
@@ -448,5 +516,5 @@ For detailed source tracking across a body of source materials, use `sources/{so
 
 ---
 
-*Guide version: 1.0*
-*Last updated: 2026-02-28*
+*Guide version: 1.1*
+*Last updated: 2026-03-12*

@@ -26,3 +26,7 @@ These axioms guide all ExpertPack development decisions.
    c. **Agentic correlation** — there is some reasonable means for interaction with an agent, either directly or indirectly, as an AI agent subject matter assistant to a person
 
 8. The **cost** to make an EP increases with the amount of EK that must come through human exchange (e.g. interview) and the amount of compute (LLM API tokens).
+
+9. The **EK ratio** of an EP is the proportion of its propositions that frontier LLMs cannot correctly answer without the pack. EK ratio is empirically measurable via blind probing (see core.md — Esoteric Knowledge Ratio) and should be tracked as a first-class quality metric.
+
+10. **Hydration should prioritize EK.** During population, content that the model already knows (general knowledge, well-documented patterns, common definitions) should receive minimal treatment. Content the model cannot produce — tribal knowledge, undocumented behavior, domain-specific edge cases, expert judgment — should receive maximum hydration effort. The goal is not to document everything, but to document what *only this pack* can provide.

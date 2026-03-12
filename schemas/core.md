@@ -339,6 +339,99 @@ Retrieval quality is measurable — don't optimize blind.
 
 ---
 
+## Esoteric Knowledge (EK) Ratio
+
+An ExpertPack's value is directly proportional to the knowledge it contains that frontier LLMs *cannot* produce on their own. This is the **Esoteric Knowledge (EK) ratio** — a first-class quality metric that should be measured and optimized throughout the pack lifecycle.
+
+See [AXIOMS.md](../AXIOMS.md) for the foundational definitions: EK is knowledge that exists only outside the weights of frontier-lab LLMs (Axiom 1), and EPs maximize the ratio of EK to general knowledge (Axiom 3).
+
+### Why EK Ratio Matters
+
+A pack full of content the model already knows is dead weight — it burns tokens without adding value. A pack with high EK density gives the model capabilities it genuinely cannot achieve alone. The distinction between a pack that's "nice to have" and one that's "essential" is almost entirely determined by its EK ratio.
+
+### Terminology
+
+| Term | Definition |
+|------|-----------|
+| **Esoteric Knowledge (EK)** | Knowledge a frontier LLM cannot correctly produce without the pack |
+| **General Knowledge (GK)** | Knowledge a frontier LLM can already produce correctly |
+| **EK Ratio** | Proportion of a pack's propositions classified as EK: `(EK + 0.5 × Partial) / Total` |
+| **Blind probe** | Asking a model a question derived from a pack proposition *without* the pack loaded |
+
+### Measuring EK Ratio
+
+EK ratio is measured empirically using **proposition-level blind probing:**
+
+1. **Extract propositions** — use the pack's `propositions/` files (one atomic fact per line). If propositions don't exist yet, generate them.
+
+2. **Generate probe questions** — convert each proposition into a natural question. *"The TSP optimizer uses a genetic algorithm with population size 32"* → *"What algorithm does EZT Designer use for route optimization, and what is the default population size?"*
+
+3. **Blind query** — ask 2–3 frontier models (e.g., GPT-5, Claude Opus, Gemini) the question with NO pack context. Just the question.
+
+4. **Score against ground truth** — compare each model's answer to the proposition:
+
+   | Result | Classification | Weight |
+   |--------|---------------|--------|
+   | Correct and confident | General Knowledge (GK) | 0.0 |
+   | Partially correct or vague | Partial | 0.5 |
+   | Wrong, hallucinated, or refused | Esoteric Knowledge (EK) | 1.0 |
+
+5. **Use the union rule** — if *any* tested model answers correctly, the proposition is GK. EK means *no* frontier model gets it right.
+
+6. **Calculate:** `EK ratio = (EK_count + 0.5 × Partial_count) / Total_propositions`
+
+### Interpreting EK Ratio
+
+| EK Ratio | Interpretation | Action |
+|----------|---------------|--------|
+| **0.80+** | Exceptional — almost entirely esoteric | Ideal. Promote this metric prominently. |
+| **0.60–0.79** | Strong — majority esoteric content | Good. Look for GK that can be trimmed. |
+| **0.40–0.59** | Mixed — significant general knowledge padding | Review low-EK sections. Trim or compress GK. |
+| **0.20–0.39** | Weak — most content is already in the model | Major rework needed. Refocus on tribal/undocumented knowledge. |
+| **< 0.20** | Minimal value-add | Consider whether the pack's subject matter has enough EK to justify a pack at all. |
+
+### EK Ratio in the Manifest
+
+Packs that have been measured should declare their EK ratio in the manifest:
+
+```yaml
+ek_ratio:
+  value: 0.72
+  measured: "2026-03-12"
+  models: ["gpt-5", "claude-opus-4", "gemini-2"]
+  propositions_tested: 142
+```
+
+This metadata enables marketplaces, consumers, and tooling to assess pack value at a glance.
+
+### EK Ratio Over Time
+
+EK ratio naturally **decreases** as models absorb more of the world's knowledge into their weights. What's esoteric today may become general knowledge in the next training run. This means:
+
+- **Measure periodically** — re-probe quarterly or after major model releases.
+- **Packs need deepening, not just maintenance.** As GK absorbs the surface layer, the pack's value increasingly depends on its deepest, most tribal content.
+- **Version your measurements** — track EK ratio over time in `meta/` to observe decay trends.
+
+### EK-Aware Hydration
+
+EK ratio is not just a post-hoc measurement — it should guide hydration decisions during pack creation. See the [Population Methods Guide](../guides/population-methods.md) for the EK Triage process and the Hydration Priority Matrix.
+
+**The principle:** During hydration, every piece of content should pass through an EK filter before receiving full treatment. Content the model already knows gets minimal filing (brief glossary entry or one-line mention). Content the model cannot produce gets maximum effort (full extraction, careful structuring, proposition generation, lead summaries).
+
+### Common-Knowledge Compaction Rule
+
+When general knowledge *must* be present for completeness (e.g., a glossary term for a well-known technology, a basic concept needed as context for esoteric content), apply **maximum compaction:**
+
+- One sentence for the definition, maximum
+- Link to the esoteric content that depends on it
+- Do NOT write multi-paragraph explanations of things the model already knows
+
+Example — **Good:** `**Zigbee** — Low-power mesh protocol (2.4 GHz, 65K nodes). See [protocols.md](concepts/protocols.md) for HA-specific coordinator firmware quirks and pairing gotchas.`
+
+Example — **Bad:** Three paragraphs explaining what Zigbee is, its history, how mesh networking works, and a comparison with Wi-Fi — all of which the model can produce perfectly without the pack.
+
+---
+
 ## Source Provenance
 
 Every content file should track where its information came from. This is especially important for packs built from multiple sources (documentation, videos, interviews, support tickets) where an agent may later need to verify, update, or trace content back to its origin.
@@ -818,10 +911,11 @@ These principles apply to every ExpertPack, regardless of type:
 | Retrieval optimization | Summaries (broad), propositions (precise), file splitting, lead summaries (front-loaded answers), and glossary (vocabulary bridging) — use together; see [Retrieval Optimization](#retrieval-optimization) |
 | Research coverage | Every pack includes `sources/_coverage.md` documenting what was checked, what was extracted, and what's untouched; see [Research Coverage](#research-coverage-sources_coveragemd) |
 | Time variance | Annotate time-variant facts inline with `<!-- refresh -->` blocks; maintain `freshness.md` as supplementary index; see [Time Variance](#time-variance) |
+| EK ratio | Measure and maximize esoteric knowledge ratio; declare in manifest; guide hydration priority; see [Esoteric Knowledge Ratio](#esoteric-knowledge-ek-ratio) |
 | Conflict resolution | Never overwrite — flag and ask the human |
 | Version control | Git-native, semantic versioning |
 
 ---
 
-*Schema version: 2.0*
-*Last updated: 2026-03-10*
+*Schema version: 2.1*
+*Last updated: 2026-03-12*
