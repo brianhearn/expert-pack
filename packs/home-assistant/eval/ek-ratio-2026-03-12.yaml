@@ -1,0 +1,57 @@
+pack: packs/home-assistant
+measured: '2026-03-12'
+models:
+- openai/gpt-4.1-mini
+- google/gemini-2.0-flash-001
+propositions_total: 10
+ek_count: 6
+partial_count: 4
+gk_count: 0
+ek_ratio: 0.8
+by_section:
+  phases-decisions: 1.0
+  concepts: 0.6
+interpretation: "Exceptional \u2014 almost entirely esoteric"
+
+# --- Per-proposition details ---
+# details:
+#   - proposition: Presence detection based solely on phone GPS fires welcome-home automations 30-9...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Building a smart home with Home Assistant is a multi-phase journey from bare har...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: ESPHome devices connect to Home Assistant via an encrypted native API — fully lo...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: MQTT (Mosquitto broker add-on) is the universal protocol bridge — it connects Ta...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Always use `states('entity_id')` rather than `states.domain.entity.state` — the ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Services (also called Actions) are the verbs of HA — the things you can ask enti...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: SD card storage causes database corruption; average failure timeline under HA wr...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Intel N100 mini-PCs (~$80-150 used) offer the best price/performance ratio for d...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Forecast.Solar provides free solar production forecasts using panel tilt, azimut...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: Phase 2 (Initial Setup): install HA, first integrations, companion app — 1 weeke...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
