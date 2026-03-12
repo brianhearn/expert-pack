@@ -409,6 +409,28 @@
         .free-pack-desc strong {
             color: var(--text);
         }
+        .ek-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(152, 195, 121, 0.15);
+            color: #98c379;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .ek-badge[data-level="high"] {
+            background: rgba(152, 195, 121, 0.2);
+            color: #98c379;
+        }
+        .ek-badge[data-level="mid"] {
+            background: rgba(229, 192, 123, 0.2);
+            color: #e5c07b;
+        }
         .free-pack-stats {
             display: flex;
             gap: 16px;
@@ -849,13 +871,14 @@
                         <div>
                             <h3>Home Assistant</h3>
                             <span class="badge">Composite Pack</span>
+                            <span class="ek-badge" data-level="mid">EK 54%</span>
                         </div>
                     </div>
-                    <p class="free-pack-desc">The open-source <strong>home automation platform</strong>. Deep practitioner knowledge covering smart home protocols, automation patterns, presence detection, YAML configuration, ESPHome, dashboards, voice assistant, energy management, and security monitoring.</p>
+                    <p class="free-pack-desc">The open-source <strong>home automation platform</strong>. Deep practitioner knowledge covering smart home protocols, automation patterns, presence detection, YAML configuration, ESPHome, dashboards, voice assistant, energy management, and security monitoring. Includes community-sourced gotchas and real-world device compatibility data.</p>
                     <div class="free-pack-stats">
-                        <span class="free-pack-stat">&#128196; <strong>45</strong> files</span>
-                        <span class="free-pack-stat">&#128207; <strong>379 KB</strong></span>
-                        <span class="free-pack-stat">&#128221; <strong>8,500+</strong> lines</span>
+                        <span class="free-pack-stat">&#128196; <strong>61</strong> files</span>
+                        <span class="free-pack-stat">&#128207; <strong>684 KB</strong></span>
+                        <span class="free-pack-stat">&#128221; <strong>10,400+</strong> lines</span>
                     </div>
                     <div class="free-pack-topics">
                         <span class="free-pack-topic">Zigbee / Z-Wave / Matter</span>
@@ -878,21 +901,26 @@
                         <div>
                             <h3>Blender 3D</h3>
                             <span class="badge">Product Pack</span>
+                            <span class="ek-badge" data-level="mid">EK 42%</span>
                         </div>
                     </div>
-                    <p class="free-pack-desc">The free, open-source <strong>3D modeling, animation, and rendering software</strong> used by millions of artists and studios worldwide. Covers polygon modeling, sculpting, PBR shading, Cycles/EEVEE rendering, Geometry Nodes, compositing, and more.</p>
+                    <p class="free-pack-desc">The free, open-source <strong>3D modeling, animation, and rendering software</strong> used by millions of artists and studios worldwide. Covers polygon modeling, sculpting, animation &amp; rigging, physics simulation, PBR shading, Cycles/EEVEE rendering, Geometry Nodes, compositing, Python scripting, and production workflows.</p>
                     <div class="free-pack-stats">
-                        <span class="free-pack-stat">&#128196; <strong>13</strong> files</span>
-                        <span class="free-pack-stat">&#128207; <strong>120 KB</strong></span>
-                        <span class="free-pack-stat">&#128221; <strong>2,000+</strong> lines</span>
+                        <span class="free-pack-stat">&#128196; <strong>36</strong> files</span>
+                        <span class="free-pack-stat">&#128207; <strong>480 KB</strong></span>
+                        <span class="free-pack-stat">&#128221; <strong>6,800+</strong> lines</span>
                     </div>
                     <div class="free-pack-topics">
                         <span class="free-pack-topic">Modeling &amp; Topology</span>
+                        <span class="free-pack-topic">Animation &amp; Rigging</span>
+                        <span class="free-pack-topic">Sculpting</span>
                         <span class="free-pack-topic">Shading &amp; PBR</span>
                         <span class="free-pack-topic">Cycles / EEVEE</span>
                         <span class="free-pack-topic">Geometry Nodes</span>
-                        <span class="free-pack-topic">Hard Surface</span>
-                        <span class="free-pack-topic">Troubleshooting</span>
+                        <span class="free-pack-topic">Physics &amp; Simulation</span>
+                        <span class="free-pack-topic">Compositing</span>
+                        <span class="free-pack-topic">Python Scripting</span>
+                        <span class="free-pack-topic">Production Workflows</span>
                     </div>
                     <div class="free-pack-actions">
                         <a href="https://download-directory.github.io/?url=https://github.com/brianhearn/ExpertPack/tree/main/packs/blender-3d" class="dl-btn" target="_blank">Download</a>
@@ -906,13 +934,14 @@
                         <div>
                             <h3>Solar &amp; Battery DIY</h3>
                             <span class="badge">Composite Pack</span>
+                            <span class="ek-badge" data-level="mid">EK 52%</span>
                         </div>
                     </div>
                     <p class="free-pack-desc">A practitioner guide for <strong>residential solar panel and battery storage systems</strong>. Covers system design, panel and battery product comparisons, NEC code compliance, permitting, installation best practices, and troubleshooting.</p>
                     <div class="free-pack-stats">
-                        <span class="free-pack-stat">&#128196; <strong>34</strong> files</span>
-                        <span class="free-pack-stat">&#128207; <strong>180 KB</strong></span>
-                        <span class="free-pack-stat">&#128221; <strong>3,200+</strong> lines</span>
+                        <span class="free-pack-stat">&#128196; <strong>46</strong> files</span>
+                        <span class="free-pack-stat">&#128207; <strong>428 KB</strong></span>
+                        <span class="free-pack-stat">&#128221; <strong>3,800+</strong> lines</span>
                     </div>
                     <div class="free-pack-topics">
                         <span class="free-pack-topic">System Design</span>
