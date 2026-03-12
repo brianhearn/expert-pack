@@ -50,9 +50,10 @@ No method is inherently superior. The right mix depends on what source materials
 1. **Inventory sources** — List all available documentation with URLs, formats, and scope. Create `sources/{doc-source}.md` for each.
 2. **Prioritize** — Start with canonical/authoritative sources. Prefer official docs over community wikis over blog posts.
 3. **Extract and restructure** — Don't copy-paste. Rewrite content into the pack's file structure: concepts go to `concepts/`, procedures go to `workflows/`, specs go to `specifications/`. Chunk by topic, not by source page.
-4. **Add RAG-friendly headers** — Ensure every file has `##` headers that enable semantic chunking without losing technical meaning.
-5. **Record provenance** — Every file gets frontmatter noting the source URL and extraction date.
-6. **Track extraction status** — Update the source index with what's been extracted and what gaps remain.
+4. **EK triage** — Documentation is the highest-GK population method. Run every extracted fact through the [EK Triage pipeline](#ek-triage--the-default-hydration-filter). Product-specific configurations and unique behaviors get full treatment; generic technology explanations get compressed to glossary entries or 1-line scaffolding. This step is mandatory during documentation ingestion.
+5. **Add RAG-friendly headers** — Ensure every file has `##` headers that enable semantic chunking without losing technical meaning.
+6. **Record provenance** — Every file gets frontmatter noting the source URL and extraction date.
+7. **Track extraction status** — Update the source index with what's been extracted and what gaps remain.
 
 ### Strengths
 - Fast bootstrapping — can process large doc sites quickly
@@ -357,7 +358,8 @@ These observations come from applying source code extraction to a production sof
 1. **Collect** — Aggregate feedback from all available channels. Prioritize sources with volume (support tickets, reviews) over anecdotal reports.
 2. **Categorize** — Group feedback by type: bug reports, confusion/usability, feature requests, praise, complaints, churn reasons.
 3. **Extract patterns** — Identify recurring themes. A single complaint is anecdotal; ten complaints about the same thing are a pattern that needs a troubleshooting doc.
-4. **Create pack content** — Patterns become:
+4. **EK triage** — Feedback mining produces a mix of EK (specific workarounds, product-specific gotchas) and GK (generic troubleshooting advice). Run extracted patterns through the [EK Triage pipeline](#ek-triage--the-default-hydration-filter). Specific error workarounds get full treatment; "have you tried restarting?" gets skipped.
+5. **Create pack content** — Patterns become:
    - `troubleshooting/common-mistakes/` — things users repeatedly get wrong
    - `troubleshooting/errors/` — error messages users report
    - `faq/` — questions that keep getting asked
@@ -382,23 +384,65 @@ These observations come from applying source code extraction to a production sof
 
 ---
 
-## EK Triage — Filtering During Hydration
+## EK Triage — The Default Hydration Filter
 
-Every population method produces a mix of esoteric and general knowledge. The EK Triage step filters extracted content before it receives full hydration treatment, ensuring the pack's EK ratio stays high.
+Every fact extracted during hydration passes through the EK triage process before being filed into the pack. This is not optional — it is the default hydration workflow. EK triage ensures that pack content is dominated by knowledge the model cannot produce on its own, while preserving just enough general knowledge to serve as retrieval scaffolding.
 
-### When to Triage
+### The Pipeline
 
-EK triage applies **after extraction, before filing.** You've pulled knowledge from a source — now decide how much effort it deserves before structuring it into pack files.
+Every extracted fact follows this flow:
 
-### The Triage Process
+```
+Extract fact/knowledge from source
+         ↓
+   Heuristic check (see matrix below)
+         ↓
+   Clearly EK? ──→ YES: Full treatment (skip to Filing step)
+         ↓ UNCERTAIN
+   Blind probe: ask a frontier model the question cold (no pack context)
+         ↓
+   Model answers correctly? ──→ YES (GK): Compress to 1-line scaffolding
+         ↓ NO
+   Model wrong/refuses? ──→ Full EK treatment
+         ↓ PARTIAL
+   Keep as context, highlight the specific detail the model got wrong
+```
 
-1. **Quick heuristic check** — Most content can be classified without probing. Use the Hydration Priority Matrix below.
-2. **Probe when uncertain** — For content you can't classify by heuristic, ask a frontier model the question cold (no pack context). If it answers correctly → general knowledge, minimize treatment.
-3. **File accordingly:**
-   - **High EK** → Full treatment: dedicated file, lead summary, proposition extraction, careful structuring
-   - **Medium EK** → Standard treatment: include in appropriate file with good headers
-   - **Low EK** → Minimal treatment: one-line glossary entry or brief mention as context for EK content
-   - **Zero EK** → Skip entirely unless needed as scaffolding for esoteric content
+### Blind Probing Protocol
+
+When the heuristic check doesn't give a clear EK/GK signal:
+
+1. **Generate a question** from the extracted fact that does NOT reveal the specific answer. Strip all numbers, values, and technical details — ask about the topic and let the model supply specifics.
+2. **Ask one frontier model** the question with no pack context. A single cheap, fast model (e.g., GPT-4.1-mini, Gemini Flash) is sufficient during hydration triage — you're not measuring EK ratio precisely, just making a filing decision.
+3. **Judge the response** against the ground truth fact:
+   - **Model nails the specifics** → GK. Compress to scaffolding.
+   - **Model gets the topic but misses the specific detail** → Partial. Keep as context, front-load the EK detail.
+   - **Model is wrong, vague, or refuses** → EK. Full treatment.
+
+**Cost:** ~3 API calls per fact (question gen + probe + judge) using cheap models ≈ $0.01/fact. For a 200-proposition pack, that's ~$2 — negligible compared to hydration compute.
+
+**When to skip probing:** Expert walkthroughs and conversational ingestion are almost always EK. Don't waste API calls confirming what you already know — tribal knowledge from a domain expert is esoteric by definition. Save probing for documentation ingestion and feedback mining where the EK/GK mix is unpredictable.
+
+### Filing by Classification
+
+| Classification | Treatment | Purpose |
+|---------------|-----------|---------|
+| **EK** (model wrong/refuses) | Full treatment: dedicated file or section, lead summary, proposition extraction, careful structuring | This is the pack's core value |
+| **Partial** (model vague/approximate) | Standard treatment: include in appropriate file, highlight the specific detail the model missed | The delta between "model knows roughly" and "pack knows precisely" is still valuable |
+| **GK scaffolding** (model correct, but needed for retrieval) | 1-3 sentences providing context for nearby EK content. No dedicated file. Glossary entry or inline context only. | Ensures EK content is retrievable — user queries match on GK terms, which lead to EK answers |
+| **GK unnecessary** (model correct, no EK depends on it) | Skip entirely. Do not file. | Adding this content would dilute EK ratio without improving retrieval |
+
+### Why Not Exclude GK Entirely?
+
+GK serves three essential roles even in a high-EK pack:
+
+1. **Query scaffolding** — Users ask questions using general vocabulary. *"How does Zigbee work in Home Assistant?"* matches on the GK Zigbee explanation, which contains the EK gotcha about coordinator firmware bugs. Remove the GK and the EK becomes an orphan with no retrieval path.
+
+2. **Context for EK** — Some EK is unintelligible without 1-2 sentences of GK context. *"SiLabs coordinators drop Aqara sensors after 48h due to source routing table overflow"* needs a brief mention of what a coordinator does. The GK is scaffolding, not content.
+
+3. **Model reliability backstop** — Models are mostly right on GK, but not always. If the pack covers a domain end-to-end and the agent answers from the pack, gaps where "the model should know this" become failure points when the model doesn't.
+
+The solution is not to exclude GK but to **compress it ruthlessly** — enough to serve as scaffolding, never enough to become the pack's substance.
 
 ### Hydration Priority Matrix
 
@@ -450,7 +494,9 @@ The most common hydration mistake is spending equal effort on general and esoter
 
 ## Combining Methods
 
-No single method is sufficient. Here's a practical ordering for building a new pack:
+No single method is sufficient. Here's a practical ordering for building a new pack.
+
+**EK triage applies at every step.** Regardless of the population method, every extracted fact passes through the [EK Triage pipeline](#ek-triage--the-default-hydration-filter) before filing. Methods that produce mostly EK (expert walkthroughs, conversational ingestion) can skip the blind probe step — but methods that produce mixed EK/GK (documentation, feedback mining) must probe.
 
 ### Product Pack
 1. **Documentation ingestion** — bootstrap the basics (~40-60% coverage)
@@ -516,5 +562,5 @@ For detailed source tracking across a body of source materials, use `sources/{so
 
 ---
 
-*Guide version: 1.1*
+*Guide version: 1.2*
 *Last updated: 2026-03-12*
