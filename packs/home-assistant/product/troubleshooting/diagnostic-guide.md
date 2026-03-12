@@ -397,3 +397,65 @@ Sometimes the correct answer is a clean install. Triggers:
 - [YAML Configuration](../concepts/yaml-configuration.md) — Config validation workflow
 - [Top HA Mistakes](common-mistakes/top-ha-mistakes.md) — Avoid the most common problems
 - [Integrations Guide](../concepts/integrations-guide.md) — Integration-specific troubleshooting
+
+---
+
+## Community-Sourced Diagnostic Tips
+
+> Appended from community mining, 2026-03-12.
+> Sources: r/homeassistant, community.home-assistant.io, GitHub issues, Hacker News.
+
+### Finding What's Bloating Your Recorder Database
+
+Install the **SQLite Web add-on** (HAOS only) and run this query to find the top 20 entities filling your database. This is the #1 community-recommended first step for "HA is slow" complaints:
+
+```sql
+SELECT m.entity_id, COUNT(*) as count
+FROM states AS S
+INNER JOIN states_meta AS M ON M.metadata_id = s.metadata_id
+GROUP BY m.entity_id
+ORDER BY count DESC
+LIMIT 20;
+```
+
+Typical offenders: radar presence sensors (`sensor.*_last_seen`, `sensor.*_linkquality`), BLE distance sensors, IKEA Fornuftig air quality, any sensor with sub-second state changes. Exclude them in `recorder:` config, then run `Recorder: Purge` with `repack: true` and `apply_filter: true`. Source: [edvoncken.net](https://edvoncken.net/2025/01/reduce-homeassistant-database/), Jan 2025.
+
+### Diagnosing Z-Wave "Unavailable" After Add-on Update
+
+After every Z-Wave JS add-on update, devices may appear "unavailable" even after restart. Standard workaround:
+1. Go to Developer Tools → States, filter for Z-Wave devices showing "unavailable"
+2. For each device: Settings → Devices → device → Z-Wave JS → Re-interview device
+3. If "Re-interview" does nothing (modal stays open, no error), restart the Z-Wave JS add-on then retry
+4. Reverting to an older add-on backup does NOT fix this — the state cache must be rebuilt
+
+Source: [GitHub home-assistant/core #126235](https://github.com/home-assistant/core/issues/126235), Sep 2024.
+
+### Diagnosing Zigbee2MQTT Action Sensor Breakage
+
+If button/remote automations stopped working after Z2M update to 2.0+:
+1. Check if `sensor.devicename_action` entities still exist (they may be disabled, not deleted)
+2. In HA, go to Settings → Devices → find the device → check "Disabled entities"
+3. Either enable the sensor entities AND add `homeassistant: { legacy_action_sensor: true }` to Z2M config
+4. OR migrate automations to use MQTT device triggers (recommended long-term)
+5. Also verify: Settings → Devices & Services → MQTT → Configure → Birth message topic = `homeassistant/status`
+
+Source: [Z2M Discussion #24198](https://github.com/Koenkk/zigbee2mqtt/discussions/24198), [Reddit r/homeassistant](https://www.reddit.com/r/homeassistant/comments/1hu5h8s/), Jan 2025.
+
+### Automation Trace — Most Underused Debug Tool
+
+The **Traces** button (top-right corner of the automation editor) is the fastest way to debug automation failures. It shows:
+- Which trigger fired (or didn't fire)
+- Variable values at each step
+- Which condition failed and why
+- Which action errored, and the exact error
+
+Use this before reading logs. Most automation "why isn't this firing?" questions can be answered in 30 seconds with traces. Source: [XDA Developers](https://www.xda-developers.com/things-wish-knew-before-going-all-in-home-assistant/), Aug 2025.
+
+### Diagnosing HACS After HA Updates
+
+If HACS disappears from sidebar or shows all integrations as broken after an HA update:
+1. Settings → Devices & Services → HACS → Configure → enable "AppDaemon apps discovery & tracking" → save (fixes disappearing sidebar)
+2. If integrations show stale "unavailable update" status: HACS → select integration → 3-dot menu → Re-download
+3. If HACS itself fails to load (critical error in logs): update HACS via terminal using `wget -O - https://get.hacs.xyz | bash -` and restart HA
+
+Source: [GitHub hacs/integration #4314](https://github.com/hacs/integration/issues/4314), [Reddit r/homeassistant](https://www.reddit.com/r/homeassistant/comments/1htm6kq/), Jan 2025.

@@ -1,0 +1,220 @@
+pack: packs/solar-diy
+measured: '2026-03-12'
+models:
+- openai/gpt-4.1-mini
+- google/gemini-2.0-flash-001
+propositions_total: 50
+ek_count: 11
+partial_count: 30
+gk_count: 9
+ek_ratio: 0.52
+by_section:
+  concepts: 0.64
+  phases: 0.59
+  decisions-gotchas: 0.56
+  overview: 0.42
+  faq-troubleshooting: 0.21
+interpretation: "Mixed \u2014 significant general knowledge padding"
+
+# --- Per-proposition details ---
+# details:
+#   - proposition: A standard 13.5 kWh battery provides backup for approximately 1–2 days of essent...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Submitting the utility interconnection application after (not in parallel with) ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: A contractor-installed system typically costs $3.50–$4.50/W installed; DIY typic...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: Installing a battery outside its operating temperature range (e.g., hot garage i...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Installation proceeds in logical sequence: roof mounts → rails → panel mounting ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: A residential solar permit application typically requires: a single-line diagram...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Racking systems must carry an ICC ESR (Evaluation Service Report) listing for th...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: A thorough site assessment covers four areas: roof condition and orientation, sh...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: A failed AHJ inspection for layout deviation (even a small field modification) r...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Using nominal voltage (not temperature-corrected Voc) for string sizing is dange...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Net metering rates have declined in California (NEM 3.0), Nevada, and other stat...
+#     classification: gk
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: gk
+#   - proposition: Solar panels are energized by daylight — DC conductors should be treated as live...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: partial
+#   - proposition: Azimuth affects annual production significantly: south-facing (180°) maximizes a...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The Enphase IQ8 series (IQ8M, IQ8H, IQ8X) supports off-grid operation and microi...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: A temperature coefficient of -0.30%/°C means a panel rated at 400W at 25°C produ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: MLPE satisfies NEC 690.12 rapid shutdown requirements; string inverters without ...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Grid-tied (no battery) systems are the least expensive and most common configura...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: DIY voids some equipment installer warranties; check manufacturer warranty terms...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: partial
+#   - proposition: Mounting solar on a roof that will need replacement in <10 years costs $2,000–$6...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: BOS electrical hardware includes: wire/conduit, combiners, disconnects, circuit ...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: For US grid-tied systems, all inverters must be UL 1741 listed (domestic use) or...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Array sizing starts with annual kWh consumption divided by local peak sun hours ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Higher efficiency panels reduce roof space required per kW: 440W panels at 22% e...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Most US residential jurisdictions allow homeowner-pulled permits for owner-occup...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The residential solar panel market splits between premium back-contact N-type pa...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: String design must satisfy: (max string voltage) ≤ inverter max input AND (min M...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The federal ITC (30%) applies to battery systems if charged primarily by solar (...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: With a solar lease or PPA, the third-party owner claims the tax credit, not the ...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: The two most dangerous activities in DIY solar are service panel work (live 200A...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Both microinverters and power optimizers are classified as MLPE (Module-Level Po...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: Equipment should be ordered only after the building permit application is submit...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: A single shaded panel in a string pulls down production for all other panels in ...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: partial
+#   - proposition: Temperature coefficient (Pmax) measures production loss per degree Celsius above...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Fall protection (harness, roof anchor, lanyard) is required at 6 feet height per...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The most dangerous DIY task is service panel work — it requires working near liv...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Trees within 30 feet of the array that are still growing should be accounted for...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Not setting up production monitoring alerts is a post-commissioning mistake: a f...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The federal Investment Tax Credit (30%) is claimed on IRS Form 5695 in the tax y...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The 30% federal Investment Tax Credit (ITC) applies to the full installed cost i...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: A shading analysis tool (Solmetric SunEye, Solar Pathfinder app, or PVGIS) is re...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: The utility interconnection process often takes longer than the building permit ...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: Wait for the utility to install a bidirectional net meter before exporting power...
+#     classification: gk
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: gk
+#   - proposition: Net metering (selling excess power back to the grid) is regulated by state publi...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Residential solar panels produce 440–500W each in 2026; a 10 kW system requires ...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: String inverters have a typical lifespan of 10–15 years and should be budgeted f...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Shading analysis must cover the worst shading months, not just peak summer; a tr...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Monitoring should be configured on day one; set up no-production and low-product...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: SREC (Solar Renewable Energy Certificate) markets in NJ, MA, PA, MD, and DC allo...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Roof penetrations not properly flashed are the most common source of post-instal...
+#     classification: gk
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: gk
+#   - proposition: NEC 705.12 (the 120% rule) determines whether a supply-side or load-side connect...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial

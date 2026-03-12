@@ -216,3 +216,71 @@ delay: "00:{{ states('input_number.motion_off_delay') | int }}:00"
 ```
 
 Now you adjust the delay from one place — the dashboard — and all automations use it.
+
+---
+
+## Community-Sourced Process Pitfalls
+
+> Added from community mining, 2026-03-12.
+> Sources: r/homeassistant, community.home-assistant.io, GitHub issues.
+
+### Never Update HA Without a Snapshot
+
+**The pattern:** Users update HA → HACS integration breaks → they have no rollback path → spend 4+ hours debugging.
+
+**The rule:** Before every HA update, take a snapshot (Settings → System → Backup → Create Backup). HA OS allows one-click rollback to the previous version from the backup. This is the #1 piece of advice from experienced users. Source: [Reddit r/homeassistant](https://www.reddit.com/r/homeassistant/comments/1i61v5c/how_to_deal_with_breaking_integrations_on_every/), Jan 2025.
+
+### Read the Breaking Changes List Before Every Update
+
+HA publishes a "Breaking Changes" section in every monthly release blog post at `home-assistant.io/blog`. Before updating, scan the list for:
+- Integrations you use
+- YAML keys you use (e.g., `service:` → `action:`, `trigger:` → `triggers:`)
+- Device-specific entity renames (happens frequently with Zigbee2MQTT updates)
+
+Source: [home-assistant.io release blog](https://www.home-assistant.io/blog/), monthly.
+
+### Don't Update Z2M and HA at the Same Time
+
+Updating Zigbee2MQTT and Home Assistant Core in the same maintenance window doubles the number of potential breaking changes and makes it impossible to isolate which update caused a problem. Best practice: update Z2M first, validate devices work, then update HA core separately. Source: community consensus, r/homeassistant.
+
+### Put Your Config in Git
+
+The most consistently recommended advanced practice across r/homeassistant, community.home-assistant.io, and HN. With git:
+- `git diff` before/after shows exactly what changed during a breaking update
+- You can roll back specific files without a full restore
+- You can share automations and get help debugging
+
+Minimum: `cd /config && git init && git add automations.yaml scripts.yaml configuration.yaml && git commit -m "initial"`. Source: [Hacker News](https://news.ycombinator.com/item?id=42813513), Jan 2025.
+
+### Don't Buy Cloud-Only Devices for Critical Functions
+
+Vendors can revoke API access at any time. Known cases:
+- **Chamberlain/MyQ** (2023): revoked HA API access, integration removed
+- **Mazda** (2023): DMCA takedown of third-party API tool
+- **Generic Tuya cloud**: randomly requires re-authentication, tokens expire
+
+For anything controlling physical security (locks, garage doors, alarms), use local-only protocols: Z-Wave, Zigbee, Thread/Matter, ESPHome, or LocalTuya with cloud blocked at the firewall. Source: [Hacker News](https://news.ycombinator.com/item?id=42813513), Jan 2025; [home-assistant.io/blog/2023/11/06/removal-of-myq-integration/](https://www.home-assistant.io/blog/2023/11/06/removal-of-myq-integration/).
+
+### Don't Start With ZHA if You Have Aqara or "Picky" Zigbee Devices
+
+ZHA is the built-in Zigbee integration but has worse device compatibility than Zigbee2MQTT for certain brands (Aqara in particular). The community first-line advice when ZHA devices randomly drop off: migrate to Z2M. However, migration requires re-pairing every device (the Zigbee mesh does not transfer between integrations). Starting with Z2M avoids this painful migration. Source: [XDA Developers](https://www.xda-developers.com/things-wish-knew-before-going-all-in-home-assistant/), Aug 2025; [Reddit community consensus](https://www.reddit.com/r/homeassistant/comments/1fpdp25/).
+
+### Template Sensors Need `unique_id` for Stability
+
+Template sensors in `configuration.yaml` without `unique_id:` will have unstable entity IDs — if a naming conflict occurs, HA appends `_2`, `_3`, etc., silently breaking automations. Always add a `unique_id:` (any unique string) to every template sensor. Source: [community.home-assistant.io](https://community.home-assistant.io/t/unique-id-for-template-sensor/596594), Jul 2023.
+
+### Zigbee2MQTT 2.0 Migration Checklist
+
+Before upgrading from Z2M 1.x to 2.0, add these to your `configuration.yaml` to minimize breaking changes:
+
+```yaml
+advanced:
+  homeassistant_legacy_entity_attributes: false
+  homeassistant_legacy_triggers: false
+  legacy_api: false
+  legacy_availability_payload: false
+device_options:
+  legacy: false
+```
+
+Also explicitly set `serial: { adapter: ezsp }` (or your adapter type). Missing the explicit adapter type causes "No valid USB adapter found" on first start. Source: [Z2M Discussion #24198](https://github.com/Koenkk/zigbee2mqtt/discussions/24198), Jan 2025.

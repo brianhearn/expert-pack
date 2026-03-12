@@ -296,3 +296,17 @@ template:
 - [ESPHome Fundamentals](esphome-fundamentals.md) — Building BLE proxies and mmWave sensors with ESP32
 - [Automation Fundamentals](automation-fundamentals.md) — Using presence in triggers and conditions
 - [Motion Lighting Workflow](../workflows/motion-lighting.md) — Room-level presence applied to lighting
+
+---
+
+## Community-Sourced Presence Detection Gotchas
+
+> Appended from community mining, 2026-03-12. Sources: r/homeassistant, community.home-assistant.io.
+
+- **WiFi-only presence detection is fundamentally unreliable.** Modern phones randomize MAC addresses (especially iPhones on iOS 14+) which breaks all router-based and nmap-based tracking unless you: (a) use the HA Companion App which can report consistent MAC in HA settings, or (b) configure your router to assign static IPs based on device hostname. MAC randomization is on by default on Android 10+ and iOS 14+. Source: [Reddit r/homeassistant](https://www.reddit.com/r/homeassistant/comments/13sfzns/), May 2023.
+
+- **nmap tracker marks phones "away" as soon as they drop WiFi ping** — which happens frequently when a phone's screen is off (power-saving suppresses WiFi activity). This creates "ghost away" events. Use nmap ONLY as one signal in a Bayesian/multi-source fusion model, never as the sole trigger for security or HVAC automations. Source: [Reddit r/homeassistant](https://www.reddit.com/r/homeassistant/comments/gbenma/), May 2020.
+
+- **HA 2025.11 breaking change: person entity state now uses zone friendly name instead of zone object ID.** Automations that trigger on `state: 'zone_object_id'` silently break. Update automations to use zone friendly name (e.g., `state: 'Home'` instead of `state: 'home'`). Source: [home-assistant.io blog 2025.11](https://rc.home-assistant.io/blog/2025/10/02/release-202511/), Oct 2025.
+
+- **Companion app presence stops updating on Android after phone restart** if battery optimization is re-enabled by Android itself (common after OS updates). Fix: check Settings → Apps → Home Assistant → Battery → set to "Unrestricted" after every major Android update. Source: community.home-assistant.io, recurring thread.

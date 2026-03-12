@@ -1,0 +1,220 @@
+pack: packs/home-assistant
+measured: '2026-03-12'
+models:
+- openai/gpt-4.1-mini
+- google/gemini-2.0-flash-001
+propositions_total: 50
+ek_count: 18
+partial_count: 18
+gk_count: 14
+ek_ratio: 0.54
+by_section:
+  phases-decisions: 0.79
+  troubleshooting-faq: 0.62
+  patterns: 0.5
+  overview: 0.5
+  concepts: 0.42
+interpretation: "Mixed \u2014 significant general knowledge padding"
+
+# --- Per-proposition details ---
+# details:
+#   - proposition: Presence detection based solely on phone GPS fires welcome-home automations 30-9...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Building a smart home with Home Assistant is a multi-phase journey from bare har...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: ESPHome devices connect to Home Assistant via an encrypted native API — fully lo...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: MQTT (Mosquitto broker add-on) is the universal protocol bridge — it connects Ta...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: partial
+#   - proposition: Always use `states('entity_id')` rather than `states.domain.entity.state` — the ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Services (also called Actions) are the verbs of HA — the things you can ask enti...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: SD card storage causes database corruption; average failure timeline under HA wr...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Intel N100 mini-PCs (~$80-150 used) offer the best price/performance ratio for d...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Forecast.Solar provides free solar production forecasts using panel tilt, azimut...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Phase 2 (Initial Setup): install HA, first integrations, companion app — 1 weeke...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Phase 1 (Planning): hardware selection, installation method, network design — 1-...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Proxmox on existing server hardware allows HA to coexist with other services as ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Running `ha core check` or using Developer Tools → YAML → Check Configuration va...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: HACS (Home Assistant Community Store) provides custom integrations and frontend ...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: All HA functionality works locally without a Nabu Casa subscription — it is a co...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: A basic HA install with 10-20 devices takes 1-2 weekends; full home coverage and...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: ZHA (Zigbee Home Automation) is the built-in HA Zigbee integration; Zigbee2MQTT ...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: The Shelly EM clamp-style energy monitor is the recommended solution for 240V hi...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: The `state_class: total_increasing` attribute is required for cumulative sensor ...
+#     classification: gk
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: gk
+#   - proposition: Z-Wave ghost nodes (dead nodes in the Z-Wave JS node list) consume network resou...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: ESPHome is maintained by Nabu Casa (the Home Assistant company) and ships as an ...
+#     classification: gk
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: gk
+#   - proposition: A motion-lighting automation has three parts: turn on when motion detected, wait...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The `for` parameter on a trigger requires an entity to remain in a state for a s...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: The only useful backup test is actually restoring the backup — verify it works o...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Conditions use AND logic by default — all conditions must be true for the automa...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: `'on'` and `'off'` must be quoted in YAML; unquoted, they are parsed as boolean ...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: The Google Drive Backup HACS add-on automatically uploads backups to Google Driv...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Faster Whisper is the standard local STT engine for HA in 2026 — it runs OpenAI'...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: HA Supervised requires a strictly maintained Debian environment and is described...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The `delay_off` attribute on template binary sensors prevents false "away" flips...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Presence detection is the single most impactful capability in home automation an...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: The "Useful in 3 Seconds" rule: any household member should understand status an...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: The short version of common gotchas: use HA OS, put it on an SSD not an SD card,...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Motion-lighting automations must use `mode: restart` so each new motion event re...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Building a smart home with HA done poorly becomes a maintenance burden — unrelia...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: An integration is a software bridge connecting HA to external hardware, cloud se...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The Wyoming protocol is HA's open standard for connecting voice processing servi...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Thread/Matter device selection is still smaller than Zigbee in 2026; Zigbee rema...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: IoT devices should be placed on a separate VLAN with no internet access (or heav...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: ESPresense is a purpose-built ESP32 firmware for BLE room-level presence detecti...
+#     classification: gk
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: gk
+#   - proposition: Mains-powered Zigbee/Z-Wave devices act as mesh routers; battery-powered devices...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: Zigbee devices typically cost $7-25 each; Z-Wave devices typically cost $30-70 e...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: The three decisions to make before spending money are: which hardware to run HA ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Local Push integrations are the most reliable — the device pushes state updates ...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: partial
+#   - proposition: Entity IDs for ESPHome follow the pattern: `domain.device_name_entity_name`....
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: HA Core (Python venv) is for developers and advanced users only — no add-ons, no...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: Excluding high-frequency sensors (time, signal strength, link quality) from the ...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: The Aqara FP2 mmWave sensor supports up to 5 detection zones and connects via Wi...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: Motion-activated lights must use `restart` mode so new motion events reset the o...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Solve home-level presence (is anyone home?) before adding room-level presence (w...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk

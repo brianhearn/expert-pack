@@ -1,0 +1,218 @@
+pack: packs/blender-3d
+measured: '2026-03-12'
+models:
+- openai/gpt-4.1-mini
+- google/gemini-2.0-flash-001
+propositions_total: 50
+ek_count: 2
+partial_count: 38
+gk_count: 10
+ek_ratio: 0.42
+by_section:
+  workflows: 0.53
+  troubleshooting: 0.5
+  concepts: 0.35
+interpretation: "Mixed \u2014 significant general knowledge padding"
+
+# --- Per-proposition details ---
+# details:
+#   - proposition: F-Curve Noise modifier adds procedural noise (camera shake, organic variation) t...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: partial
+#   - proposition: `bpy.data` is preferred for scripts; `bpy.ops` requires correct context (mode, s...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: The Shadow pass shows shadow contribution as a dark value; reroute through Color...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Face Sets (Blender 2.91+) are colored per-face regions for isolating brushes to ...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Combining multiple render passes (Diffuse Direct + Indirect, Specular Direct + I...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: EEVEE is a rasterization renderer: fast, real-time, good for product viz, motion...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: The IK Pole Angle is adjusted in 90° increments; if the knee flips, adjust the p...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: The Mirror modifier's Clipping option prevents vertices from crossing the mirror...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: Accidental Action proliferation (Action.001, Action.002, etc.) is caused by pres...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Automatic Weights (`Ctrl+P → With Automatic Weights`) is a starting point for me...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Bake Geometry Nodes simulations before final render: `Object → Geometry Nodes → ...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Multi-pass compositing separates Diffuse Direct, Diffuse Indirect, Specular, Emi...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: `Dissolve (Ctrl+X)` removes geometry while preserving surrounding topology; `Del...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: For web video delivery, H.264 in MP4 is the standard codec; for professional pos...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Custom operators inherit from `bpy.types.Operator` with `bl_idname` (CATEGORY_OT...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Collections are Blender's organizational hierarchy; objects can belong to multip...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: Edit Mode operates on Object Data; if two objects share a mesh, editing one's me...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: Modifier order in the stack matters enormously: Mirror before Subdivision Surfac...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Auto-Keying automatically creates keyframes for any changed property while playi...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Use Drivers (not keyframes) for: shape keys controlled by bone rotation, wheel r...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: For manual retopology in Blender, enable `Face Snap` with `Project Individual El...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: VSE text strips are functional but limited; complex title cards are better creat...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Object Data (Mesh, Armature, Curve, etc.) is a separate data-block that multiple...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: partial
+#   - proposition: GPU compositing (Blender 4.0+, enabled in Preferences → System → GPU Compositing...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: AgX (Blender 4.0+) is the recommended view transform; it has better chromatic ac...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: Broken links in `.blend` files are shown as orange in the Outliner; fix with `Fi...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Fireflies (bright pixel artifacts) in Cycles are fixed by clamping Indirect Ligh...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Physics cache location problems on render farms are caused by absolute cache pat...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Set Subdivision Surface Viewport Level to 1 (or 0 for off-camera objects) and Re...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: `bpy.context.temp_override()` (Blender 3.2+) is the modern way to set context fo...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: Extrapolation mode `Make Cyclic` repeats an F-Curve for looping; the Cycles modi...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: After changing mesh properties via the data API, call `obj.data.update()` to for...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: Speed Control strips with speed factor < 1.0 create slow motion; slow motion req...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Always bake physics simulations to disk before rendering — simulations are not d...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: For Boolean cleanup: `Merge by Distance`, then manually route edge loops from th...
+#     classification: partial
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: partial
+#   - proposition: Connecting an object custom property to a shader via a driver enables the materi...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Every data-block has a user count; when the count reaches zero, the data-block i...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: ek
+#   - proposition: Lip sync uses Shape Keys for phoneme shapes (M/B/P, OOH, EE/I, AH/AA, F/V, TH, L...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: `Overlay → Face Orientation` shows blue (correct outward normals) and red (inver...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: gk
+#   - proposition: Metallic should be 0 (dielectric: plastic, wood, skin) or 1 (metal); values betw...
+#     classification: gk
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: gk
+#   - proposition: Applying a modifier below the Multiresolution modifier collapses the base mesh a...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Before optimizing, identify the actual bottleneck: viewport slowness (Statistics...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Physics caches grow large: a 200-frame 128-resolution fluid simulation can be 5–...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: For the `Follow Path` camera rig: draw a Bezier curve, add Follow Path constrain...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
+#   - proposition: The Principled BSDF implements Disney's PBR model and handles ~90% of real-world...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Product render Cycles settings: Samples 512–2048, Glossy bounces 8, Transmission...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Standard lip sync timing: set shape key value to 0 two frames before the phoneme...
+#     classification: ek
+#     gpt-4.1-mini: ek
+#     gemini-2.0-flash-001: ek
+#   - proposition: Blender's physics assume real-world scale: 1 Blender unit = 1 meter; physics tha...
+#     classification: gk
+#     gpt-4.1-mini: gk
+#     gemini-2.0-flash-001: ek
+#   - proposition: When VRAM is exceeded, Cycles falls back to CPU RAM (dramatically slower) or cra...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: partial
+#   - proposition: Missing subsurface scattering on organic products (candles, soaps) makes them lo...
+#     classification: partial
+#     gpt-4.1-mini: partial
+#     gemini-2.0-flash-001: ek
