@@ -451,7 +451,7 @@ Process packs benefit from summaries and propositions — see [Retrieval Optimiz
 
 ## Pack Population
 
-For detailed guidance on all population methods, see the [Population Methods Guide](../guides/population-methods.md).
+For detailed guidance on all population methods, see the [Hydration Guide](../guides/hydration.md).
 
 For process packs, the recommended combining order is:
 1. Documentation ingestion → SOPs, runbooks, compliance docs

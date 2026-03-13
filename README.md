@@ -98,7 +98,7 @@ Every extracted fact passes through the EK triage pipeline:
 - **GK scaffolding** (model correct, but needed for retrieval) → 1-3 sentences max, no dedicated file
 - **GK unnecessary** (model correct, no EK depends on it) → Skip entirely
 
-See [population-methods.md](guides/population-methods.md) for the full hydration pipeline.
+See the [Hydration Guide](guides/hydration.md) for the full hydration pipeline.
 
 ---
 
@@ -174,7 +174,8 @@ ExpertPack/
 │   └── eval.md              ← Evaluation framework (v1.2)
 │
 ├── guides/                  ← Practical guides
-│   └── population-methods.md ← How to hydrate packs from various sources (v1.3)
+│   ├── hydration.md         ← Complete hydration lifecycle: planning → population → retrieval optimization → validation (v1.0)
+│   └── consumption.md       ← How to deploy and consume packs with AI agents (v1.0)
 │
 ├── tools/                   ← Tooling
 │   ├── eval-ek.py           ← EK ratio measurement via blind probing

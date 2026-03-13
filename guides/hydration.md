@@ -1,6 +1,6 @@
-# Population Methods Guide
+# Hydration Guide
 
-*How to fill an ExpertPack with knowledge. This guide is pack-type-agnostic — each method notes which pack types benefit most and where the approach differs. Read this before building any pack.*
+*The complete lifecycle for filling an ExpertPack with knowledge — from planning through population, retrieval optimization, validation, and maintenance. This guide is pack-type-agnostic; each method notes which pack types benefit most and where the approach differs. Read this before building any pack.*
 
 ---
 
@@ -17,6 +17,72 @@ An ExpertPack is only as good as its sources. The best packs combine multiple po
 - **Feedback mining gives you the user reality.** What real people struggle with, not what designers assumed.
 
 No method is inherently superior. The right mix depends on what source materials exist and what kind of pack you're building. Start with whatever you have access to and layer in additional methods as they become available.
+
+---
+
+## Planning a Hydration Campaign
+
+Before diving into population, step back and plan. A well-planned hydration campaign prioritizes the highest-EK sources, avoids wasting effort on general knowledge, and sequences methods so each builds on what came before.
+
+### Source Audit
+
+Start by inventorying everything available:
+
+- **Existing documentation** — docs sites, help articles, manuals, wikis, READMEs, blog posts
+- **Technical artifacts** — source code, schemas, configs, CAD files, schematics
+- **Visual materials** — screenshots, photos, diagrams, UI mockups
+- **Video content** — tutorials, demos, training recordings, conference talks, interviews
+- **Human experts** — who has tribal knowledge? Who built it? Who supports it daily?
+- **Feedback channels** — support tickets, forum threads, app reviews, social media, bug trackers
+- **Published works** (person packs) — books, articles, social media, interview transcripts
+
+Don't evaluate yet — just list everything. You'll prioritize next.
+
+### EK Potential Assessment
+
+For each source, estimate where the esoteric knowledge lives:
+
+| Source Type | Typical EK Density | Notes |
+|------------|-------------------|-------|
+| Expert tribal knowledge | Very High | Exists only in human heads — highest priority |
+| Undocumented code behavior | High | Real behavior vs. documented behavior |
+| Support tickets / user complaints | High | Real pain points the model can't invent |
+| Internal decision records | High | The "why" behind choices |
+| Video walkthroughs with narration | Medium–High | Expert explains "why" alongside "what" |
+| Official documentation | Low–Medium | Highest GK contamination risk — probe aggressively |
+| Generic technology explanations | Very Low | Skip or 1-line glossary entry |
+
+Focus your campaign on the high-EK sources first. A 2-hour expert walkthrough will generate more pack value than a week of documentation ingestion.
+
+### Method Sequencing by Pack Type
+
+No single method is sufficient. Here's a practical ordering for building a new pack.
+
+**EK triage applies at every step.** Regardless of the population method, every extracted fact passes through the [EK Triage pipeline](#ek-triage--the-default-hydration-filter) before filing. Methods that produce mostly EK (expert walkthroughs, conversational ingestion) can skip the blind probe step — but methods that produce mixed EK/GK (documentation, feedback mining) must probe.
+
+#### Product Pack
+1. **Documentation ingestion** — bootstrap the basics (~40-60% coverage)
+2. **Technical artifact analysis** — add depth and discover the undocumented (~60-80%)
+3. **Visual ingestion** — build interface docs from screenshots or photos (~70-85%)
+4. **Expert walkthrough** — fill gaps, validate findings, capture "why" (~85-95%)
+5. **Observation & testing** — quality gate, find remaining gaps (~95%+)
+6. **Feedback mining** — populate troubleshooting and customer reality (ongoing)
+
+#### Person Pack
+1. **Documentation ingestion** — published works, online presence
+2. **Conversational ingestion** — stories, beliefs, opinions (ongoing, primary method)
+3. **Video ingestion** — talks, interviews, appearances
+4. **Expert walkthrough** — the person validates and corrects
+5. **Observation & testing** — roleplay conversations to find gaps
+
+#### Process Pack
+1. **Documentation ingestion** — SOPs, runbooks, compliance docs
+2. **Expert walkthrough** — practitioners explain the reality vs. the docs
+3. **Technical artifact analysis** — scripts, automation, monitoring configs
+4. **Feedback mining** — incident reports, audit findings
+5. **Observation & testing** — walk through each phase
+
+The percentages are rough guides, not targets. Some packs will reach 90% from documentation alone (mature products with good docs). Others will need expert walkthroughs before documentation even makes sense (tribal-knowledge-heavy processes).
 
 ---
 
@@ -529,33 +595,256 @@ The most common hydration mistake is spending equal effort on general and esoter
 
 ---
 
-## Combining Methods
+## Building the Retrieval Layer
 
-No single method is sufficient. Here's a practical ordering for building a new pack.
+Hydrating content files is only half the job. A pack full of well-structured Markdown is still at the mercy of the retrieval system — and most RAG systems are dumb about structured content. This section covers the retrieval optimization layers that bridge the gap between how you *organized* the knowledge and how the consuming agent *finds* it.
 
-**EK triage applies at every step.** Regardless of the population method, every extracted fact passes through the [EK Triage pipeline](#ek-triage--the-default-hydration-filter) before filing. Methods that produce mostly EK (expert walkthroughs, conversational ingestion) can skip the blind probe step — but methods that produce mixed EK/GK (documentation, feedback mining) must probe.
+These layers are not optional nice-to-haves. In eval experiments on a real product pack, retrieval optimization produced the single largest quality improvement of any change — larger than model upgrades, content edits, or RAG configuration tuning.
 
-### Product Pack
-1. **Documentation ingestion** — bootstrap the basics (~40-60% coverage)
-2. **Technical artifact analysis** — add depth and discover the undocumented (~60-80%)
-3. **Visual ingestion** — build interface docs from screenshots or photos (~70-85%)
-4. **Expert walkthrough** — fill gaps, validate findings, capture "why" (~85-95%)
-5. **Observation & testing** — quality gate, find remaining gaps (~95%+)
-6. **Feedback mining** — populate troubleshooting and customer reality (ongoing)
+### Lead Summaries
 
-### Person Pack
-1. **Documentation ingestion** — published works, online presence
-2. **Conversational ingestion** — stories, beliefs, opinions (ongoing, primary method)
-3. **Video ingestion** — talks, interviews, appearances
-4. **Expert walkthrough** — the person validates and corrects
-5. **Observation & testing** — roleplay conversations to find gaps
+Add a 1–3 sentence blockquote at the very top of high-traffic content files that directly answers the most likely query.
 
-### Process Pack
-1. **Documentation ingestion** — SOPs, runbooks, compliance docs
-2. **Expert walkthrough** — practitioners explain the reality vs. the docs
-3. **Technical artifact analysis** — scripts, automation, monitoring configs
-4. **Feedback mining** — incident reports, audit findings
-5. **Observation & testing** — walk through each phase
+```markdown
+# User Roles
+
+> **Lead summary:** EZT Designer supports three user roles: Owner, Editor, and Viewer. Owners can manage team members and billing. Editors can create and modify territories but cannot change team settings. There is no "Admin" role — Owner is the highest permission level.
+
+## What It Is
+...
+```
+
+**Why this matters:** RAG chunkers split files from the top. If the first 400 tokens are a table of contents or general introduction, the most relevant chunk ranks lower than it should. Lead summaries front-load the critical facts — including anti-hallucination "NOT" facts and common gotchas — into the highest-ranked chunk position.
+
+**Where to focus:** Start with the ~15 most-retrieved files (identified via eval results or support ticket analysis). Not every file needs one — prioritize files that answer high-frequency questions.
+
+### Summaries Directory (`summaries/`)
+
+Section-level summaries that enable hierarchical retrieval. One summary file per content section, each 1–3KB of dense bullet points with cross-references to detail files.
+
+```markdown
+# Concepts — Summary
+
+Dense bullet-point summary of all concepts in this section.
+
+## Key Topics
+- **Territories** — Named geographic regions assigned to reps. See [territories.md](../concepts/territories.md)
+- **Routing Optimizer** — TSP solver using genetic algorithm, population 32. See [routing.md](../concepts/routing.md)
+- **Data Sources** — Supports Excel, Dynamics 365, Power Platform, SQL Azure. See [data-sources.md](../concepts/data-sources.md)
+...
+```
+
+**Why summaries matter:** Without summaries, broad questions like "what can this product do?" compete against hundreds of fine-grained files with mediocre relevance. A summary file matches with high relevance and provides a complete broad answer. Detail files then handle follow-ups. This is the RAPTOR pattern — recursive summarization into a retrieval tree.
+
+**Generation rules:**
+- Summaries are DERIVED from content files — read all files in a section before writing
+- Include cross-references to source files so agents can drill down
+- Regenerate when source content changes significantly
+
+### Propositions Directory (`propositions/`)
+
+Atomic factual statements extracted from content files. Each proposition captures exactly ONE fact and is self-contained — readable without any surrounding context.
+
+```markdown
+# Concepts — Propositions
+
+### territories.md
+- EZT Designer organizes geographic areas into hierarchical territories
+- Territories can be defined by postal codes, counties, states, or countries
+- A territory can only be assigned to one rep at a time
+- Territories support custom color coding based on any numeric metric
+
+### routing-optimizer.md
+- The route optimizer uses a TSP (Traveling Salesman Problem) genetic algorithm
+- Default population size is 32 candidates per generation
+- Maximum stops per route is 150
+...
+```
+
+**Why propositions matter:** Prose paragraphs contain multiple facts mixed with explanations and transitions. RAG retrieval against prose returns the whole paragraph, only part of which is relevant. Propositions isolate individual facts — each matches precisely or not at all.
+
+**Extraction rules:**
+- Each proposition = one fact (not compound statements)
+- Self-contained — no "it" or "this" references to surrounding context
+- 5–20 propositions per source file, depending on density
+- Do NOT invent facts — extract only what the source states
+- Regenerate when source content changes
+
+### Glossary (`glossary.md`)
+
+Maps common user vocabulary to precise technical terms. This bridges the gap between how users describe their problems and how the pack documents solutions.
+
+```markdown
+# EZT Designer — Glossary
+
+## Territory Terms
+
+| Term | Definition | Common User Language |
+|------|-----------|---------------------|
+| **Territory** | Named geographic region assigned to a rep | "area", "zone", "region", "turf" |
+| **Locked territory** | Territory with editing disabled to prevent changes | "stuck ZIP codes", "can't move", "frozen" |
+| **Alignment** | The complete set of territory assignments | "territory map", "the layout", "assignments" |
+```
+
+**Why a glossary matters:** Users say "stuck ZIP codes" when the pack documents "locked territories." Without a vocabulary bridge, RAG retrieval fails because the query terms don't match the content terms. A glossary gives RAG an explicit mapping to match against.
+
+**Guidelines:**
+- Include the "Common User Language" column — this is what makes glossaries effective
+- Keep definitions concise (1-2 sentences)
+- Add the glossary to manifest `always` tier (Tier 1) — it's small, high-value, and helps every query
+- Update when eval failures reveal vocabulary gaps
+
+### Schema-Aware Chunking
+
+**This is the single highest-impact retrieval optimization.** In eval experiments on a real product pack, schema-aware chunking produced +9.4% correctness, -52% input tokens, and -60% hallucination rate — the largest improvement from any single change, bigger than model upgrades or content edits.
+
+#### The Problem with Generic Chunkers
+
+Most RAG systems chunk files by character count. They don't understand Markdown structure. A generic chunker will:
+
+- Split a lead summary from its `# Title`
+- Cut a proposition group between the `### source.md` header and its bullet list
+- Slice a glossary table mid-row
+- Orphan a `<!-- refresh -->` metadata block from the content it describes
+- Break a `##` section in the middle of a thought
+
+The result: every retrieved chunk is an arbitrary text slice that may have lost its context. You spent effort structuring knowledge with headers, lead summaries, and grouped propositions — and the chunker throws that structure away.
+
+#### The Schema-Aware Chunker
+
+The [schema-aware chunker](../tools/schema-chunker/) pre-processes ExpertPack files into semantically coherent chunk files. Each output file is one complete thought, sized to fit within the RAG system's token budget. The consuming platform's chunker then passes each file through 1:1 — no re-splitting.
+
+**What it respects:**
+- `##` headers as semantic boundaries (never splits mid-section)
+- Lead summaries stay attached to their `# Title`
+- Proposition groups (`### source.md` + bullet list) stay intact
+- Glossary category tables stay together
+- YAML frontmatter stays with the first chunk
+- `<!-- refresh -->` metadata stays with its content
+- `_index.md` files chunked as single units when possible
+
+**Each chunk file includes source metadata:**
+```markdown
+<!-- source: concepts/routing-optimizer.md | section: How It Works | tier: 2 -->
+The TSP optimizer uses a genetic algorithm with population size 32...
+```
+
+#### Evidence: What Works and What Doesn't
+
+These results come from 6 controlled experiments on a real product pack (EZT Designer, 204 source files), each changing one variable at a time:
+
+| Change | Correctness | Hallucination | Tokens | Verdict |
+|--------|------------|---------------|--------|---------|
+| **Baseline** (generic chunks) | 79.0% | 10.0% | 4,372 | Starting point |
+| File splitting alone | 76.9% (-2.1%) | 12.0% (+2%) | 3,686 | ❌ Lost context |
+| Prose compaction (~40% denser) | 76.8% (-2.2%) | 14.0% (+4%) | 3,721 | ❌ Harder to parse |
+| Summaries + propositions + splits | 78.7% (-0.3%) | 6.0% (-4%) | 3,733 | ✅ First quality win |
+| **Schema-aware chunking** | **88.4%** (+9.4%) | **4.0%** (-6%) | **2,111** (-52%) | 🔥 Best single change |
+
+**Key lessons:**
+- **Splitting alone loses context.** Sub-files miss the surrounding context that helped the model understand relationships. Don't split without adding retrieval layers.
+- **Compaction hurts.** Removing examples and shortening explanations makes text *harder* for models to parse. The "redundant" content was serving as reasoning scaffolding.
+- **Three layers together work.** Summaries + propositions + splits compensate for each other: summaries recover broad context, propositions enable precise fact retrieval, splits provide focused detail.
+- **Schema-aware chunking is transformative.** Pre-computing semantically coherent chunks means every retrieved result is self-contained and relevant. The insight: **retrieval precision > model capability for factual correctness.** A weaker model with precise chunks outperforms a stronger model with sloppy chunks.
+
+#### Integration
+
+The chunker outputs a `.chunks/` directory inside the pack. Point your RAG system at `.chunks/` instead of the raw pack files:
+
+```bash
+# Generate chunks
+python3 tools/schema-chunker/chunk.py --pack ./packs/my-pack --output ./packs/my-pack/.chunks
+
+# Configure OpenClaw to index chunks
+# In openclaw.json:
+{
+  "memorySearch": {
+    "extraPaths": ["path/to/pack/.chunks"],
+    "chunking": { "tokens": 500, "overlap": 0 },
+    "query": {
+      "hybrid": {
+        "mmr": { "enabled": true, "lambda": 0.7 },
+        "temporalDecay": { "enabled": false }
+      }
+    }
+  }
+}
+```
+
+- **Overlap 0** — chunks are already semantically complete
+- **MMR enabled** — prevents near-duplicate proposition/summary/content chunks from crowding results
+- **Temporal decay off** — pack knowledge doesn't expire by file modification date
+
+See the [chunker README](../tools/schema-chunker/README.md) for full CLI reference.
+
+### The Three-Layer System
+
+Lead summaries, summaries, propositions, glossary, and schema-aware chunking work as a system. Each layer handles what the others can't:
+
+| Layer | Handles | Without It |
+|-------|---------|-----------|
+| **Lead summaries** | Front-loads answers into the highest-ranked chunk position | First chunk is preamble, not the answer |
+| **Summaries** | Broad questions ("what can it do?") | Every query competes against hundreds of fine-grained files |
+| **Propositions** | Specific factual questions ("what's the max?") | Model must extract facts from prose paragraphs |
+| **Glossary** | Vocabulary bridging between user language and pack terms | Queries using informal language miss relevant content |
+| **Schema-aware chunking** | Preserves all structural conventions during retrieval | Generic chunker destroys the structure you built |
+
+Don't build one layer and skip the rest. The three-layer approach (summaries + propositions + split/chunked content files) consistently outperforms any single layer alone.
+
+### Retrieval Anti-Patterns
+
+Based on eval experiments, avoid these common mistakes:
+
+- **Do NOT compact or compress prose to save tokens.** Denser text is harder for models to parse. Examples, explanations, and context that feel redundant to a human serve as reasoning scaffolding for a model. Content quality was never the bottleneck — retrieval precision was.
+- **Do NOT split files without adding retrieval layers.** Splitting alone degrades quality. Each fragment loses the surrounding context that made the unified file useful. Always pair splitting with summaries and propositions.
+- **Do NOT sacrifice content readability for token efficiency.** Readable prose with `##` headers and concrete examples outperforms tightly compressed bullet lists. Token count at retrieval time matters less than match quality and reasoning support.
+
+---
+
+## Validation
+
+Hydration isn't done until you've measured the result. Eval-driven improvement is not a post-launch activity — it's the final phase of hydration.
+
+### Running Evals
+
+Build an eval set of 30+ questions covering the pack's key scenarios. Include:
+
+- **Basic retrieval** — "What is X?" (single file lookup)
+- **Multi-file synthesis** — "How does X relate to Y?" (requires combining information)
+- **Troubleshooting** — "X isn't working" (diagnostic reasoning)
+- **Out-of-scope** — Questions the agent should decline (tests refusal)
+- **Adversarial** — Questions designed to induce hallucination
+
+Run the eval set against the deployed pack + model configuration. Save results as a baseline. See the [eval schema](../schemas/eval.md) for the full format and methodology.
+
+### Content Gap Analysis
+
+Eval failures point directly to hydration gaps:
+
+| Failure Pattern | Likely Cause | Hydration Fix |
+|----------------|-------------|---------------|
+| Wrong answer on a covered topic | Retrieval miss — content exists but wasn't found | Add lead summary, improve `##` headers, check chunk boundaries |
+| Confident wrong answer | Hallucination — model fabricating | Add anti-hallucination facts to relevant files, add propositions |
+| Incomplete answer | Content gap or partial retrieval | Check if content exists; add propositions for precise retrieval |
+| Vocabulary mismatch | User terms ≠ pack terms | Update glossary with user language mappings |
+
+### EK Ratio Measurement
+
+After hydration, measure the pack's EK ratio via proposition-level blind probing. This tells you what proportion of the pack's content is genuinely esoteric — knowledge the model can't produce alone. See [core.md — EK Ratio](../schemas/core.md#esoteric-knowledge-ek-ratio) for the full measurement protocol.
+
+Target EK ratios:
+- **0.80+** — Exceptional. Almost entirely esoteric knowledge.
+- **0.60–0.79** — Strong. Look for GK that can be trimmed.
+- **0.40–0.59** — Mixed. Review low-EK sections.
+- **< 0.40** — Needs major rework. Refocus on tribal/undocumented knowledge.
+
+### The Three Eval Dimensions
+
+Three independent variables affect pack-powered response quality. When evaluating, vary one at a time:
+
+1. **Structure** (highest leverage) — the pack's content, file organization, chunking, retrieval layers. Structural improvements compound across every model and every configuration.
+2. **Agent Training** (second) — system prompts, SOUL.md, scope rules. Transferable across models.
+3. **Model** (third) — the LLM processing queries. Expensive and vendor-dependent. Matters most for instruction following (refusal), less for factual correctness when retrieval is precise.
 
 ---
 
@@ -599,5 +888,54 @@ For detailed source tracking across a body of source materials, use `sources/{so
 
 ---
 
-*Guide version: 1.3*
-*Last updated: 2026-03-12*
+## Maintenance
+
+Hydration is not a one-time event. Packs need ongoing maintenance as sources update, models evolve, and users reveal gaps.
+
+### Time Variance and Freshness
+
+Not all facts have the same shelf life. A string sizing formula is permanent; a panel's price per watt is stale within months. During hydration, annotate time-variant facts with inline refresh metadata:
+
+```markdown
+The Tesla Powerwall 3 is priced at approximately $10,500-14,000 installed.
+
+<!-- refresh
+  decay: volatile
+  as_of: 2026-Q1
+  source: https://www.energysage.com/solar/battery-storage/
+  method: "Search 'Tesla Powerwall 3 installed cost [current year]'"
+-->
+```
+
+**The critical rule: refresh instructions travel with the data.** When a consuming agent encounters a volatile fact, it needs the refresh method right there — not a pointer to a freshness guide it may not load. See [core.md — Time Variance](../schemas/core.md#time-variance) for the full annotation format and decay categories.
+
+Maintain a supplementary `freshness.md` at the pack root for maintainers reviewing overall freshness at a glance.
+
+### Re-Hydration When Sources Update
+
+When the product ships a new version, documentation is revised, or new expert knowledge becomes available:
+
+1. **Identify affected files** — use source provenance frontmatter to trace which pack files came from the updated source
+2. **Re-extract** — run the relevant population method on the updated source
+3. **EK triage the delta** — new content passes through the same EK filter as initial hydration
+4. **Regenerate retrieval layers** — update summaries, propositions, and re-run the schema-aware chunker
+5. **Re-run evals** — verify that updates improved (or at least didn't degrade) quality
+
+### EK Ratio Decay
+
+EK ratio naturally **decreases** over time as frontier models absorb more knowledge into their weights. What's esoteric today may become general knowledge in the next training run. This means:
+
+- **Re-measure quarterly** or after major model releases
+- **Packs need deepening, not just maintenance.** As models absorb the surface layer, the pack's value depends increasingly on its deepest, most tribal content.
+- **Track measurements over time** — declining EK ratio is a signal to invest in deeper expert walkthroughs, undocumented behavior analysis, and edge case documentation.
+
+### Research Coverage Tracking
+
+Every pack should include a `sources/_coverage.md` that honestly documents what knowledge sources were checked, what was extracted, and what remains untouched. This makes the pack's depth and limitations transparent. See [core.md — Research Coverage](../schemas/core.md#research-coverage-sources_coveragemd) for the format and status key.
+
+Update coverage status as you deepen the pack: ⬜ Identified → 🟡 Sampled → ✅ Mined. Known gaps should be specific and actionable — "More research needed" is useless; "Installer forum threads about firmware failure modes not yet mined" tells the next hydrator exactly what to do.
+
+---
+
+*Guide version: 1.0*
+*Last updated: 2026-03-13*

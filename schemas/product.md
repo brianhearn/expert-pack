@@ -1052,7 +1052,7 @@ dependencies: []
 
 ## Pack Population
 
-For detailed guidance on all population methods — documentation ingestion, visual ingestion, video ingestion, technical artifact analysis, expert walkthroughs, observation & testing, and feedback mining — see the [Population Methods Guide](../guides/population-methods.md).
+For detailed guidance on all population methods — documentation ingestion, visual ingestion, video ingestion, technical artifact analysis, expert walkthroughs, observation & testing, and feedback mining — see the [Hydration Guide](../guides/hydration.md).
 
 The guide covers each method's pipeline, strengths, limitations, and applicability across pack types. It also provides a recommended ordering for combining methods when building a product pack.
 
@@ -1060,13 +1060,13 @@ The guide covers each method's pipeline, strengths, limitations, and applicabili
 
 ## Creating a New Product Pack
 
-This section is a playbook for an AI agent creating and maintaining a product pack. Read the schema and use it as your filing map; read the [Population Methods Guide](../guides/population-methods.md) for how to execute each ingestion method.
+This section is a playbook for an AI agent creating and maintaining a product pack. Read the schema and use it as your filing map; read the [Hydration Guide](../guides/hydration.md) for how to execute each ingestion method.
 
 Agent-first step-by-step
 
 1. **Read the schema and product blueprint** — Load this file and core.md. Treat the schema as the authoritative filing map for content.
 
-2. **Read the [Population Methods Guide](../guides/population-methods.md)** — Understand the available methods and the recommended combining order for product packs.
+2. **Read the [Hydration Guide](../guides/hydration.md)** — Understand the available methods and the recommended combining order for product packs.
 
 3. **Initialize the pack** — Create `packs/{product-slug}/` with required files: `manifest.yaml` (type: product), `overview.md`. Create directories: `concepts/`, `workflows/`, `interfaces/`, `troubleshooting/`, `faq/`, `commercial/`, and a placeholder `entities.json`.
 
@@ -1104,7 +1104,7 @@ Agent-first step-by-step
 Notes and principles
 
 - The schema is your filing guide — decide where content belongs; create new directories when needed.
-- Record provenance for every file (see [Population Methods Guide](../guides/population-methods.md#source-provenance)) and never overwrite expert-verified content without reconfirmation.
+- Record provenance for every file (see [Hydration Guide](../guides/hydration.md#source-provenance)) and never overwrite expert-verified content without reconfirmation.
 - Prioritize building troubleshooting/ and interfaces/ early for support readiness.
 
 ---

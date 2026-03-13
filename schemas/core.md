@@ -414,7 +414,7 @@ EK ratio naturally **decreases** as models absorb more of the world's knowledge 
 
 ### EK-Aware Hydration
 
-EK ratio is not just a post-hoc measurement — it should guide hydration decisions during pack creation. See the [Population Methods Guide](../guides/population-methods.md) for the EK Triage process and the Hydration Priority Matrix.
+EK ratio is not just a post-hoc measurement — it should guide hydration decisions during pack creation. See the [Hydration Guide](../guides/hydration.md) for the EK Triage process and the Hydration Priority Matrix.
 
 **The principle:** During hydration, every piece of content should pass through an EK filter before receiving full treatment. Content the model already knows gets minimal filing (brief glossary entry or one-line mention). Content the model cannot produce gets maximum effort (full extraction, careful structuring, proposition generation, lead summaries).
 

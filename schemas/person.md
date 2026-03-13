@@ -571,7 +571,7 @@ sources:
 
 ## Pack Population
 
-For general guidance on population methods — documentation ingestion, video ingestion, conversational ingestion, expert walkthroughs, observation & testing, and more — see the [Population Methods Guide](../guides/population-methods.md).
+For general guidance on population methods — documentation ingestion, video ingestion, conversational ingestion, expert walkthroughs, observation & testing, and more — see the [Hydration Guide](../guides/hydration.md).
 
 For person packs, the recommended combining order is:
 1. Documentation ingestion → published works, online presence
@@ -584,11 +584,11 @@ For person packs, the recommended combining order is:
 
 ## Creating a New Person Pack
 
-This section is a playbook for an AI agent creating and maintaining a person pack. Read the schema above as your filing guide; read the [Population Methods Guide](../guides/population-methods.md) for how to execute each ingestion method.
+This section is a playbook for an AI agent creating and maintaining a person pack. Read the schema above as your filing guide; read the [Hydration Guide](../guides/hydration.md) for how to execute each ingestion method.
 
 Agent-first step-by-step
 
-1. **Read the schema, directory blueprint, and [Population Methods Guide](../guides/population-methods.md)**
+1. **Read the schema, directory blueprint, and [Hydration Guide](../guides/hydration.md)**
    - Load this file and core.md to understand required files, directories, and content types.
    - Use the schema as the authoritative filing map: when content arrives, determine its target directory by content type (verbatim, summaries, facts, mind, relationships, presentation, training, meta).
 
@@ -669,7 +669,7 @@ Notes and principles
 
 - Treat verbatim/ as the canonical source of the person's voice; summaries must never overwrite verbatim.
 - The schema is your filing guide — decide where incoming content lives based on the taxonomy. If a new type is needed, create matching directories under verbatim/ and summaries/ and document them in the pack manifest.
-- Record provenance for every file (see [Population Methods Guide](../guides/population-methods.md#source-provenance)) and never overwrite expert-verified content without reconfirmation.
+- Record provenance for every file (see [Hydration Guide](../guides/hydration.md#source-provenance)) and never overwrite expert-verified content without reconfirmation.
 - Use short, specific prompts that request a single story or fact at a time. Ask follow-ups for sensory detail, dates, and significance.
 
 ---

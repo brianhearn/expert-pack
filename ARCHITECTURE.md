@@ -97,7 +97,8 @@ ExpertPack/
 │   └── eval.md            ← Eval framework (v1.0)
 │
 ├── guides/                ← Practical how-to guides for pack builders
-│   └── population-methods.md  ← How to populate packs from various sources
+│   ├── hydration.md           ← Complete hydration lifecycle (replaces population-methods.md)
+│   └── consumption.md         ← How to deploy and consume packs with AI agents
 │
 ├── tools/                 ← Tooling for pack development
 │   └── eval-runner/       ← Automated eval execution and scoring
