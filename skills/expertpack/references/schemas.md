@@ -83,6 +83,26 @@ conflicts:
   priority: [...]
 ```
 
+## Entity Relation Graph (optional)
+`relations.yaml` at pack root — typed, directional relationships between entities.
+Use for packs with 20+ cross-referencing entities, especially product packs and composites.
+
+```yaml
+entities:
+  - id: territory
+    type: concept
+    label: "Territory"
+    file: concepts/territories.md
+relations:
+  - from: territory
+    rel: contains
+    to: account
+    properties:
+      cardinality: one_to_many
+```
+
+Navigation aid, not content. Markdown files always win on conflicts. Aim for 15–30 key relationships, not exhaustive graphs.
+
 ## Key Rules
 - NO secrets ever
 - Distill knowledge, do not copy raw state

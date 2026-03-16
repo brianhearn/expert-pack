@@ -684,6 +684,105 @@ For structured navigation beyond what `_index.md` provides, packs can include JS
 
 JSON indexes answer the question "where should I look?" Markdown files answer "what do I need to know?"
 
+### Entity Relation Graph (relations.yaml)
+
+Optional file at the pack root (or composite root) that declares typed, directional relationships between named entities across the pack. While markdown links connect *files*, a relation graph connects *concepts* — enabling agents to traverse knowledge by meaning rather than file structure.
+
+**When to use:** Packs with 20+ entities that reference each other across multiple files. Product packs with complex entity models (e.g., "Territory contains Accounts, Account has assigned Rep, Rep belongs to Team"). Composite packs where entities span constituent packs. Person packs with rich relationship networks.
+
+**When to skip:** Small packs where markdown links and `_index.md` provide sufficient navigation. If an agent can find everything via RAG search, a relation graph adds overhead without value.
+
+**Format:**
+
+```yaml
+# relations.yaml — Entity Relation Graph
+# Typed, directional relationships between named entities.
+
+entities:
+  - id: territory
+    type: concept
+    label: "Territory"
+    file: concepts/territories.md
+
+  - id: account
+    type: concept
+    label: "Account"
+    file: concepts/accounts.md
+
+  - id: rep
+    type: concept
+    label: "Sales Rep"
+    file: concepts/reps.md
+
+  - id: optimizer
+    type: workflow
+    label: "Route Optimizer"
+    file: workflows/route-optimization.md
+
+relations:
+  - from: territory
+    rel: contains
+    to: account
+    properties:
+      cardinality: one_to_many
+
+  - from: account
+    rel: assigned_to
+    to: rep
+    properties:
+      cardinality: many_to_one
+
+  - from: optimizer
+    rel: operates_on
+    to: territory
+```
+
+**Entity fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `id` | Yes | Unique kebab-case identifier within the pack |
+| `type` | Yes | Entity category: `concept`, `workflow`, `interface`, `person`, `tool`, `phase`, `decision` |
+| `label` | Yes | Human-readable display name |
+| `file` | Recommended | Relative path to the canonical content file for this entity |
+| `pack` | Composites only | Slug of the constituent pack this entity belongs to |
+
+**Relation fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `from` | Yes | Source entity id |
+| `rel` | Yes | Relationship type (verb phrase, snake_case) |
+| `to` | Yes | Target entity id |
+| `properties` | No | Optional metadata: `cardinality` (one_to_one, one_to_many, many_to_one, many_to_many), `bidirectional` (bool), `conditional` (string describing when the relation applies) |
+
+**Common relation types:**
+
+| Relation | Typical Usage |
+|----------|--------------|
+| `contains` | Parent-child hierarchy (Territory contains Accounts) |
+| `assigned_to` | Ownership or responsibility (Account assigned to Rep) |
+| `depends_on` | Prerequisite or dependency (Phase 3 depends on Phase 2) |
+| `operates_on` | Tool/workflow acts on an entity (Optimizer operates on Territory) |
+| `extends` | Specialization (AgentPack extends PersonPack) |
+| `configured_by` | Settings relationship (Feature configured by Config File) |
+| `resolves` | Troubleshooting (Workaround resolves Error) |
+| `part_of` | Composition (Chapter part of Process) |
+
+**Rules:**
+- `relations.yaml` is a navigation aid, not content — the same rule as JSON indexes. If it disagrees with a Markdown file, the Markdown file wins.
+- Entity ids must be unique within the file. In composites, prefix with pack slug to avoid collisions (e.g., `product-a.territory`), or use the `pack` field.
+- Keep the graph focused on high-value relationships an agent would actually traverse. A 200-relation graph is noise. Aim for the 15–30 relationships that matter most for navigation and reasoning.
+- The graph is optional and additive. Packs without `relations.yaml` work exactly as before — markdown links and `_index.md` handle navigation.
+
+**Agent consumption patterns:**
+- **"What depends on X?"** → traverse `depends_on` relations from entity X
+- **"What does the Optimizer touch?"** → follow `operates_on` from optimizer entity
+- **"Show me everything about Territories"** → find territory entity, follow all outbound relations, load referenced files
+- **Cross-pack reasoning** (composites) → "How does the founder's sales philosophy connect to the CRM product?" → traverse relations across pack boundaries
+
+**Context tier:** Tier 2 (Searchable). The relation graph is small and useful for navigation but doesn't need to load every session. Agents query it when they need to traverse entity relationships.
+
 ---
 
 ## Context Strategy
@@ -911,6 +1010,7 @@ These principles apply to every ExpertPack, regardless of type:
 | Section headers | `##` headers at natural topic breaks for RAG chunking |
 | Naming | kebab-case for files, directories, and slugs |
 | Cross-references | Relative markdown links between related files |
+| Entity relations | Optional `relations.yaml` for typed entity graphs; navigation aid, not content |
 | Directory indexes | `_index.md` in every content directory |
 | Context strategy | Three tiers: always → searchable → on-demand, declared in manifest |
 | Retrieval optimization | Summaries (broad), propositions (precise), file splitting, lead summaries (front-loaded answers), and glossary (vocabulary bridging) — use together; see [Retrieval Optimization](#retrieval-optimization) |
@@ -922,5 +1022,5 @@ These principles apply to every ExpertPack, regardless of type:
 
 ---
 
-*Schema version: 2.2*
-*Last updated: 2026-03-12*
+*Schema version: 2.3*
+*Last updated: 2026-03-16*
