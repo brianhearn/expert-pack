@@ -313,6 +313,100 @@ The three-layer approach (split files + summaries + propositions) consistently o
 
 ---
 
+### Chunking Strategy
+
+When an ExpertPack is consumed via a RAG chunker (as opposed to direct file loading), the chunker must decide how to decompose each file into retrieval units. Different content types have fundamentally different retrieval requirements — a 10-step workflow must be retrieved whole, while a large concept file with independent sections can be split safely.
+
+ExpertPacks declare chunking intent through two mechanisms: **directory-based defaults** (convention-driven) and **per-file frontmatter overrides** (explicit).
+
+#### Strategies
+
+| Strategy | Behavior | Default For |
+|----------|----------|-------------|
+| **atomic** | Emit the entire file as a single chunk, regardless of size. Never split. | `workflows/`, `troubleshooting/errors/`, `troubleshooting/diagnostics/`, `troubleshooting/common-mistakes/` |
+| **sectioned** | Split on `##` headers, then `###` if oversized, then paragraphs. Standard behavior. | `concepts/`, `interfaces/`, `faq/`, `propositions/`, `summaries/`, `commercial/`, and all other directories |
+
+**Why workflows are atomic:** Workflows are step-by-step procedures where each step depends on the previous. Retrieving step 5 of 10 without the surrounding steps produces hallucinated instructions — the model fills gaps with fabricated UI paths and invented interactions. Workflow files must be retrieved as complete units or not at all.
+
+**Why troubleshooting is atomic:** Error resolution files (symptom → cause → fix) and diagnostic decision trees lose their logical flow when split. An agent that retrieves only the "fix" without the "symptom" and "cause" gives dangerously decontextualized advice.
+
+#### Directory Defaults
+
+Schema-aware chunkers should map ExpertPack directory conventions to default strategies:
+
+| Directory | Default Strategy | Rationale |
+|-----------|-----------------|-----------|
+| `workflows/` | atomic | Procedures are indivisible |
+| `troubleshooting/errors/` | atomic | Error + fix is one unit |
+| `troubleshooting/diagnostics/` | atomic | Decision trees are indivisible |
+| `troubleshooting/common-mistakes/` | atomic | Symptom + fix is one unit |
+| `interfaces/` | sectioned | Large files; regions are independent |
+| `concepts/` | sectioned | Sections are self-contained |
+| `faq/` | sectioned | Each Q&A stands alone |
+| `propositions/` | sectioned | Groups of atomic facts |
+| `summaries/` | sectioned | Section summaries are independent |
+| `commercial/` | sectioned | Topics within commercial docs are independent |
+| All others | sectioned | Safe default |
+
+#### Per-File Override
+
+Any content file can override its directory default by declaring a `retrieval` block in its YAML frontmatter:
+
+```yaml
+---
+retrieval:
+  strategy: atomic
+---
+```
+
+The precedence order is: **frontmatter override → directory default → sectioned fallback.**
+
+Use per-file overrides when a file's retrieval needs differ from its directory convention. For example, a concept file that contains a critical decision framework that must not be fragmented:
+
+```yaml
+---
+retrieval:
+  strategy: atomic
+---
+
+# Workload Calculation Framework
+
+## The Formula
+...
+```
+
+#### Sequence Metadata
+
+When a file IS split (sectioned strategy), the chunker should embed sequence metadata in each chunk's source comment so that consuming agents know:
+1. How many sibling chunks exist
+2. How to find them
+
+**Format:**
+
+```
+<!-- source: concepts/territories.md | section: How It Works (part 3 of 7) | tier: 2 | sequence: concepts--territories--*.md -->
+```
+
+The `part X of Y` tells the agent this is an incomplete fragment. The `sequence` glob pattern tells it where to find the full set. An agent receiving a sequence-tagged chunk should load all sibling chunks before synthesizing an answer.
+
+#### Atomic Chunks and Size Limits
+
+Atomic files may exceed the chunker's default character budget. This is expected and acceptable — the alternative (splitting a workflow) is worse than a larger chunk. RAG systems that impose hard size limits should:
+
+1. **Index the full atomic chunk** for retrieval
+2. Optionally also generate a **summary companion chunk** (`{name}--summary.md`) containing the file's lead summary and step/section titles, for lightweight search matching
+
+The summary chunk acts as the search target; the full atomic chunk is what the agent loads for answering.
+
+#### Design Guidance
+
+- **Prefer atomic for procedural content.** If a file describes a sequence of steps that depend on each other, it should be atomic. When in doubt, err toward atomic — a larger chunk that's complete beats a smaller chunk that's fragmentary.
+- **Prefer sectioned for reference content.** If a file's sections are independently useful (each FAQ answer, each concept explanation), sectioned splitting improves precision.
+- **Lead summaries matter more for atomic chunks.** Since atomic chunks are larger, the lead summary blockquote serves as a concentrated search target at the top of the chunk. Always add lead summaries to atomic workflow files.
+- **Don't fight the chunker — annotate.** If a file is being chunked wrong, add a `retrieval.strategy` frontmatter field rather than restructuring the content to fit chunker assumptions.
+
+---
+
 ### Optimization Anti-Patterns
 
 Based on eval experiments, avoid these common mistakes:
@@ -1014,6 +1108,7 @@ These principles apply to every ExpertPack, regardless of type:
 | Directory indexes | `_index.md` in every content directory |
 | Context strategy | Three tiers: always → searchable → on-demand, declared in manifest |
 | Retrieval optimization | Summaries (broad), propositions (precise), file splitting, lead summaries (front-loaded answers), and glossary (vocabulary bridging) — use together; see [Retrieval Optimization](#retrieval-optimization) |
+| Chunking strategy | Workflows and troubleshooting files are atomic (never split); concepts and reference files are sectioned; override via `retrieval.strategy` frontmatter; see [Chunking Strategy](#chunking-strategy) |
 | Research coverage | Every pack includes `sources/_coverage.md` documenting what was checked, what was extracted, and what's untouched; see [Research Coverage](#research-coverage-sources_coveragemd) |
 | Time variance | Annotate time-variant facts inline with `<!-- refresh -->` blocks; maintain `freshness.md` as supplementary index; see [Time Variance](#time-variance) |
 | EK ratio | Measure and maximize esoteric knowledge ratio; declare in manifest; guide hydration priority; see [Esoteric Knowledge Ratio](#esoteric-knowledge-ek-ratio) |
@@ -1022,5 +1117,5 @@ These principles apply to every ExpertPack, regardless of type:
 
 ---
 
-*Schema version: 2.3*
-*Last updated: 2026-03-16*
+*Schema version: 2.4*
+*Last updated: 2026-03-24*

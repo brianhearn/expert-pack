@@ -103,6 +103,29 @@ relations:
 
 Navigation aid, not content. Markdown files always win on conflicts. Aim for 15–30 key relationships, not exhaustive graphs.
 
+## Chunking Strategy (schema 2.4+)
+Content files declare how they should be chunked for RAG via directory defaults or frontmatter override.
+
+**Strategies:** `atomic` (never split) or `sectioned` (split on ## headers, default).
+
+**Directory defaults:**
+- `workflows/` → atomic (procedures are indivisible)
+- `troubleshooting/errors/`, `troubleshooting/diagnostics/`, `troubleshooting/common-mistakes/` → atomic
+- `interfaces/`, `concepts/`, `faq/`, `propositions/`, `summaries/`, `commercial/` → sectioned
+- All others → sectioned
+
+**Per-file override:**
+```yaml
+---
+retrieval:
+  strategy: atomic
+---
+```
+
+Precedence: frontmatter > directory default > sectioned fallback.
+
+When splitting (sectioned), chunks carry sequence metadata: `part X of Y | sequence: {glob}`.
+
 ## Key Rules
 - NO secrets ever
 - Distill knowledge, do not copy raw state

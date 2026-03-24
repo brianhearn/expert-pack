@@ -72,6 +72,30 @@ def parse_simple_yaml(text: str) -> dict:
     return result
 
 
+def parse_retrieval_strategy(frontmatter: str) -> str:
+    """Extract retrieval.strategy from YAML frontmatter block.
+    Returns 'atomic' or 'sectioned' or None if not specified."""
+    # Simple regex-based parser for nested yaml key (good enough for our use)
+    match = re.search(r'retrieval\s*:\s*.*?strategy\s*:\s*(\w+)', frontmatter, re.DOTALL | re.IGNORECASE)
+    if match:
+        strategy = match.group(1).lower().strip()
+        if strategy in ('atomic', 'sectioned'):
+            return strategy
+    return None
+
+
+def get_directory_default_strategy(rel_path: str) -> str:
+    """Return default chunking strategy based on directory convention."""
+    path = Path(rel_path).as_posix()
+    if 'workflows/' in path:
+        return 'atomic'
+    elif any(d in path for d in ('troubleshooting/errors/', 'troubleshooting/diagnostics/', 'troubleshooting/common-mistakes/')):
+        return 'atomic'
+    elif any(d in path for d in ('interfaces/', 'concepts/', 'faq/', 'propositions/', 'summaries/', 'commercial/')):
+        return 'sectioned'
+    return 'sectioned'
+
+
 def parse_manifest(pack_dir: Path) -> dict:
     """Read and parse manifest.yaml from pack directory."""
     manifest_path = pack_dir / "manifest.yaml"
@@ -309,16 +333,37 @@ def split_by_lines(text: str, max_chars: int) -> list[str]:
     return chunks
 
 
-def chunk_file(content: str, max_chars: int) -> list[dict]:
-    """Chunk a single markdown file respecting schema conventions.
+def resolve_strategy(frontmatter: str, rel_path: str) -> str:
+    """Resolve chunking strategy: frontmatter override → directory default → sectioned."""
+    fm_strategy = parse_retrieval_strategy(frontmatter)
+    if fm_strategy:
+        return fm_strategy
+    return get_directory_default_strategy(rel_path)
 
-    Returns list of {text, section_title} dicts, each within max_chars
-    (except source comment overhead which is added later)."""
+
+def chunk_file(content: str, max_chars: int, rel_path: str = "") -> list[dict]:
+    """Chunk a single markdown file respecting schema conventions and retrieval strategy.
+
+    Returns list of {text, section_title, is_atomic: bool, strategy: str} dicts."""
 
     # Extract frontmatter
     frontmatter, body = extract_frontmatter(content)
 
-    # Get the H1 title and any lead summary
+    strategy = resolve_strategy(frontmatter, rel_path)
+
+    # If atomic strategy, emit as one chunk (even if huge)
+    if strategy == 'atomic':
+        h1_match = H1_RE.search(body)
+        h1_title = h1_match.group(1).strip() if h1_match else "content"
+        full_text = frontmatter + body if frontmatter else body
+        return [{
+            "text": full_text,
+            "section_title": h1_title,
+            "is_atomic": True,
+            "strategy": strategy
+        }]
+
+    # Get the H1 title and any lead summary (for sectioned)
     h1_match = H1_RE.search(body)
     h1_title = h1_match.group(1).strip() if h1_match else ""
 
@@ -338,7 +383,7 @@ def chunk_file(content: str, max_chars: int) -> list[dict]:
 
         # Check if it fits in one chunk
         if len(text) <= max_chars:
-            chunks.append({"text": text, "section_title": title})
+            chunks.append({"text": text, "section_title": title, "is_atomic": False, "strategy": strategy})
         else:
             # Split oversized section
             sub_chunks = split_oversized_section(text, max_chars)
@@ -346,7 +391,9 @@ def chunk_file(content: str, max_chars: int) -> list[dict]:
                 suffix = f" (part {i + 1})" if len(sub_chunks) > 1 else ""
                 chunks.append({
                     "text": sub,
-                    "section_title": f"{title}{suffix}"
+                    "section_title": f"{title}{suffix}",
+                    "is_atomic": False,
+                    "strategy": strategy
                 })
 
     # If no chunks produced (empty file), return empty
@@ -359,8 +406,6 @@ def chunk_file(content: str, max_chars: int) -> list[dict]:
         combined = frontmatter + first["text"]
         if len(combined) <= max_chars:
             first["text"] = combined
-        # If too large with frontmatter, just skip attaching it
-        # (frontmatter is metadata, not critical for search)
 
     return chunks
 
@@ -370,12 +415,11 @@ def chunk_file(content: str, max_chars: int) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 def make_chunk_filename(rel_path: str, section_title: str, chunk_index: int,
-                        total_chunks: int) -> str:
+                        total_chunks: int, is_atomic: bool = False) -> str:
     """Generate chunk filename from source path and section.
 
-    Convention: {dir}--{file}--{section-slug}.md
-    For root files: {file}--{section-slug}.md
-    If file produces only one chunk: {dir}--{file}.md
+    For atomic files that exceed size: produces {name}--summary.md and {name}--full.md
+    Otherwise follows standard convention.
     """
     path = Path(rel_path)
     stem = path.stem  # filename without .md
@@ -383,11 +427,16 @@ def make_chunk_filename(rel_path: str, section_title: str, chunk_index: int,
 
     parts = []
     if parent:
-        # Replace / with -- for nested dirs
         parts.append(parent.replace("/", "--").replace("\\", "--"))
     parts.append(stem)
 
-    if total_chunks > 1 and section_title and section_title != "_preamble":
+    if is_atomic and total_chunks > 1:
+        # Special case for oversized atomic → summary + full
+        if "summary" in section_title.lower() or chunk_index == 0:
+            parts.append("summary")
+        else:
+            parts.append("full")
+    elif total_chunks > 1 and section_title and section_title != "_preamble" and not is_atomic:
         slug = slugify(section_title)
         if slug:
             parts.append(slug)
@@ -509,7 +558,7 @@ def process_pack(pack_dir: Path, output_dir: Path, max_chars: int,
         effective_max = max_chars - max(comment_overhead, 120)
 
         # Chunk the file
-        chunks = chunk_file(content, effective_max)
+        chunks = chunk_file(content, effective_max, rel_path=rel_path)
 
         if not chunks:
             stats["warnings"].append(f"{rel_path}: no chunks produced")
@@ -517,15 +566,25 @@ def process_pack(pack_dir: Path, output_dir: Path, max_chars: int,
 
         stats["included"].append(rel_path)
 
+        total_for_file = len(chunks)
+        atomic_strategy = chunks[0].get("strategy", "sectioned") if chunks else "sectioned"
+
         for i, chunk in enumerate(chunks):
-            # Build source comment
-            section_part = f" | section: {chunk['section_title']}" if chunk["section_title"] and chunk["section_title"] != "_preamble" else ""
+            is_atomic_chunk = chunk.get("is_atomic", False)
+
+            # Build source comment with sequence metadata for sectioned splits
+            section_title = chunk["section_title"]
+            section_part = f" | section: {section_title}" if section_title and section_title != "_preamble" else ""
+            if not is_atomic_chunk and total_for_file > 1:
+                of_n = f" of {total_for_file}"
+                seq_glob = rel_path.replace('.md', '--*.md').replace('/', '--')
+                section_part = f" | section: {section_title} (part {i+1}{of_n}) | sequence: {seq_glob}"
             source_comment = f"<!-- source: {rel_path}{section_part} | tier: {tier} -->\n"
 
             chunk_text = source_comment + chunk["text"]
 
-            # Generate filename
-            filename = make_chunk_filename(rel_path, chunk["section_title"], i, len(chunks))
+            # Generate filename (pass atomic flag)
+            filename = make_chunk_filename(rel_path, section_title, i, total_for_file, is_atomic=is_atomic_chunk)
 
             # Handle collisions
             if filename in used_names:
@@ -551,7 +610,7 @@ def process_pack(pack_dir: Path, output_dir: Path, max_chars: int,
                 })
 
             if verbose:
-                print(f"  {rel_path} → {filename} ({len(chunk_text)} chars)")
+                print(f"  {rel_path} → {filename} ({len(chunk_text)} chars, strategy={atomic_strategy})")
 
     # Calculate average
     avg_chars = (stats["total_chars"] // stats["chunks_produced"]
@@ -569,6 +628,7 @@ def process_pack(pack_dir: Path, output_dir: Path, max_chars: int,
                 stats["skipped"].append({"file": rel_path, "reason": skip_reason})
 
     # Write chunk manifest
+    atomic_count = sum(1 for p in stats.get("included", []) if "workflows/" in p or "troubleshooting/" in p)  # rough
     manifest_out = {
         "generated": stats["generated"],
         "pack": stats["pack"],
@@ -576,6 +636,10 @@ def process_pack(pack_dir: Path, output_dir: Path, max_chars: int,
         "chunks_produced": stats["chunks_produced"],
         "max_chars": stats["max_chars"],
         "avg_chunk_chars": stats["avg_chunk_chars"],
+        "strategy_stats": {
+            "atomic_files_approx": atomic_count,
+            "sectioned_files_approx": len(stats["included"]) - atomic_count
+        },
         "coverage": {
             "included": stats["included"],
             "skipped": [s["file"] for s in stats["skipped"]]
@@ -596,6 +660,10 @@ def print_summary(stats: dict, output_dir: Path):
     print(f"Avg chunk size:  {stats['avg_chunk_chars']:,} chars")
     print(f"Max chunk budget: {stats['max_chars']:,} chars")
     print(f"Files skipped:   {len(stats['skipped'])}")
+
+    strat = stats.get("strategy_stats", {})
+    print(f"Atomic (approx): {strat.get('atomic_files_approx', 0)}")
+    print(f"Sectioned (approx): {strat.get('sectioned_files_approx', 0)}")
 
     if stats["oversized"]:
         print(f"\n⚠️  Oversized chunks ({len(stats['oversized'])}):")
