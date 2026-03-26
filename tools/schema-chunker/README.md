@@ -18,6 +18,9 @@ The schema-aware chunker understands ExpertPack conventions and produces one `.m
 - YAML frontmatter stays with the first chunk
 - Glossary category tables stay together
 - `_index.md` files chunked as single units when possible
+- **Atomic vs. sectioned strategies** — workflows and troubleshooting files are emitted as single chunks (never split); reference content is split on `##` headers
+- **Per-file overrides** via `retrieval.strategy` frontmatter
+- **Sequence metadata** in source comments for sectioned splits (`part X of Y`, glob pattern)
 
 ## Quick Start
 
@@ -84,14 +87,44 @@ After chunking, update your OpenClaw config to index `.chunks/` instead of the r
 | `--config` | No | — | Path to `openclaw.json` — reads `chunking.tokens` × 4 |
 | `--verbose` | No | — | Print per-file chunking details |
 
-## How It Chunks
+## Chunking Strategies
 
-**Split hierarchy** (tried in order, falls back to next):
+*(Schema 2.4+)*
+
+The chunker applies one of two strategies per file:
+
+| Strategy | Behavior | Default For |
+|----------|----------|-------------|
+| **atomic** | Emit the entire file as a single chunk. Never split. | `workflows/`, `troubleshooting/errors/`, `troubleshooting/diagnostics/`, `troubleshooting/common-mistakes/` |
+| **sectioned** | Split on `##` headers, then `###` if oversized, then paragraphs. | `concepts/`, `interfaces/`, `faq/`, `propositions/`, `summaries/`, `commercial/`, all others |
+
+**Why it matters:** Workflows and troubleshooting files are step-by-step procedures or symptom → cause → fix units. Splitting them produces hallucinated instructions — the model fills gaps with fabricated content. These files must be retrieved whole or not at all.
+
+### Precedence
+
+1. **Frontmatter override** — `retrieval.strategy: atomic` or `sectioned` in YAML frontmatter
+2. **Directory default** — based on ExpertPack directory conventions (table above)
+3. **Fallback** — `sectioned`
+
+Override example:
+
+```yaml
+---
+retrieval:
+  strategy: atomic
+---
+```
+
+### Sectioned Split Hierarchy
+
+For sectioned files, splitting is tried in order (falls back to next):
 
 1. **`##` headers** — each section becomes a candidate chunk
 2. **`###` headers** — if a section is still too large
 3. **Paragraph boundaries** — double newlines
 4. **Line boundaries** — single newlines (never splits mid-line)
+
+### Source Comments
 
 **Each chunk file includes a source comment:**
 
@@ -100,9 +133,19 @@ After chunking, update your OpenClaw config to index `.chunks/` instead of the r
 The TSP optimizer uses a genetic algorithm with population size 32...
 ```
 
+For sectioned splits, chunks include sequence metadata:
+
+```markdown
+<!-- source: concepts/territories.md | section: How It Works (part 3 of 7) | sequence: concepts--territories--*.md -->
+```
+
+The `part X of Y` tells the consuming agent this is a fragment. The `sequence` glob tells it where to find the full set.
+
 This metadata aids embedding quality and enables source citations.
 
-**Filename convention:** `{dir}--{file}--{section-slug}.md`
+### Filename Convention
+
+Standard: `{dir}--{file}--{section-slug}.md`
 
 ```
 concepts--routing-optimizer--how-it-works.md
@@ -110,6 +153,8 @@ propositions--concepts.md
 glossary--territory-terms.md
 troubleshooting--upload-failures--lead.md
 ```
+
+Atomic files that exceed size limits produce `{name}--summary.md` and `{name}--full.md`.
 
 ## Output
 

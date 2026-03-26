@@ -116,7 +116,7 @@ The included [eval-ek.py](tools/eval-ek.py) tool measures EK ratio via blind pro
 
 ### Schema-Aware Chunker
 
-Generic RAG chunkers split files by character count — they don't understand markdown structure. The [schema-aware chunker](tools/schema-chunker/) pre-processes ExpertPack files into semantically coherent chunks that respect `##` headers, lead summaries, proposition groups, and glossary tables.
+Generic RAG chunkers split files by character count — they don't understand markdown structure. The [schema-aware chunker](tools/schema-chunker/) pre-processes ExpertPack files into semantically coherent chunks that respect `##` headers, lead summaries, proposition groups, glossary tables, and content-type-aware strategies — workflows and troubleshooting files are kept atomic (never split), while reference content is sectioned on headers. Per-file overrides via `retrieval.strategy` frontmatter.
 
 **Results on a real product pack (EZT Designer):**
 - **+9.4% correctness** (79% → 88.4%) — best improvement from any single change
@@ -131,7 +131,7 @@ Designed for [OpenClaw](https://openclaw.ai) — outputs pre-sized `.md` files t
 
 | Schema | Version | What It Covers |
 |--------|---------|---------------|
-| [core.md](schemas/core.md) | 2.2 | Shared principles: MD-canonical, file structure, retrieval optimization, EK ratio, context tiers, provenance |
+| [core.md](schemas/core.md) | 2.4 | Shared principles: MD-canonical, file structure, retrieval optimization, chunking strategies, EK ratio, context tiers, provenance |
 | [person.md](schemas/person.md) | 1.6 | Person packs: verbatim, mind taxonomy, relationships, presentation, agent subtype |
 | [product.md](schemas/product.md) | 1.8 | Product packs: concepts, workflows, interfaces, troubleshooting, commercial, customers |
 | [process.md](schemas/process.md) | 1.4 | Process packs: phases, decisions, checklists, exceptions, scheduling, regulations |
@@ -166,7 +166,7 @@ ExpertPack/
 ├── LICENSE                  ← Apache 2.0
 │
 ├── schemas/                 ← Pack blueprints (the framework)
-│   ├── core.md              ← Shared principles (v2.2)
+│   ├── core.md              ← Shared principles (v2.4)
 │   ├── person.md            ← Person-pack schema (v1.6)
 │   ├── product.md           ← Product-pack schema (v1.8)
 │   ├── process.md           ← Process-pack schema (v1.4)

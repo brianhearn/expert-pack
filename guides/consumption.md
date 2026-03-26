@@ -126,6 +126,8 @@ The [schema-aware chunker](../tools/schema-chunker/) pre-processes ExpertPack fi
 - YAML frontmatter stays with the first chunk
 - `<!-- refresh -->` metadata stays with its content
 - `_index.md` files chunked as single units when possible
+- **Atomic vs. sectioned strategies** per directory and per file (see below)
+- **Sequence metadata** in chunk source comments for sectioned splits
 
 **Usage:**
 
@@ -134,6 +136,70 @@ python3 tools/schema-chunker/chunk.py --pack ./packs/my-pack --output ./packs/my
 ```
 
 Then point your RAG system at `.chunks/` instead of the raw pack directory. See the [chunker README](../tools/schema-chunker/README.md) for the full CLI reference.
+
+### Atomic vs. Sectioned Strategies
+
+*(Schema 2.4+)*
+
+Not all content should be split the same way. A 10-step workflow must be retrieved whole — retrieving step 5 of 10 without context produces hallucinated instructions. A large concept file with independent sections can be split safely.
+
+The schema-aware chunker supports two strategies:
+
+| Strategy | Behavior | Default For |
+|----------|----------|-------------|
+| **atomic** | Emit the entire file as a single chunk, regardless of size. Never split. | `workflows/`, `troubleshooting/errors/`, `troubleshooting/diagnostics/`, `troubleshooting/common-mistakes/` |
+| **sectioned** | Split on `##` headers, then `###` if oversized, then paragraphs. Standard behavior. | `concepts/`, `interfaces/`, `faq/`, `propositions/`, `summaries/`, `commercial/`, and all other directories |
+
+**Why workflows are atomic:** Workflows are step-by-step procedures where each step depends on the previous. Retrieving a fragment without the surrounding steps causes the model to fill gaps with fabricated UI paths and invented interactions.
+
+**Why troubleshooting is atomic:** Error resolution files (symptom → cause → fix) and diagnostic decision trees lose their logical flow when split. An agent that retrieves only the "fix" without the "symptom" and "cause" gives dangerously decontextualized advice.
+
+#### Directory Defaults
+
+The chunker maps ExpertPack directory conventions to default strategies automatically:
+
+| Directory | Default Strategy | Rationale |
+|-----------|-----------------|-----------|
+| `workflows/` | atomic | Procedures are indivisible |
+| `troubleshooting/errors/` | atomic | Error + fix is one unit |
+| `troubleshooting/diagnostics/` | atomic | Decision trees are indivisible |
+| `troubleshooting/common-mistakes/` | atomic | Symptom + fix is one unit |
+| `interfaces/` | sectioned | Large files; regions are independent |
+| `concepts/` | sectioned | Sections are self-contained |
+| `faq/` | sectioned | Each Q&A stands alone |
+| `propositions/` | sectioned | Groups of atomic facts |
+| `summaries/` | sectioned | Section summaries are independent |
+| `commercial/` | sectioned | Topics within commercial docs are independent |
+| All others | sectioned | Safe default |
+
+#### Per-File Override
+
+Any content file can override its directory default by declaring a `retrieval` block in its YAML frontmatter:
+
+```yaml
+---
+retrieval:
+  strategy: atomic
+---
+```
+
+Precedence: **frontmatter override → directory default → sectioned fallback.**
+
+Use this when a file's retrieval needs differ from its directory convention — e.g., a concept file that contains a critical decision framework that must not be fragmented.
+
+#### Sequence Metadata
+
+When a file IS split (sectioned strategy), the chunker embeds sequence metadata in each chunk's source comment so consuming agents know how many sibling chunks exist and how to find them:
+
+```
+<!-- source: concepts/territories.md | section: How It Works (part 3 of 7) | sequence: concepts--territories--*.md -->
+```
+
+The `part X of Y` tells the agent this is an incomplete fragment. The `sequence` glob tells it where to find the full set. An agent receiving a sequence-tagged chunk should load all sibling chunks before synthesizing an answer.
+
+#### Atomic Chunks and Size Limits
+
+Atomic files may exceed the chunker's default character budget. This is expected and acceptable — the alternative (splitting a workflow) is worse than a larger chunk. RAG systems with hard size limits should index the full atomic chunk for retrieval, and optionally generate a summary companion chunk for lightweight search matching.
 
 ### Evidence: What Works and What Doesn't
 
@@ -369,5 +435,5 @@ A condensed deployment checklist for getting a pack into production:
 
 ---
 
-*Guide version: 1.0*
-*Last updated: 2026-03-13*
+*Guide version: 1.1*
+*Last updated: 2026-03-26*

@@ -68,6 +68,29 @@ Results from 6 controlled experiments on a deployed product pack (204 source fil
 
 **Key takeaway:** Schema-aware chunking is the highest-impact single change. A cheap model with precise retrieval beat an expensive model with generic retrieval.
 
+## Chunking Strategies (Schema 2.4+)
+
+The chunker applies **atomic** or **sectioned** strategy per file:
+
+| Strategy | Behavior | Default For |
+|----------|----------|-------------|
+| **atomic** | Entire file as one chunk; never split | `workflows/`, `troubleshooting/errors/`, `troubleshooting/diagnostics/`, `troubleshooting/common-mistakes/` |
+| **sectioned** | Split on `##` headers | `concepts/`, `interfaces/`, `faq/`, `propositions/`, `summaries/`, `commercial/`, all others |
+
+**Why atomic matters:** Workflows and troubleshooting are step-by-step procedures or symptom → cause → fix units. Splitting them causes the model to hallucinate missing steps.
+
+**Precedence:** frontmatter override → directory default → sectioned fallback.
+
+Per-file override via YAML frontmatter:
+```yaml
+---
+retrieval:
+  strategy: atomic
+---
+```
+
+**Sequence metadata:** Sectioned splits include `part X of Y` and a `sequence` glob in source comments so consuming agents can find all sibling chunks.
+
 ## Context Tier Loading
 
 | Tier | Name | When Loaded | Size Target |
