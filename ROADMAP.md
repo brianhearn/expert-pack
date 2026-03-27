@@ -57,7 +57,7 @@ Keep the framework current as LLMs advance.
 - [ ] **Structured fact tables** — replace narrative repetition with key/value facts, decision tables, canonicalized terms/glossaries for deduplication and retrieval precision
 - [ ] **Entity cross-reference indexes** — use entities.json as canonical registry with aliases for term normalization (evaluate whether current RAG actually benefits)
 - [ ] **File size flexibility** — revisit 1-3KB for large-context models; maybe a "dense mode"
-- [x] **Chunking strategy review** — built schema-aware chunker (`tools/schema-chunker/`). Pre-processes pack files respecting `##` headers, lead summaries, proposition groups, glossary tables. +9.4% correctness, -52% tokens on EZT Designer eval. (2026-03-13)
+- [x] **Chunking strategy review** — We built and validated a schema-aware chunker that respected structural elements like headers, lead summaries, proposition groups, and glossary tables. This produced +9.4% correctness and -52% tokens on EZT Designer eval (2026-03-13). The core insight led directly to Schema 2.5: files authored as self-contained 400–800 token retrieval units require no preprocessing — the schema itself became the chunking strategy.
 - [ ] **Agentic RAG patterns** — multi-step retrieval, query refinement
 - [ ] **Minimum capability declarations** — manifest field for required model capabilities
 - [ ] **Regular schema review cadence** — triggered by major model releases

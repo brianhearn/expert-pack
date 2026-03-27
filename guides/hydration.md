@@ -698,38 +698,18 @@ Maps common user vocabulary to precise technical terms. This bridges the gap bet
 
 **This is the single highest-impact retrieval optimization.** In eval experiments on a real product pack, schema-aware chunking produced +9.4% correctness, -52% input tokens, and -60% hallucination rate — the largest improvement from any single change, bigger than model upgrades or content edits.
 
-#### The Problem with Generic Chunkers
+#### Authoring for Retrieval
 
-Most RAG systems chunk files by character count. They don't understand Markdown structure. A generic chunker will:
+Author every content file to the 400–800 token target (1,500 token ceiling). These files become self-contained retrieval units. Any standard RAG chunker will pass them through intact.
 
-- Split a lead summary from its `# Title`
-- Cut a proposition group between the `### source.md` header and its bullet list
-- Slice a glossary table mid-row
-- Orphan a `<!-- refresh -->` metadata block from the content it describes
-- Break a `##` section in the middle of a thought
+This preserves:
+- Lead summaries attached to titles
+- Proposition groups
+- Glossary tables
+- `<!-- refresh -->` metadata
+- Complete `##` sections
 
-The result: every retrieved chunk is an arbitrary text slice that may have lost its context. You spent effort structuring knowledge with headers, lead summaries, and grouped propositions — and the chunker throws that structure away.
-
-#### The Schema-Aware Chunker
-
-The [schema-aware chunker](../tools/schema-chunker/) pre-processes ExpertPack files into semantically coherent chunk files. Each output file is one complete thought, sized to fit within the RAG system's token budget. The consuming platform's chunker then passes each file through 1:1 — no re-splitting.
-
-**What it respects:**
-- `##` headers as semantic boundaries (never splits mid-section)
-- Lead summaries stay attached to their `# Title`
-- Proposition groups (`### source.md` + bullet list) stay intact
-- Glossary category tables stay together
-- YAML frontmatter stays with the first chunk
-- `<!-- refresh -->` metadata stays with its content
-- `_index.md` files chunked as single units when possible
-
-**Each chunk file includes source metadata:**
-```markdown
-<!-- source: concepts/routing-optimizer.md | section: How It Works | tier: 2 -->
-The TSP optimizer uses a genetic algorithm with population size 32...
-```
-
-#### Evidence: What Works and What Doesn't
+**Evidence: What Works and What Doesn't**
 
 These results come from 6 controlled experiments on a real product pack (EZT Designer, 204 source files), each changing one variable at a time:
 
@@ -749,7 +729,7 @@ These results come from 6 controlled experiments on a real product pack (EZT Des
 
 #### Integration
 
-For Schema 2.5+ packs, point your RAG system at the pack root (no `.chunks/` directory needed):
+For Schema 2.5+ packs, point your RAG system at the pack root. Author files to the 400–800 token target so they remain intact during indexing.
 
 ```bash
 # Configure OpenClaw to index the pack directly
@@ -768,13 +748,9 @@ For Schema 2.5+ packs, point your RAG system at the pack root (no `.chunks/` dir
 }
 ```
 
-`.chunks/` and the schema-aware chunker remain available only as a legacy migration step for oversized files (see Consumption Guide).
-
 - **Overlap 0** — chunks are already semantically complete
 - **MMR enabled** — prevents near-duplicate proposition/summary/content chunks from crowding results
 - **Temporal decay off** — pack knowledge doesn't expire by file modification date
-
-See the [chunker README](../tools/schema-chunker/README.md) for full CLI reference.
 
 ### The Three-Layer System
 
@@ -786,7 +762,7 @@ Lead summaries, summaries, propositions, glossary, and schema-aware chunking wor
 | **Summaries** | Broad questions ("what can it do?") | Every query competes against hundreds of fine-grained files |
 | **Propositions** | Specific factual questions ("what's the max?") | Model must extract facts from prose paragraphs |
 | **Glossary** | Vocabulary bridging between user language and pack terms | Queries using informal language miss relevant content |
-| **Schema-aware chunking** | Preserves all structural conventions during retrieval | Generic chunker destroys the structure you built |
+| **Small self-contained files** | Preserves all structural conventions during retrieval | Large files get split by generic chunkers |
 
 Don't build one layer and skip the rest. The three-layer approach (summaries + propositions + split/chunked content files) consistently outperforms any single layer alone.
 

@@ -107,8 +107,6 @@ ExpertPack files are designed to be **retrieval-ready by default**. When authore
 
 Author content files as self-contained retrieval units. RAG chunkers that see a file under their token budget leave it intact, preserving lead summaries, proposition groups, glossary tables, and `<!-- refresh -->` metadata.
 
-**Legacy packs** with oversized files can still use the schema-chunker as a migration tool (see Legacy Migration below).
-
 ### Atomic vs. Sectioned Content
 
 Not all content should be authored to the standard size target. Procedural content that depends on sequential context must be retrieved as complete units.
@@ -132,18 +130,9 @@ The pack's file sizes interact with three RAG knobs:
 
 See core schema for detailed OpenClaw config example and full guidance.
 
-### Legacy Migration
+The +9.4% correctness improvement came from preventing splits on oversized files. We learned that authoring files as self-contained retrieval units (400–800 tokens) at creation time eliminates the need for any preprocessing. This insight became the foundation of Schema 2.5.
 
-For packs authored before Schema 2.5 with oversized files:
-
-- **Recommended:** Refactor into 400–800 token files following the new File Size guidance.
-- **Optional:** Use the [schema-aware chunker](../tools/schema-chunker/) to generate a `.chunks/` directory. Point RAG at it instead of the raw pack.
-
-The +9.4% correctness from schema-aware chunking (footnote: measured at `chunking.tokens=500` with GPT-5 Mini; gain disappears at higher budgets where the dumb chunker doesn't activate) came entirely from preventing splits. With correctly sized files at authoring time, the tool is unnecessary.
-
-#### Directory Defaults
-
-The chunker maps ExpertPack directory conventions to default strategies automatically:
+#### Directory Defaults for Atomic vs Sectioned Content
 
 | Directory | Default Strategy | Rationale |
 |-----------|-----------------|-----------|

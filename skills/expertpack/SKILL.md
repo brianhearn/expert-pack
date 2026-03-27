@@ -71,18 +71,9 @@ For detailed platform integration (Cursor, Claude Code, custom APIs, direct cont
 
 For full hydration methodology, EK triage process, and source prioritization: read `{skill_dir}/references/hydration.md`.
 
-### 3. Chunk for RAG
+### 3. Configure RAG
 
-**Legacy migration only (for oversized files):** 
-
-```bash
-# Optional: for legacy packs with oversized files only
-python3 {skill_dir}/scripts/chunk.py --pack <pack-path> --output <pack-path>/.chunks
-```
-
-Point OpenClaw RAG at the pack directly. The 400–800 token file constraint makes files retrieval-ready by design.
-
-(The +9.4% correctness was measured at chunking.tokens=500 on GPT-5 Mini; at higher budgets or with correctly-sized files, the tool provides no additional benefit.)
+Point OpenClaw RAG at the pack directly. The 400–800 token file-size constraint makes files retrieval-ready by design — no external chunking tool needed.
 
 ### 4. Measure EK Ratio & Run Quality Evals
 

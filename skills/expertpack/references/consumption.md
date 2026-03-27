@@ -12,7 +12,7 @@ How to deploy an ExpertPack as the knowledge backend for an AI agent.
 
 ### OpenClaw
 
-Add pack to `memorySearch.extraPaths` in `openclaw.json` (use raw pack dir, not .chunks for Schema 2.5+):
+Add pack to `memorySearch.extraPaths` in `openclaw.json`:
 
 ```json
 {
@@ -58,9 +58,7 @@ Packs under ~20 files / 30KB: skip RAG. Concatenate Tier 1 + Tier 2 files direct
 
 ## Retrieval-Ready Design & Evidence
 
-For new packs, **author files to 400–800 tokens** so the schema prevents large files: every file passes through RAG chunkers intact as a self-contained unit.
-
-**Legacy packs** may still benefit from the schema-chunker.
+**Author files to 400–800 tokens** so the schema prevents large files: every file passes through RAG chunkers intact as a self-contained unit.
 
 Results from 6 controlled experiments on a deployed product pack (204 source files, 50-question eval):
 

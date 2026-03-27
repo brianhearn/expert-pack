@@ -422,15 +422,9 @@ Every token in your system prompt (SOUL.md, workspace files, platform overhead) 
 - **MMR enabled (λ=0.7)** — prevents near-duplicate proposition/summary/content files from crowding results
 - **Temporal decay off** — pack knowledge doesn't expire by file modification time
 
-#### Legacy Packs and Migration
+#### Legacy Packs
 
-Packs authored before these file-size guidelines may contain oversized files. Two options:
-
-1. **Recommended: Refactor the files.** Split oversized files into focused sub-files following the guidelines above. This is a one-time investment that makes the pack permanently retrieval-ready.
-
-2. **Optional: Use the schema-chunker tool.** The [schema-aware chunker](../tools/schema-chunker/) can pre-process oversized files into correctly-sized chunks as a `.chunks/` directory. This is a stopgap for packs that can't be immediately refactored. Point your RAG system at `.chunks/` instead of the raw pack directory.
-
-The schema-chunker remains available as a migration aid, but is not part of the standard ExpertPack workflow for new packs.
+Packs authored before these file-size guidelines may contain oversized files. Refactor oversized files into focused sub-files following the guidelines above. This is a one-time investment that makes the pack permanently retrieval-ready.
 
 ---
 

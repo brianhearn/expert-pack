@@ -54,7 +54,7 @@ A complete ExpertPack conforming to schema 2.3:
 ## Post-Conversion Steps
 
 1. `cd ~/expertpacks/my-learnings-pack`
-2. (Legacy only) For oversized files: optionally run `python3 /path/to/expertpack/tools/schema-chunker/chunk.py --pack . --output ./.chunks`. New packs to Schema 2.5 spec need no chunker.
+2. Verify content files are 400–800 tokens each (Schema 2.5 — retrieval-ready by design)
 3. Measure EK ratio: `python3 /path/to/expertpack/tools/eval-ek.py .`
 4. Review `overview.md` and `manifest.yaml`
 5. Commit to git and publish to ClawHub

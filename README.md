@@ -118,7 +118,7 @@ The included [eval-ek.py](tools/eval-ek.py) tool measures EK ratio via blind pro
 
 The schema itself is now the chunking strategy. Author content files as self-contained retrieval units **(400–800 tokens, 1,500 token hard ceiling)**. Any RAG chunker will pass these files through intact without splitting, preserving structure, lead summaries, propositions, and metadata.
 
-The [schema-aware chunker](tools/schema-chunker/) remains available as an **optional legacy migration tool** for packs with oversized files only (see [Consumption Guide](guides/consumption.md) for details; measured at chunking.tokens=500 on GPT-5 Mini; at higher budgets or with correctly-sized files, the tool provides no additional benefit).
+The schema itself is now the chunking strategy. Author content files as self-contained retrieval units **(400–800 tokens, 1,500 token hard ceiling)**. Any RAG chunker will pass these files through intact without splitting, preserving structure, lead summaries, propositions, and metadata.
 
 ---
 
@@ -173,8 +173,7 @@ ExpertPack/
 │   └── consumption.md       ← How to deploy and consume packs with AI agents (v1.0)
 │
 ├── tools/                   ← Tooling
-│   ├── eval-ek.py           ← EK ratio measurement via blind probing
-│   └── schema-chunker/      ← Legacy migration tool for oversized files (optional)
+│   └── eval-ek.py           ← EK ratio measurement via blind probing
 │
 ├── skills/                  ← Agent skills
 │   └── expertpack-export/   ← Auto-discover & export agent → EP
