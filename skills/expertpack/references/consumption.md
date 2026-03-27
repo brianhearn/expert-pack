@@ -43,7 +43,7 @@ Add pack to `memorySearch.extraPaths` in `openclaw.json` (use raw pack dir, not 
 
 ### IDE Agents (Cursor, Claude Code)
 
-Place the pack in the project directory. Reference from `.cursorrules` or `CLAUDE.md`. The small-file structure (1–3KB) is already optimized for built-in chunking. The small-file structure (400–800 tokens per file) is already optimized for any chunker. No pre-processing needed.
+Place the pack in the project directory. Reference from `.cursorrules` or `CLAUDE.md`. The small-file structure (400–800 tokens per file) is already optimized for any chunker. No pre-processing needed.
 
 ### Custom / API
 
@@ -151,12 +151,12 @@ When out of scope: "{refusal message}"
 
 | Symptom | Likely Cause | Fix |
 |---------|-------------|-----|
-| Wrong answer on covered topic | Retrieval miss | Add lead summary, improve headers, run chunker, check glossary |
+| Wrong answer on covered topic | Retrieval miss | Add lead summary, improve headers, check file sizes, check glossary |
 | Confident wrong answer | Hallucination | Add anti-hallucination facts; strengthen SOUL.md |
 | Incomplete answer | Content gap or partial retrieval | Check content exists; add propositions |
 | Answers off-topic questions | Weak refusal | Strengthen scope rules with examples; upgrade model |
 | Vocabulary mismatch | User terms ≠ pack terms | Update glossary "Common User Language" column |
-| High token cost | Over-retrieval | Schema-aware chunking, enable MMR |
+| High token cost | Over-retrieval | Verify file sizes (400–800 tokens), enable MMR, reduce maxResults |
 
 ### Optimization Priority
 
@@ -167,8 +167,8 @@ When out of scope: "{refusal message}"
 ## Quick-Start Checklist
 
 - [ ] Choose platform (OpenClaw, IDE, custom, direct context)
-- [ ] Run schema-aware chunker
-- [ ] Configure RAG (chunk 500, overlap 0, MMR on, decay off)
+- [ ] Verify pack files are 400–800 tokens (schema = chunker)
+- [ ] Configure RAG (tokens 1000, overlap 0, maxResults 10, MMR on, decay off)
 - [ ] Write SOUL.md (identity, scope, style, anti-hallucination)
 - [ ] Select model (balance cost, speed, instruction following)
 - [ ] Load Tier 1 files in system prompt

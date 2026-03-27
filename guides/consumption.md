@@ -377,7 +377,7 @@ Consumption quality is measurable. Don't optimize blind — run evals, identify 
 | Refuses questions it should answer | Over-scoped or model confused | Training | Relax scope rules, add examples of valid questions |
 | Vocabulary mismatch | User terms don't match pack terms | Structure | Update glossary with user language mappings in "Common User Language" column |
 | Slow responses | Too many tokens retrieved, model too large | Structure + Model | Reduce chunk size, tighten retrieval, or use a faster model |
-| High token cost | Retrieval returning too much context | Structure | Schema-aware chunking (cut tokens 52% in our experiments), enable MMR to reduce duplicates |
+| High token cost | Retrieval returning too much context | Structure | Verify file sizes (400–800 tokens), enable MMR to reduce duplicates, reduce maxResults |
 
 ### The Three Dimensions (Revisited)
 
