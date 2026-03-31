@@ -120,6 +120,10 @@ Not all content should be authored to the standard size target. Procedural conte
 
 **Why troubleshooting is atomic:** Error resolution files (symptom → cause → fix) and diagnostic decision trees lose their logical flow when split. An agent that retrieves only the "fix" without the "symptom" and "cause" gives dangerously decontextualized advice.
 
+### Pack–Consumer Coordination Contract
+
+The pack author and consumer config form a two-party contract. The pack commits to a hard ceiling (1,500 tokens for standard files; atomic files may be larger). The consumer sets `chunking.tokens` ≥ that ceiling so nothing gets split. If you're consuming a pack you didn't author, verify its file sizes before assuming the default 1,000-token budget applies. See [core.md — Pack–Consumer Coordination Contract](../schemas/core.md#packconsumer-coordination-contract) for details.
+
 ### Platform Configuration - The Three-Knob Model
 
 The pack's file sizes interact with three RAG knobs:
@@ -411,5 +415,5 @@ A condensed deployment checklist for getting a pack into production:
 
 ---
 
-*Guide version: 2.0*
-*Last updated: 2026-03-27*
+*Guide version: 2.1*
+*Last updated: 2026-03-31*

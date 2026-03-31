@@ -380,6 +380,17 @@ When a topic spans multiple files (because splitting was needed to stay within s
 
 The `part X of Y` tells the agent this is one piece of a larger topic. The `sequence` glob tells it where to find siblings. An agent receiving a sequence-tagged file should consider loading siblings before synthesizing a complete answer.
 
+#### Pack–Consumer Coordination Contract
+
+The pack author and the consuming agent configuration form a two-party contract:
+
+- **Pack author commits:** "No standard content file exceeds 1,500 tokens (the hard ceiling). Atomic files (workflows, troubleshooting) may be larger but must be retrieved whole."
+- **Consumer configures:** Set `chunking.tokens` (or equivalent) to **≥ the pack's hard ceiling** — 1,000 is the recommended minimum for well-authored packs — so no file is ever split.
+
+The invariant is: **`chunking.tokens` > pack's hard ceiling for non-atomic files.** As long as this holds, every file passes through the chunker intact. If a pack deviates from the size target (e.g., during early hydration or with legacy content), the consumer config needs a proportional adjustment.
+
+This is a convention, not an enforced spec. Both sides need to uphold it. If you're consuming a pack you didn't author, verify the file sizes before assuming the default 1,000-token budget is sufficient.
+
 #### Platform Configuration
 
 The pack's file-size constraints interact with three RAG platform knobs. Configure them as a system:
@@ -1129,7 +1140,7 @@ These principles apply to every ExpertPack, regardless of type:
 | Directory indexes | `_index.md` in every content directory |
 | Context strategy | Three tiers: always → searchable → on-demand, declared in manifest |
 | Retrieval optimization | Summaries (broad), propositions (precise), file splitting, lead summaries (front-loaded answers), and glossary (vocabulary bridging) — use together; see [Retrieval Optimization](#retrieval-optimization) |
-| Chunking strategy | The schema IS the chunking strategy. Author files to target size so every file passes through RAG chunkers intact (400–800 tokens). Atomic strategy for workflows/troubleshooting via frontmatter; see [Chunking Strategy](#chunking-strategy) |
+| Chunking strategy | The schema IS the chunking strategy. Author files to target size so every file passes through RAG chunkers intact (400–800 tokens). Atomic strategy for workflows/troubleshooting via frontmatter. Consumer config must set `chunking.tokens` ≥ pack's hard ceiling (1,000 recommended); see [Chunking Strategy](#chunking-strategy) |
 | Research coverage | Every pack includes `sources/_coverage.md` documenting what was checked, what was extracted, and what's untouched; see [Research Coverage](#research-coverage-sources_coveragemd) |
 | Time variance | Annotate time-variant facts inline with `<!-- refresh -->` blocks; maintain `freshness.md` as supplementary index; see [Time Variance](#time-variance) |
 | EK ratio | Measure and maximize esoteric knowledge ratio; declare in manifest; guide hydration priority; see [Esoteric Knowledge Ratio](#esoteric-knowledge-ek-ratio) |
@@ -1138,5 +1149,5 @@ These principles apply to every ExpertPack, regardless of type:
 
 ---
 
-*Schema version: 2.5*
-*Last updated: 2026-03-27*
+*Schema version: 2.6*
+*Last updated: 2026-03-31*
