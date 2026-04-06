@@ -10,6 +10,15 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ---
 
+## [2026-04-06] — Scaffolding: .obsidian/ Required Step
+
+### Changed
+- `schemas/core.md` — added "Scaffolding a New Pack" section with explicit 10-step sequence; `.obsidian/` copy is step 2 and marked as non-optional
+- `skills/expertpack/SKILL.md` — hydration steps updated to include `.obsidian/` copy as step 4
+- Local `expertpack` skill also updated
+
+---
+
 ## [2026-04-06] — ExpertPack Skill Cleanup
 
 ### Changed

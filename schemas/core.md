@@ -82,6 +82,32 @@ For process packs: what the process achieves, when to use it, who it's for.
 
 ---
 
+## Scaffolding a New Pack
+
+When creating a new ExpertPack from scratch, follow this sequence:
+
+1. **Create the root directory** — use the pack slug as the folder name (kebab-case)
+2. **Copy the `.obsidian/` config folder** into the pack root — from the ExpertPack repo root or the `template/` folder. This makes the pack an immediately usable Obsidian vault.
+   ```
+   cp -r /path/to/ExpertPack/.obsidian ./your-pack-slug/.obsidian
+   ```
+   Or use the full template as your starting point:
+   ```
+   cp -r /path/to/ExpertPack/template ./your-pack-slug
+   ```
+3. **Create `manifest.yaml`** — fill in all required fields (name, slug, type, version, description, entry_point)
+4. **Create `overview.md`** — the entry point every agent reads first
+5. **Scaffold content directories** per the type schema — `concepts/`, `workflows/`, `troubleshooting/`, `faq/`, etc. Each directory gets an `_index.md`
+6. **Create `glossary.md`** — add terms as hydration proceeds
+7. **Create `sources/_coverage.md`** — track what sources have been researched
+8. **Begin hydration** — populate content files using EK-aware triage (esoteric knowledge first)
+9. **Add retrieval layers** as content grows — `summaries/`, `propositions/`, lead summaries in content files
+10. **Measure EK ratio** — run blind-probe eval once the pack has substantive content
+
+**The `.obsidian/` folder is not optional.** Every pack should include it so the pack is immediately openable in Obsidian without any manual setup. It contains pre-configured Dataview and Templater settings that make authoring and reviewing the pack significantly easier.
+
+---
+
 ## Directory Conventions
 
 ### _index.md Files

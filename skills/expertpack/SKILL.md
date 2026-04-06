@@ -60,14 +60,19 @@ For detailed platform integration (Cursor, Claude Code, custom APIs, direct cont
 
 1. Determine pack type: person, product, process, or composite
 2. Read `{skill_dir}/references/schemas.md` for structural requirements
-3. Scaffold the directory structure per the type schema
-4. Create `manifest.yaml` and `overview.md` (both required)
-5. Populate content using EK-aware hydration:
+3. Create root directory using the pack slug (kebab-case)
+4. **Copy `.obsidian/` config into the pack root** — from the ExpertPack repo `template/` folder. This makes the pack immediately usable in Obsidian with Dataview and Templater pre-configured.
+   ```bash
+   cp -r /path/to/ExpertPack/template/.obsidian ./your-pack-slug/.obsidian
+   ```
+5. Create `manifest.yaml` and `overview.md` (both required)
+6. Scaffold content directories per the type schema with `_index.md` in each
+7. Populate content using EK-aware hydration:
    - Focus on esoteric knowledge — content the model cannot produce on its own
    - Full treatment for EK content; compressed scaffolding for general knowledge
    - Skip content with zero EK value
-6. Add retrieval layers: `_index.md` per directory, `summaries/`, `propositions/`, `glossary.md`
-7. Add `sources/_coverage.md` documenting what was researched
+8. Add retrieval layers: `summaries/`, `propositions/`, `glossary.md`, lead summaries in content files
+9. Add `sources/_coverage.md` documenting what was researched
 
 For full hydration methodology and source prioritization: read `{skill_dir}/references/hydration.md`.
 
