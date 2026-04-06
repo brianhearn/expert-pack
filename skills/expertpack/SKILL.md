@@ -1,6 +1,6 @@
 ---
 name: expertpack
-description: "Work with ExpertPacks — structured knowledge packs for AI agents. Obsidian-compatible: every pack is a valid Obsidian vault with Dataview support. Use when: (1) Loading/consuming an ExpertPack as agent context, (2) Creating or hydrating a new ExpertPack from scratch, (3) Chunking a pack for RAG deployment, (4) Backing up/exporting an OpenClaw agent's workspace into an ExpertPack, (5) Opening or authoring a pack in Obsidian. Triggers on: 'expertpack', 'expert pack', 'esoteric knowledge', 'knowledge pack', 'pack hydration', 'backup to expertpack', 'export agent knowledge', 'obsidian vault', 'obsidian pack'. For EK ratio measurement and quality evals, install the separate expertpack-eval skill."
+description: "Work with ExpertPacks — structured knowledge packs for AI agents. Obsidian-compatible: every pack is a valid Obsidian vault with Dataview support. Use when: (1) Loading/consuming an ExpertPack as agent context, (2) Creating or hydrating a new ExpertPack from scratch, (3) Configuring RAG for a pack, (4) Opening or authoring a pack in Obsidian. Triggers on: 'expertpack', 'expert pack', 'esoteric knowledge', 'knowledge pack', 'pack hydration', 'obsidian vault', 'obsidian pack'. For EK ratio measurement and quality evals install expertpack-eval. For exporting an OpenClaw agent as an ExpertPack install expertpack-export."
 metadata:
   openclaw:
     homepage: https://expertpack.ai
@@ -8,15 +8,12 @@ metadata:
       bins:
         - python3
     data_access:
-      - label: Workspace files
-        description: "Export scripts (scan.py, distill.py, compose.py, validate.py) read workspace files (SOUL.md, MEMORY.md, memory/*.md, etc.) to build export packs. All processing is local — no content is transmitted externally by these scripts."
-        scope: local
       - label: OpenClaw config (RAG setup)
         description: "The RAG configuration snippet modifies openclaw.json to point the memory search engine at pack directories. This is optional and user-initiated."
         scope: local
     external_services:
       - label: OpenRouter (via expertpack-eval companion)
-        description: "EK ratio measurement and quality evals (in the separate expertpack-eval skill) send pack-derived content (propositions/facts) to LLM APIs via OpenRouter for blind probing. This skill itself does NOT make external API calls — install expertpack-eval only if you need EK measurement."
+        description: "EK ratio measurement and quality evals (in the separate expertpack-eval skill) send pack-derived content to LLM APIs via OpenRouter for blind probing. This skill itself makes NO external API calls."
         optional: true
         skill: expertpack-eval
 ---
@@ -27,9 +24,9 @@ Structured knowledge packs for AI agents. Maximize the knowledge your AI is miss
 
 **Learn more:** [expertpack.ai](https://expertpack.ai) · [GitHub](https://github.com/brianhearn/ExpertPack) · [Schema docs](https://expertpack.ai/#schemas) · [Obsidian compatible](https://expertpack.ai/#obsidian)
 
-> **💎 Obsidian compatible:** Every ExpertPack is a valid Obsidian vault. Copy the `.obsidian/` folder from the repo root into any pack directory, open it in Obsidian, and install Dataview + Templater. You get live queries by content type, EK score, and tags; graph view; and full-text search. Standard relative Markdown links are used throughout — packs render correctly on GitHub and in Obsidian simultaneously.
+> **💎 Obsidian compatible:** Every ExpertPack is a valid Obsidian vault. Copy the `.obsidian/` folder from the repo root into any pack directory, open it in Obsidian, and install Dataview + Templater. You get live queries by content type, EK score, and tags; graph view; and full-text search. Standard relative Markdown links — packs render correctly on GitHub and in Obsidian simultaneously.
 
-> **Data & privacy:** The export scripts (scan/distill/compose/validate) read your workspace files locally and write output to a directory you specify — no content is sent externally. The RAG config snippet is optional and local. EK ratio measurement and quality evals require the separate `expertpack-eval` skill, which *does* send pack-derived propositions to LLM APIs (OpenRouter) for blind probing — install it only if you need that feature.
+> **Companion skills:** This skill covers consumption, hydration, and RAG setup only. For EK measurement and quality evals use `expertpack-eval`. For exporting an OpenClaw agent's workspace as an ExpertPack use `expertpack-export`.
 
 **Full schemas:** `/path/to/ExpertPack/schemas/` in the repo (core.md, person.md, product.md, process.md, composite.md, eval.md)
 
@@ -93,61 +90,16 @@ Point OpenClaw RAG at the pack directly. The 400–800 token file-size constrain
 
 ### 4. Measure EK Ratio & Run Quality Evals
 
-For EK ratio measurement (blind probing) and automated quality evals, install the companion skill:
+Install the companion skill:
 
 ```
 clawhub install expertpack-eval
 ```
 
-See `expertpack-eval` for full details on EK measurement, eval runner, and the improvement loop.
+### 5. Export an OpenClaw Agent as an ExpertPack
 
-### 5. Backup / Export OpenClaw → ExpertPack
+Install the companion skill:
 
-Export an OpenClaw agent's accumulated knowledge into a structured ExpertPack composite.
-
-**Step 1 — Scan:**
-
-```bash
-python3 {skill_dir}/scripts/scan.py --workspace <workspace-path> --output /tmp/ep-scan.json
 ```
-
-Review the scan output with the user. It proposes pack assignments (agent, person, product, process) with confidence scores. Flag ambiguous classifications for user decision.
-
-**Step 2 — Distill** (repeat per pack):
-
-```bash
-python3 {skill_dir}/scripts/distill.py \
-  --scan /tmp/ep-scan.json \
-  --pack <type:slug> \
-  --output <export-dir>/packs/<slug>/
+clawhub install expertpack-export
 ```
-
-- Distill, don't copy — target 10-20% volume of raw state
-- Strips secrets automatically (API keys, tokens, passwords)
-- Deduplicates, prefers newest for conflicts
-
-**Step 3 — Compose:**
-
-```bash
-python3 {skill_dir}/scripts/compose.py \
-  --scan /tmp/ep-scan.json \
-  --export-dir <export-dir>/
-```
-
-Generates composite manifest and overview.
-
-**Step 4 — Validate:**
-
-```bash
-python3 {skill_dir}/scripts/validate.py --export-dir <export-dir>/
-```
-
-Checks: required files exist, manifest fields valid, no secrets leaked, file sizes within guidelines, cross-references resolve.
-
-**Step 5 — Review & ship.** Present validation report to user. They decide whether to commit/push.
-
-**Critical rules:**
-- Never include secrets in the export
-- Never modify the live workspace — all output goes to the export directory
-- Flag personal information for access tier review
-- Default user-specific content to `private` access
