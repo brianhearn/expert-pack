@@ -10,6 +10,31 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ---
 
+## [2026-04-06] — ExpertPack Skill Cleanup
+
+### Changed
+- `skills/expertpack/SKILL.md` — stripped `requires`, `data_access`, and `external_services` metadata; skill is now pure instructions with no scripts, no file access, no external calls
+- `skills/expertpack/scripts/` — removed `scan.py`, `distill.py`, `compose.py`, `validate.py`; these belong in `expertpack-export` (where they already exist)
+- Published `expertpack@1.6.0` to ClawHub with clean security scan
+
+---
+
+## [2026-04-06] — Obsidian Vault Template
+
+### Added
+- `template/` — complete Obsidian vault template for building ExpertPacks inside Obsidian
+  - Full EP directory structure with stubs for every content type
+  - `manifest.yaml`, `overview.md`, `glossary.md`, `Dashboard.md` pre-filled
+  - Example content files for `concepts/`, `workflows/`, `troubleshooting/`, `faq/`
+  - `sources/_coverage.md`, `volatile/README.md`, `eval/benchmark.yaml` stubs
+  - `.obsidian/` pre-configured: Dataview + Templater enabled, relative link format
+  - 5 Templater templates (concept, workflow, FAQ, troubleshooting, volatile) — frontmatter auto-populates on note creation
+  - `Dashboard.md` with 7 live Dataview queries: content by type, missing frontmatter, expiring volatile, atomic files, tag browser, EK scores, file count by directory
+  - `template/README.md` — quick start guide for Obsidian users covering EK ratio concept, content types, file size targets, AI agent integration
+- `README.md` — added Vault Template nav link and callout in Obsidian Compatibility section
+
+---
+
 ## [Core 2.8] — 2026-04-06 — Obsidian Compatibility
 
 ### Added
