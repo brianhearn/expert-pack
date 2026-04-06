@@ -10,6 +10,22 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ---
 
+## [Core 2.9] — 2026-04-06 — Graph View: Clean Topology
+
+### Added
+- `.obsidian/graph.json` — pre-configured graph view settings:
+  - `_index.md` files excluded by default (`-file:_index` filter) — removes hub-spoke noise, reveals true concept topology
+  - Color groups: blue=concept, green=workflow, orange=faq, red=troubleshooting
+- `schemas/core.md` — `related:` frontmatter field documented as optional; enables explicit cross-links between content files for richer graph edges and agent context traversal
+
+### Changed
+- `schemas/core.md` — `_index.md` section clarified: "orientation only" role, explicit guidance that cross-section relationships belong on content files, not on index hubs
+- `schemas/core.md` — `OBSIDIAN-SETUP.md` references updated; new "Graph View Configuration" and "Content Cross-Linking" sections added
+- `.obsidian/OBSIDIAN-SETUP.md` — updated with graph filter notes and `related:` frontmatter guidance
+- Version bump: 2.8 → 2.9
+
+---
+
 ## [2026-04-06] — Scaffolding: .obsidian/ Required Step
 
 ### Changed

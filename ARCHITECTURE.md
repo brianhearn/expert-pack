@@ -56,7 +56,7 @@ These apply to every ExpertPack. See [schemas/core.md](schemas/core.md) for the 
 
 The schema system has two layers:
 
-### Core Schema ([schemas/core.md](schemas/core.md)) — v2.8
+### Core Schema ([schemas/core.md](schemas/core.md)) — v2.9
 Shared principles and conventions that apply to every ExpertPack:
 - The MD-canonical principle
 - Required files (`manifest.yaml`, `overview.md`)
@@ -91,7 +91,7 @@ A pack is an instantiation of a schema — a concrete knowledge base about a spe
 ```
 ExpertPack/
 ├── schemas/               ← The blueprints
-│   ├── core.md            ← Shared principles (v2.7)
+│   ├── core.md            ← Shared principles (v2.9)
 │   ├── person.md          ← Person-pack schema (v1.6)
 │   ├── product.md         ← Product-pack schema (v1.8)
 │   ├── process.md         ← Process-pack schema (v1.4)
@@ -241,6 +241,8 @@ The eval system answers the question: "Is this pack getting better or worse?"
 | 2026-03-13 | — | Schema 2.5: files authored as self-contained 400–800 token retrieval units; schema itself became the chunking strategy |
 | 2026-03-27 | — | Schema 2.5 split eval; schema versions advanced (core 2.5→2.6, eval 1.0→1.2, composite 1.0→1.1) |
 | 2026-04-01 | — | Schema 2.7: volatile data isolation — `volatile/` directory convention + frontmatter TTL for time-bound EK |
+| 2026-04-06 | — | Schema 2.8: Obsidian compatibility — per-file YAML frontmatter, `.obsidian/` reference folder, 25-type taxonomy |
+| 2026-04-06 | — | Schema 2.9: Graph view optimization — `graph.json` excludes `_index.md` hubs, `related:` frontmatter for content cross-links, `_index.md` clarified as orientation-only |
 
 ---
 

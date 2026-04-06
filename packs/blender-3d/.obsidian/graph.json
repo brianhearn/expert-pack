@@ -1,0 +1,51 @@
+{
+  "collapse-filter": true,
+  "search": "-file:_index",
+  "showTags": false,
+  "showAttachments": false,
+  "hideUnresolved": false,
+  "showOrphans": true,
+  "collapse-color-groups": false,
+  "colorGroups": [
+    {
+      "query": "type:concept",
+      "color": {
+        "a": 1,
+        "rgb": 4357097
+      }
+    },
+    {
+      "query": "type:workflow",
+      "color": {
+        "a": 1,
+        "rgb": 14869218
+      }
+    },
+    {
+      "query": "type:faq",
+      "color": {
+        "a": 1,
+        "rgb": 16753920
+      }
+    },
+    {
+      "query": "type:troubleshooting",
+      "color": {
+        "a": 1,
+        "rgb": 16711680
+      }
+    }
+  ],
+  "collapse-display": false,
+  "showArrow": false,
+  "textFadeMultiplier": 0,
+  "nodeSizeMultiplier": 1,
+  "lineSizeMultiplier": 1,
+  "collapse-forces": false,
+  "centerStrength": 0.518713248970312,
+  "repelStrength": 10,
+  "linkStrength": 1,
+  "linkDistance": 30,
+  "scale": 1,
+  "close": false
+}

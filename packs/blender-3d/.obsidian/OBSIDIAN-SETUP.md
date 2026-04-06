@@ -15,6 +15,7 @@ This `.obsidian/` folder makes any ExpertPack a native Obsidian vault.
 - **Link format:** Relative path (not wikilinks) — preserves GitHub compatibility
 - **Markdown links:** Enabled — standard `[text](file.md)` syntax throughout
 - **New link format:** Relative to file
+- **Graph view filter:** `_index.md` files excluded by default — reveals concept topology without hub-spoke noise. To see index nodes: open Graph View → Filters → clear the search field.
 
 ## Useful Dataview Queries
 
@@ -64,5 +65,6 @@ GROUP BY type
 
 - The `.obsidian/` folder is checked into the EP repo as a reference configuration
 - Copy it into any EP pack directory to make that pack Obsidian-ready
-- The graph view shows file relationships via standard markdown links
+- Graph view excludes `_index.md` by default — shows concept relationships, not navigation hubs
+- Add `related:` frontmatter to content files for richer graph cross-links between sections
 - ExpertPack content is fully readable/editable without Obsidian — plain `.md` files always

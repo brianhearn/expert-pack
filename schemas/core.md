@@ -112,16 +112,30 @@ When creating a new ExpertPack from scratch, follow this sequence:
 
 ### _index.md Files
 
-Every content directory should have an `_index.md` file that serves as a table of contents. It lists and links to all files in that directory with brief descriptions.
+Every content directory should have an `_index.md` file. Its role is **orientation only**: it lists what's available and helps agents and humans navigate. It is not a content hub and should not be the center of the graph view.
 
-Index files serve two purposes:
-1. **Agent navigation** — an agent can read the index to discover what's available without loading every file
-2. **Broad query matching** — RAG can match an index file against general queries like "what workflows are documented?"
+**What `_index.md` does:**
+1. **Agent navigation** — an agent reads the index to discover what's available without loading every file
+2. **Broad query matching** — RAG matches an index file against general queries like "what workflows are documented?"
+
+**What `_index.md` does NOT do:**
+- It is not the structural center of a section. Its outbound links point down to children, not across to siblings or other sections.
+- Cross-section relationships belong on the content files themselves (via `related:` frontmatter or inline links), not on the index.
+
+**Graph view:** The `.obsidian/graph.json` config excludes `_index.md` files from the graph by default (`-file:_index` filter). This keeps the graph view clean — showing actual concept relationships rather than every node clustering around its index hub. If you want to see index nodes, remove or clear the search filter in Graph View settings.
 
 **Example** `_index.md` for a product pack's concepts directory:
 
 ```markdown
-# {Section Name}
+---
+title: "Concepts"
+type: index
+tags: [concepts]
+pack: "pack-slug"
+retrieval_strategy: standard
+---
+
+# Concepts
 
 {Brief description of what this directory contains.}
 
@@ -1249,7 +1263,7 @@ retrieval_strategy: "standard|atomic"
 
 **Required:** `title`, `type`, `tags`, `pack`
 **Recommended:** `retrieval_strategy` (defaults to `standard` if omitted)
-**Optional:** `ek_score` (float 0.0–1.0, from blind probing)
+**Optional:** `ek_score` (float 0.0–1.0, from blind probing), `related` (list of relative paths to semantically related files)
 
 **Type reference:**
 
@@ -1306,20 +1320,54 @@ The repo root contains a `.obsidian/` folder with pre-configured settings:
 - `app.json` — link format, attachment folder, sensible defaults
 - `community-plugins.json` — Dataview + Templater enabled
 - `plugins/dataview/data.json` — Dataview settings
+- `graph.json` — graph view settings with `_index.md` excluded by default (see below)
 - `OBSIDIAN-SETUP.md` — setup guide + useful Dataview queries
 
 To use a pack as an Obsidian vault: copy the `.obsidian/` folder into the pack directory, then open that directory as a vault in Obsidian.
+
+### Graph View Configuration
+
+The `.obsidian/graph.json` config ships with `"search": "-file:_index"` — this excludes all `_index.md` files from the graph view by default.
+
+**Why:** `_index.md` files link to all their children by design (for agent navigation). Without filtering, every section cluster centers on its `_index` hub rather than showing the actual concept topology. Excluding index files reveals the true knowledge graph — content nodes connected by genuine semantic relationships.
+
+**To see index nodes:** Open Graph View → Filters panel → clear or modify the search field.
+
+**Color groups (pre-configured):**
+- Blue: `concept` files
+- Green: `workflow` files
+- Orange: `faq` files
+- Red: `troubleshooting` files
+
+### Content Cross-Linking
+
+For a rich graph view, content files should link directly to semantically related files in other sections. Use the optional `related:` frontmatter field:
+
+```yaml
+---
+title: "Geocoding Overview"
+type: concept
+tags: [geocoding, data]
+pack: "my-pack"
+retrieval_strategy: standard
+related:
+  - ../workflows/import-data.md
+  - ../troubleshooting/geocoding-failures.md
+---
+```
+
+Or use inline links within the file body (`[Import Data workflow](../workflows/import-data.md)`). Both create edges in the Obsidian graph. Cross-links are optional but improve graph density and agent context traversal. Prioritize links that represent genuine conceptual dependencies, not exhaustive catalogs.
 
 ### What Obsidian Adds
 
 With frontmatter in place, Obsidian users get:
 - **Dataview queries** — live tables filtering by `type`, `pack`, `ek_score`, `retrieval_strategy`, tags
-- **Graph view** — visual map of file relationships via markdown links
+- **Graph view** — visual map of concept relationships (index hubs excluded by default)
 - **Tag pane** — browse all content by type and domain tag
 - **Templater templates** — create new EP-schema-compliant files from templates
 - **Search** — full-text + frontmatter field search across the pack
 
 ---
 
-*Schema version: 2.8*
+*Schema version: 2.9*
 *Last updated: 2026-04-06*
