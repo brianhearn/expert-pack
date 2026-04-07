@@ -1268,7 +1268,7 @@ These principles apply to every ExpertPack, regardless of type:
 | EK ratio | Measure and maximize esoteric knowledge ratio; declare in manifest; guide hydration priority; see [Esoteric Knowledge Ratio](#esoteric-knowledge-ek-ratio) |
 | Conflict resolution | Never overwrite — flag and ask the human |
 | Version control | Git-native, semantic versioning |
-| Obsidian compatibility | Per-file YAML frontmatter (`title`, `type`, `tags`, `pack`, `retrieval_strategy`) on all content files; `.obsidian/` reference config in repo root; standard relative Markdown links (not wikilinks); see [Obsidian Compatibility](#obsidian-compatibility) |
+| Obsidian compatibility | Per-file YAML frontmatter (`title`, `type`, `tags`, `pack`, `retrieval_strategy`) on all content files; `.obsidian/` reference config in repo root; `[[wikilinks]]` for body cross-links (graph-visible); bare filenames in `related:` frontmatter; unique basenames vault-wide via directory prefix; see [Obsidian Compatibility](#obsidian-compatibility) |
 
 ---
 
@@ -1339,9 +1339,13 @@ frontmatter
 
 ### Link Format
 
-ExpertPacks use **standard relative Markdown links** (`[text](../other-file.md)`), not Obsidian wikilinks (`[[other-file]]`). This preserves compatibility with GitHub rendering, standard Markdown processors, and all EP tooling.
+ExpertPacks use **Obsidian wikilinks** (`[[filename.md|Label]]`) for body cross-links. Wikilinks are the only link format that renders as graph edges in Obsidian's graph view — standard Markdown links (`[text](file.md)`) are invisible to the graph.
 
-The `.obsidian/` reference config sets Obsidian's link format to `relative` to match — Obsidian will create new links in standard format by default.
+Because all filenames are unique vault-wide (see [Filename Uniqueness](#filename-uniqueness-required)), wikilinks use **bare filenames only** — no paths. `[[sum-nina-street.md|Nina Street]]` not `[[../summaries/stories/sum-nina-street.md|Nina Street]]`.
+
+**Trade-off:** Wikilinks render as raw text on GitHub. This is acceptable — the primary consumption surfaces are Obsidian and agent retrieval, not GitHub browsing. GitHub users can still navigate via directory structure.
+
+The `.obsidian/` reference config should set link format to `shortest` to match — Obsidian will create new links as bare-filename wikilinks by default.
 
 ### The `.obsidian/` Reference Folder
 
@@ -1387,18 +1391,20 @@ tags: [geocoding, data]
 pack: "my-pack"
 retrieval_strategy: standard
 related:
-  - ../workflows/import-data.md
-  - ../troubleshooting/geocoding-failures.md
+  - wf-import-data.md
+  - ts-geocoding-failures.md
 ---
 ```
 
-**Layer 2 — Inline body links** (agent-readable navigation):
+`related:` entries use **bare filenames only** — no directory paths. Since all filenames are unique vault-wide (prefixed by directory type), bare names are unambiguous and compatible with both agent traversal and Obsidian resolution.
+
+**Layer 2 — Inline body wikilinks** (graph edges + agent-readable navigation):
 
 ```markdown
-**Related:** [Import Data](../workflows/import-data.md), [Geocoding Failures](../troubleshooting/geocoding-failures.md)
+**Related:** [[wf-import-data.md|Import Data]], [[ts-geocoding-failures.md|Geocoding Failures]]
 ```
 
-Both layers are recommended. Frontmatter powers Obsidian graph edges and structured queries. Body links surface the connections to agents reading the file directly — they don't need to inspect frontmatter to know where to go next.
+Both layers are recommended. Frontmatter powers structured queries and agent traversal. Body wikilinks create Obsidian graph edges and surface the connections to agents reading the file directly — they don't need to inspect frontmatter to know where to go next.
 
 #### Link Density by Pack Type
 
