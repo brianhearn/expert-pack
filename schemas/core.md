@@ -1341,7 +1341,14 @@ The `.obsidian/graph.json` config ships with `"search": "-file:_index"` — this
 
 ### Content Cross-Linking
 
-For a rich graph view, content files should link directly to semantically related files in other sections. Use the optional `related:` frontmatter field:
+Content files should link directly to semantically related files. This serves two distinct purposes:
+
+1. **Agent traversal** — An agent that retrieves one file can follow links to neighboring context without firing another RAG query. Dense cross-links turn a flat file collection into a navigable knowledge graph.
+2. **Obsidian graph view** — Links become graph edges. A well-linked pack reveals its topology visually; an unlinked pack looks like a disconnected scatter plot.
+
+Use both layers together:
+
+**Layer 1 — `related:` frontmatter** (Obsidian graph edges + RAG metadata):
 
 ```yaml
 ---
@@ -1356,7 +1363,57 @@ related:
 ---
 ```
 
-Or use inline links within the file body (`[Import Data workflow](../workflows/import-data.md)`). Both create edges in the Obsidian graph. Cross-links are optional but improve graph density and agent context traversal. Prioritize links that represent genuine conceptual dependencies, not exhaustive catalogs.
+**Layer 2 — Inline body links** (agent-readable navigation):
+
+```markdown
+**Related:** [Import Data](../workflows/import-data.md), [Geocoding Failures](../troubleshooting/geocoding-failures.md)
+```
+
+Both layers are recommended. Frontmatter powers Obsidian graph edges and structured queries. Body links surface the connections to agents reading the file directly — they don't need to inspect frontmatter to know where to go next.
+
+#### Link Density by Pack Type
+
+The right amount of cross-linking varies by pack type and content structure:
+
+**Product and process packs:** Link files that share a workflow, a failure mode, or a conceptual dependency. A concept file should link to its related workflows and troubleshooting entries. A workflow should link to the concepts it depends on and the errors it can trigger. Aim for 2–5 related links per file; more than 8 is usually a sign of over-linking.
+
+**Person packs (stories specifically):** Story files should form a traversable graph, not a star. Every story that shares a person, a location, a time period, or a thematic thread should link to its neighbors — bidirectionally. The test: if an agent loads one story from a person's childhood, it should be able to traverse the entire era by following links, without needing to go back through the index.
+
+Person pack linking patterns:
+- **Location cluster:** All stories set at the same place link to each other (e.g., all Nina Street stories cross-link)
+- **Person thread:** Stories featuring the same recurring character link across the arc
+- **Chronological neighbors:** Stories from the same life era link to adjacent periods
+- **Thematic echo:** Stories sharing a theme (pranks, faith, electronics) link across locations and eras
+- **Verbatim ↔ summary:** Each summary file links to its verbatim counterpart and vice versa
+
+#### Bidirectionality
+
+Links should be bidirectional where the relationship is symmetric. If file A links to file B, file B should link back to file A. Asymmetric links (A → B but not B → A) create dead ends in agent traversal and leave orphaned nodes in the graph.
+
+The easiest way to maintain bidirectionality: when adding a `related:` entry to a file, also add the reverse link to each target file.
+
+#### What to Link, What to Skip
+
+**Link when:**
+- The target file provides necessary context for understanding this one
+- They share a central character, location, or event
+- They're chronological neighbors in a sequence
+- An agent reading this file would predictably want the other one next
+
+**Don't link when:**
+- The relationship is distant or generic ("both are about people")
+- You'd be linking everything to everything — signal collapses
+- The link would only make sense to a human browsing, not an agent retrieving
+
+#### Maintenance
+
+Cross-links decay when files are renamed, moved, or deleted. After any file restructuring, verify that links to the changed file still resolve. A broken link in frontmatter is silent — it won't error, but it will leave an orphaned node in the graph and a dead end for agent traversal. Periodically run:
+
+```bash
+grep -r 'related:' . | grep -o '[a-z/_-]*\.md' | sort -u
+```
+
+and verify each referenced file exists.
 
 ### What Obsidian Adds
 
@@ -1370,4 +1427,4 @@ With frontmatter in place, Obsidian users get:
 ---
 
 *Schema version: 2.9*
-*Last updated: 2026-04-06*
+*Last updated: 2026-04-07*
