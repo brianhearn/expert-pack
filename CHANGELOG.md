@@ -14,7 +14,7 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ### Added
 - `.obsidian/graph.json` — pre-configured graph view settings:
-  - `_index.md` files excluded by default (`-file:_index` filter) — removes hub-spoke noise, reveals true concept topology
+  - `_index.md` files excluded by default (`-_index` filter) — removes hub-spoke noise, reveals true concept topology
   - Color groups: blue=concept, green=workflow, orange=faq, red=troubleshooting
 - `schemas/core.md` — `related:` frontmatter field documented as optional; enables explicit cross-links between content files for richer graph edges and agent context traversal
 

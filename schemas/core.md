@@ -122,7 +122,7 @@ Every content directory should have an `_index.md` file. Its role is **orientati
 - It is not the structural center of a section. Its outbound links point down to children, not across to siblings or other sections.
 - Cross-section relationships belong on the content files themselves (via `related:` frontmatter or inline links), not on the index.
 
-**Graph view:** The `.obsidian/graph.json` config excludes `_index.md` files from the graph by default (`-file:_index` filter). This keeps the graph view clean — showing actual concept relationships rather than every node clustering around its index hub. If you want to see index nodes, remove or clear the search filter in Graph View settings.
+**Graph view:** The `.obsidian/graph.json` config excludes `_index.md` files from the graph by default (`-_index` filter). This keeps the graph view clean — showing actual concept relationships rather than every node clustering around its index hub. If you want to see index nodes, remove or clear the search filter in Graph View settings.
 
 **Example** `_index.md` for a product pack's concepts directory:
 
@@ -1327,7 +1327,7 @@ To use a pack as an Obsidian vault: copy the `.obsidian/` folder into the pack d
 
 ### Graph View Configuration
 
-The `.obsidian/graph.json` config ships with `"search": "-file:_index"` — this excludes all `_index.md` files from the graph view by default.
+The `.obsidian/graph.json` config ships with `"search": "-_index"` — this excludes all `_index.md` files from the graph view by default.
 
 **Why:** `_index.md` files link to all their children by design (for agent navigation). Without filtering, every section cluster centers on its `_index` hub rather than showing the actual concept topology. Excluding index files reveals the true knowledge graph — content nodes connected by genuine semantic relationships.
 
