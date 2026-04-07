@@ -121,6 +121,8 @@ An AI retelling a person's story needs their actual words — the humor, the pac
 
 Verbatim and summary directories should mirror each other — if `verbatim/stories/{story-slug}.md` exists, there should be a corresponding `summaries/stories/{story-slug}.md`. Subdirectories within verbatim/ and summaries/ are organized by content type.
 
+**Cross-linking is required:** Every verbatim file must include a `related:` frontmatter entry pointing to its summary, and a `**Related:**` wikilink body link (e.g., `[[story-slug.md|Summary — Story Title]]`). Every summary must link back to its verbatim via `canonical_verbatim:` frontmatter. Verbatim files without a summary link are orphaned nodes in Obsidian's graph view and dead ends for agent traversal.
+
 Content Type Taxonomy
 
 Verbatim and summary directories are organized by content type. The following taxonomy provides recommended categories — use what fits, extend as needed:

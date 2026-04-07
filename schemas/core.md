@@ -1384,7 +1384,7 @@ Person pack linking patterns:
 - **Person thread:** Stories featuring the same recurring character link across the arc
 - **Chronological neighbors:** Stories from the same life era link to adjacent periods
 - **Thematic echo:** Stories sharing a theme (pranks, faith, electronics) link across locations and eras
-- **Verbatim ↔ summary:** Each summary file links to its verbatim counterpart and vice versa
+- **Verbatim ↔ summary:** Each summary file links to its verbatim counterpart and vice versa (**required** — verbatim files without a summary link are orphaned in graph views)
 
 #### Bidirectionality
 
