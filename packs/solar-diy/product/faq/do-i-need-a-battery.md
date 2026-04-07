@@ -1,11 +1,15 @@
 ---
-title: "Do I Need a Battery with Solar?"
-type: "faq"
-tags: [battery-systems-2026, faq-battery-decision, grid-tied-vs-hybrid, product, system-design-fundamentals]
-pack: "solar-diy-product"
-retrieval_strategy: "standard"
+title: Do I Need a Battery with Solar?
+type: faq
+tags:
+- battery-systems-2026
+- faq-battery-decision
+- grid-tied-vs-hybrid
+- product
+- system-design-fundamentals
+pack: solar-diy-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=product, topic=faq-battery-decision, related=battery-systems-2026,grid-tied-vs-hybrid,system-design-fundamentals -->
 
 > **Lead summary:** A battery is not required for solar to work — grid-tied systems function without one. A battery is needed if you want backup power during outages, or if you want to shift solar production to high-rate evening hours (time-of-use arbitrage). Battery costs dropped significantly in 2023–2026; the 30% federal ITC now applies to battery storage, making economics more favorable.
@@ -60,6 +64,6 @@ TOU arbitrage payback in CA (charging at $0.15/kWh off-peak, discharging at $0.5
 
 ## Related
 
-- Full battery comparison: [`battery-systems-2026.md`](../specifications/battery-systems-2026.md)
-- Grid-tied vs. hybrid decision: [`grid-tied-vs-hybrid.md`](../../process/decisions/grid-tied-vs-hybrid.md)
-- System design for battery sizing: [`system-design-fundamentals.md`](../concepts/system-design-fundamentals.md)
+- Full battery comparison: [[battery-systems-2026.md|`battery-systems-2026.md`]]
+- Grid-tied vs. hybrid decision: `grid-tied-vs-hybrid.md`
+- System design for battery sizing: [[system-design-fundamentals.md|`system-design-fundamentals.md`]]

@@ -1,11 +1,14 @@
 ---
-title: "Why Is My Automation Not Firing?"
-type: "faq"
-tags: [automation-debugging, automation-fundamentals, diagnostic-guide, faq]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Why Is My Automation Not Firing?
+type: faq
+tags:
+- automation-debugging
+- automation-fundamentals
+- diagnostic-guide
+- faq
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=faq, topic=automation-debugging, related=automation-fundamentals,diagnostic-guide -->
 
 # Why Is My Automation Not Firing?
@@ -96,5 +99,5 @@ Look for WARNING or ERROR entries around the time the automation should have fir
 | Fires too many times | Template trigger oscillating | Add `for:` duration to stabilize |
 | Fires on device going offline | `unavailable` state triggering | Add `not_from: [unavailable, unknown]` |
 
-→ See [automation-fundamentals.md](../concepts/automation-fundamentals.md) for trigger/condition/action reference
-→ See [diagnostic-guide.md](../troubleshooting/diagnostic-guide.md) for deeper troubleshooting
+→ See [[automation-fundamentals.md]] for trigger/condition/action reference
+→ See [[diagnostic-guide.md]] for deeper troubleshooting

@@ -1,11 +1,12 @@
 ---
-title: "Decision: Installation Method"
-type: "decision"
-tags: [decisions, installation-method]
-pack: "home-assistant-process"
-retrieval_strategy: "standard"
+title: 'Decision: Installation Method'
+type: decision
+tags:
+- decisions
+- installation-method
+pack: home-assistant-process
+retrieval_strategy: standard
 ---
-
 # Decision: Installation Method
 
 ## The Decision
@@ -147,4 +148,4 @@ Do you have an existing Synology/QNAP NAS?
     └─ No → Use HA OS
 ```
 
-→ See [Phase 1: Planning](../phases/01-planning.md) for hardware recommendations that pair well with HAOS.
+→ See [[01-planning.md|Phase 1: Planning]] for hardware recommendations that pair well with HAOS.

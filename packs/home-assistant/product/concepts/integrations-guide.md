@@ -1,11 +1,15 @@
 ---
-title: "Integrations Guide — Evaluating, Choosing, and Managing HA Integrations"
-type: "concept"
-tags: [concepts, core-architecture, esphome-fundamentals, integrations-guide, protocols]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Integrations Guide — Evaluating, Choosing, and Managing HA Integrations
+type: concept
+tags:
+- concepts
+- core-architecture
+- esphome-fundamentals
+- integrations-guide
+- protocols
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=integrations-guide, related=core-architecture,protocols,esphome-fundamentals -->
 ---
 sources:
@@ -296,10 +300,10 @@ MQTT is a lightweight pub/sub messaging protocol. It's not a product — it's th
 
 ## Related
 
-- [Core Architecture](core-architecture.md) — How integrations, devices, and entities relate
-- [Smart Home Protocols](protocols.md) — Choosing the right protocol for devices
-- [ESPHome Fundamentals](esphome-fundamentals.md) — Custom sensor integration
-- [Troubleshooting](../troubleshooting/diagnostic-guide.md) — Integration debugging
+- [[core-architecture.md|Core Architecture]] — How integrations, devices, and entities relate
+- [[protocols.md|Smart Home Protocols]] — Choosing the right protocol for devices
+- [[esphome-fundamentals.md|ESPHome Fundamentals]] — Custom sensor integration
+- [[diagnostic-guide.md|Troubleshooting]] — Integration debugging
 
 ---
 

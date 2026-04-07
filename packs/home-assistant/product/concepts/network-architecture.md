@@ -1,11 +1,15 @@
 ---
-title: "Network Architecture for Smart Homes"
-type: "concept"
-tags: [backup-migration, concepts, integrations-guide, network-architecture, protocols]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Network Architecture for Smart Homes
+type: concept
+tags:
+- backup-migration
+- concepts
+- integrations-guide
+- network-architecture
+- protocols
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=network-architecture, related=protocols,integrations-guide,backup-migration -->
 ---
 sources:
@@ -304,6 +308,6 @@ UniFi access points are the community standard — they handle VLAN-tagged SSIDs
 
 ## Related
 
-- [ESPHome Fundamentals](esphome-fundamentals.md) — ESP32 sensors that work with MQTT (less mDNS dependency)
-- [Integration Guide](integrations-guide.md) — Integration-specific network requirements
-- [Backup & Migration](backup-migration.md) — Keeping your HA config safe during network changes
+- [[esphome-fundamentals.md|ESPHome Fundamentals]] — ESP32 sensors that work with MQTT (less mDNS dependency)
+- [[integrations-guide.md|Integration Guide]] — Integration-specific network requirements
+- [[backup-migration.md|Backup & Migration]] — Keeping your HA config safe during network changes

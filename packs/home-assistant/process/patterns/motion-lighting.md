@@ -1,11 +1,14 @@
 ---
-title: "Motion-Activated Lighting — The Definitive Pattern"
+title: Motion-Activated Lighting — The Definitive Pattern
 type: pattern
-tags: [pattern, motion-lighting, automation, home-assistant-process]
+tags:
+- pattern
+- motion-lighting
+- automation
+- home-assistant-process
 pack: home-assistant-process
 retrieval_strategy: standard
 ---
-
 ---
 sources:
   - type: documentation
@@ -329,6 +332,6 @@ If you don't want to write YAML, community blueprints handle most of these patte
 
 ## Related
 
-- [Automation Fundamentals](../concepts/automation-fundamentals.md) — Triggers, conditions, actions, modes
-- [Presence Detection](../concepts/presence-detection.md) — Multi-sensor presence for room-level awareness
-- [Dashboard Design](../concepts/dashboard-design.md) — Creating override toggles and status indicators
+- Automation Fundamentals — Triggers, conditions, actions, modes
+- Presence Detection — Multi-sensor presence for room-level awareness
+- Dashboard Design — Creating override toggles and status indicators

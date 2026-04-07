@@ -1,11 +1,15 @@
 ---
-title: "Core Architecture — The HA Mental Model"
-type: "concept"
-tags: [automation-fundamentals, concepts, core-architecture, integrations-guide, protocols]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Core Architecture — The HA Mental Model
+type: concept
+tags:
+- automation-fundamentals
+- concepts
+- core-architecture
+- integrations-guide
+- protocols
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=core-architecture, related=automation-fundamentals,protocols,integrations-guide -->
 ---
 sources:
@@ -109,5 +113,5 @@ The **Supervisor** provides: add-on store (like Mosquitto MQTT broker, Node-RED,
 
 ## Related
 
-- [Smart Home Protocols](protocols.md) — How devices actually communicate with HA
-- [Automation Fundamentals](automation-fundamentals.md) — Using the state machine for automation
+- [[protocols.md|Smart Home Protocols]] — How devices actually communicate with HA
+- [[automation-fundamentals.md|Automation Fundamentals]] — Using the state machine for automation

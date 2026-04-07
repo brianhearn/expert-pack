@@ -1,11 +1,12 @@
 ---
-title: "Decision: Smart Home Protocol Selection"
-type: "decision"
-tags: [decisions, protocol-selection]
-pack: "home-assistant-process"
-retrieval_strategy: "standard"
+title: 'Decision: Smart Home Protocol Selection'
+type: decision
+tags:
+- decisions
+- protocol-selection
+pack: home-assistant-process
+retrieval_strategy: standard
 ---
-
 # Decision: Smart Home Protocol Selection
 
 ## The Decision
@@ -155,4 +156,4 @@ This decision determines which devices you can buy, which coordinator hardware y
 - Z-Wave: Aeotec Z-Stick Gen7 ($55)
 - Both: Nortek HUSBZB-1 ($65) supports both protocols on one stick
 
-→ See [Phase 3: Protocol Setup](../phases/03-protocol-setup.md) for installation and pairing instructions.
+→ See [[03-protocol-setup.md|Phase 3: Protocol Setup]] for installation and pairing instructions.

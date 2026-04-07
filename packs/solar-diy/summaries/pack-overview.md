@@ -1,11 +1,12 @@
 ---
-title: "Summary — Solar DIY Composite Pack Overview"
-type: "summary"
-tags: [pack-overview, summaries]
-pack: "solar-diy"
-retrieval_strategy: "standard"
+title: Summary — Solar DIY Composite Pack Overview
+type: summary
+tags:
+- pack-overview
+- summaries
+pack: solar-diy
+retrieval_strategy: standard
 ---
-
 # Summary — Solar DIY Composite Pack Overview
 
 This is a high-level entry point for the Solar DIY ExpertPack. It combines two sub-packs into a single residential solar guide.
@@ -48,28 +49,28 @@ The Solar DIY composite pack covers the full arc of a residential solar project:
 ## Navigate the Pack
 
 **Technology questions** → start in `product/`
-- How inverters work: [`product/concepts/inverter-types.md`](../product/concepts/inverter-types.md)
+- How inverters work: [[inverter-types.md|`product/concepts/inverter-types.md`]]
 - Panel and battery comparisons: [`product/specifications/`](../product/specifications/)
-- System design math: [`product/concepts/system-design-fundamentals.md`](../product/concepts/system-design-fundamentals.md)
-- NEC rapid shutdown requirements: [`product/concepts/nec-rapid-shutdown.md`](../product/concepts/nec-rapid-shutdown.md)
-- Rapid reference definitions: [`product/glossary.md`](../product/glossary.md)
+- System design math: [[system-design-fundamentals.md|`product/concepts/system-design-fundamentals.md`]]
+- NEC rapid shutdown requirements: [[nec-rapid-shutdown.md|`product/concepts/nec-rapid-shutdown.md`]]
+- Rapid reference definitions: [[glossary.md|`product/glossary.md`]]
 
 **Process and how-to questions** → start in `process/`
-- Should I DIY or hire? [`process/decisions/diy-vs-contractor.md`](../process/decisions/diy-vs-contractor.md)
-- Do I need a battery? [`process/decisions/grid-tied-vs-hybrid.md`](../process/decisions/grid-tied-vs-hybrid.md)
-- Which inverter type? [`process/decisions/inverter-topology.md`](../process/decisions/inverter-topology.md)
-- Full 7-phase roadmap: [`process/overview.md`](../process/overview.md)
-- Common mistakes: [`process/gotchas/common-mistakes.md`](../process/gotchas/common-mistakes.md)
+- Should I DIY or hire? [[diy-vs-contractor.md|`process/decisions/diy-vs-contractor.md`]]
+- Do I need a battery? [[grid-tied-vs-hybrid.md|`process/decisions/grid-tied-vs-hybrid.md`]]
+- Which inverter type? [[inverter-topology.md|`process/decisions/inverter-topology.md`]]
+- Full 7-phase roadmap: [[overview.md|`process/overview.md`]]
+- Common mistakes: [[common-mistakes.md|`process/gotchas/common-mistakes.md`]]
 
 **RAG-optimized summaries:**
-- Product summary: [`product/summaries/product-overview.md`](../product/summaries/product-overview.md)
-- Process summary: [`process/summaries/process-overview.md`](../process/summaries/process-overview.md)
+- Product summary: [[product-overview.md|`product/summaries/product-overview.md`]]
+- Process summary: [[process-overview.md|`process/summaries/process-overview.md`]]
 
 **Atomic propositions (for semantic retrieval):**
-- Product concepts: [`product/propositions/concepts.md`](../product/propositions/concepts.md)
-- Process phases: [`process/propositions/phases.md`](../process/propositions/phases.md)
-- Decisions & gotchas: [`process/propositions/decisions-gotchas.md`](../process/propositions/decisions-gotchas.md)
-- Pack-level overview: [`propositions/overview.md`](../propositions/overview.md)
+- Product concepts: [[concepts.md|`product/propositions/concepts.md`]]
+- Process phases: [[phases.md|`process/propositions/phases.md`]]
+- Decisions & gotchas: [[decisions-gotchas.md|`process/propositions/decisions-gotchas.md`]]
+- Pack-level overview: [[overview.md|`propositions/overview.md`]]
 
 ---
 

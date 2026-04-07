@@ -1,11 +1,12 @@
 ---
-title: "Decision: Hardware Selection"
-type: "decision"
-tags: [decisions, hardware-selection]
-pack: "home-assistant-process"
-retrieval_strategy: "standard"
+title: 'Decision: Hardware Selection'
+type: decision
+tags:
+- decisions
+- hardware-selection
+pack: home-assistant-process
+retrieval_strategy: standard
 ---
-
 # Decision: Hardware Selection
 
 ## The Decision
@@ -207,4 +208,4 @@ Running HA OS as a VM gives you snapshots, easy migration, and the full HAOS exp
 
 **The most common regret:** Starting on an SD card. Don't. Buy the SSD at the same time as the Pi.
 
-→ See [Phase 1: Planning](../phases/01-planning.md) for the full checklist before you start.
+→ See [[01-planning.md|Phase 1: Planning]] for the full checklist before you start.

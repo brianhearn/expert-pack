@@ -1,11 +1,14 @@
 ---
-title: "System Design Fundamentals"
+title: System Design Fundamentals
 type: concept
-tags: [concept, system-design, solar-fundamentals, solar-diy-product]
+tags:
+- concept
+- system-design
+- solar-fundamentals
+- solar-diy-product
 pack: solar-diy-product
 retrieval_strategy: standard
 ---
-
 ---
 sources:
   - type: documentation
@@ -150,7 +153,7 @@ Min panels = 550 ÷ 39.11 = 14.06 → 15 panels min
 
 ## Step 4: Battery Sizing
 
-See [Battery Systems 2026](../specifications/battery-systems-2026.md) for product comparisons.
+See [[battery-systems-2026.md|Battery Systems 2026]] for product comparisons.
 
 ### Key Questions
 1. **What loads do you want to back up?** Essential circuits (fridge, lights, Wi-Fi) need ~3-5 kW. Whole-home with A/C needs 10-15 kW+
@@ -160,6 +163,6 @@ See [Battery Systems 2026](../specifications/battery-systems-2026.md) for produc
 
 ## Related
 
-- [Solar Panel Landscape](../specifications/solar-panels-2026.md) — Current panel specs for design calculations
-- [Battery Systems](../specifications/battery-systems-2026.md) — Battery comparison for Step 4
-- [Inverter Types](inverter-types.md) — Architecture selection for Step 2
+- [[solar-panels-2026.md|Solar Panel Landscape]] — Current panel specs for design calculations
+- [[battery-systems-2026.md|Battery Systems]] — Battery comparison for Step 4
+- [[inverter-types.md|Inverter Types]] — Architecture selection for Step 2

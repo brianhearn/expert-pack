@@ -1,11 +1,10 @@
 ---
-title: "Home Assistant Platform Reference"
-type: "overview"
+title: Home Assistant Platform Reference
+type: overview
 tags: []
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 # Home Assistant Platform Reference
 
 ## What Home Assistant Is
@@ -30,14 +29,14 @@ This is the **reference layer** — it answers questions about what Home Assista
 
 | Section | Contents |
 |---------|----------|
-| [concepts/](concepts/_index.md) | Architecture, protocols, automation engine, YAML, ESPHome, dashboards, integrations, presence detection, voice assistant, energy management, networking, backup |
-| [troubleshooting/](troubleshooting/_index.md) | Diagnostic guide, common mistakes |
-| [faq/](faq/common-questions.md) | Frequently asked questions |
-| [glossary.md](glossary.md) | Terminology and definitions |
+| [[_index.md|concepts/]] | Architecture, protocols, automation engine, YAML, ESPHome, dashboards, integrations, presence detection, voice assistant, energy management, networking, backup |
+| [[_index.md|troubleshooting/]] | Diagnostic guide, common mistakes |
+| [[common-questions.md|faq/]] | Frequently asked questions |
+| [[glossary.md]] | Terminology and definitions |
 
 ## What This Pack Does NOT Cover
 
-The **how to build a smart home** journey — phased guidance, decision frameworks, and implementation patterns — lives in the companion **[process pack](../process/overview.md)**. Use both together for the full picture.
+The **how to build a smart home** journey — phased guidance, decision frameworks, and implementation patterns — lives in the companion **[[overview.md|process pack]]**. Use both together for the full picture.
 
 ## Version Coverage
 

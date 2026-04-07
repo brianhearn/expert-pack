@@ -1,11 +1,12 @@
 ---
-title: "Phase 4: Automation Building"
-type: "phase"
-tags: [04-automation-building, phases]
-pack: "home-assistant-process"
-retrieval_strategy: "atomic"
+title: 'Phase 4: Automation Building'
+type: phase
+tags:
+- 04-automation-building
+- phases
+pack: home-assistant-process
+retrieval_strategy: atomic
 ---
-
 # Phase 4: Automation Building
 
 ## Goal
@@ -34,7 +35,7 @@ happens"
 **Conditions** gate the action: only run if it's after sunset, if someone is home, if the light is already off.  
 **Actions** do the work: turn on lights, send notifications, set thermostats, call services.
 
-See [Automation Fundamentals](../../product/concepts/automation-fundamentals.md) for the full model.
+See Automation Fundamentals for the full model.
 
 ---
 
@@ -77,7 +78,7 @@ The cleanest pattern uses a **timer** or a **delay in the same automation**:
         entity_id: light.kitchen
 ```
 
-→ See the full pattern in [Motion Lighting](../patterns/motion-lighting.md)
+→ See the full pattern in [[motion-lighting.md|Motion Lighting]]
 
 ---
 
@@ -248,4 +249,4 @@ ha core check
 
 ## What's Next
 
-→ [Phase 5: Dashboard Design](05-dashboard-design.md) — Build dashboards for daily at-a-glance control
+→ [[05-dashboard-design.md|Phase 5: Dashboard Design]] — Build dashboards for daily at-a-glance control

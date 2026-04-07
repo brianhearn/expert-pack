@@ -1,11 +1,14 @@
 ---
-title: "Presence Detection — The Hardest Problem in Home Automation"
-type: "concept"
-tags: [automation-fundamentals, concepts, esphome-fundamentals, presence-detection]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Presence Detection — The Hardest Problem in Home Automation
+type: concept
+tags:
+- automation-fundamentals
+- concepts
+- esphome-fundamentals
+- presence-detection
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=presence-detection, related=esphome-fundamentals,automation-fundamentals -->
 ---
 sources:
@@ -301,9 +304,9 @@ template:
 
 ## Related
 
-- [ESPHome Fundamentals](esphome-fundamentals.md) — Building BLE proxies and mmWave sensors with ESP32
-- [Automation Fundamentals](automation-fundamentals.md) — Using presence in triggers and conditions
-- [Motion Lighting Workflow](../workflows/motion-lighting.md) — Room-level presence applied to lighting
+- [[esphome-fundamentals.md|ESPHome Fundamentals]] — Building BLE proxies and mmWave sensors with ESP32
+- [[automation-fundamentals.md|Automation Fundamentals]] — Using presence in triggers and conditions
+- Motion Lighting Workflow — Room-level presence applied to lighting
 
 ---
 

@@ -1,11 +1,16 @@
 ---
-title: "Inverter Types — Microinverters vs String Inverters vs Optimizers"
-type: "concept"
-tags: [component-selection, inverter-topology, inverter-types, nec-rapid-shutdown, product, system-design-fundamentals]
-pack: "solar-diy-product"
-retrieval_strategy: "standard"
+title: Inverter Types — Microinverters vs String Inverters vs Optimizers
+type: concept
+tags:
+- component-selection
+- inverter-topology
+- inverter-types
+- nec-rapid-shutdown
+- product
+- system-design-fundamentals
+pack: solar-diy-product
+retrieval_strategy: standard
 ---
-
 # Inverter Types — Microinverters vs String Inverters vs Optimizers
 
 <!-- context: section=product, topic=inverter-types, related=system-design-fundamentals,nec-rapid-shutdown,inverter-topology,component-selection -->
@@ -124,4 +129,4 @@ Hybrid approach: each panel gets a DC-DC power optimizer, but a central string i
 
 ## The UL 3741 Alternative
 
-A newer compliance path allows string inverter systems to meet rapid shutdown without MLPE by using UL 3741-listed PV Hazard Control Systems. These systems use wire management and fault protection instead of per-module electronics. This can reduce component count and long-term maintenance, but adoption is still early and not all AHJs accept it yet. See [NEC Rapid Shutdown](nec-rapid-shutdown.md) for details.
+A newer compliance path allows string inverter systems to meet rapid shutdown without MLPE by using UL 3741-listed PV Hazard Control Systems. These systems use wire management and fault protection instead of per-module electronics. This can reduce component count and long-term maintenance, but adoption is still early and not all AHJs accept it yet. See [[nec-rapid-shutdown.md|NEC Rapid Shutdown]] for details.

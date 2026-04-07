@@ -1,11 +1,12 @@
 ---
-title: "Phase 1: Planning"
-type: "phase"
-tags: [01-planning, phases]
-pack: "home-assistant-process"
-retrieval_strategy: "atomic"
+title: 'Phase 1: Planning'
+type: phase
+tags:
+- 01-planning
+- phases
+pack: home-assistant-process
+retrieval_strategy: atomic
 ---
-
 # Phase 1: Planning
 
 ## Goal
@@ -46,7 +47,7 @@ Your HA server needs to run 24/7. It needs enough CPU and RAM to handle integrat
 - 32-bit ARM boards — limited add-on support
 - Shared servers running other production workloads
 
-→ See [Hardware Selection Decision](../decisions/hardware-selection.md) for full comparison and buying advice.
+→ See [[hardware-selection.md|Hardware Selection Decision]] for full comparison and buying advice.
 
 ---
 
@@ -63,7 +64,7 @@ Home Assistant comes in four flavors. The differences are significant.
 
 **Recommendation:** Choose **HA OS** unless you have a specific reason not to. It's the only method where you get full add-on support (ESPHome, Zigbee2MQTT, Frigate, etc.), automatic OS-level updates, and official Supervisor support. The tradeoff — you don't have general OS access — is rarely a problem in practice.
 
-→ See [Installation Method Decision](../decisions/installation-method.md) for detailed tradeoffs.
+→ See [[installation-method.md|Installation Method Decision]] for detailed tradeoffs.
 
 ---
 
@@ -112,7 +113,7 @@ While planning, decide which smart home protocol you'll lead with. This determin
 
 **TL;DR for most people:** Start with **Zigbee**. It's cheap, local, mature, and has the largest device ecosystem.
 
-→ See [Protocol Selection Decision](../decisions/protocol-selection.md) for full Zigbee vs Z-Wave vs Wi-Fi vs Thread/Matter comparison.
+→ See [[protocol-selection.md|Protocol Selection Decision]] for full Zigbee vs Z-Wave vs Wi-Fi vs Thread/Matter comparison.
 
 ---
 
@@ -128,4 +129,4 @@ While planning, decide which smart home protocol you'll lead with. This determin
 
 ## What's Next
 
-→ [Phase 2: Initial Setup](02-initial-setup.md) — Install HA OS and configure your first integrations
+→ [[02-initial-setup.md|Phase 2: Initial Setup]] — Install HA OS and configure your first integrations

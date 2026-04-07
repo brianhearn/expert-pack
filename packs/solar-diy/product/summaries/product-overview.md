@@ -1,11 +1,12 @@
 ---
-title: "Summary — Solar DIY Product Pack Overview"
-type: "summary"
-tags: [product-overview, summaries]
-pack: "solar-diy-product"
-retrieval_strategy: "standard"
+title: Summary — Solar DIY Product Pack Overview
+type: summary
+tags:
+- product-overview
+- summaries
+pack: solar-diy-product
+retrieval_strategy: standard
 ---
-
 # Summary — Solar DIY Product Pack Overview
 
 This summary covers all technology reference content in the Solar DIY product pack. Follow links to source files for full detail.
@@ -18,7 +19,7 @@ Residential solar uses three inverter architectures: **microinverters** (one per
 
 The key trade-off: microinverters cost more but offer per-panel monitoring, shading resilience, and no high-voltage DC on the roof. String inverters cost 20–40% less for unshaded simple roofs. String inverters with optimizers split the difference — per-panel monitoring and MPPT, but still a central DC→AC conversion point.
 
-→ Source: [inverter-types.md](../concepts/inverter-types.md)
+→ Source: [[inverter-types.md]]
 
 ---
 
@@ -30,7 +31,7 @@ Three compliance paths: MLPE (microinverters/optimizers — compliant by design)
 
 **Critical:** Jurisdictions adopt NEC editions at different times. Always verify which NEC edition your AHJ enforces before designing.
 
-→ Source: [nec-rapid-shutdown.md](../concepts/nec-rapid-shutdown.md)
+→ Source: [[nec-rapid-shutdown.md]]
 
 ---
 
@@ -45,7 +46,7 @@ Every system design requires four calculations:
 
 Use NREL's PVWatts for production estimates. String sizing errors are the most dangerous: using nominal voltage instead of temperature-corrected Voc is the most common mistake.
 
-→ Source: [system-design-fundamentals.md](../concepts/system-design-fundamentals.md)
+→ Source: [[system-design-fundamentals.md]]
 
 ---
 
@@ -57,7 +58,7 @@ Standard residential panels now produce 440–500W. The market splits between:
 
 PERC panels are now largely displaced. All US-market panels must carry UL 1703 or UL 61730 listing.
 
-→ Source: [solar-panels-2026.md](../specifications/solar-panels-2026.md)
+→ Source: [[solar-panels-2026.md]]
 
 ---
 
@@ -73,7 +74,7 @@ All three leading systems use LFP chemistry (safer, longer-lived than NMC):
 
 Choose based on: existing inverter compatibility, backup load requirements, and expansion plans. The 30% federal ITC applies to batteries that are primarily solar-charged.
 
-→ Source: [battery-systems-2026.md](../specifications/battery-systems-2026.md)
+→ Source: [[battery-systems-2026.md]]
 
 ---
 
@@ -85,4 +86,4 @@ The most costly DIY product errors:
 - **Mixed MC4 connector brands** → code violation, fire risk
 - **Battery in hot unconditioned space** → warranty void, premature degradation
 
-→ Source: [top-diy-mistakes.md](../troubleshooting/common-mistakes/top-diy-mistakes.md)
+→ Source: [[top-diy-mistakes.md]]

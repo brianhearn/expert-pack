@@ -1,11 +1,15 @@
 ---
-title: "Automation Fundamentals"
-type: "concept"
-tags: [automation-fundamentals, concepts, core-architecture, protocols, yaml-configuration]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Automation Fundamentals
+type: concept
+tags:
+- automation-fundamentals
+- concepts
+- core-architecture
+- protocols
+- yaml-configuration
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=automation-fundamentals, related=core-architecture,yaml-configuration,protocols -->
 ---
 sources:
@@ -163,5 +167,5 @@ Pre-made automations shared by the community. You configure the inputs (which en
 
 ## Related
 
-- [Core Architecture](core-architecture.md) — Understanding entities and the state machine
-- [Protocols](protocols.md) — How devices connect and communicate
+- [[core-architecture.md|Core Architecture]] — Understanding entities and the state machine
+- [[protocols.md|Protocols]] — How devices connect and communicate

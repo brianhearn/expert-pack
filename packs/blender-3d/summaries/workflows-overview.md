@@ -1,11 +1,12 @@
 ---
-title: "Summary — Workflows Overview"
-type: "summary"
-tags: [summaries, workflows-overview]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Summary — Workflows Overview
+type: summary
+tags:
+- summaries
+- workflows-overview
+pack: blender-3d
+retrieval_strategy: standard
 ---
-
 # Summary — Workflows Overview
 
 This summary covers all 5 workflow files in the Blender 3D pack. For detailed information, follow the links to source files.
@@ -37,7 +38,7 @@ The full pipeline: Armature rigging → Mesh binding → Walk cycle → Lip sync
 - Push Actions down → NLA strips; layer additive tracks (breathing, blinks) on top with blend type Add/Combine
 - Before game export: `Object → Animation → Bake Action` with Visual Keying to flatten all NLA to pure keyframes
 
-→ Source: [character-animation.md](../workflows/character-animation.md)
+→ Source: [[character-animation.md]]
 
 ---
 
@@ -66,7 +67,7 @@ The foundational workflow: **low-poly control cage + Subdivision Surface modifie
 - Inset (`I`): `I` again = per-face mode; essential for panel lines and recessed detail
 - Knife (`K`): `Z` = cut-through, `C` = 45° constraint
 
-→ Source: [hard-surface-modeling.md](../workflows/hard-surface-modeling.md)
+→ Source: [[hard-surface-modeling.md]]
 
 ---
 
@@ -98,7 +99,7 @@ MoGraph in Blender uses Geometry Nodes for procedural motion + EEVEE for fast it
 - Iterate in EEVEE (10–100× faster); switch to Cycles for final frames only
 - Bake Geometry Nodes simulations before final render
 
-→ Source: [motion-graphics.md](../workflows/motion-graphics.md)
+→ Source: [[motion-graphics.md]]
 
 ---
 
@@ -132,7 +133,7 @@ Professional product rendering prioritizes material accuracy, controlled lightin
 - Cycles: 512–2048 samples, Glossy bounces=8, Transmission=12, Film Transparent ON
 - Render to multilayer EXR for compositing flexibility
 
-→ Source: [product-visualization.md](../workflows/product-visualization.md)
+→ Source: [[product-visualization.md]]
 
 ---
 
@@ -163,4 +164,4 @@ Blender performance problems are usually: too much unique geometry, too many tex
 - Per-node render command: `blender -b scene.blend -o //renders/frame_#### -s 1 -e 100 -a`
 - Portal lights at window openings dramatically improve interior scene convergence
 
-→ Source: [scene-optimization.md](../workflows/scene-optimization.md)
+→ Source: [[scene-optimization.md]]

@@ -1,11 +1,14 @@
 ---
-title: "How Do I Access Home Assistant Remotely?"
-type: "faq"
-tags: [backup-migration, faq, network-architecture, remote-access]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: How Do I Access Home Assistant Remotely?
+type: faq
+tags:
+- backup-migration
+- faq
+- network-architecture
+- remote-access
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=faq, topic=remote-access, related=network-architecture,backup-migration -->
 
 # How Do I Access Home Assistant Remotely?
@@ -85,4 +88,4 @@ This is the single most common dangerous mistake in HA setups. If a forum post t
 | Want to support HA development | Nabu Casa |
 | Just want to try something | Tailscale (easy rollback) |
 
-→ See [network-architecture.md](../concepts/network-architecture.md) for full security discussion
+→ See [[network-architecture.md]] for full security discussion

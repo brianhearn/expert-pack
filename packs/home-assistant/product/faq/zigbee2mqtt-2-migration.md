@@ -1,18 +1,23 @@
 ---
-title: "Zigbee2MQTT 2.0 Migration: What Broke and How to Fix It"
+title: 'Zigbee2MQTT 2.0 Migration: What Broke and How to Fix It'
 type: faq
-tags: [faq, zigbee2mqtt, migration, zigbee, home-assistant-product, breaking-changes]
+tags:
+- faq
+- zigbee2mqtt
+- migration
+- zigbee
+- home-assistant-product
+- breaking-changes
 pack: home-assistant-product
 retrieval_strategy: standard
 description: Comprehensive community-sourced guide to Z2M 1.x → 2.0 migration gotchas and fixes.
 mined: 2026-03-12
 sources:
-  - https://github.com/Koenkk/zigbee2mqtt/discussions/24198
-  - https://www.reddit.com/r/homeassistant/comments/1hu5h8s/
-  - https://github.com/Koenkk/zigbee2mqtt/issues/25461
-  - https://community.home-assistant.io/t/action-entity-missing-for-zigbee-switches-zigbee2mqtt/630468
+- https://github.com/Koenkk/zigbee2mqtt/discussions/24198
+- https://www.reddit.com/r/homeassistant/comments/1hu5h8s/
+- https://github.com/Koenkk/zigbee2mqtt/issues/25461
+- https://community.home-assistant.io/t/action-entity-missing-for-zigbee-switches-zigbee2mqtt/630468
 ---
-
 # Zigbee2MQTT 2.0 Migration Guide
 
 > Zigbee2MQTT 2.0.0 was released January 2025. It contains significant breaking changes for HA users.
@@ -180,6 +185,6 @@ pnpm run clean
 
 ## Related
 
-- [Community Gotchas](../troubleshooting/common-mistakes/community-gotchas.md) — All Z2M gotchas in one place
-- [Protocol Selection](../../process/decisions/protocol-selection.md) — ZHA vs Z2M decision
-- [Zigbee Concepts](../concepts/protocols.md) — Zigbee protocol fundamentals
+- [[community-gotchas.md|Community Gotchas]] — All Z2M gotchas in one place
+- Protocol Selection — ZHA vs Z2M decision
+- [[protocols.md|Zigbee Concepts]] — Zigbee protocol fundamentals

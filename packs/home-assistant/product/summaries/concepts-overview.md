@@ -1,11 +1,12 @@
 ---
-title: "Summary — Product Concepts Overview"
-type: "summary"
-tags: [concepts-overview, summaries]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Summary — Product Concepts Overview
+type: summary
+tags:
+- concepts-overview
+- summaries
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 # Summary — Product Concepts Overview
 
 This summary covers all concept files in the Home Assistant product pack. For detailed information, follow the links to source files.
@@ -18,7 +19,7 @@ Home Assistant (HA) is an open-source local-first home automation platform. The 
 
 The entity hierarchy: **Integration → Device → Entity → State → Attributes**. Entity IDs (`light.kitchen_ceiling`, `sensor.outdoor_temp`) are the stable references used across the entire system.
 
-→ Source: [core-architecture.md](../concepts/core-architecture.md)
+→ Source: [[core-architecture.md]]
 
 ---
 
@@ -30,7 +31,7 @@ The entity hierarchy: **Integration → Device → Entity → State → Attribut
 
 Most good setups use 2-3 protocols simultaneously.
 
-→ Source: [protocols.md](../concepts/protocols.md)
+→ Source: [[protocols.md]]
 
 ---
 
@@ -42,7 +43,7 @@ Critical nuances: use `mode: restart` for motion-activated lights (not the defau
 
 Automation traces (Settings → Automations → Traces) are the most powerful debugging tool — they show exactly what happened at each step.
 
-→ Source: [automation-fundamentals.md](../concepts/automation-fundamentals.md)
+→ Source: [[automation-fundamentals.md]]
 
 ---
 
@@ -52,7 +53,7 @@ The UI handles 90% of HA configuration. Use YAML for: template sensors, complex 
 
 Common pitfalls: `'on'`/`'off'` must be quoted (unquoted = boolean), tabs break YAML (use spaces only), always validate with `ha core check` before restarting. The packages pattern (`homeassistant: packages: !include_dir_named packages/`) is the best way to organize large configs into logical feature files.
 
-→ Source: [yaml-configuration.md](../concepts/yaml-configuration.md)
+→ Source: [[yaml-configuration.md]]
 
 ---
 
@@ -62,7 +63,7 @@ Every integration has an **IoT class** that predicts reliability: Local Push (be
 
 HACS adds community integrations and frontend cards. Frontend cards (Mushroom, mini-graph-card) are low risk. Custom HACS integrations run with full HA privileges — evaluate security before installing.
 
-→ Source: [integrations-guide.md](../concepts/integrations-guide.md)
+→ Source: [[integrations-guide.md]]
 
 ---
 
@@ -72,7 +73,7 @@ Use **Sections layout** (default since 2024.4) for all new dashboards — it's r
 
 **Mushroom Cards** (HACS) are the most widely-used custom cards — clean, consistent, mobile-first. Build purpose-specific dashboards (Overview, Room, Security, Energy) rather than one giant view. Conditional cards hide non-relevant controls, reducing clutter.
 
-→ Source: [dashboard-design.md](../concepts/dashboard-design.md)
+→ Source: [[dashboard-design.md]]
 
 ---
 
@@ -82,7 +83,7 @@ ESPHome generates firmware for ESP32 microcontrollers from YAML config. A comple
 
 ESP32 auto-discovers in HA via mDNS. BLE proxy (`bluetooth_proxy: active: true`) is one of the most underappreciated features — it makes all Bluetooth devices work anywhere in the home.
 
-→ Source: [esphome-fundamentals.md](../concepts/esphome-fundamentals.md)
+→ Source: [[esphome-fundamentals.md]]
 
 ---
 
@@ -92,7 +93,7 @@ IoT devices should be on a separate VLAN (no internet access); HA stays on the t
 
 **Never port-forward port 8123 to the internet.** Use Nabu Casa (easiest, outbound-only tunnel), Tailscale (zero-config VPN), or a reverse proxy with SSL. USB 3.0 RF interference on the Zigbee coordinator is fixed with a USB 2.0 extension cable.
 
-→ Source: [network-architecture.md](../concepts/network-architecture.md)
+→ Source: [[network-architecture.md]]
 
 ---
 
@@ -102,7 +103,7 @@ HA backup/restore is remarkably capable — full restore to new hardware in unde
 
 Automate off-device backups (Google Drive Backup add-on or Samba to NAS). Test backups by actually restoring them before an emergency. Intel N100 mini-PCs are the community sweet spot for new dedicated HA hardware in 2025-2026.
 
-→ Source: [backup-migration.md](../concepts/backup-migration.md)
+→ Source: [[backup-migration.md]]
 
 ---
 
@@ -112,7 +113,7 @@ Multi-sensor fusion beats single-tracker approaches. Combine: phone GPS (HA Comp
 
 Android battery optimization kills the HA Companion app — set it to "Unrestricted." MAC randomization breaks WiFi tracking unless the Companion app reports a consistent identifier. Solve home-level presence before adding room-level.
 
-→ Source: [presence-detection.md](../concepts/presence-detection.md)
+→ Source: [[presence-detection.md]]
 
 ---
 
@@ -122,7 +123,7 @@ Assist is HA's local voice pipeline: Wake Word → STT → Intent → TTS. Each 
 
 Key rules: expose only entities you want voice-controlled, name them `[Area] [Descriptor] [Domain]`, assign all devices to Areas, add aliases for speech variations. LLM agents (OpenAI, Claude, local Ollama) replace the built-in intent engine for natural language commands. In 2026, Assist is powerful but not yet Alexa-level polish.
 
-→ Source: [voice-assistant.md](../concepts/voice-assistant.md)
+→ Source: [[voice-assistant.md]]
 
 ---
 
@@ -132,4 +133,4 @@ The Energy Dashboard needs **cumulative kWh sensors** with `state_class: total_i
 
 Set up energy sensors as early as possible — HA cannot retroactively capture data before sensors were configured. High-draw 240V circuits (HVAC, EV charger) require clamp-style monitors (Shelly EM), not smart plugs.
 
-→ Source: [energy-management.md](../concepts/energy-management.md)
+→ Source: [[energy-management.md]]

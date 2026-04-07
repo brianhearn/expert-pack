@@ -1,11 +1,15 @@
 ---
-title: "Top Home Assistant Mistakes"
-type: "troubleshooting"
-tags: [automation-fundamentals, backup-migration, protocols, top-ha-mistakes, troubleshooting]
-pack: "home-assistant-product"
-retrieval_strategy: "atomic"
+title: Top Home Assistant Mistakes
+type: troubleshooting
+tags:
+- automation-fundamentals
+- backup-migration
+- protocols
+- top-ha-mistakes
+- troubleshooting
+pack: home-assistant-product
+retrieval_strategy: atomic
 ---
-
 <!-- context: section=troubleshooting, topic=top-ha-mistakes, related=protocols,automation-fundamentals,backup-migration -->
 # Top Home Assistant Mistakes
 
@@ -21,7 +25,7 @@ Buying 40+ WiFi smart devices because "they don't need a hub." WiFi IoT devices 
 Transition critical devices to Zigbee or Z-Wave. Keep WiFi only for high-bandwidth devices (cameras) and devices that don't exist in other protocols. A Zigbee coordinator (USB dongle) costs $20-30.
 
 ### How to Avoid
-Start with Zigbee as your default protocol. See [Protocols](../../concepts/protocols.md).
+Start with Zigbee as your default protocol. See [[protocols.md|Protocols]].
 
 ---
 

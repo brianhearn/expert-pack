@@ -1,11 +1,12 @@
 ---
-title: "Summary — Solar DIY Process Pack Overview"
-type: "summary"
-tags: [process-overview, summaries]
-pack: "solar-diy-process"
-retrieval_strategy: "standard"
+title: Summary — Solar DIY Process Pack Overview
+type: summary
+tags:
+- process-overview
+- summaries
+pack: solar-diy-process
+retrieval_strategy: standard
 ---
-
 # Summary — Solar DIY Process Pack Overview
 
 This summary covers all seven project phases plus decisions and gotchas. Follow links to source files for full detail.
@@ -26,7 +27,7 @@ A residential solar project spans 3–9 months across seven sequential phases. T
 | 6 — Inspection & Commissioning | 2–8 weeks | AHJ inspection, utility meter swap, PTO |
 | 7 — Operations & Maintenance | Ongoing | Monitoring, cleaning, annual inspection |
 
-→ Source: [process/overview.md](../overview.md)
+→ Source: [[overview.md|process/overview.md]]
 
 ---
 
@@ -39,7 +40,7 @@ Four areas to evaluate: roof condition and orientation, shading analysis, struct
 - Shading analysis required for worst-case months (November–January), not just summer
 - Submit utility interconnection inquiry early — some areas have 6–18 month queues
 
-→ Source: [01-site-assessment.md](../phases/01-site-assessment.md)
+→ Source: [[01-site-assessment.md]]
 
 ---
 
@@ -53,7 +54,7 @@ String sizing must satisfy TWO constraints simultaneously:
 
 Use ASHRAE 2% design temperatures for cold-day calculations. When in doubt, reduce string length by one panel — conservative is safe, overvoltage is dangerous.
 
-→ Source: [02-system-design.md](../phases/02-system-design.md)
+→ Source: [[02-system-design.md]]
 
 ---
 
@@ -63,7 +64,7 @@ Five component categories: panels, inverter, battery (optional), racking, BOS el
 
 Racking must carry an ICC ESR for your roof type and local wind/snow loads. Register all equipment warranties before installation.
 
-→ Source: [03-component-selection.md](../phases/03-component-selection.md)
+→ Source: [[03-component-selection.md]]
 
 ---
 
@@ -75,7 +76,7 @@ Two applications to submit in parallel:
 
 The utility process is almost always the critical path. Starting it the same week as the building permit saves 4–10 weeks. Resolve the 120% rule and supply-side vs. load-side connection question during design, not permitting.
 
-→ Source: [04-permitting.md](../phases/04-permitting.md)
+→ Source: [[04-permitting.md]]
 
 ---
 
@@ -91,7 +92,7 @@ Work sequence: roof mounts → rails → panels → DC wiring → inverter/batte
 
 Most common installation errors: missing labels, MC4 brand mixing, sheathing-only lag bolts, improper flashing.
 
-→ Source: [05-installation.md](../phases/05-installation.md)
+→ Source: [[05-installation.md]]
 
 ---
 
@@ -104,7 +105,7 @@ AHJ inspection → utility inspection → PTO letter → net meter swap → syst
 - The federal ITC (30%) is claimed on IRS Form 5695 for the tax year of commissioning
 - Set up monitoring alerts immediately after commissioning; don't assume it's working without verification
 
-→ Source: [06-inspection-commissioning.md](../phases/06-inspection-commissioning.md)
+→ Source: [[06-inspection-commissioning.md]]
 
 ---
 
@@ -118,7 +119,7 @@ The system is largely self-managing, but monitoring and annual inspection preven
 - String inverters (10–15 year lifespan) should be budgeted for replacement around year 15
 - Document degradation year-over-year; >1%/year sustained degradation is a warranty claim trigger
 
-→ Source: [07-operations-maintenance.md](../phases/07-operations-maintenance.md)
+→ Source: [[07-operations-maintenance.md]]
 
 ---
 
@@ -130,7 +131,7 @@ The system is largely self-managing, but monitoring and annual inspection preven
 
 **Inverter Topology:** Microinverters for complex/shaded roofs. String inverters for large simple unshaded arrays (cost savings). Optimizers for a middle ground.
 
-→ Sources: [diy-vs-contractor.md](../decisions/diy-vs-contractor.md) | [grid-tied-vs-hybrid.md](../decisions/grid-tied-vs-hybrid.md) | [inverter-topology.md](../decisions/inverter-topology.md)
+→ Sources: [[diy-vs-contractor.md]] | [[grid-tied-vs-hybrid.md]] | [[inverter-topology.md]]
 
 ---
 
@@ -143,4 +144,4 @@ The system is largely self-managing, but monitoring and annual inspection preven
 5. Sequential permit submissions instead of parallel (wastes 4–10 weeks)
 6. Failing to confirm separate net metering enrollment after interconnection
 
-→ Source: [common-mistakes.md](../gotchas/common-mistakes.md)
+→ Source: [[common-mistakes.md]]

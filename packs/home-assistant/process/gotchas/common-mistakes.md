@@ -1,11 +1,12 @@
 ---
-title: "Common Mistakes in Home Assistant"
-type: "gotcha"
-tags: [common-mistakes, gotchas]
-pack: "home-assistant-process"
-retrieval_strategy: "atomic"
+title: Common Mistakes in Home Assistant
+type: gotcha
+tags:
+- common-mistakes
+- gotchas
+pack: home-assistant-process
+retrieval_strategy: atomic
 ---
-
 # Common Mistakes in Home Assistant
 
 These are the mistakes that cost people the most time and frustration. Learn them before you start.
@@ -35,7 +36,7 @@ These are the mistakes that cost people the most time and frustration. Learn the
 
 **The fix:** Use Zigbee or Z-Wave for sensors, switches, plugs, and bulbs. Reserve Wi-Fi for devices that must be Wi-Fi (cameras, smart displays, appliances). A $25 Zigbee coordinator handles 100+ devices without impacting your router.
 
-→ See [Protocol Selection](../decisions/protocol-selection.md)
+→ See [[protocol-selection.md|Protocol Selection]]
 
 ---
 
@@ -72,7 +73,7 @@ automation:
       entity_id: light.kitchen
 ```
 
-→ See [Motion Lighting Pattern](../patterns/motion-lighting.md)
+→ See [[motion-lighting.md|Motion Lighting Pattern]]
 
 ---
 
@@ -172,7 +173,7 @@ Combine them with a Bayesian sensor for highest accuracy.
 
 **The fix:** Use Zigbee for most devices. Use Z-Wave specifically where sub-GHz range matters (thick walls, long distances) or for door locks and garage door openers where the higher certification bar matters. Don't default to Z-Wave for everything.
 
-→ See [Protocol Selection](../decisions/protocol-selection.md)
+→ See [[protocol-selection.md|Protocol Selection]]
 
 ---
 

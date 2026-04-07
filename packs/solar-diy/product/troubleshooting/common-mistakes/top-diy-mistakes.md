@@ -1,11 +1,17 @@
 ---
-title: "Top DIY Solar Installation Mistakes"
-type: "troubleshooting"
-tags: [common-mistakes, inspection-commissioning, installation, permitting, product, system-design-fundamentals, troubleshooting-mistakes]
-pack: "solar-diy-product"
-retrieval_strategy: "atomic"
+title: Top DIY Solar Installation Mistakes
+type: troubleshooting
+tags:
+- common-mistakes
+- inspection-commissioning
+- installation
+- permitting
+- product
+- system-design-fundamentals
+- troubleshooting-mistakes
+pack: solar-diy-product
+retrieval_strategy: atomic
 ---
-
 <!-- context: section=product, topic=troubleshooting-mistakes, related=system-design-fundamentals,installation,permitting,inspection-commissioning,common-mistakes -->
 
 > **Lead summary:** The most costly DIY solar mistakes occur during string sizing (Phase 2), permitting (Phase 4), and service panel work (Phase 5). Wrong string sizing can damage inverters; skipping proper permitting creates legal liability; incorrect service panel connections are a fire hazard. This guide documents symptoms, causes, and fixes.
@@ -21,7 +27,7 @@ Inverter displays overvoltage error on cold winter mornings, or system produces 
 Not accounting for temperature effects on panel voltage. Panels produce MORE voltage in cold weather and LESS in hot weather. If you size your strings at room temperature, you'll exceed inverter limits in winter or fall below minimum in summer.
 
 ### The Fix
-Run proper string sizing calculations using your site's ASHRAE temperature extremes, not average temperatures. See [System Design Fundamentals](../../concepts/system-design-fundamentals.md) for the math.
+Run proper string sizing calculations using your site's ASHRAE temperature extremes, not average temperatures. See [[system-design-fundamentals.md|System Design Fundamentals]] for the math.
 
 ### How to Avoid
 Always use the coldest recorded temperature (or ASHRAE 2% low) for maximum string size and the hottest temperature plus mounting adder for minimum string size. Never guess.
@@ -40,7 +46,7 @@ Installing a string inverter system without MLPE or UL 3741 compliance. This was
 Add compliant rapid shutdown devices, switch to microinverters, or redesign for UL 3741 compliance. Any of these may require significant rework.
 
 ### How to Avoid
-Check your jurisdiction's adopted NEC edition BEFORE designing the system. If NEC 2017 or later, plan for rapid shutdown from the start. See [NEC Rapid Shutdown](../../concepts/nec-rapid-shutdown.md).
+Check your jurisdiction's adopted NEC edition BEFORE designing the system. If NEC 2017 or later, plan for rapid shutdown from the start. See [[nec-rapid-shutdown.md|NEC Rapid Shutdown]].
 
 ---
 

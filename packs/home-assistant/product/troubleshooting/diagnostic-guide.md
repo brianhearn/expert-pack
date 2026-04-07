@@ -1,11 +1,15 @@
 ---
-title: "Diagnostic Guide — Systematic Home Assistant Troubleshooting"
-type: "troubleshooting"
-tags: [core-architecture, diagnostic-guide, integrations-guide, troubleshooting, yaml-configuration]
-pack: "home-assistant-product"
-retrieval_strategy: "atomic"
+title: Diagnostic Guide — Systematic Home Assistant Troubleshooting
+type: troubleshooting
+tags:
+- core-architecture
+- diagnostic-guide
+- integrations-guide
+- troubleshooting
+- yaml-configuration
+pack: home-assistant-product
+retrieval_strategy: atomic
 ---
-
 <!-- context: section=troubleshooting, topic=diagnostic-guide, related=core-architecture,yaml-configuration,integrations-guide -->
 ---
 sources:
@@ -401,10 +405,10 @@ Sometimes the correct answer is a clean install. Triggers:
 
 ## Related
 
-- [Core Architecture](core-architecture.md) — Understanding what you're troubleshooting
-- [YAML Configuration](../concepts/yaml-configuration.md) — Config validation workflow
-- [Top HA Mistakes](common-mistakes/top-ha-mistakes.md) — Avoid the most common problems
-- [Integrations Guide](../concepts/integrations-guide.md) — Integration-specific troubleshooting
+- [[core-architecture.md|Core Architecture]] — Understanding what you're troubleshooting
+- [[yaml-configuration.md|YAML Configuration]] — Config validation workflow
+- [[top-ha-mistakes.md|Top HA Mistakes]] — Avoid the most common problems
+- [[integrations-guide.md|Integrations Guide]] — Integration-specific troubleshooting
 
 ---
 

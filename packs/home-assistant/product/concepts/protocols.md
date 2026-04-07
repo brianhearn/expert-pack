@@ -1,11 +1,15 @@
 ---
-title: "Smart Home Protocols — Decision Framework"
-type: "concept"
-tags: [concepts, core-architecture, esphome-fundamentals, network-architecture, protocols]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Smart Home Protocols — Decision Framework
+type: concept
+tags:
+- concepts
+- core-architecture
+- esphome-fundamentals
+- network-architecture
+- protocols
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=protocols, related=core-architecture,esphome-fundamentals,network-architecture -->
 ---
 sources:
@@ -130,5 +134,5 @@ Two main ways to run Zigbee in HA:
 
 ## Related
 
-- [Core Architecture](core-architecture.md) — How integrations and entities work in HA
-- [Automation Fundamentals](automation-fundamentals.md) — Building automations across protocols
+- [[core-architecture.md|Core Architecture]] — How integrations and entities work in HA
+- [[automation-fundamentals.md|Automation Fundamentals]] — Building automations across protocols

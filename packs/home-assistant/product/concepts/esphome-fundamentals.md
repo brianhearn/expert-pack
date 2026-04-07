@@ -1,11 +1,15 @@
 ---
-title: "ESPHome Fundamentals — Custom Hardware at Minimal Cost"
-type: "concept"
-tags: [concepts, esphome-fundamentals, integrations-guide, presence-detection, protocols]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: ESPHome Fundamentals — Custom Hardware at Minimal Cost
+type: concept
+tags:
+- concepts
+- esphome-fundamentals
+- integrations-guide
+- presence-detection
+- protocols
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=esphome-fundamentals, related=protocols,integrations-guide,presence-detection -->
 ---
 sources:
@@ -331,7 +335,7 @@ esp32_ble_tracker:
 
 **What BLE proxy enables:**
 - Bluetooth integration devices (thermometers, plant sensors, scales, etc.) work even if they're far from the HA host
-- Presence detection via phone BLE (see [Presence Detection](presence-detection.md))
+- Presence detection via phone BLE (see [[presence-detection.md|Presence Detection]])
 - Govee/Xiaomi/SwitchBot Bluetooth sensors work throughout the house
 - HA automatically uses whichever proxy is closest to a device
 
@@ -419,6 +423,6 @@ i2c:
 
 ## Related
 
-- [Presence Detection](presence-detection.md) — BLE proxy and mmWave for presence
-- [Smart Home Protocols](protocols.md) — ESPHome's place in the protocol landscape
-- [Integrations Guide](integrations-guide.md) — ESPHome integration in HA
+- [[presence-detection.md|Presence Detection]] — BLE proxy and mmWave for presence
+- [[protocols.md|Smart Home Protocols]] — ESPHome's place in the protocol landscape
+- [[integrations-guide.md|Integrations Guide]] — ESPHome integration in HA

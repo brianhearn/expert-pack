@@ -1,11 +1,15 @@
 ---
-title: "Energy Management in Home Assistant"
-type: "concept"
-tags: [concepts, core-architecture, energy-management, integrations-guide, yaml-configuration]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Energy Management in Home Assistant
+type: concept
+tags:
+- concepts
+- core-architecture
+- energy-management
+- integrations-guide
+- yaml-configuration
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=energy-management, related=core-architecture,integrations-guide,yaml-configuration -->
 ---
 sources:
@@ -388,6 +392,6 @@ automation:
 
 ## Related
 
-- [Core Architecture](core-architecture.md) — Understanding entities, state_class, and long-term statistics
-- [Integration Guide](integrations-guide.md) — Connecting inverters, smart meters, and energy monitors
-- [YAML Configuration](yaml-configuration.md) — sensor platform, utility_meter, and template sensors
+- [[core-architecture.md|Core Architecture]] — Understanding entities, state_class, and long-term statistics
+- [[integrations-guide.md|Integration Guide]] — Connecting inverters, smart meters, and energy monitors
+- [[yaml-configuration.md|YAML Configuration]] — sensor platform, utility_meter, and template sensors

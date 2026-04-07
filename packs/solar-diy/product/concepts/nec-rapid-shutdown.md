@@ -1,11 +1,15 @@
 ---
-title: "NEC 690.12 — Rapid Shutdown Requirements"
+title: NEC 690.12 — Rapid Shutdown Requirements
 type: concept
-tags: [concept, nec, rapid-shutdown, code-compliance, solar-diy-product]
+tags:
+- concept
+- nec
+- rapid-shutdown
+- code-compliance
+- solar-diy-product
 pack: solar-diy-product
 retrieval_strategy: standard
 ---
-
 ---
 sources:
   - type: documentation
@@ -124,5 +128,5 @@ Systems must have a rapid shutdown label at or near the main service disconnect.
 
 ## Related
 
-- [Inverter Types](inverter-types.md) — How MLPE fits into inverter architecture choices
-- [System Design Workflow](../workflows/system-design.md) — String sizing implications of rapid shutdown compliance
+- [[inverter-types.md|Inverter Types]] — How MLPE fits into inverter architecture choices
+- System Design Workflow — String sizing implications of rapid shutdown compliance

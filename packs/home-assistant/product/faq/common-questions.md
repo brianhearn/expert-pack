@@ -1,11 +1,15 @@
 ---
-title: "Frequently Asked Questions"
-type: "faq"
-tags: [backup-migration, common-questions, core-architecture, faq, protocols]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Frequently Asked Questions
+type: faq
+tags:
+- backup-migration
+- common-questions
+- core-architecture
+- faq
+- protocols
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=faq, topic=common-questions, related=core-architecture,protocols,backup-migration -->
 ---
 sources:
@@ -363,7 +367,7 @@ Everything. HA is fully functional locally without any subscription. All local a
 
 ## Related
 
-- [Core Architecture](../concepts/core-architecture.md) — Understanding what HA is and how it works
-- [Backup & Migration](../concepts/backup-migration.md) — HA OS vs Docker migration considerations
-- [Voice Assistant](../concepts/voice-assistant.md) — Nabu Casa voice vs local Whisper/Piper
-- [Smart Home Protocols](../concepts/protocols.md) — Zigbee vs Matter vs Thread deep dive
+- [[core-architecture.md|Core Architecture]] — Understanding what HA is and how it works
+- [[backup-migration.md|Backup & Migration]] — HA OS vs Docker migration considerations
+- [[voice-assistant.md|Voice Assistant]] — Nabu Casa voice vs local Whisper/Piper
+- [[protocols.md|Smart Home Protocols]] — Zigbee vs Matter vs Thread deep dive

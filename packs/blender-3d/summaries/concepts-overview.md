@@ -1,11 +1,12 @@
 ---
-title: "Summary — Concepts Overview"
-type: "summary"
-tags: [concepts-overview, summaries]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Summary — Concepts Overview
+type: summary
+tags:
+- concepts-overview
+- summaries
+pack: blender-3d
+retrieval_strategy: standard
 ---
-
 # Summary — Concepts Overview
 
 This summary covers all 10 concept files in the Blender 3D pack. For detailed information, follow the links to source files.
@@ -23,7 +24,7 @@ Blender uses a **data-block** system: every piece of data (Object, Mesh, Materia
 - The Python API: `bpy.data` (direct data access), `bpy.context` (current state), `bpy.ops` (UI operators)
 - The Info Log records every UI action as Python — fastest way to learn the API
 
-→ Source: [core-architecture.md](../concepts/core-architecture.md)
+→ Source: [[core-architecture.md]]
 
 ---
 
@@ -40,7 +41,7 @@ Good topology = **all quads, in edge loops that follow surface contours**. Every
 - UV unwrapping: Smart UV Project (fast, many islands), Seam-based Unwrap (higher quality); check stretching with the UV overlay
 - Retopology: Manual with Shrinkwrap snap, QuadriFlow (built-in), or Instant Meshes (external free)
 
-→ Source: [modeling-fundamentals.md](../concepts/modeling-fundamentals.md)
+→ Source: [[modeling-fundamentals.md]]
 
 ---
 
@@ -59,7 +60,7 @@ Good topology = **all quads, in edge loops that follow surface contours**. Every
 - True displacement (Cycles only): enable in Material Settings + use Adaptive Subdivision
 - Free HDRIs: Poly Haven (polyhaven.com), CC0 license, up to 16K
 
-→ Source: [shading-rendering.md](../concepts/shading-rendering.md)
+→ Source: [[shading-rendering.md]]
 
 ---
 
@@ -78,7 +79,7 @@ Animation data flows: **F-Curve → Action → NLA strip → final transform**. 
 - NLA: push Actions down, layer with blend types (Replace, Add, Combine) for additive secondary animations
 - Shape Keys: Basis is mandatory rest position; values keyframed or driven; corrective shapes fix joint collapse
 
-→ Source: [animation-rigging.md](../concepts/animation-rigging.md)
+→ Source: [[animation-rigging.md]]
 
 ---
 
@@ -94,7 +95,7 @@ Animation data flows: **F-Curve → Action → NLA strip → final transform**. 
 - Geometry Nodes Simulation Zone (4.0+): stateful per-frame simulation; must be evaluated sequentially; always bake before animation render
 - Physics caches: a 200-frame 128-res fluid = 5–50GB; set explicit cache paths
 
-→ Source: [physics-simulation.md](../concepts/physics-simulation.md)
+→ Source: [[physics-simulation.md]]
 
 ---
 
@@ -110,7 +111,7 @@ Geometry Nodes is a functional, non-destructive visual programming system for ge
 - Good for: scatter, parametric shapes, simulation, motion graphics; NOT for: organic hand modeling, rigging, materials, post-processing
 - Performance: keep as instances, limit distribution density, use Viewer node to inspect without full evaluation
 
-→ Source: [geometry-nodes.md](../concepts/geometry-nodes.md)
+→ Source: [[geometry-nodes.md]]
 
 ---
 
@@ -127,7 +128,7 @@ Blender's entire feature set is accessible via the `bpy` module.
 - Depsgraph access: `obj.evaluated_get(depsgraph)` for geometry after modifiers
 - Always use `.get()` for safe data-block access; always call `obj.data.update()` after data API changes
 
-→ Source: [python-scripting.md](../concepts/python-scripting.md)
+→ Source: [[python-scripting.md]]
 
 ---
 
@@ -146,7 +147,7 @@ Key brushes: Draw (workhorse), Clay (builds volume evenly), Clay Strips (sharp r
 - After retopo: bake normal map from high-poly to low-poly (Selected to Active bake type: Normal)
 - Memory: Multires level 6 on 5K-vert base = ~20M vertices; 32GB RAM comfortable
 
-→ Source: [sculpting.md](../concepts/sculpting.md)
+→ Source: [[sculpting.md]]
 
 ---
 
@@ -164,7 +165,7 @@ Node-based post-processing operating on render output and passes.
 - OpenEXR Multilayer: 32-bit float, lossless, all passes in one file — professional standard
 - GPU compositing (4.0+): enable in Preferences → System → GPU Compositing; 5–20× faster for supported nodes
 
-→ Source: [compositing.md](../concepts/compositing.md)
+→ Source: [[compositing.md]]
 
 ---
 
@@ -181,4 +182,4 @@ Blender's built-in non-linear video editor. Adequate for assembly and post-proce
 - H.264/MP4 for web; ProRes/DNxHD for professional deliverables; CRF 18 = high-quality web output
 - VSE limitations: no multi-cam, basic color, basic audio; use DaVinci Resolve when these matter
 
-→ Source: [video-editing.md](../concepts/video-editing.md)
+→ Source: [[video-editing.md]]

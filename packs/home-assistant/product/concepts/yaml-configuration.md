@@ -1,11 +1,14 @@
 ---
-title: "YAML Configuration — The Definitive Practitioner Guide"
-type: "concept"
-tags: [automation-fundamentals, concepts, core-architecture, yaml-configuration]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: YAML Configuration — The Definitive Practitioner Guide
+type: concept
+tags:
+- automation-fundamentals
+- concepts
+- core-architecture
+- yaml-configuration
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=yaml-configuration, related=core-architecture,automation-fundamentals -->
 ---
 sources:
@@ -492,6 +495,6 @@ Workflow:
 
 ## Related
 
-- [Core Architecture](core-architecture.md) — Entities, devices, integrations model
-- [Automation Fundamentals](automation-fundamentals.md) — Templates in automations
-- [Troubleshooting](../troubleshooting/diagnostic-guide.md) — Debugging config errors
+- [[core-architecture.md|Core Architecture]] — Entities, devices, integrations model
+- [[automation-fundamentals.md|Automation Fundamentals]] — Templates in automations
+- [[diagnostic-guide.md|Troubleshooting]] — Debugging config errors

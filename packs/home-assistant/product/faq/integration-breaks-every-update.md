@@ -1,18 +1,22 @@
 ---
-title: "Why does my integration break every update?"
+title: Why does my integration break every update?
 type: faq
-tags: [faq, integration-failures, updates, home-assistant-product, breaking-changes]
+tags:
+- faq
+- integration-failures
+- updates
+- home-assistant-product
+- breaking-changes
 pack: home-assistant-product
 retrieval_strategy: standard
 description: Real-world patterns for HA update-induced integration failures and how to survive them.
 mined: 2026-03-12
 sources:
-  - https://www.reddit.com/r/homeassistant/comments/1i61v5c/how_to_deal_with_breaking_integrations_on_every/
-  - https://github.com/hacs/integration/issues/4314
-  - https://github.com/home-assistant/core/issues/126235
-  - https://news.ycombinator.com/item?id=42813513
+- https://www.reddit.com/r/homeassistant/comments/1i61v5c/how_to_deal_with_breaking_integrations_on_every/
+- https://github.com/hacs/integration/issues/4314
+- https://github.com/home-assistant/core/issues/126235
+- https://news.ycombinator.com/item?id=42813513
 ---
-
 # Why Does My Integration Break Every Update?
 
 This is one of the most common complaints from experienced HA users. Here's what's really happening and how to handle it.
@@ -86,6 +90,6 @@ Integration broken after HA update?
 
 ## Related
 
-- [Community Gotchas](common-mistakes/community-gotchas.md) — Specific version-by-version breakage
-- [Diagnostic Guide](../troubleshooting/diagnostic-guide.md) — How to read logs and traces
-- [Process Gotchas](../../process/gotchas/common-mistakes.md) — Update process best practices
+- [[community-gotchas.md|Community Gotchas]] — Specific version-by-version breakage
+- [[diagnostic-guide.md|Diagnostic Guide]] — How to read logs and traces
+- Process Gotchas — Update process best practices

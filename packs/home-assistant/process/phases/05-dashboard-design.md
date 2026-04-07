@@ -1,11 +1,12 @@
 ---
-title: "Phase 5: Dashboard Design"
-type: "phase"
-tags: [05-dashboard-design, phases]
-pack: "home-assistant-process"
-retrieval_strategy: "atomic"
+title: 'Phase 5: Dashboard Design'
+type: phase
+tags:
+- 05-dashboard-design
+- phases
+pack: home-assistant-process
+retrieval_strategy: atomic
 ---
-
 # Phase 5: Dashboard Design
 
 ## Goal
@@ -203,4 +204,4 @@ Users without admin access can still control everything — they just don't see 
 
 ## What's Next
 
-→ [Phase 6: Advanced Features](06-advanced-features.md) — Voice assistant, energy monitoring, and presence detection
+→ [[06-advanced-features.md|Phase 6: Advanced Features]] — Voice assistant, energy monitoring, and presence detection

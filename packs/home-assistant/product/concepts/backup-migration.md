@@ -1,11 +1,14 @@
 ---
-title: "Backup, Migration, and Hardware Upgrades"
-type: "concept"
-tags: [backup-migration, concepts, core-architecture, network-architecture]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Backup, Migration, and Hardware Upgrades
+type: concept
+tags:
+- backup-migration
+- concepts
+- core-architecture
+- network-architecture
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=backup-migration, related=core-architecture,network-architecture -->
 ---
 sources:
@@ -375,6 +378,6 @@ Most people who test this process for the first time discover one OAuth integrat
 
 ## Related
 
-- [Core Architecture](core-architecture.md) — What each component of HA stores and where
-- [Network Architecture](network-architecture.md) — Remote access options (needed after migration to new IP)
-- [Smart Home Protocols](protocols.md) — Zigbee coordinator hardware selection
+- [[core-architecture.md|Core Architecture]] — What each component of HA stores and where
+- [[network-architecture.md|Network Architecture]] — Remote access options (needed after migration to new IP)
+- [[protocols.md|Smart Home Protocols]] — Zigbee coordinator hardware selection

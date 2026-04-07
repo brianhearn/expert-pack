@@ -1,11 +1,10 @@
 ---
-title: "Building a Smart Home with Home Assistant"
-type: "overview"
+title: Building a Smart Home with Home Assistant
+type: overview
 tags: []
-pack: "home-assistant-process"
-retrieval_strategy: "standard"
+pack: home-assistant-process
+retrieval_strategy: standard
 ---
-
 # Building a Smart Home with Home Assistant
 
 ## What This Process Is
@@ -38,33 +37,33 @@ You don't need to be a programmer. You need patience, willingness to read docume
 
 The seven phases build on each other. Don't skip ahead — each phase creates the foundation the next one needs.
 
-1. **[Planning](phases/01-planning.md)** — Hardware selection, installation method, network design *(1-3 days)*
-2. **[Initial Setup](phases/02-initial-setup.md)** — Install HA, first integrations, companion app *(1 weekend)*
-3. **[Protocol Setup](phases/03-protocol-setup.md)** — Zigbee/Z-Wave coordinator, first devices *(1-2 weeks)*
-4. **[Automation Building](phases/04-automation-building.md)** — First automations, templates, testing *(2-4 weeks)*
-5. **[Dashboard Design](phases/05-dashboard-design.md)** — Lovelace dashboards, mobile optimization *(1-2 weeks)*
-6. **[Advanced Features](phases/06-advanced-features.md)** — Voice assistant, energy monitoring, presence detection *(2-4 weeks)*
-7. **[Hardening](phases/07-hardening.md)** — Backups, security, remote access, monitoring *(1 weekend + ongoing)*
+1. **[[01-planning.md|Planning]]** — Hardware selection, installation method, network design *(1-3 days)*
+2. **[[02-initial-setup.md|Initial Setup]]** — Install HA, first integrations, companion app *(1 weekend)*
+3. **[[03-protocol-setup.md|Protocol Setup]]** — Zigbee/Z-Wave coordinator, first devices *(1-2 weeks)*
+4. **[[04-automation-building.md|Automation Building]]** — First automations, templates, testing *(2-4 weeks)*
+5. **[[05-dashboard-design.md|Dashboard Design]]** — Lovelace dashboards, mobile optimization *(1-2 weeks)*
+6. **[[06-advanced-features.md|Advanced Features]]** — Voice assistant, energy monitoring, presence detection *(2-4 weeks)*
+7. **[[07-hardening.md|Hardening]]** — Backups, security, remote access, monitoring *(1 weekend + ongoing)*
 
 ## Key Decision Points
 
 Before you buy hardware, settle these three decisions:
 
-- **[Installation Method](decisions/installation-method.md)** — HA OS gives you the most features; Container is great for NAS/Docker power users. Most beginners should pick HA OS.
-- **[Hardware Selection](decisions/hardware-selection.md)** — Raspberry Pi 4/5 is the classic choice; a used mini-PC gives you more headroom. Avoid Pi 3 and SD cards for production.
-- **[Protocol Selection](decisions/protocol-selection.md)** — Zigbee is the best starting point: cheap, reliable, locally controlled, huge device ecosystem.
+- **[[installation-method.md|Installation Method]]** — HA OS gives you the most features; Container is great for NAS/Docker power users. Most beginners should pick HA OS.
+- **[[hardware-selection.md|Hardware Selection]]** — Raspberry Pi 4/5 is the classic choice; a used mini-PC gives you more headroom. Avoid Pi 3 and SD cards for production.
+- **[[protocol-selection.md|Protocol Selection]]** — Zigbee is the best starting point: cheap, reliable, locally controlled, huge device ecosystem.
 
 ## Proven Patterns
 
 These automation patterns have been refined across thousands of HA installs. Use them as starting points, not end states.
 
-- **[Motion Lighting](patterns/motion-lighting.md)** — Lights that follow people, not schedules
-- **[Climate Control](patterns/climate-control.md)** — Automated heating/cooling that learns occupancy
-- **[Security Monitoring](patterns/security-monitoring.md)** — Entry sensors, cameras, and alert routing
-- **[Notification Patterns](patterns/notification-patterns.md)** — Alerts that inform without overwhelming
+- **[[motion-lighting.md|Motion Lighting]]** — Lights that follow people, not schedules
+- **[[climate-control.md|Climate Control]]** — Automated heating/cooling that learns occupancy
+- **[[security-monitoring.md|Security Monitoring]]** — Entry sensors, cameras, and alert routing
+- **[[notification-patterns.md|Notification Patterns]]** — Alerts that inform without overwhelming
 
 ## Common Gotchas
 
-→ [See the gotchas guide](gotchas/common-mistakes.md)
+→ [[common-mistakes.md|See the gotchas guide]]
 
 The short version: use HA OS, put it on an SSD not an SD card, set up Zigbee2MQTT early, automate your backups on day one, and never edit `configuration.yaml` directly without checking the config first.

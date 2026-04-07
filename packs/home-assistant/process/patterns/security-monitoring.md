@@ -1,11 +1,15 @@
 ---
-title: "Home Security Monitoring with Home Assistant"
+title: Home Security Monitoring with Home Assistant
 type: pattern
-tags: [pattern, security, monitoring, automation, home-assistant-process]
+tags:
+- pattern
+- security
+- monitoring
+- automation
+- home-assistant-process
 pack: home-assistant-process
 retrieval_strategy: standard
 ---
-
 ---
 sources:
   - type: documentation
@@ -505,6 +509,6 @@ Don't keep years of footage unless you have specific reasons — it's storage bu
 
 ## Related
 
-- [Presence Detection](../concepts/presence-detection.md) — The "anyone home" signal that drives security mode
-- [Notification Patterns](notification-patterns.md) — Advanced notification delivery with camera snapshots and action buttons
-- [Network Architecture](../concepts/network-architecture.md) — Camera VLAN, NVR placement, no cloud routing
+- Presence Detection — The "anyone home" signal that drives security mode
+- [[notification-patterns.md|Notification Patterns]] — Advanced notification delivery with camera snapshots and action buttons
+- Network Architecture — Camera VLAN, NVR placement, no cloud routing

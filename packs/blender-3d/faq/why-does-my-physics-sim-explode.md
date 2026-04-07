@@ -1,11 +1,14 @@
 ---
-title: "Why Does My Physics Simulation Explode?"
-type: "faq"
-tags: [common-mistakes, faq, physics-simulation, physics-troubleshooting]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Why Does My Physics Simulation Explode?
+type: faq
+tags:
+- common-mistakes
+- faq
+- physics-simulation
+- physics-troubleshooting
+pack: blender-3d
+retrieval_strategy: standard
 ---
-
 <!-- context: section=faq, topic=physics-troubleshooting, related=physics-simulation,common-mistakes -->
 
 # Why Does My Physics Simulation Explode?
@@ -47,5 +50,5 @@ Blender's physics engine assumes **1 Blender unit = 1 meter**. A "building" that
 
 ## Related
 
-- [Physics & Simulation](../concepts/physics-simulation.md)
-- [Common Mistakes](../troubleshooting/common-mistakes.md)
+- [[physics-simulation.md|Physics & Simulation]]
+- [[common-mistakes.md|Common Mistakes]]

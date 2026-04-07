@@ -1,11 +1,12 @@
 ---
-title: "Phase 6: Advanced Features"
-type: "phase"
-tags: [06-advanced-features, phases]
-pack: "home-assistant-process"
-retrieval_strategy: "atomic"
+title: 'Phase 6: Advanced Features'
+type: phase
+tags:
+- 06-advanced-features
+- phases
+pack: home-assistant-process
+retrieval_strategy: atomic
 ---
-
 # Phase 6: Advanced Features
 
 ## Goal
@@ -232,4 +233,4 @@ trigger:
 
 ## What's Next
 
-→ [Phase 7: Hardening](07-hardening.md) — Backups, security, remote access, and long-term monitoring
+→ [[07-hardening.md|Phase 7: Hardening]] — Backups, security, remote access, and long-term monitoring

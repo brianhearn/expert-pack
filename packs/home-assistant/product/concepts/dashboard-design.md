@@ -1,11 +1,14 @@
 ---
-title: "Dashboard Design — Practical Patterns for Useful UIs"
-type: "concept"
-tags: [concepts, core-architecture, dashboard-design, integrations-guide]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Dashboard Design — Practical Patterns for Useful UIs
+type: concept
+tags:
+- concepts
+- core-architecture
+- dashboard-design
+- integrations-guide
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=dashboard-design, related=core-architecture,integrations-guide -->
 ---
 sources:
@@ -385,6 +388,6 @@ my_theme:
 
 ## Related
 
-- [Core Architecture](core-architecture.md) — Entities, areas, and organization
-- [Integrations Guide](integrations-guide.md) — What's available to display
-- [YAML Configuration](yaml-configuration.md) — Dashboard YAML for advanced customization
+- [[core-architecture.md|Core Architecture]] — Entities, areas, and organization
+- [[integrations-guide.md|Integrations Guide]] — What's available to display
+- [[yaml-configuration.md|YAML Configuration]] — Dashboard YAML for advanced customization

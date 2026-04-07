@@ -1,36 +1,37 @@
 ---
-title: "Summary — Home Assistant ExpertPack (Composite)"
-type: "summary"
-tags: [pack-overview, summaries]
-pack: "home-assistant"
-retrieval_strategy: "standard"
+title: Summary — Home Assistant ExpertPack (Composite)
+type: summary
+tags:
+- pack-overview
+- summaries
+pack: home-assistant
+retrieval_strategy: standard
 ---
-
 # Summary — Home Assistant ExpertPack (Composite)
 
 This is a composite ExpertPack combining a **product pack** (reference knowledge about the HA platform) and a **process pack** (practical 7-phase guide to building a smart home).
 
 ## Quick Navigation
 
-**Just starting?** → [Process overview](../process/overview.md) → [Phase 1: Planning](../process/phases/01-planning.md)
+**Just starting?** → [[overview.md|Process overview]] → [[01-planning.md|Phase 1: Planning]]
 
-**Need a decision framework?** → [Installation method](../process/decisions/installation-method.md) | [Protocol selection](../process/decisions/protocol-selection.md) | [Hardware selection](../process/decisions/hardware-selection.md)
+**Need a decision framework?** → [[installation-method.md|Installation method]] | [[protocol-selection.md|Protocol selection]] | [[hardware-selection.md|Hardware selection]]
 
-**Looking up how HA works?** → [Product overview](../product/overview.md) → [Concepts](../product/concepts/_index.md)
+**Looking up how HA works?** → [[overview.md|Product overview]] → [[_index.md|Concepts]]
 
-**Troubleshooting?** → [Diagnostic guide](../product/troubleshooting/diagnostic-guide.md) | [Common mistakes](../product/troubleshooting/common-mistakes/top-ha-mistakes.md)
+**Troubleshooting?** → [[diagnostic-guide.md|Diagnostic guide]] | [[top-ha-mistakes.md|Common mistakes]]
 
-**Automation patterns?** → [Motion lighting](../process/patterns/motion-lighting.md) | [Climate control](../process/patterns/climate-control.md) | [Presence detection](../product/concepts/presence-detection.md)
+**Automation patterns?** → [[motion-lighting.md|Motion lighting]] | [[climate-control.md|Climate control]] | [[presence-detection.md|Presence detection]]
 
 ## Product Pack Summary
 
-→ [Full product concepts summary](../product/summaries/concepts-overview.md)
+→ [[concepts-overview.md|Full product concepts summary]]
 
 The product pack covers HA's internals: the integration→device→entity→state hierarchy (core-architecture), the trigger→condition→action automation model (automation-fundamentals), protocol selection (protocols), YAML configuration patterns (yaml-configuration), integration evaluation (integrations-guide), dashboard design (dashboard-design), DIY sensor building (esphome-fundamentals), network security (network-architecture), backup/migration (backup-migration), presence detection (presence-detection), voice assistant (voice-assistant), and energy management (energy-management).
 
 ## Process Pack Summary
 
-→ [Full process summary](../process/summaries/process-overview.md)
+→ [[process-overview.md|Full process summary]]
 
 The process pack provides a structured path through 7 phases (planning → hardening), 3 pre-purchase decision frameworks, 4 proven automation patterns, and a gotchas guide covering the mistakes that cost the most time.
 

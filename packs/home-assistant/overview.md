@@ -1,19 +1,18 @@
 ---
-title: "Home Assistant Smart Home Guide"
-type: "overview"
+title: Home Assistant Smart Home Guide
+type: overview
 tags: []
-pack: "home-assistant"
-retrieval_strategy: "standard"
+pack: home-assistant
+retrieval_strategy: standard
 ---
-
 # Home Assistant Smart Home Guide
 
 ## What This Is
 
 This is a **composite ExpertPack** — two packs in one:
 
-- **[Product Pack](product/overview.md)** — Deep reference knowledge about the Home Assistant platform itself: its architecture, protocols, automation model, YAML configuration, integrations, dashboards, and troubleshooting.
-- **[Process Pack](process/overview.md)** — A phased, practical guide to *building* a smart home with Home Assistant, from initial hardware selection through a fully hardened, automated home.
+- **[[overview.md|Product Pack]]** — Deep reference knowledge about the Home Assistant platform itself: its architecture, protocols, automation model, YAML configuration, integrations, dashboards, and troubleshooting.
+- **[[overview.md|Process Pack]]** — A phased, practical guide to *building* a smart home with Home Assistant, from initial hardware selection through a fully hardened, automated home.
 
 Together they give you an AI agent that can both *answer technical questions* about Home Assistant and *guide you through the journey* of building and expanding your smart home.
 
@@ -24,30 +23,30 @@ Together they give you an AI agent that can both *answer technical questions* ab
 ### If you're just starting out
 Start with the process pack. Work through the phases in order — they're designed to build on each other without overwhelming you.
 
-→ [Process overview](process/overview.md)  
-→ [Phase 1: Planning](process/phases/01-planning.md)
+→ [[overview.md|Process overview]]  
+→ [[01-planning.md|Phase 1: Planning]]
 
 ### If you need to make a key decision
 The decisions directory distills the major choice points into structured frameworks.
 
-→ [Installation method](process/decisions/installation-method.md) — HA OS vs Container vs Supervised vs Core  
-→ [Protocol selection](process/decisions/protocol-selection.md) — Zigbee vs Z-Wave vs WiFi vs Thread/Matter  
-→ [Hardware selection](process/decisions/hardware-selection.md) — Pi vs mini-PC vs VM
+→ [[installation-method.md|Installation method]] — HA OS vs Container vs Supervised vs Core  
+→ [[protocol-selection.md|Protocol selection]] — Zigbee vs Z-Wave vs WiFi vs Thread/Matter  
+→ [[hardware-selection.md|Hardware selection]] — Pi vs mini-PC vs VM
 
 ### If you're troubleshooting or looking up concepts
 The product pack is your reference layer. It covers the platform's internals, protocols, automation fundamentals, and common failure modes.
 
-→ [Product overview](product/overview.md)  
-→ [Troubleshooting](product/troubleshooting/_index.md)  
-→ [Concepts](product/concepts/_index.md)
+→ [[overview.md|Product overview]]  
+→ [[_index.md|Troubleshooting]]  
+→ [[_index.md|Concepts]]
 
 ### If you want proven automation patterns
 The process pack includes battle-tested implementation patterns for common automation scenarios.
 
-→ [Motion lighting](process/patterns/motion-lighting.md)  
-→ [Climate control](process/patterns/climate-control.md)  
-→ [Security monitoring](process/patterns/security-monitoring.md)  
-→ [Notification patterns](process/patterns/notification-patterns.md)
+→ [[motion-lighting.md|Motion lighting]]  
+→ [[climate-control.md|Climate control]]  
+→ [[security-monitoring.md|Security monitoring]]  
+→ [[notification-patterns.md|Notification patterns]]
 
 ---
 

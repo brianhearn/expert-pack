@@ -1,11 +1,14 @@
 ---
-title: "What Hardware Should I Run Home Assistant On?"
-type: "faq"
-tags: [backup-migration, faq, hardware-selection, network-architecture]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: What Hardware Should I Run Home Assistant On?
+type: faq
+tags:
+- backup-migration
+- faq
+- hardware-selection
+- network-architecture
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=faq, topic=hardware-selection, related=backup-migration,network-architecture -->
 
 # What Hardware Should I Run Home Assistant On?
@@ -75,4 +78,4 @@ If you want to run HA alongside a NAS, media server, or other services on the sa
 
 USB passthrough in Proxmox: VM → Hardware → Add → USB Device → select coordinator by vendor:product ID.
 
-→ See [backup-migration.md](../concepts/backup-migration.md) for migration details and hardware upgrade paths
+→ See [[backup-migration.md]] for migration details and hardware upgrade paths

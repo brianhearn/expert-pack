@@ -1,11 +1,17 @@
 ---
-title: "General Solar FAQ"
-type: "faq"
-tags: [battery-systems-2026, diy-vs-contractor, faq-general, grid-tied-vs-hybrid, inverter-types, product, system-design-fundamentals]
-pack: "solar-diy-product"
-retrieval_strategy: "standard"
+title: General Solar FAQ
+type: faq
+tags:
+- battery-systems-2026
+- diy-vs-contractor
+- faq-general
+- grid-tied-vs-hybrid
+- inverter-types
+- product
+- system-design-fundamentals
+pack: solar-diy-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=product, topic=faq-general, related=system-design-fundamentals,inverter-types,battery-systems-2026,diy-vs-contractor,grid-tied-vs-hybrid -->
 
 > **Lead summary:** Answers to the most common solar questions: costs ($15,000–$35,000 before the 30% federal tax credit), system sizing, battery necessity, DIY feasibility, and how long payback takes (6–12 years typically). The 30% federal ITC is the single biggest financial lever available to solar buyers.
@@ -32,7 +38,7 @@ Average installed cost is $2.50-3.50 per watt before incentives. A typical 8 kW 
   method: "The ITC is 30% through 2032 under the Inflation Reduction Act, then steps down (26% in 2033, 22% in 2034). Verify if legislation has changed."
 -->
 
-Battery storage adds $6,000-16,000 per unit depending on the system (see [Battery Systems](../specifications/battery-systems-2026.md)).
+Battery storage adds $6,000-16,000 per unit depending on the system (see [[battery-systems-2026.md|Battery Systems]]).
 
 <!-- refresh
   decay: volatile

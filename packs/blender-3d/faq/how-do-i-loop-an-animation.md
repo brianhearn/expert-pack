@@ -1,11 +1,15 @@
 ---
-title: "How Do I Loop an Animation?"
-type: "faq"
-tags: [animation-looping, animation-rigging, character-animation, faq, motion-graphics]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: How Do I Loop an Animation?
+type: faq
+tags:
+- animation-looping
+- animation-rigging
+- character-animation
+- faq
+- motion-graphics
+pack: blender-3d
+retrieval_strategy: standard
 ---
-
 <!-- context: section=faq, topic=animation-looping, related=animation-rigging,character-animation,motion-graphics -->
 
 # How Do I Loop an Animation?
@@ -50,6 +54,6 @@ For a walk cycle that moves forward:
 
 ## Related
 
-- [Animation & Rigging](../concepts/animation-rigging.md)
-- [Character Animation Workflow](../workflows/character-animation.md)
-- [Motion Graphics Workflow](../workflows/motion-graphics.md)
+- [[animation-rigging.md|Animation & Rigging]]
+- [[character-animation.md|Character Animation Workflow]]
+- [[motion-graphics.md|Motion Graphics Workflow]]

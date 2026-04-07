@@ -1,11 +1,15 @@
 ---
-title: "Voice Assistants with Home Assistant Assist"
-type: "concept"
-tags: [automation-fundamentals, concepts, esphome-fundamentals, integrations-guide, voice-assistant]
-pack: "home-assistant-product"
-retrieval_strategy: "standard"
+title: Voice Assistants with Home Assistant Assist
+type: concept
+tags:
+- automation-fundamentals
+- concepts
+- esphome-fundamentals
+- integrations-guide
+- voice-assistant
+pack: home-assistant-product
+retrieval_strategy: standard
 ---
-
 <!-- context: section=concepts, topic=voice-assistant, related=esphome-fundamentals,integrations-guide,automation-fundamentals -->
 ---
 sources:
@@ -417,6 +421,6 @@ Assist is impressive for an open-source local system, but know what you're getti
 
 ## Related
 
-- [ESPHome Fundamentals](esphome-fundamentals.md) — Building ESP32 voice satellites
-- [Integration Guide](integrations-guide.md) — Connecting OpenAI, Anthropic, and other LLM providers
-- [Automation Fundamentals](automation-fundamentals.md) — Building automations triggered by voice intents
+- [[esphome-fundamentals.md|ESPHome Fundamentals]] — Building ESP32 voice satellites
+- [[integrations-guide.md|Integration Guide]] — Connecting OpenAI, Anthropic, and other LLM providers
+- [[automation-fundamentals.md|Automation Fundamentals]] — Building automations triggered by voice intents

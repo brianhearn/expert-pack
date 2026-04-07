@@ -1,11 +1,8 @@
 ---
-title: "Smart Notification Patterns — Beyond "Send Me a Message""
-type: pattern
-tags: [pattern, notifications, automation, home-assistant-process]
-pack: home-assistant-process
-retrieval_strategy: standard
+pack: home-assistant
+tags:
+- process
 ---
-
 ---
 sources:
   - type: documentation
@@ -419,6 +416,6 @@ automation:
 
 ## Related
 
-- [Automation Fundamentals](../concepts/automation-fundamentals.md) — Triggers, conditions, actions
-- [Presence Detection](../concepts/presence-detection.md) — Route notifications based on who's home
-- [Diagnostic Guide](../troubleshooting/diagnostic-guide.md) — Debugging notification delivery issues
+- Automation Fundamentals — Triggers, conditions, actions
+- Presence Detection — Route notifications based on who's home
+- Diagnostic Guide — Debugging notification delivery issues

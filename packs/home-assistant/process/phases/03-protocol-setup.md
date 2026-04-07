@@ -1,11 +1,12 @@
 ---
-title: "Phase 3: Protocol Setup"
-type: "phase"
-tags: [03-protocol-setup, phases]
-pack: "home-assistant-process"
-retrieval_strategy: "atomic"
+title: 'Phase 3: Protocol Setup'
+type: phase
+tags:
+- 03-protocol-setup
+- phases
+pack: home-assistant-process
+retrieval_strategy: atomic
 ---
-
 # Phase 3: Protocol Setup
 
 ## Goal
@@ -176,4 +177,4 @@ Areas unlock:
 
 ## What's Next
 
-→ [Phase 4: Automation Building](04-automation-building.md) — Build your first automations on a stable device foundation
+→ [[04-automation-building.md|Phase 4: Automation Building]] — Build your first automations on a stable device foundation

@@ -1,11 +1,12 @@
 ---
-title: "Phase 2: Initial Setup"
-type: "phase"
-tags: [02-initial-setup, phases]
-pack: "home-assistant-process"
-retrieval_strategy: "atomic"
+title: 'Phase 2: Initial Setup'
+type: phase
+tags:
+- 02-initial-setup
+- phases
+pack: home-assistant-process
+retrieval_strategy: atomic
 ---
-
 # Phase 2: Initial Setup
 
 ## Goal
@@ -146,4 +147,4 @@ This unlocks the YAML editor for automations, template testing, and other power-
 
 ## What's Next
 
-→ [Phase 3: Protocol Setup](03-protocol-setup.md) — Add your Zigbee/Z-Wave coordinator and start pairing smart devices
+→ [[03-protocol-setup.md|Phase 3: Protocol Setup]] — Add your Zigbee/Z-Wave coordinator and start pairing smart devices

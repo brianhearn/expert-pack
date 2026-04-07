@@ -1,11 +1,15 @@
 ---
-title: "Climate Control Automation Patterns"
+title: Climate Control Automation Patterns
 type: pattern
-tags: [pattern, climate-control, automation, thermostat, home-assistant-process]
+tags:
+- pattern
+- climate-control
+- automation
+- thermostat
+- home-assistant-process
 pack: home-assistant-process
 retrieval_strategy: standard
 ---
-
 ---
 sources:
   - type: documentation
@@ -504,6 +508,6 @@ The ESPHome ClimateIR component supports many manufacturers (Mitsubishi, Daikin,
 
 ## Related
 
-- [Presence Detection](../concepts/presence-detection.md) — The multi-sensor presence model that powers presence-based climate
-- [Energy Management](../concepts/energy-management.md) — Track HVAC energy consumption, optimize for solar excess
-- [Automation Fundamentals](../concepts/automation-fundamentals.md) — Triggers, conditions, modes for climate automations
+- Presence Detection — The multi-sensor presence model that powers presence-based climate
+- Energy Management — Track HVAC energy consumption, optimize for solar excess
+- Automation Fundamentals — Triggers, conditions, modes for climate automations
