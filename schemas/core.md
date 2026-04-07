@@ -215,6 +215,35 @@ Each `##` section should be about one sub-topic and produce a coherent chunk on 
 - **Pack slugs:** `kebab-case` — matches the directory name
 - **No spaces, no underscores in filenames** (exception: legacy files that predate this convention)
 
+### Filename Uniqueness (Required)
+
+Every content file in a pack **must have a unique basename** across the entire vault. Duplicate basenames break Obsidian wikilink resolution — the graph draws edges to the wrong file or picks arbitrarily between matches.
+
+**Enforcement: directory prefix convention.** Each directory type is assigned a short prefix. All content files in that directory are named `{prefix}-{slug}.md`. This makes filenames self-describing and collision-free by construction.
+
+Standard prefixes for person packs:
+
+| Directory | Prefix | Example |
+|---|---|---|
+| `summaries/stories/` | `sum-` | `sum-nina-street.md` |
+| `summaries/reflections/` | `sum-` | `sum-ai-personhood.md` |
+| `summaries/opinions/` | `sum-` | `sum-on-ai.md` |
+| `verbatim/stories/` | `vbt-` | `vbt-nina-street.md` |
+| `verbatim/reflections/` | `vbt-` | `vbt-ai-personhood.md` |
+| `verbatim/opinions/` | `vbt-` | `vbt-on-ai.md` |
+| `mind/` | `mind-` | `mind-epistemology.md` |
+| `facts/` | `facts-` | `facts-timeline.md` |
+| `meta/` | `meta-` | `meta-changelog.md` |
+| `propositions/` | `prop-` | `prop-facts.md` |
+| `relationships/` | `rel-` | `rel-people.md` |
+| `presentation/` | `pres-` | `pres-modes.md` |
+
+For other pack types (product, process, etc.), define prefixes in the pack's `manifest.yaml` under `file_prefixes`. Choose short (3–5 char) abbreviations that reflect content type.
+
+**Exceptions:** Root-level structural files (`README.md`, `SCHEMA.md`, `STATUS.md`, `glossary.md`, `overview.md`) and `_index.md` directory indexes are exempt — they are already unique by convention.
+
+The EP CLI validator (when available) will enforce this rule and flag any duplicate basenames at pack validation time.
+
 ---
 
 ## Retrieval Optimization
