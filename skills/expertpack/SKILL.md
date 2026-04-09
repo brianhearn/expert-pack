@@ -56,6 +56,8 @@ Default directory: `~/expertpacks/`. Check there first, fall back to current wor
 
 For detailed platform integration (Cursor, Claude Code, custom APIs, direct context window): read `{skill_dir}/references/consumption.md`.
 
+> **Volatile files:** If a pack uses `volatile/` files with a `source` URL, staleness is checked at session start and the agent alerts you. Refresh is always **user-initiated** — no automatic background network fetches occur.
+
 ### 2. Create / Hydrate a Pack
 
 1. Determine pack type: person, product, process, or composite
@@ -91,6 +93,8 @@ clawhub install expertpack-eval
 ### 5. Validate & Fix a Pack
 
 > **Note:** `ep-validate.py` and `ep-doctor.py` are local Python scripts from the public ExpertPack repo (github.com/brianhearn/ExpertPack, `tools/validator/`). They read and write local pack files only — no network calls, no external dependencies beyond Python stdlib. Review the scripts before running if desired.
+>
+> **⚠️ Always run without `--apply` first (dry-run is the default).** Inspect the proposed changes before applying. Keep files under version control or take backups before any `--apply` run.
 
 Run the CLI validator to check compliance (16 checks covering manifest, frontmatter, wikilinks, cross-links, file prefixes, orphans, and file size):
 

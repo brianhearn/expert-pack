@@ -145,7 +145,7 @@ volatile:
 - `volatile/` files are always Tier 2 (Searchable) — never Tier 1
 - Static and volatile content never coexist in the same file
 - Volatile files are **excluded from EK ratio measurement** — declare `volatile_excluded: true` in the manifest's `ek_ratio` block
-- Staleness check is passive: at session start the agent checks `expires_at` across `volatile/*.md`; if stale, auto-refresh from `source` (URL) or alert the user (manual source)
+- Staleness check is passive: at session start the agent checks `expires_at` across `volatile/*.md`; if stale, the agent alerts the user — refresh is always user-initiated (agent fetches from `source` URL only when the user explicitly requests it, or alerts the user to update manually if no URL is set)
 - The existing `<!-- refresh -->` inline block in core.md remains the standard for *individual volatile facts within static files*; frontmatter TTL is for *fully volatile files* in `volatile/`
 
 **Manifest addition:**
