@@ -61,7 +61,7 @@ For detailed platform integration (Cursor, Claude Code, custom APIs, direct cont
 1. Determine pack type: person, product, process, or composite
 2. Read `{skill_dir}/references/schemas.md` for structural requirements
 3. Create root directory using the pack slug (kebab-case)
-4. **Copy `.obsidian/` config into the pack root** — from the ExpertPack repo `template/` folder. This makes the pack immediately usable in Obsidian with Dataview and Templater pre-configured.
+4. **Copy `.obsidian/` config into the pack root** — from the ExpertPack repo `template/` folder (local clone of the public repo at github.com/brianhearn/ExpertPack). This makes the pack immediately usable in Obsidian with Dataview and Templater pre-configured.
    ```bash
    cp -r /path/to/ExpertPack/template/.obsidian ./your-pack-slug/.obsidian
    ```
@@ -90,6 +90,8 @@ clawhub install expertpack-eval
 
 ### 5. Validate & Fix a Pack
 
+> **Note:** `ep-validate.py` and `ep-doctor.py` are local Python scripts from the public ExpertPack repo (github.com/brianhearn/ExpertPack, `tools/validator/`). They read and write local pack files only — no network calls, no external dependencies beyond Python stdlib. Review the scripts before running if desired.
+
 Run the CLI validator to check compliance (16 checks covering manifest, frontmatter, wikilinks, cross-links, file prefixes, orphans, and file size):
 
 ```bash
@@ -98,13 +100,13 @@ python3 /path/to/ExpertPack/tools/validator/ep-validate.py /path/to/pack [--verb
 
 **Must pass with 0 errors before committing.** Warnings are advisory.
 
-Auto-fix common issues with the doctor (dry-run by default):
+Auto-fix common issues with the doctor. **Always run dry-run first** to review proposed changes before applying:
 
 ```bash
-# Dry-run — see what would change
+# Dry-run — see what would change (default, no files modified)
 python3 /path/to/ExpertPack/tools/validator/ep-doctor.py /path/to/pack
 
-# Apply all fixes
+# Apply all fixes after reviewing dry-run output
 python3 /path/to/ExpertPack/tools/validator/ep-doctor.py /path/to/pack --apply
 
 # Apply specific fix category: links | fm | prefix
@@ -116,13 +118,13 @@ Fix operations:
 - **fm** — add missing frontmatter fields (title, type, tags, pack), fix `canonical_verbatim` paths
 - **prefix** — rename files to content-type prefixes for vault-wide uniqueness (`sum-`, `vbt-`, `facts-`, `meta-`, `mind-`, `prop-`, `rel-`, `pres-`)
 
-Remove broken wikilinks pointing to non-existent files (safe for cross-sub-pack references in composites):
+Remove broken wikilinks pointing to non-existent files (safe for cross-sub-pack references in composites). **Run without `--apply` first** to preview changes:
 
 ```bash
 python3 /path/to/ExpertPack/tools/validator/ep-fix-broken-wikilinks.py /path/to/pack [--apply]
 ```
 
-**Recommended workflow:** `ep-doctor --apply` → `ep-validate` → commit.
+**Recommended workflow:** `ep-doctor` (dry-run) → `ep-doctor --apply` → `ep-validate` → commit.
 
 All tools are in `ExpertPack/tools/validator/` in the public repo.
 
