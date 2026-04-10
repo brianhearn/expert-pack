@@ -1362,6 +1362,73 @@ These principles apply to every ExpertPack, regardless of type:
 
 ---
 
+## Graph Export (_graph.yaml)
+
+Every pack CAN include a `_graph.yaml` adjacency file at its root. This is optional but recommended for packs used with GraphRAG pipelines or any consumer that benefits from explicit entity/relationship structure.
+
+### Why a graph layer
+
+Markdown-first RAG works well for precise retrieval but lacks explicit relationship traversal. A graph export gives GraphRAG systems a navigable structure without making graph the canonical format — the Markdown files remain the source of truth.
+
+### File format
+
+```yaml
+meta:
+  pack: "Pack Name"
+  slug: "pack-slug"
+  generated_at: "2026-04-10T15:55:00Z"
+  node_count: 288
+  edge_count: 152
+  schema_version: "1.0"
+
+nodes:
+  - id: "pack-slug/concepts/topic"     # stable frontmatter id
+    title: "Topic Title"
+    type: "concept"
+    file: "concepts/topic.md"           # relative path for content lookup
+    verified_at: "2026-04-10"
+
+edges:
+  - source: "pack-slug/concepts/topic"
+    target: "pack-slug/workflows/related-workflow"
+    kind: "wikilink"                    # wikilink | related | context
+```
+
+### Edge kinds
+
+| Kind | Derived from |
+|------|--------------|
+| `wikilink` | `[[target.md]]` body references |
+| `related` | `related:` frontmatter list |
+| `context` | `<!-- context: ... related=X -->` comment hints |
+
+### Generation
+
+Use the `ep-graph-export` tool in `tools/graph-export/`:
+
+```bash
+python3 tools/graph-export/ep-graph-export.py /path/to/pack
+```
+
+This requires that content files have `id:` frontmatter (see Provenance Metadata section). Run `ep-validate --provenance` first to identify any files missing `id`.
+
+### Rules
+
+- `_graph.yaml` is **derived** from Markdown content — regenerate it when files are added, removed, or significantly restructured
+- It is excluded from RAG indexing (`context.on_demand` or omitted from `extraPaths`) — it is structural metadata, not retrieval content
+- Node `id` values are the stable frontmatter IDs — they match the citation IDs in the Provenance Metadata spec
+- The graph is NOT bidirectional by default — edges follow the direction of the source reference
+- A JSON variant (`_graph.json`) is also acceptable; use `--format json` with the export tool
+
+### GraphRAG compatibility
+
+The flat adjacency list is importable into common graph frameworks:
+- **NetworkX:** `G.add_edges_from([(e['source'], e['target']) for e in graph['edges']])`
+- **LlamaIndex Knowledge Graph:** feed nodes/edges into `KnowledgeGraphIndex`
+- **Neo4j:** map nodes as `:Concept` with `id` as the key property
+
+---
+
 ## Obsidian Compatibility
 
 ExpertPacks are valid [Obsidian](https://obsidian.md) vaults. Any EP pack directory can be opened directly in Obsidian with full Dataview query support, graph navigation, and template-based authoring.
@@ -1551,5 +1618,5 @@ With frontmatter in place, Obsidian users get:
 
 ---
 
-*Schema version: 3.0*
+*Schema version: 3.1*
 *Last updated: 2026-04-10*
