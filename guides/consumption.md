@@ -426,6 +426,44 @@ After deployment, ongoing quality management:
 
 ---
 
+## Deploy Prep: Strip Frontmatter Before Indexing
+
+YAML frontmatter (`id`, `content_hash`, `verified_at`, `verified_by`) is management metadata — it serves tooling and freshness tracking, not retrieval. Embedding it alongside content dilutes semantic similarity scores and wastes context tokens. Strip it before deploying to your RAG platform.
+
+The source pack (in your repo) retains full provenance. The deployed copy is clean. Deploy artifacts are ephemeral.
+
+```bash
+# 1. Strip frontmatter to a temp deploy dir
+python3 ExpertPack/tools/deploy-prep/ep-strip-frontmatter.py \
+    --src ExpertPacks/my-pack \
+    --out /tmp/my-pack-deploy \
+    --force
+
+# 2. Package and ship (OpenClaw example)
+tar czf /tmp/my-pack-deploy.tar.gz -C /tmp/my-pack-deploy .
+scp /tmp/my-pack-deploy.tar.gz root@your-host:/tmp/
+ssh root@your-host "rm -rf /root/.openclaw/workspace/my-pack && \
+    mkdir -p /root/.openclaw/workspace/my-pack && \
+    tar xzf /tmp/my-pack-deploy.tar.gz -C /root/.openclaw/workspace/my-pack"
+
+# 3. Clean up
+rm -rf /tmp/my-pack-deploy /tmp/my-pack-deploy.tar.gz
+```
+
+See `ExpertPack/tools/deploy-prep/` for the full tool and README.
+
+---
+
+## Eval Discipline
+
+Eval results are only comparable when the conditions are identical. Mixing question sets or configs produces noise, not signal.
+
+- **Fix your question set.** Pick N questions (recommended: 20) and never change them between comparison runs. Tag them `benchmark: true` in `questions.yaml`. Use the full set only for exploratory runs.
+- **Lock your config.** The canonical RAG config is your baseline. Changing `chunking.tokens`, `maxResults`, or any other parameter is an explicit experiment — document it, run both old and new on the same question set, label the runs clearly.
+- **One variable at a time.** Structure, model, config — change only one per run. Multi-variable changes make causality impossible to trace.
+
+---
+
 ## Quick-Start Checklist
 
 A condensed deployment checklist for getting a pack into production:
@@ -436,12 +474,13 @@ A condensed deployment checklist for getting a pack into production:
 - [ ] **Write SOUL.md** — identity, scope rules, response style, anti-hallucination guidance
 - [ ] **Select model** — balance cost, speed, and instruction following for your use case
 - [ ] **Load Tier 1 files** — manifest, overview, glossary in system prompt or always-load config
-- [ ] **Build eval set** — 30+ questions covering basic, intermediate, advanced, and out-of-scope
+- [ ] **Strip frontmatter** — run `ep-strip-frontmatter.py` before deploying to your RAG platform
+- [ ] **Build eval set** — 20 fixed benchmark questions + additional exploratory questions
 - [ ] **Run baseline eval** — save results
 - [ ] **Identify and fix failures** — one dimension at a time (structure → training → model)
 - [ ] **Deploy and monitor** — track question patterns, token usage, and model behavior over time
 
 ---
 
-*Guide version: 2.1*
-*Last updated: 2026-03-31*
+*Guide version: 2.2*
+*Last updated: 2026-04-10*
