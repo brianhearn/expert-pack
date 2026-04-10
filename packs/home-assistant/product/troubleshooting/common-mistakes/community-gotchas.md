@@ -15,8 +15,10 @@ sources:
   - https://news.ycombinator.com/item?id=42813513
   - https://www.xda-developers.com/things-wish-knew-before-going-all-in-home-assistant/
   - https://edvoncken.net/2025/01/reduce-homeassistant-database/
+id: home-assistant/product/troubleshooting/common-mistakes/community-gotchas
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Community-Sourced Gotchas and Practitioner Knowledge
 
 > These are things that tripped up real users and are NOT obvious from docs.

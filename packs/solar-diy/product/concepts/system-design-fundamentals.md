@@ -8,6 +8,9 @@ tags:
 - solar-diy-product
 pack: solar-diy-product
 retrieval_strategy: standard
+id: solar-diy/product/concepts/system-design-fundamentals
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 ---
 sources:

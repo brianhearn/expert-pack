@@ -1,9 +1,14 @@
 ---
-title: "Animation and Rigging"
-type: "concept"
-tags: [animation-rigging, concepts]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Animation and Rigging
+type: concept
+tags:
+- animation-rigging
+- concepts
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/animation-rigging
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/concepts/animation-rigging -->

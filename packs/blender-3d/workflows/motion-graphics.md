@@ -1,9 +1,14 @@
 ---
-title: "Motion Graphics Workflow"
-type: "workflow"
-tags: [motion-graphics, workflows]
-pack: "blender-3d"
-retrieval_strategy: "atomic"
+title: Motion Graphics Workflow
+type: workflow
+tags:
+- motion-graphics
+- workflows
+pack: blender-3d
+retrieval_strategy: atomic
+id: blender-3d/workflows/motion-graphics
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/workflows/motion-graphics -->

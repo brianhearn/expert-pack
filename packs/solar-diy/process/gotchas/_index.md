@@ -4,6 +4,9 @@ type: "index"
 tags: [gotchas]
 pack: "solar-diy-process"
 retrieval_strategy: "standard"
+id: solar-diy/process/gotchas/_index
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Gotchas Index

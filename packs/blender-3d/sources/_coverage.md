@@ -1,9 +1,14 @@
 ---
-title: "Blender Knowledge Sources — Coverage Map"
-type: "source"
-tags: [-coverage, sources]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Blender Knowledge Sources — Coverage Map
+type: source
+tags:
+- -coverage
+- sources
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/sources/_coverage
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Blender Knowledge Sources — Coverage Map

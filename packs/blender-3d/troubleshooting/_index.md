@@ -1,9 +1,13 @@
 ---
-title: "Troubleshooting"
-type: "index"
-tags: [troubleshooting]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Troubleshooting
+type: index
+tags:
+- troubleshooting
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/troubleshooting/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Troubleshooting

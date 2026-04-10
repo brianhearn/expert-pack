@@ -8,6 +8,9 @@ tags:
 - yaml-configuration
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/yaml-configuration
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=yaml-configuration, related=core-architecture,automation-fundamentals -->
 ---

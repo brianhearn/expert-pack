@@ -16,6 +16,9 @@ sources:
 - https://github.com/hacs/integration/issues/4314
 - https://github.com/home-assistant/core/issues/126235
 - https://news.ycombinator.com/item?id=42813513
+id: home-assistant/product/faq/integration-breaks-every-update
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Why Does My Integration Break Every Update?
 

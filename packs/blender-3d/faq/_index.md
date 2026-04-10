@@ -1,9 +1,13 @@
 ---
-title: "Blender 3D — FAQ"
-type: "index"
-tags: [faq]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Blender 3D — FAQ
+type: index
+tags:
+- faq
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/faq/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Blender 3D — FAQ

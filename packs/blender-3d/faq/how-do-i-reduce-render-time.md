@@ -9,6 +9,9 @@ tags:
 - shading-rendering
 pack: blender-3d
 retrieval_strategy: standard
+id: blender-3d/faq/how-do-i-reduce-render-time
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=faq, topic=render-performance, related=shading-rendering,scene-optimization,compositing -->
 

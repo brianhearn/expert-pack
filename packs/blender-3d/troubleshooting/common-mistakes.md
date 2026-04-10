@@ -1,9 +1,19 @@
 ---
-title: "Common Blender Mistakes"
-type: "troubleshooting"
-tags: [animation-rigging, common-mistakes, modeling-fundamentals, physics-simulation, sculpting, shading-rendering, troubleshooting]
-pack: "blender-3d"
-retrieval_strategy: "atomic"
+title: Common Blender Mistakes
+type: troubleshooting
+tags:
+- animation-rigging
+- common-mistakes
+- modeling-fundamentals
+- physics-simulation
+- sculpting
+- shading-rendering
+- troubleshooting
+pack: blender-3d
+retrieval_strategy: atomic
+id: blender-3d/troubleshooting/common-mistakes
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: section=troubleshooting, topic=common-mistakes, related=modeling-fundamentals,shading-rendering,animation-rigging,physics-simulation,sculpting -->

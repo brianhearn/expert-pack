@@ -4,6 +4,9 @@ type: "decision"
 tags: [decision-diy-vs-contractor, installation, permitting, process, site-assessment]
 pack: "solar-diy-process"
 retrieval_strategy: "standard"
+id: solar-diy/process/decisions/diy-vs-contractor
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Decision: DIY vs. Contractor

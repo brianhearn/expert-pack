@@ -6,6 +6,9 @@ tags:
 - phases
 pack: home-assistant-process
 retrieval_strategy: atomic
+id: home-assistant/process/phases/03-protocol-setup
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Phase 3: Protocol Setup
 

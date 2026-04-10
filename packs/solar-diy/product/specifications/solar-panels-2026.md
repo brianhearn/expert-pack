@@ -4,6 +4,9 @@ type: specification
 tags: [specification, solar-panels, efficiency, manufacturers, solar-diy-product]
 pack: solar-diy-product
 retrieval_strategy: standard
+id: solar-diy/product/specifications/solar-panels-2026
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 ---

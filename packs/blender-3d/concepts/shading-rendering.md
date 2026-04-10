@@ -1,9 +1,17 @@
 ---
-title: "Shading and Rendering"
-type: "concept"
-tags: [compositing, concepts, geometry-nodes, modeling-fundamentals, shading-rendering]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Shading and Rendering
+type: concept
+tags:
+- compositing
+- concepts
+- geometry-nodes
+- modeling-fundamentals
+- shading-rendering
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/shading-rendering
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: section=concepts, topic=shading-rendering, related=modeling-fundamentals,compositing,geometry-nodes -->

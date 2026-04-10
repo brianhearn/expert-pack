@@ -1,9 +1,14 @@
 ---
-title: "Character Animation Workflow"
-type: "workflow"
-tags: [character-animation, workflows]
-pack: "blender-3d"
-retrieval_strategy: "atomic"
+title: Character Animation Workflow
+type: workflow
+tags:
+- character-animation
+- workflows
+pack: blender-3d
+retrieval_strategy: atomic
+id: blender-3d/workflows/character-animation
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/workflows/character-animation -->

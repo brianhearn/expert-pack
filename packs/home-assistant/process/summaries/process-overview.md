@@ -6,6 +6,9 @@ tags:
 - summaries
 pack: home-assistant-process
 retrieval_strategy: standard
+id: home-assistant/process/summaries/process-overview
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Summary — Process Pack Overview
 

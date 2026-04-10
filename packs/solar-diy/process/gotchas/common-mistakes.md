@@ -4,6 +4,9 @@ type: "gotcha"
 tags: [common-mistakes, installation, nec-rapid-shutdown, permitting, process, string-sizing, system-design]
 pack: "solar-diy-process"
 retrieval_strategy: "atomic"
+id: solar-diy/process/gotchas/common-mistakes
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Common Mistakes in Residential Solar Projects

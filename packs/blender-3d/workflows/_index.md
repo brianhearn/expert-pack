@@ -1,9 +1,13 @@
 ---
-title: "Workflows"
-type: "index"
-tags: [workflows]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Workflows
+type: index
+tags:
+- workflows
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/workflows/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Workflows

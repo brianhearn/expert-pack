@@ -9,6 +9,9 @@ tags:
 - protocols
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/core-architecture
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=core-architecture, related=automation-fundamentals,protocols,integrations-guide -->
 ---

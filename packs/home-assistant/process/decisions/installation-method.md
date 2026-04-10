@@ -6,6 +6,9 @@ tags:
 - installation-method
 pack: home-assistant-process
 retrieval_strategy: standard
+id: home-assistant/process/decisions/installation-method
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Decision: Installation Method
 

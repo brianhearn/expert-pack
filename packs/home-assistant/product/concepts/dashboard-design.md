@@ -8,6 +8,9 @@ tags:
 - integrations-guide
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/dashboard-design
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=dashboard-design, related=core-architecture,integrations-guide -->
 ---

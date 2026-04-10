@@ -6,6 +6,9 @@ tags:
 - summaries
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/summaries/concepts-overview
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Summary — Product Concepts Overview
 

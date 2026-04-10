@@ -4,6 +4,9 @@ type: "volatile"
 tags: []
 pack: "solar-diy-product"
 retrieval_strategy: "standard"
+id: solar-diy/product/freshness
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Freshness Guide — Solar DIY Pack

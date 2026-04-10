@@ -1,9 +1,14 @@
 ---
-title: "Python Scripting (bpy)"
-type: "concept"
-tags: [concepts, python-scripting]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Python Scripting (bpy)
+type: concept
+tags:
+- concepts
+- python-scripting
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/python-scripting
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/concepts/python-scripting -->

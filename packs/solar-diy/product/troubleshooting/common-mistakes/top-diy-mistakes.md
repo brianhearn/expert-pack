@@ -11,6 +11,9 @@ tags:
 - troubleshooting-mistakes
 pack: solar-diy-product
 retrieval_strategy: atomic
+id: solar-diy/product/troubleshooting/common-mistakes/top-diy-mistakes
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 <!-- context: section=product, topic=troubleshooting-mistakes, related=system-design-fundamentals,installation,permitting,inspection-commissioning,common-mistakes -->
 

@@ -1,9 +1,12 @@
 ---
-title: "Blender Glossary"
-type: "glossary"
+title: Blender Glossary
+type: glossary
 tags: []
-pack: "blender-3d"
-retrieval_strategy: "standard"
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/glossary
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Blender Glossary

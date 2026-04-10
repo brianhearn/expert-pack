@@ -4,8 +4,10 @@ type: "proposition"
 tags: [phases-decisions, propositions]
 pack: "home-assistant-process"
 retrieval_strategy: "standard"
+id: home-assistant/process/propositions/phases-decisions
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Propositions — Process Phases & Decisions
 
 Atomic factual statements extracted from the process phases and decision files.

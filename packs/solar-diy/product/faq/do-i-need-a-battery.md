@@ -9,6 +9,9 @@ tags:
 - system-design-fundamentals
 pack: solar-diy-product
 retrieval_strategy: standard
+id: solar-diy/product/faq/do-i-need-a-battery
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 <!-- context: section=product, topic=faq-battery-decision, related=battery-systems-2026,grid-tied-vs-hybrid,system-design-fundamentals -->
 

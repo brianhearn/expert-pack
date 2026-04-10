@@ -1,9 +1,14 @@
 ---
-title: "Compositing"
-type: "concept"
-tags: [compositing, concepts]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Compositing
+type: concept
+tags:
+- compositing
+- concepts
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/compositing
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/concepts/compositing -->

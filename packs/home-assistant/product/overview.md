@@ -4,6 +4,9 @@ type: overview
 tags: []
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/overview
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Home Assistant Platform Reference
 

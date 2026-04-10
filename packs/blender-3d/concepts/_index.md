@@ -1,9 +1,13 @@
 ---
-title: "Concepts"
-type: "index"
-tags: [concepts]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Concepts
+type: index
+tags:
+- concepts
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Concepts

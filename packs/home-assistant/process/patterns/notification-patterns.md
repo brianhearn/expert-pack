@@ -2,6 +2,9 @@
 pack: home-assistant
 tags:
 - process
+id: home-assistant/process/patterns/notification-patterns
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 ---
 sources:

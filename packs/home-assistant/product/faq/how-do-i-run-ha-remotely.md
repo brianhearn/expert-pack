@@ -8,6 +8,9 @@ tags:
 - remote-access
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/faq/how-do-i-run-ha-remotely
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=faq, topic=remote-access, related=network-architecture,backup-migration -->
 

@@ -4,6 +4,9 @@ type: "proposition"
 tags: [decisions-gotchas, propositions]
 pack: "solar-diy-process"
 retrieval_strategy: "standard"
+id: solar-diy/process/propositions/decisions-gotchas
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Propositions — Solar Process Decisions & Gotchas

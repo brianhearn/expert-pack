@@ -4,8 +4,10 @@ type: "phase"
 tags: [07-hardening, phases]
 pack: "home-assistant-process"
 retrieval_strategy: "atomic"
+id: home-assistant/process/phases/07-hardening
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Phase 7: Hardening
 
 ## Goal

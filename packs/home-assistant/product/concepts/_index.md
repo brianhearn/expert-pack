@@ -4,8 +4,10 @@ type: "index"
 tags: [concepts]
 pack: "home-assistant-product"
 retrieval_strategy: "standard"
+id: home-assistant/product/concepts/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Concepts
 
 Core knowledge for understanding and building with Home Assistant. Start with Core Architecture — everything else builds on it.

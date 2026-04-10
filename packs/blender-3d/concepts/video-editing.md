@@ -1,9 +1,14 @@
 ---
-title: "Video Editing — Video Sequence Editor (VSE)"
-type: "concept"
-tags: [concepts, video-editing]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Video Editing — Video Sequence Editor (VSE)
+type: concept
+tags:
+- concepts
+- video-editing
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/video-editing
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/concepts/video-editing -->

@@ -1,9 +1,14 @@
 ---
-title: "Blender Community Mining — 2026-03-13"
-type: "source"
-tags: [community-mining, blender-community]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Blender Community Mining — 2026-03-13
+type: source
+tags:
+- community-mining
+- blender-community
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/_community-mining-2026-03-13
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Blender Community Mining — 2026-03-13

@@ -10,6 +10,9 @@ tags:
 - system-design-phase
 pack: solar-diy-product
 retrieval_strategy: standard
+id: solar-diy/product/faq/how-do-i-size-my-solar-system
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 <!-- context: section=product, topic=faq-system-sizing, related=system-design-fundamentals,solar-panels-2026,system-design-phase,pvwatts -->
 

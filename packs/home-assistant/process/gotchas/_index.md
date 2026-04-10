@@ -4,8 +4,10 @@ type: "index"
 tags: [gotchas]
 pack: "home-assistant-process"
 retrieval_strategy: "standard"
+id: home-assistant/process/gotchas/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Gotchas Index
 
 Common mistakes and traps in Home Assistant setups. Reading this before you start saves hours of debugging.

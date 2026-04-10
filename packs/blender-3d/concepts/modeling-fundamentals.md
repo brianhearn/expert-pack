@@ -1,9 +1,17 @@
 ---
-title: "Modeling Fundamentals"
-type: "concept"
-tags: [concepts, core-architecture, modeling-fundamentals, sculpting, shading-rendering]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Modeling Fundamentals
+type: concept
+tags:
+- concepts
+- core-architecture
+- modeling-fundamentals
+- sculpting
+- shading-rendering
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/modeling-fundamentals
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: section=concepts, topic=modeling-fundamentals, related=core-architecture,shading-rendering,sculpting -->

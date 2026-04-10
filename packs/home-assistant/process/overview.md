@@ -4,6 +4,9 @@ type: overview
 tags: []
 pack: home-assistant-process
 retrieval_strategy: standard
+id: home-assistant/process/overview
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Building a Smart Home with Home Assistant
 

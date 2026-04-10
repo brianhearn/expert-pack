@@ -9,6 +9,9 @@ tags:
 - protocols
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/faq/common-questions
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=faq, topic=common-questions, related=core-architecture,protocols,backup-migration -->
 ---

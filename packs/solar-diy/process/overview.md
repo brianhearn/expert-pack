@@ -4,6 +4,9 @@ type: "overview"
 tags: [component-selection, inspection-commissioning, installation, operations-maintenance, permitting, process, process-overview, site-assessment, system-design]
 pack: "solar-diy-process"
 retrieval_strategy: "standard"
+id: solar-diy/process/overview
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 <!-- context: section=process, topic=process-overview, related=site-assessment,system-design,component-selection,permitting,installation,inspection-commissioning,operations-maintenance -->

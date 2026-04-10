@@ -9,6 +9,9 @@ tags:
 - voice-assistant
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/voice-assistant
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=voice-assistant, related=esphome-fundamentals,integrations-guide,automation-fundamentals -->
 ---

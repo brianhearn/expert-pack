@@ -1,9 +1,13 @@
 ---
-title: "Summaries Index — Blender 3D ExpertPack"
-type: "index"
-tags: [summaries]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Summaries Index — Blender 3D ExpertPack
+type: index
+tags:
+- summaries
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/summaries/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Summaries Index — Blender 3D ExpertPack

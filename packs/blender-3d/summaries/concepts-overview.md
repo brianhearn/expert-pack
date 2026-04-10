@@ -6,6 +6,9 @@ tags:
 - summaries
 pack: blender-3d
 retrieval_strategy: standard
+id: blender-3d/summaries/concepts-overview
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Summary — Concepts Overview
 

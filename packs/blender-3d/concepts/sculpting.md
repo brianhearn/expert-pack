@@ -1,9 +1,14 @@
 ---
-title: "Sculpting"
-type: "concept"
-tags: [concepts, sculpting]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Sculpting
+type: concept
+tags:
+- concepts
+- sculpting
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/sculpting
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/concepts/sculpting -->

@@ -1,9 +1,12 @@
 ---
-title: "Blender 3D — Open-Source 3D Modeling, Animation & Rendering Suite"
-type: "overview"
+title: Blender 3D — Open-Source 3D Modeling, Animation & Rendering Suite
+type: overview
 tags: []
-pack: "blender-3d"
-retrieval_strategy: "standard"
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/overview
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Blender 3D — Open-Source 3D Modeling, Animation & Rendering Suite

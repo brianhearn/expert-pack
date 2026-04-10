@@ -8,6 +8,9 @@ tags:
 - network-architecture
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/faq/what-hardware-should-i-run-ha-on
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=faq, topic=hardware-selection, related=backup-migration,network-architecture -->
 

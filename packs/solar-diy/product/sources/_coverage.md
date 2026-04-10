@@ -4,6 +4,9 @@ type: "source"
 tags: [-coverage, sources]
 pack: "solar-diy-product"
 retrieval_strategy: "standard"
+id: solar-diy/product/sources/_coverage
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Research Coverage — Solar DIY Pack

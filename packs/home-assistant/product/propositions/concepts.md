@@ -4,8 +4,10 @@ type: "proposition"
 tags: [concepts, propositions]
 pack: "home-assistant-product"
 retrieval_strategy: "standard"
+id: home-assistant/product/propositions/concepts
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Propositions — Product Concepts
 
 Atomic factual statements extracted from the product concepts files.

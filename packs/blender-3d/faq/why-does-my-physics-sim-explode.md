@@ -8,6 +8,9 @@ tags:
 - physics-troubleshooting
 pack: blender-3d
 retrieval_strategy: standard
+id: blender-3d/faq/why-does-my-physics-sim-explode
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=faq, topic=physics-troubleshooting, related=physics-simulation,common-mistakes -->
 

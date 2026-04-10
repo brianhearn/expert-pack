@@ -4,6 +4,9 @@ type: "phase"
 tags: [diy-vs-contractor, permitting, phase-1-site-assessment, process, shading-analysis, system-design]
 pack: "solar-diy-process"
 retrieval_strategy: "atomic"
+id: solar-diy/process/phases/01-site-assessment
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Phase 1: Site Assessment

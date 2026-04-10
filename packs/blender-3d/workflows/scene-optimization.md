@@ -1,9 +1,14 @@
 ---
-title: "Scene Optimization Workflow"
-type: "workflow"
-tags: [scene-optimization, workflows]
-pack: "blender-3d"
-retrieval_strategy: "atomic"
+title: Scene Optimization Workflow
+type: workflow
+tags:
+- scene-optimization
+- workflows
+pack: blender-3d
+retrieval_strategy: atomic
+id: blender-3d/workflows/scene-optimization
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/workflows/scene-optimization -->

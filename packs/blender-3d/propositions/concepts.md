@@ -1,9 +1,14 @@
 ---
-title: "Propositions — Concepts"
-type: "proposition"
-tags: [concepts, propositions]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Propositions — Concepts
+type: proposition
+tags:
+- concepts
+- propositions
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/propositions/concepts
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Propositions — Concepts

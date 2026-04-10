@@ -1,9 +1,14 @@
 ---
-title: "Propositions — Troubleshooting"
-type: "proposition"
-tags: [propositions, troubleshooting]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Propositions — Troubleshooting
+type: proposition
+tags:
+- propositions
+- troubleshooting
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/propositions/troubleshooting
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Propositions — Troubleshooting

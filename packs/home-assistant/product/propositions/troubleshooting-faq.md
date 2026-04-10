@@ -4,8 +4,10 @@ type: "proposition"
 tags: [propositions, troubleshooting-faq]
 pack: "home-assistant-product"
 retrieval_strategy: "standard"
+id: home-assistant/product/propositions/troubleshooting-faq
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Propositions — Troubleshooting & FAQ
 
 Atomic factual statements extracted from the troubleshooting and FAQ files.

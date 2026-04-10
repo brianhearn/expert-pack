@@ -9,6 +9,9 @@ tags:
 - motion-graphics
 pack: blender-3d
 retrieval_strategy: standard
+id: blender-3d/faq/how-do-i-loop-an-animation
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=faq, topic=animation-looping, related=animation-rigging,character-animation,motion-graphics -->
 

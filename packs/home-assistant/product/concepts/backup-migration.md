@@ -8,6 +8,9 @@ tags:
 - network-architecture
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/backup-migration
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=backup-migration, related=core-architecture,network-architecture -->
 ---

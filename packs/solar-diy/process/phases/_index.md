@@ -4,6 +4,9 @@ type: "index"
 tags: [phases]
 pack: "solar-diy-process"
 retrieval_strategy: "standard"
+id: solar-diy/process/phases/_index
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Phases Index

@@ -4,6 +4,9 @@ type: "decision"
 tags: [battery-systems-2026, component-selection, decision-grid-tied-vs-hybrid, inverter-types, process, system-design]
 pack: "solar-diy-process"
 retrieval_strategy: "standard"
+id: solar-diy/process/decisions/grid-tied-vs-hybrid
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Decision: Grid-Tied vs Hybrid vs Off-Grid

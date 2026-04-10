@@ -1,9 +1,14 @@
 ---
-title: "Propositions — Workflows"
-type: "proposition"
-tags: [propositions, workflows]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Propositions — Workflows
+type: proposition
+tags:
+- propositions
+- workflows
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/propositions/workflows
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Propositions — Workflows

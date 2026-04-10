@@ -4,6 +4,9 @@ type: "index"
 tags: [specifications]
 pack: "solar-diy-product"
 retrieval_strategy: "standard"
+id: solar-diy/product/specifications/_index
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Specifications

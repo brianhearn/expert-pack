@@ -9,6 +9,9 @@ tags:
 - protocols
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/integrations-guide
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=integrations-guide, related=core-architecture,protocols,esphome-fundamentals -->
 ---

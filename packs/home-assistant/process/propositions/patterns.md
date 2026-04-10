@@ -4,8 +4,10 @@ type: "proposition"
 tags: [patterns, propositions]
 pack: "home-assistant-process"
 retrieval_strategy: "standard"
+id: home-assistant/process/propositions/patterns
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Propositions — Process Patterns
 
 Atomic factual statements extracted from the process patterns files.

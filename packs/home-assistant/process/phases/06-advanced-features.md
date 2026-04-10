@@ -6,6 +6,9 @@ tags:
 - phases
 pack: home-assistant-process
 retrieval_strategy: atomic
+id: home-assistant/process/phases/06-advanced-features
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 # Phase 6: Advanced Features
 

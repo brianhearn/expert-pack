@@ -8,6 +8,9 @@ tags:
 - presence-detection
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/presence-detection
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=presence-detection, related=esphome-fundamentals,automation-fundamentals -->
 ---

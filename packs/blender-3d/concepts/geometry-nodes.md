@@ -1,9 +1,17 @@
 ---
-title: "Geometry Nodes"
-type: "concept"
-tags: [animation-rigging, concepts, geometry-nodes, physics-simulation, python-scripting]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Geometry Nodes
+type: concept
+tags:
+- animation-rigging
+- concepts
+- geometry-nodes
+- physics-simulation
+- python-scripting
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/geometry-nodes
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: section=concepts, topic=geometry-nodes, related=python-scripting,physics-simulation,animation-rigging -->

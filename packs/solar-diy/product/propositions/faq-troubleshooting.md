@@ -4,6 +4,9 @@ type: "proposition"
 tags: [faq-troubleshooting, propositions]
 pack: "solar-diy-product"
 retrieval_strategy: "standard"
+id: solar-diy/product/propositions/faq-troubleshooting
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Propositions — Solar Product FAQ & Troubleshooting

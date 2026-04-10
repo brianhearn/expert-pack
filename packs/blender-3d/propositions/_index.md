@@ -1,9 +1,13 @@
 ---
-title: "Propositions Index — Blender 3D ExpertPack"
-type: "index"
-tags: [propositions]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Propositions Index — Blender 3D ExpertPack
+type: index
+tags:
+- propositions
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/propositions/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 # Propositions Index — Blender 3D ExpertPack

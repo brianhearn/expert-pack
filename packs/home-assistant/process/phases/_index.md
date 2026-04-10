@@ -4,8 +4,10 @@ type: "index"
 tags: [phases]
 pack: "home-assistant-process"
 retrieval_strategy: "standard"
+id: home-assistant/process/phases/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Phases Index
 
 The seven phases of building a smart home with Home Assistant. Work through them in order — each phase builds on the previous.

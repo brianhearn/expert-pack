@@ -9,6 +9,9 @@ tags:
 - troubleshooting/common-mistakes
 pack: blender-3d
 retrieval_strategy: standard
+id: blender-3d/faq/why-is-my-render-noisy
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=faq, topic=render-noise, related=shading-rendering,compositing,troubleshooting/common-mistakes -->
 

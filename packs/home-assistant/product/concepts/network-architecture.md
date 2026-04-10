@@ -9,6 +9,9 @@ tags:
 - protocols
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/network-architecture
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=network-architecture, related=protocols,integrations-guide,backup-migration -->
 ---

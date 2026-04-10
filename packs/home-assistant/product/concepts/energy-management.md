@@ -9,6 +9,9 @@ tags:
 - yaml-configuration
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/concepts/energy-management
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=concepts, topic=energy-management, related=core-architecture,integrations-guide,yaml-configuration -->
 ---

@@ -4,6 +4,9 @@ type: "glossary"
 tags: [battery-systems-2026, glossary, inverter-types, nec-rapid-shutdown, product, system-design-fundamentals]
 pack: "solar-diy-product"
 retrieval_strategy: "standard"
+id: solar-diy/product/glossary
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 <!-- context: section=product, topic=glossary, related=system-design-fundamentals,inverter-types,nec-rapid-shutdown,battery-systems-2026 -->

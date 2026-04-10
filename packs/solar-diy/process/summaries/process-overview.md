@@ -6,6 +6,9 @@ tags:
 - summaries
 pack: solar-diy-process
 retrieval_strategy: standard
+id: solar-diy/process/summaries/process-overview
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 # Summary — Solar DIY Process Pack Overview
 

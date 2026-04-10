@@ -1,9 +1,14 @@
 ---
-title: "Physics and Simulation"
-type: "concept"
-tags: [concepts, physics-simulation]
-pack: "blender-3d"
-retrieval_strategy: "standard"
+title: Physics and Simulation
+type: concept
+tags:
+- concepts
+- physics-simulation
+pack: blender-3d
+retrieval_strategy: standard
+id: blender-3d/concepts/physics-simulation
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/concepts/physics-simulation -->

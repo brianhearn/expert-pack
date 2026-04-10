@@ -9,6 +9,9 @@ tags:
 - product
 pack: solar-diy-product
 retrieval_strategy: standard
+id: solar-diy/product/faq/what-is-net-metering
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 <!-- context: section=product, topic=faq-net-metering, related=grid-tied-vs-hybrid,inspection-commissioning,general-faq -->
 

@@ -4,6 +4,9 @@ type: "phase"
 tags: [120-percent-rule, inspection-commissioning, installation, nec-rapid-shutdown, phase-4-permitting, process, system-design]
 pack: "solar-diy-process"
 retrieval_strategy: "atomic"
+id: solar-diy/process/phases/04-permitting
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 
 # Phase 4: Permitting & Utility Interconnection

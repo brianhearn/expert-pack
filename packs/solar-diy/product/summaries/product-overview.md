@@ -6,6 +6,9 @@ tags:
 - summaries
 pack: solar-diy-product
 retrieval_strategy: standard
+id: solar-diy/product/summaries/product-overview
+verified_at: "2026-04-10"
+verified_by: agent
 ---
 # Summary — Solar DIY Product Pack Overview
 

@@ -8,6 +8,9 @@ tags:
 - protocols
 pack: home-assistant-product
 retrieval_strategy: standard
+id: home-assistant/product/faq/zigbee-vs-wifi-which-should-i-use
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 <!-- context: section=faq, topic=protocol-selection, related=protocols,integrations-guide -->
 

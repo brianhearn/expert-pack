@@ -1,9 +1,14 @@
 ---
-title: "Product Visualization Workflow"
-type: "workflow"
-tags: [product-visualization, workflows]
-pack: "blender-3d"
-retrieval_strategy: "atomic"
+title: Product Visualization Workflow
+type: workflow
+tags:
+- product-visualization
+- workflows
+pack: blender-3d
+retrieval_strategy: atomic
+id: blender-3d/workflows/product-visualization
+verified_at: '2026-04-10'
+verified_by: agent
 ---
 
 <!-- context: blender-3d/workflows/product-visualization -->

@@ -4,8 +4,10 @@ type: "index"
 tags: [patterns]
 pack: "home-assistant-process"
 retrieval_strategy: "standard"
+id: home-assistant/process/patterns/_index
+verified_at: '2026-04-10'
+verified_by: agent
 ---
-
 # Patterns Index
 
 Battle-tested automation patterns for Home Assistant. These are implementations refined across many real-world setups — use them as starting points and adapt to your home.
