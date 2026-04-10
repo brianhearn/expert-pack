@@ -63,6 +63,7 @@ Keep the framework current as LLMs advance.
 - [x] **Provenance metadata** — Schema 3.0 (2026-04-10): per-file `id`, `content_hash`, `verified_at`, `verified_by`; manifest `freshness` block; Citation Response Contract; `--provenance` validator flag (W-PROV-01..04). All 7 packs backfilled (537 files total).
 - [x] **Graph export** — Schema 3.1 (2026-04-10): `_graph.yaml` adjacency file; `ep-graph-export.py` parses wikilinks + `related:` frontmatter + context hints into typed edges. GraphRAG-compatible.
 - [x] **Deploy-prep tooling** — `ep-strip-frontmatter.py` (2026-04-10): strips frontmatter before RAG deploy to prevent provenance metadata diluting embeddings. Source files unchanged.
+- [ ] **OpenClaw EP retrieval plugin** — a pluggable retrieval interface (when OC supports it) that uses EP frontmatter (provenance `id`, `related:`, `type:`, graph edges) for retrieval scoring and graph traversal, but strips frontmatter from chunks before injecting into context. Best of both worlds: rich metadata drives *what* to retrieve, clean prose is *what the model sees*. Watch for a pluggable RAG interface in future OC releases.
 - [ ] **Agentic RAG patterns** — multi-step retrieval, query refinement
 - [ ] **Minimum capability declarations** — manifest field for required model capabilities
 - [ ] **Regular schema review cadence** — triggered by major model releases
