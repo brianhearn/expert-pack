@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""ExpertPack Validator v2 — comprehensive pack compliance checker.
+"""ExpertPack Validator v2 - comprehensive pack compliance checker.
 
 Usage: python3 ep-validate-v2.py /path/to/pack [--verbose] [--json] [--provenance]
 
-Checks (19):
+Checks (20):
   1. manifest.yaml exists and has required fields
   2. manifest.yaml field validation (type, slug format, entry_point exists)
   3. Duplicate basenames across the vault
@@ -23,6 +23,7 @@ Checks (19):
  17. W-PROV-01: content file missing verified_at (provenance) [--provenance]
  18. W-PROV-02: content_hash present but doesn't match actual file body [--provenance]
  19. W-PROV-04: content file missing id field (provenance) [--provenance]
+ 20. W-HUB-01: concept-dense hub file detected (high topic count, standard retrieval_strategy)
 
 Provenance checks (17-19) are opt-in via --provenance flag.
 """
@@ -164,7 +165,7 @@ class Validator:
         t = self.manifest.get('type', '')
         if t and t not in VALID_PACK_TYPES:
             self._add('ERROR', 'manifest-type', 'manifest.yaml',
-                       f"Invalid type '{t}' — must be one of {sorted(VALID_PACK_TYPES)}")
+                       f"Invalid type '{t}' - must be one of {sorted(VALID_PACK_TYPES)}")
         slug = self.manifest.get('slug', '')
         if slug and not re.match(r'^[a-z0-9]+(-[a-z0-9]+)*$', slug):
             self._add('WARN', 'manifest-slug', 'manifest.yaml',
@@ -205,7 +206,7 @@ class Validator:
                 prefix = prefixes.get(parent)
             if prefix and not bn.startswith(prefix):
                 self._add('ERROR', 'missing-prefix', rel,
-                           f"Expected prefix '{prefix}' — should be '{prefix}{bn}'")
+                           f"Expected prefix '{prefix}' - should be '{prefix}{bn}'")
 
     # ── Check 5: frontmatter required fields ─────────────────────────────
     def check_frontmatter_required(self):
@@ -265,7 +266,7 @@ class Validator:
                 ref_bn = os.path.basename(ref)
                 if ref_bn not in self.all_basenames:
                     self._add('ERROR', 'broken-related', rel,
-                               f"related: '{ref}' — file not found")
+                               f"related: '{ref}' - file not found")
 
     # ── Check 9: path-based related: entries ─────────────────────────────
     def check_path_in_related(self):
@@ -275,7 +276,7 @@ class Validator:
                 if '/' in ref:
                     bn = os.path.basename(ref)
                     self._add('WARN', 'path-in-related', rel,
-                               f"related: '{ref}' — should be bare filename '{bn}'")
+                               f"related: '{ref}' - should be bare filename '{bn}'")
 
     # ── Check 10: verbatim<->summary cross-links ────────────────────────
     def check_vbt_sum_links(self):
@@ -366,7 +367,7 @@ class Validator:
                     continue
                 if tb not in self.all_basenames:
                     self._add('ERROR', 'broken-wikilink', rel,
-                               f"[[{target}]] — target not found")
+                               f"[[{target}]] - target not found")
 
     # ── Check 12: markdown links (should be wikilinks) ───────────────────
     def check_md_links(self):
@@ -376,7 +377,7 @@ class Validator:
             if md_links:
                 targets = [t for _, t in md_links]
                 self._add('WARN', 'markdown-links', rel,
-                           f"{len(md_links)} markdown link(s) — should be [[wikilinks]] for Obsidian graph: {', '.join(targets[:3])}" +
+                           f"{len(md_links)} markdown link(s) - should be [[wikilinks]] for Obsidian graph: {', '.join(targets[:3])}" +
                            (f" + {len(targets)-3} more" if len(targets) > 3 else ""))
 
     # ── Check 13: broken canonical_verbatim ──────────────────────────────
@@ -388,7 +389,7 @@ class Validator:
             cv_bn = os.path.basename(str(cv))
             if cv_bn not in self.all_basenames:
                 self._add('ERROR', 'broken-canonical-verbatim', rel,
-                           f"canonical_verbatim: '{cv}' — file not found")
+                           f"canonical_verbatim: '{cv}' - file not found")
 
     # ── Check 14: bidirectional related ──────────────────────────────────
     def check_bidirectional_related(self):
@@ -433,7 +434,7 @@ class Validator:
             has_incoming = bn in incoming
             if not has_outgoing and not has_incoming:
                 self._add('WARN', 'orphaned', rel,
-                           "No related: frontmatter and no incoming links — orphaned")
+                           "No related: frontmatter and no incoming links - orphaned")
 
     # ── Check 16: file size ──────────────────────────────────────────────
     def check_file_size(self):
@@ -443,10 +444,64 @@ class Validator:
                 # Check if atomic strategy exempts it
                 fm = self.fm.get(rel, {})
                 retrieval = fm.get('retrieval', {})
-                if isinstance(retrieval, dict) and retrieval.get('strategy') == 'atomic':
+                rs = fm.get('retrieval_strategy', '')
+                if (isinstance(retrieval, dict) and retrieval.get('strategy') == 'atomic') \
+                        or rs == 'atomic':
                     continue
                 self._add('WARN', 'file-too-large', rel,
                            f"{chars} chars (ceiling: {CHAR_CEILING}) — consider splitting")
+
+    # W-HUB-01: concept density check
+    HUB_MIN_CONCEPTS = 8   # minimum distinct concept count to trigger
+    HUB_MAX_DEPTH    = 15  # words-per-concept threshold (below = hub)
+    HUB_SKIP_TYPES   = {'index', 'source', 'proposition', 'summary',
+                        'training', 'glossary'}
+    HUB_SKIP_RS      = {'atomic', 'navigation'}  # these are intentional
+    HUB_SKIP_SCOPE   = {'reference', 'multi', 'navigation'}  # author-declared
+
+    def check_hub_files(self):
+        """W-HUB-01: flag files that are concept-dense retrieval hubs.
+
+        A hub file has many distinct topic sections/rows relative to its word
+        count, causing its embedding to land in the centroid of all topics and
+        rank modestly for everything while answering nothing well.
+
+        Trigger: depth_ratio (words / concept_count) < HUB_MAX_DEPTH
+                 AND concept_count >= HUB_MIN_CONCEPTS
+                 AND not explicitly declared as reference/multi/navigation.
+        """
+        for rel, content in self.files.items():
+            fm = self.fm.get(rel, {})
+            # Skip exempt types
+            if fm.get('type', '') in self.HUB_SKIP_TYPES:
+                continue
+            # Skip exempt retrieval strategies
+            rs = fm.get('retrieval_strategy', 'standard')
+            if rs in self.HUB_SKIP_RS:
+                continue
+            # Skip if author declared concept_scope explicitly
+            scope = fm.get('concept_scope', '')
+            if scope in self.HUB_SKIP_SCOPE:
+                continue
+            # Strip frontmatter from body for analysis
+            body = re.sub(r'^---.*?---\s*', '', content, flags=re.DOTALL)
+            body = re.sub(r'<!--.*?-->', '', body, flags=re.DOTALL)
+            words = len(body.split())
+            if words < 100:
+                continue
+            # Count H2/H3 headings + non-separator table rows as concept proxy
+            h_count = len(re.findall(r'^#{2,3}\s+.+', body, re.MULTILINE))
+            row_count = len(re.findall(r'^\|[^-\|].*\|', body, re.MULTILINE))
+            concept_count = h_count + row_count
+            if concept_count < self.HUB_MIN_CONCEPTS:
+                continue
+            depth_ratio = words / concept_count
+            if depth_ratio < self.HUB_MAX_DEPTH:
+                self._add('WARN', 'W-HUB-01', rel,
+                           f"{concept_count} concepts, {depth_ratio:.1f} words/concept "
+                           f"(threshold: <{self.HUB_MAX_DEPTH} words/concept, "
+                           f">={self.HUB_MIN_CONCEPTS} concepts) — "
+                           f"consider splitting or setting concept_scope: reference/multi")
 
 
     # -- Checks 17-19: provenance (opt-in via --provenance) ----------------
@@ -529,6 +584,7 @@ class Validator:
         self.check_bidirectional_related()
         self.check_orphaned()
         self.check_file_size()
+        self.check_hub_files()
         if self.check_provenance:
             self.check_provenance_fields()
         return self.issues

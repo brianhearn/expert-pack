@@ -444,6 +444,8 @@ See [guides/consumption.md](../guides/consumption.md) for the recommended RAG co
 
 Based on eval experiments, avoid these common mistakes:
 
+**Do NOT create hub files.** A file that covers 10+ distinct capabilities, integrations, or features in a single flat table is a retrieval hub — its embedding lands in the centroid of all those concept clusters simultaneously and ranks modestly for every query. Split multi-concept files into focused atomic files (one dominant topic each), then mark the original as `retrieval_strategy: navigation` / `concept_scope: navigation`. The split files + the navigation pointer are better than the original in every way: sharper embeddings, higher relevance scores, and no retrieval pollution.
+
 **Do NOT compact or compress prose to save tokens.** Denser text is harder for models to parse correctly. Examples, explanations, and context that feel redundant to a human often serve as reasoning scaffolding for a model. The content quality was never the bottleneck — retrieval precision was.
 
 **Do NOT split files without adding retrieval layers.** Splitting alone degrades quality. An agent that retrieves one fragment of what used to be a unified file loses the context that made that file useful. Always pair splitting with summaries and propositions.
@@ -1173,6 +1175,7 @@ These principles apply to every ExpertPack, regardless of type:
 | Directory indexes | `_index.md` in every content directory |
 | Context strategy | Three tiers: always → searchable → on-demand, declared in manifest |
 | Retrieval optimization | Summaries (broad), propositions (precise), file splitting, lead summaries (front-loaded answers), and glossary (vocabulary bridging) — use together; see [Retrieval Optimization](#retrieval-optimization) |
+| Concept scope | Use `concept_scope: single` (default) for all content files. Split any file covering 5+ distinct topics. Mark navigation/index files `concept_scope: navigation` + `retrieval_strategy: navigation` to exclude from retrieval index. See [Concept Scope](#concept_scope--retrieval-density-signal). |
 | Chunking strategy | The schema IS the chunking strategy. Author files to target size so every file passes through RAG chunkers intact (400–800 tokens). Atomic strategy for workflows/troubleshooting via frontmatter. Consumer config must set `chunking.tokens` ≥ pack's hard ceiling (1,000 recommended); see [Chunking Strategy](#chunking-strategy) |
 | Research coverage | Every pack includes `sources/_coverage.md` documenting what was checked, what was extracted, and what's untouched; see [Research Coverage](#research-coverage-sources_coveragemd) |
 | Time variance | Annotate time-variant facts inline with `<!-- refresh -->` blocks; maintain `freshness.md` as supplementary index; for entirely time-bound files use `volatile/` directory with frontmatter TTL (`refresh`, `source`, `fetched_at`, `expires_at`); see [Time Variance](#time-variance) |
@@ -1264,15 +1267,33 @@ title: "Human-readable title (matches # H1 heading)"
 type: "concept|workflow|troubleshooting|faq|proposition|summary|source|glossary|overview|index|decision|phase|gotcha|pattern|specification|volatile|fact|mind|relationship|presentation|verbatim|training|meta|timeline|commercial|customer|interface"
 tags: [kebab-case-tags, derived-from-section-topic-and-related]
 pack: "pack-slug"
-retrieval_strategy: "standard|atomic"
+retrieval_strategy: "standard|atomic|navigation"
+concept_scope: "single|reference|multi|navigation"  # optional — see Concept Scope
 ---
 ```
 
 **Required:** `title`, `type`, `tags`, `pack`
-**Recommended:** `retrieval_strategy` (defaults to `standard` if omitted)
+**Recommended:** `retrieval_strategy` (defaults to `standard` if omitted), `concept_scope` (see below)
 **Optional:** `ek_score` (float 0.0–1.0, from blind probing), `related` (list of relative paths to semantically related files)
 
 **Type reference:**
+
+#### `concept_scope` — Retrieval Density Signal
+
+The `concept_scope` field signals how many distinct topics a file covers. It is used by `ep-validate` to detect hub files and by consuming agents to adjust retrieval confidence.
+
+| Value | Meaning | Retrieval behavior |
+|-------|---------|-------------------|
+| `single` | One dominant topic — tight semantic embedding | Default. What every content file should be. |
+| `reference` | Lookup table where rows share a uniform schema (e.g., icon→emoji mappings, setting flags) | Dense tables are fine; NOT a hub. Retrieval normal. |
+| `multi` | Multiple distinct topics intentionally combined | Explicit author declaration. Triggers `W-HUB-01` if not flagged. |
+| `navigation` | Points to other files only — no standalone knowledge | **Excluded from retrieval index.** Use for index/overview/hub files after splitting. |
+
+**The golden rule:** Each content file should have one dominant topic. If you find yourself writing H2 sections for unrelated concepts, split the file. The vector embedding of a multi-concept file lands in the centroid of all its topics — it will rank modestly for everything and well for nothing.
+
+**`retrieval_strategy: navigation`** works in tandem with `concept_scope: navigation`. Files with either value are excluded from the RAG retrieval pool at index time. They remain in the pack for agent navigation (following wikilinks) but are never returned as top-K results.
+
+---
 
 | Directory / File | `type` value | `retrieval_strategy` |
 |---|---|---|
@@ -1439,5 +1460,5 @@ With frontmatter in place, Obsidian users get:
 
 ---
 
-*Schema version: 3.1*
-*Last updated: 2026-04-10*
+*Schema version: 3.2*
+*Last updated: 2026-04-13*
