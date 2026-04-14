@@ -63,6 +63,19 @@ context:
   searchable: []  # Tier 2: indexed for RAG retrieval (default for unlisted files)
   on_demand: []   # Tier 3: loaded only on explicit request
 
+# MCP configuration (optional — enables EP MCP expertise injection)
+# See "MCP Configuration" section for full documentation
+mcp:
+  instructions: |   # 1-3 sentences for the MCP server's instructions= parameter.
+                    # What domain, what problems, when to reach for it.
+  prompts:          # Named MCP Prompts mapped to source workflow files.
+    - name: ""      # Snake_case prompt name exposed to MCP clients
+      description: ""  # One-line description shown to agents during registration
+      source: ""    # Relative path to the workflow file (type: workflow, atomic)
+  resources:
+    include_always_tier: true   # Expose context.always files as MCP Resources (default: true)
+    additional: []              # Extra files to expose beyond the always tier
+
 # Type-specific fields are defined in each type schema
 ```
 
@@ -1015,6 +1028,131 @@ This is a safe default — no content is hidden from search, and identity files 
 
 ---
 
+## MCP Configuration
+
+ExpertPacks can declare an `mcp` block in `manifest.yaml` to control how EP MCP serves the pack to MCP-compatible agents. This block is **optional** — EP MCP functions without it using safe defaults — but declaring it explicitly unlocks the full expertise injection pattern.
+
+### Why This Matters
+
+The core problem EP MCP solves is making a consuming agent an **expert**, not just giving it a search endpoint. A general-purpose agent connecting to an EP MCP server needs three things before it can use the pack effectively:
+
+1. **Orientation** — What does this pack cover? When should I reach for it?
+2. **Foundational context** — What do I need to know before I start working? (always-tier files)
+3. **Workflow guidance** — For known task patterns, what's the right approach, sequence, and tooling?
+
+MCP has three primitives that map directly to these needs: `instructions=` (orientation), Resources (foundational context), and Prompts (workflow guidance). The `mcp` block in `manifest.yaml` is how a pack author controls this mapping explicitly.
+
+### The Three MCP Primitives — EP Mapping
+
+| MCP Primitive | Purpose | EP Source | Applies To |
+|---|---|---|---|
+| `instructions=` | Orientation — what this server covers and when to use it | `mcp.instructions` field | All pack types |
+| Resources | Foundational context — files the agent reads at registration | `context.always` tier + `mcp.resources.additional` | All pack types |
+| Prompts | Workflow guidance — named task templates with full methodology | `mcp.prompts` → `type: workflow` files | All pack types |
+
+### `mcp.instructions`
+
+A short string (1–3 sentences) injected as the MCP server's `instructions=` parameter. This is what MCP-compatible hosts show during server registration and what agents read to decide whether to call this server.
+
+**Write it for an agent, not a human.** It should answer:
+- What domain does this pack cover?
+- What kinds of problems can it solve?
+- When should an agent reach for it vs. its own knowledge?
+
+```yaml
+mcp:
+  instructions: |
+    Territory planning and EasyTerritory product expertise. Use this server
+    when the user needs to design, analyze, or optimize sales territories —
+    including building from scratch, importing alignment files, analyzing
+    balance, and applying best practices. Also covers EasyTerritory tool
+    usage, workflows, and configuration.
+```
+
+**Default behavior (no `mcp.instructions`):** EP MCP derives instructions from `manifest.description`. The derived version is adequate but generic — explicit instructions are strongly recommended for domain MCP servers.
+
+### `mcp.prompts`
+
+Named MCP Prompts that EP MCP exposes to connecting agents. Each prompt bundles a complete workflow — methodology, steps, tool guidance, and expected outputs — into a single named capability the agent can invoke by name.
+
+**Why prompts matter:** A general agent connecting to EZT MCP doesn't know that building territories requires: understanding the data model, choosing a partitioning method, importing accounts, running the optimizer, and reviewing balance. A prompt named `build_territories` delivers all of that context proactively — the agent doesn't need to discover it through search.
+
+```yaml
+mcp:
+  prompts:
+    - name: "build_territories"
+      description: "End-to-end workflow for building territories from scratch"
+      source: "workflows/wf-build-territories.md"
+    - name: "analyze_territory_balance"
+      description: "Analyze revenue and workload balance across existing territories"
+      source: "workflows/wf-balance-analysis.md"
+    - name: "import_alignment_file"
+      description: "Import a ZIP-to-territory alignment file and build polygons"
+      source: "workflows/wf-import-alignment.md"
+```
+
+**Source file requirements:** The `source` path must point to a file with `type: workflow` and `retrieval_strategy: atomic` in its frontmatter. These constraints are enforced — workflow files are designed to be read whole and are the right content type for prompt delivery.
+
+**Auto-discovery fallback:** If `mcp.prompts` is omitted, EP MCP auto-discovers prompt candidates by scanning for all `type: workflow` files. Auto-discovery is a reasonable fallback but explicit declaration is preferred — it lets the pack author control naming, descriptions, and which workflows surface as first-class prompts.
+
+**Applies to all pack types:**
+- **Product packs** — task-oriented prompts: build, configure, analyze, troubleshoot
+- **Process packs** — process execution prompts: the process itself is the prompt
+- **Person packs** — voice and interaction prompts: "write in this person's voice", "how would this person approach X?"
+- **Composite packs** — prompts may span multiple knowledge domains within the pack
+
+### `mcp.resources`
+
+Controls which pack files are exposed as MCP Resources — content the agent can read directly at registration time to establish foundational context.
+
+```yaml
+mcp:
+  resources:
+    include_always_tier: true   # Default: true. Expose all context.always files as Resources.
+    additional:                 # Extra files to expose beyond the always tier
+      - "glossary.md"           # Useful even if not in always tier
+      - "concepts/con-key-concepts.md"
+```
+
+**Default behavior:** When `include_always_tier: true` (the default), all files listed in `context.always` are exposed as MCP Resources with URI scheme `ep://{slug}/{path}`. The agent can read them at registration to establish the foundational context the pack author determined every session needs.
+
+**`manifest.yaml` and `overview.md` are always exposed** as Resources regardless of this setting — they are the identity and entry point of every pack.
+
+### Validator Rules
+
+| Code | Condition | Severity |
+|------|-----------|----------|
+| `W-MCP-01` | `mcp.prompts[].source` file does not have `type: workflow` | Warning |
+| `W-MCP-02` | `mcp.prompts[].source` file does not have `retrieval_strategy: atomic` | Warning |
+| `E-MCP-01` | `mcp.prompts[].source` file does not exist | Error |
+| `W-MCP-03` | `mcp.instructions` exceeds 500 characters | Warning |
+
+### Full `mcp` Block Example (Product Pack)
+
+```yaml
+mcp:
+  instructions: |
+    Territory planning and EasyTerritory product expertise. Use this server
+    when the user needs to design, analyze, or optimize sales territories.
+    Covers methodology, tool usage, workflows, and configuration best practices.
+  prompts:
+    - name: "build_territories"
+      description: "End-to-end workflow for building territories from scratch"
+      source: "workflows/wf-build-territories.md"
+    - name: "analyze_territory_balance"
+      description: "Analyze revenue and workload balance across existing territories"
+      source: "workflows/wf-balance-analysis.md"
+    - name: "import_alignment_file"
+      description: "Import a ZIP-to-territory alignment CSV and generate polygons"
+      source: "workflows/wf-import-alignment.md"
+  resources:
+    include_always_tier: true
+    additional:
+      - "glossary.md"
+```
+
+---
+
 ## Content Changelog
 
 Every pack should maintain a `meta/changelog.md` — an append-only log of what content was added, updated, or removed, when, and from what source. This is the pack's provenance record.
@@ -1460,5 +1598,5 @@ With frontmatter in place, Obsidian users get:
 
 ---
 
-*Schema version: 3.2*
-*Last updated: 2026-04-13*
+*Schema version: 3.3*
+*Last updated: 2026-04-14*

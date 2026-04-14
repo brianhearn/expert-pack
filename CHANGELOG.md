@@ -10,6 +10,20 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ---
 
+## [Core 3.3] — 2026-04-14 — MCP Configuration
+
+### Added
+- `schemas/core.md` — New `mcp` block in `manifest.yaml` spec: `mcp.instructions`, `mcp.prompts`, and `mcp.resources` fields. Enables EP MCP to serve packs as full expertise injection layers (orientation via `instructions=`, foundational context via Resources, workflow guidance via Prompts).
+- `schemas/core.md` — New `## MCP Configuration` section documenting the three MCP primitives, their EP source mapping, per-field guidance, pack-type applicability (product/process/person/composite), auto-discovery fallback for prompts, validator rules (W-MCP-01/02/03, E-MCP-01), and a full example.
+- `schemas/core.md` — Validator rules table for MCP block: source file type/atomic checks, instructions length warning.
+
+### Design Rationale
+- The `mcp` block is universal — defined in `core.md`, applies to all pack types. Product, process, person, and composite packs all expose the same three MCP primitives; content varies by type.
+- `mcp.prompts` maps to `type: workflow` + `retrieval_strategy: atomic` files — the schema already marked these as the right candidates. The prompts block is the explicit name mapping; EP MCP auto-discovers when omitted.
+- `context.always` tier is the natural source for MCP Resources — same files the pack author already said load every session.
+
+---
+
 ## [Core 3.1.1] — 2026-04-10 — Schema REFINE/OPTIMIZE Pass
 
 ### Changed
