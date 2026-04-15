@@ -42,6 +42,8 @@ Reduce hallucinations and improve answer completeness.
 - [ ] **Confidence tagging** — content-level confidence (expert-verified, crawled, inferred)
 - [ ] **Contradiction detection** — surface conflicting chunks at runtime instead of guessing
 - [x] **Hallucination measurement** — automated detection via LLM-as-judge against pack content
+- [ ] **Claim-to-span verification** *(intelligence sweep #1, 2026-04-15)* — Post-retrieval step that checks each claim in the generated answer against retrieved spans and flags or rejects answers with low span-coverage. Adds `claim_coverage` and `citation_f1` columns to eval scorecards. Build as a lightweight verifier pass (LLM-as-judge checking claim↔span alignment) in the eval runner.
+- [ ] **Schema registry** *(intelligence sweep #5, 2026-04-15)* — Publish a minimal EP schema registry: YAML + JSON-LD examples for the canonical micro-record format (`id`, `label`, `canonical-statement`, `type`, `provenance`, `updated_at`, `source_span_uri`). Ship as `schemas/registry/` in the ExpertPack repo with exporter tooling that attaches `source_span_uri` to every generated record.
 
 ### 4. Pack Creation & Training
 Make it easier to build and maintain packs.
@@ -65,7 +67,10 @@ Keep the framework current as LLMs advance.
 - [x] **Deploy-prep tooling** — `ep-strip-frontmatter.py` (2026-04-10): strips frontmatter before RAG deploy to prevent provenance metadata diluting embeddings. Source files unchanged.
 - [ ] **Shared entities across packs** — canonical entity IDs (`entity:<slug>`) declared in `manifest.yaml` or `entities.json` so `ep-graph-export` can emit cross-pack edges for people, organizations, products, and locations that appear in multiple packs. Enables multi-pack GraphRAG traversal and cross-vault Obsidian linking. Likely a Schema 3.2 addition; pairs directly with the OC EP retrieval plugin idea. Implementation: standardize entity ID format, upgrade `ep-graph-export.py` to emit `entity_mention` edges, optionally add `ep-graph-merge.py` to combine per-pack graphs into a unified cross-pack graph.
 - [ ] **OpenClaw EP retrieval plugin** — a pluggable retrieval interface (when OC supports it) that uses EP frontmatter (provenance `id`, `related:`, `type:`, graph edges) for retrieval scoring and graph traversal, but strips frontmatter from chunks before injecting into context. Best of both worlds: rich metadata drives *what* to retrieve, clean prose is *what the model sees*. Watch for a pluggable RAG interface in future OC releases.
-- [ ] **Agentic RAG patterns** — multi-step retrieval, query refinement
+- [ ] **Bi-temporal provenance model** *(inspired by Graphiti, 2026-04-15)* — Upgrade the provenance block to track two timestamps per fact: `valid_from` (when it became true in the world) and `recorded_at` (when it entered the pack). Current `verified_at` only captures ingestion time. Enables historical queries ("what was true as of Q3 2025?") and automated fact invalidation when superseding content is added. Pairs with contradiction detection. Schema 3.4 candidate.
+- [ ] **Hybrid KG + vector micro-records export** *(inspired by Graphiti + intelligence sweep #4, 2026-04-15)* — Export path that generates canonical micro-records (JSON-LD triples: `id`, `label`, `canonical-statement`, `type`, `provenance`, `valid_from`, `source_span_uri`) from high-value EP content. Feeds a lightweight triple store (FalkorDB or SQLite) alongside the existing vector index. Deterministic lookups for factual queries; vector search for narrative/context. Pilot with EZT Designer entities first.
+- [ ] **EP MCP: graph traversal queries** *(inspired by Graphiti MCP server, 2026-04-15)* — EP MCP currently does vector + BM25 hybrid search only. Add graph traversal so agents can follow `related:` and wikilink edges from a seed result for multi-hop retrieval without full re-embed. Expose as a separate `search_graph` tool in the MCP server. Prerequisite: `_graph.yaml` already exists (Schema 3.1 done).
+- [ ] **Agentic RAG patterns** — multi-step retrieval, query refinement *(two-pass retrieve→focus flow from intelligence sweep #3, 2026-04-15)*
 - [ ] **Minimum capability declarations** — manifest field for required model capabilities
 - [ ] **Regular schema review cadence** — triggered by major model releases
 
@@ -128,6 +133,19 @@ Stay current with developments that could improve the framework.
 - **Eval discipline rules:** fixed 20-question benchmark set, canonical RAG config, one variable at a time (documented in guides)
 - **Eval Run 11 (EZT Designer):** 81.9% correctness, 3.8/5 completeness, 4.3% hallucination, 66.7% refusal — schema v3.1, tuned RAG, GPT-5.3 Chat (23 questions with frontmatter; Run 12 will be first controlled baseline)
 - **`expertpack` skill v2.0.5** on ClawHub — updated for schema v3.1 (provenance spec, graph export, 19-check validator, deploy-prep tools)
+
+### 2026-04-15 — Graphiti analysis + intelligence sweep → roadmap additions
+- Reviewed [getzep/graphiti](https://github.com/getzep/graphiti): temporal context graph engine; bi-temporal facts, provenance-first triples, hybrid retrieval (semantic + BM25 + graph traversal), MCP server with `search_facts`/`search_nodes` tools.
+- **Graphiti vs EP framing:** Graphiti = dynamic agent memory (what's true now / what changed). EP = curated expertise injection (what the model can't know from weights). Complementary, not competitive.
+- **3 roadmap items from Graphiti:**
+  1. Bi-temporal provenance (`valid_from` + `recorded_at`) — Schema 3.4 candidate
+  2. Hybrid KG + vector micro-records export — pilot with EZT Designer entities
+  3. EP MCP `search_graph` tool — multi-hop traversal via `_graph.yaml`
+- **3 roadmap items from intelligence sweep:**
+  1. Claim-to-span verification + `citation_f1` metric — eval runner addition (finding #1)
+  2. Schema registry `schemas/registry/` — YAML + JSON-LD micro-record spec (finding #5)
+  3. Two-pass retrieve→focus noted on agentic RAG item (finding #3)
+- No schemas or pack content modified.
 
 ---
 
