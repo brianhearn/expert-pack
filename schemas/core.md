@@ -1598,5 +1598,54 @@ With frontmatter in place, Obsidian users get:
 
 ---
 
+## Schema Registry and Micro-Record Format
+
+The `schemas/registry/` directory defines the **canonical micro-record format** — a compact, machine-readable representation of any pack file suitable for triple stores, knowledge graphs, and deterministic lookups.
+
+### What Is a Micro-Record?
+
+A micro-record is a single JSON-LD object representing one pack file. It contains:
+
+- **`id`** — stable pack-scoped identifier (matches frontmatter `id`)
+- **`source_span_uri`** — relative path to the source file (enables claim-to-span traceability)
+- **`label`** — short display name
+- **`canonical_statement`** — one sentence: the primary claim of the file
+- **`type`** — content type (see `schemas/registry/types.yaml`)
+- **`pack`** — pack slug
+- **`tags`** — semantic tags from frontmatter
+- **`provenance`** — `recorded_at`, `valid_from`, `verified_at`, `verified_by`, `source`, `content_hash`
+- **`related`** — edges to other records (kind = wikilink | related | context | supersedes | entity_mention)
+- **`lifecycle`** — `status` (active | superseded | deprecated | draft), `superseded_by`, `valid_until`
+
+### Bi-Temporal Provenance
+
+Micro-records distinguish two timestamps:
+
+| Field | Meaning |
+|---|---|
+| `provenance.valid_from` | When the described knowledge became true in the world |
+| `provenance.recorded_at` | When it was first added to this pack |
+| `provenance.verified_at` | When it was last confirmed accurate |
+
+This enables historical queries ("what was true about feature X as of Q3 2025?") and automated fact invalidation via `lifecycle.superseded_by`.
+
+### Registry Files
+
+| File | Purpose |
+|---|---|
+| `schemas/registry/micro-record.schema.yaml` | Field definitions and constraints |
+| `schemas/registry/micro-record.jsonld.json` | JSON-LD context (stable URIs at `expertpack.ai/schema/1.0/`) |
+| `schemas/registry/types.yaml` | All 25 declared content types with descriptions |
+| `schemas/registry/edge-kinds.yaml` | All declared edge kinds (wikilink, related, context, supersedes, entity_mention) |
+| `schemas/registry/examples/` | Concrete example records (concept, workflow, FAQ) |
+
+### Generating Micro-Records
+
+Micro-records are generated from pack files by `tools/micro-record-exporter/` (planned — see ROADMAP). For now, they can be authored manually for high-value files or generated from frontmatter + `_graph.yaml`.
+
+The `canonical_statement` is the one field that requires human or LLM authoring — it cannot be derived mechanically from frontmatter alone.
+
+---
+
 *Schema version: 3.3*
-*Last updated: 2026-04-14*
+*Last updated: 2026-04-15*
