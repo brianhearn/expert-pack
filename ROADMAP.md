@@ -147,6 +147,34 @@ Stay current with developments that could improve the framework.
   3. Two-pass retrieve→focus noted on agentic RAG item (finding #3)
 - No schemas or pack content modified.
 
+### 2026-04-15 — Bi-temporal provenance, micro-records, claim verifier, schema registry, graph traversal verification
+
+**Schema 3.4 — Bi-temporal provenance:**
+- Added `valid_from` (world truth date) + `recorded_at` (ingestion date) to frontmatter spec and micro-record schema
+- W-PROV-05 validator rule added; both fields optional
+- Most valuable for product feature / policy files with a known real-world effective date
+- Graphiti analysis was the catalyst: their temporal fact model mapped cleanly onto EP's existing provenance layer
+
+**Hybrid KG + vector micro-records export:**
+- `tools/micro-record-exporter/ep-micro-record-export.py` — generates JSONL micro-records from any pack
+- Reads frontmatter + `_graph.yaml`; uses lead summary blockquote for `canonical_statement`, falls back to first prose paragraph
+- `--generate-statements` flag for LLM-assisted statement generation
+- Pilot: EZT Designer — 295 records, 153 edges, 226KB JSONL
+- Optional next step: load into SQLite/FalkorDB for deterministic ID lookups alongside vector search
+
+**Claim-to-span verification (eval runner addition):**
+- `tools/eval-runner/claim_verifier.py` — post-processor that extracts claims from any completed eval result and verifies each against pack spans
+- Appends `claim_coverage` + `citation_f1` to per-question details and aggregate scores
+- Run after `run_eval.py` to get grounding metrics on any result file
+
+**Schema registry:**
+- `schemas/registry/` — full micro-record schema (YAML field definitions), JSON-LD context with stable URIs at `expertpack.ai/schema/1.0/`, `types.yaml` (25 types), `edge-kinds.yaml` (5 edge kinds), 3 worked examples (concept, workflow, FAQ)
+- Core schema section updated to reference registry
+
+**EP MCP graph traversal verified:**
+- `ep_graph_traverse_tool` already fully implemented and deployed — no code work needed
+- Smoke tested: `wf-capacity-planning-overview` depth-2 traversal surfaces 7 connected nodes via 8 edge traversals (scheduling algorithms, workload partitioning concepts, 2 related workflows)
+
 ---
 
 *Update this file when meaningful progress happens on any vector. This is the single source of truth for the improvement project.*
