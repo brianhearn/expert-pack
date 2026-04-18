@@ -1,10 +1,12 @@
 # RFC-001: Atomic-Conceptual Chunks
 
-- **Status:** Draft
+- **Status:** Accepted (pending migration tooling + eval validation)
 - **Author:** Brian Hearn (with EasyBot)
 - **Created:** 2026-04-18
+- **Accepted:** 2026-04-18
 - **Target:** Schema 4.0 (MAJOR bump)
 - **Supersedes:** Portions of Retrieval Optimization section in `schemas/core.md` (summaries directory, propositions directory, separate FAQ directory, lead summary pattern)
+- **Companion:** [`schemas/references/granularity-guide.md`](../references/granularity-guide.md)
 
 ---
 
@@ -73,7 +75,10 @@ type: concept
 tags: [concept-slug, related-domain-tags]
 pack: {pack-slug}
 retrieval_strategy: standard
-concept_scope: single
+concept_scope: single          # or "composite" for parent concepts spanning children
+parent_concept: parent-slug    # optional — set when this is a child in a composite hierarchy
+supersedes:                    # optional — files replaced by this one (for migration tracking)
+  - old-filename.md
 related:
   - sibling-concept.md
   - related-workflow.md
@@ -115,18 +120,21 @@ Answer.
 
 ### Optional sections
 
-4. **`## Frequently Asked`.** Include when the concept has documented questions that users actually ask. Each question as an H3 heading. The chunker splits on headings, so each Q/A becomes its own sub-chunk with strong query-matching surface.
+4. **`## Frequently Asked`.** Include when the concept has documented questions that users actually ask. Each question as an H3 heading. The chunker splits on headings, so each Q/A becomes its own sub-chunk with strong query-matching surface. Canonical ownership: each Q/A lives in the primary concept it answers for; other concepts cross-link to it via `## Related Concepts` rather than duplicating the Q/A.
 
-5. **`## Related Terms`.** Include when the concept has relative terminology that doesn't stand alone. If a term has its own definition, properties, and relationships, it earns its own concept file instead.
+5. **`## Related Terms`.** Include when the concept has relative terminology that doesn't stand alone. If a term has its own definition, properties, and relationships, it earns its own concept file instead. See [granularity-guide.md](../references/granularity-guide.md) for the embed-vs-promote decision procedure.
+
+6. **`## Key Propositions`** (optional). Include when the concept has genuinely axiomatic statements worth surfacing for logical extraction — invariants, hard rules, or formal properties. Each proposition as a concise bullet. Omit when the concept's truth is adequately carried by body prose. This is the schema-supported path for the declarative style that `propositions/` files used to carry, without the aggregator regression.
 
 ### Removed / deprecated
 
 - **`summaries/` directory** — deprecated. The opening paragraph of each concept file replaces this.
-- **`propositions/` directory** — deprecated. Propositions are absorbed into body prose and FAQ answers.
-- **Standalone `faq/` directory** — deprecated for concept-specific FAQs. Questions move into the concept file's `## Frequently Asked` section. A root `faq/` may persist for cross-cutting questions that don't belong to any single concept (e.g., "What does 'EasyTerritory' mean?"), but should be used sparingly.
+- **`propositions/` directory** — deprecated as a standalone directory. When a concept has axiomatic statements worth surfacing, use the optional `## Key Propositions` section inside the concept file.
+- **Standalone `faq/` directory** — deprecated for concept-specific FAQs. Questions move into the primary concept file's `## Frequently Asked` section. A root `faq/` may persist for truly cross-cutting questions that don't belong to any single concept (e.g., "What does 'EasyTerritory' mean?"), but should be used sparingly.
 - **Root-level `glossary-{domain}.md` files** — deprecated. Terms either:
   - Get promoted to their own concept file (if they stand alone), OR
   - Get embedded in the `## Related Terms` section of the parent concept (if relative)
+  - A lean, optional `glossary.md` at the pack root may exist for genuinely cross-cutting terms (product name, industry vocabulary) as an author/agent navigation aid — not as a retrieval layer.
 - **Lead summary blockquote pattern** — deprecated. The opening paragraph IS the lead summary; no separate blockquote needed.
 
 ### Preserved
@@ -140,17 +148,33 @@ Answer.
 
 ### Granularity rule
 
-**Author discretion, no frequency threshold.** A term or sub-topic earns its own concept file when it has:
-- Its own definition (not just "X in the context of Y")
-- Its own properties or sub-concepts
-- Its own relationships to other concepts
-- Content that would exceed the target size (400-800 tokens) if embedded
+**Author discretion, no frequency threshold.** A term or sub-topic earns its own concept file when it has its own definition (not just "X in the context of Y"), its own properties or sub-concepts, its own relationships to other concepts, or enough content to justify standalone treatment. Otherwise, it lives embedded in the parent concept. When tests are inconclusive, **prefer embed** — promotion is cheap later; demotion creates broken wikilinks and orphan files.
 
-Otherwise, it lives embedded in the parent concept. This is a judgment call by the pack author, informed by how the domain naturally decomposes — not by eval hit frequency (which is circular and doesn't generalize to real-world usage).
+The full decision procedure, boundary tables (concept-vs-term, concept-vs-workflow, concept-vs-FAQ), and 8 worked examples from the validation refactor live in [`schemas/references/granularity-guide.md`](../references/granularity-guide.md). Authors and review agents should consult it whenever an embed-vs-promote call is non-obvious.
+
+### Workflow vs. concept boundary
+
+A concept file is definitional: what something is, why it matters, how it behaves, what tradeoffs it carries. A workflow file is procedural: numbered steps the user executes to accomplish a task. When content has both, split it:
+
+- Definitional content → `concepts/{concept}.md`
+- Procedural content → `workflows/{workflow}.md`
+- Wikilink the two together
+
+Rule of thumb: if you'd teach it by saying "do this, then this, then this," it's a workflow. If you'd teach it by saying "imagine a map where…", it's a concept.
+
+### Size targets
+
+- **Soft target:** 500–900 tokens per concept file. This is the natural range observed in the validation refactor and leaves room for the opening definition, body, FAQ section, and related terms without crowding.
+- **Hard ceiling:** 1,500 tokens. Files above this must be split at `##` boundaries or decomposed into parent+child concepts via `concept_scope: composite`.
+- **Lower bound:** files under ~200 tokens are almost always better embedded as related terms in a parent concept; they don't carry enough signal to justify their own retrieval slot.
 
 ### Wikilink convention
 
 Related concept files are linked via bare-filename wikilinks (`[[concept-slug]]`, no path, no `.md` extension required but allowed). Filename uniqueness across the pack is already enforced by the existing directory-prefix convention. EP MCP's graph expansion picks up wikilinked neighbors during retrieval, reducing the need to duplicate content.
+
+### Deprecation tracking (`supersedes:`)
+
+When a new atomic-conceptual file replaces one or more legacy files, list the legacy filenames in the new file's `supersedes:` frontmatter field. This lets `ep-validate` detect orphans (a `supersedes:` target that still exists in the pack), lets migration tooling prune replaced files once the new file is validated, and preserves the audit trail without baking stale paths into the content body.
 
 ---
 
@@ -177,8 +201,12 @@ Packs on Schema 3.x remain readable by EP MCP — this RFC does not break the lo
 
 The `tools/` directory should gain:
 
-- `ep-migrate-3-to-4.py` — scans a pack for `summaries/`, `propositions/`, `faq/`, `glossary-*.md` and produces a migration plan (which content goes where). Interactive — asks the author about ambiguous cases (e.g., "this term could be promoted or embedded — your call").
-- `ep-validate` updated to flag deprecated directories in Schema 4.0+ packs.
+- `ep-migrate-3-to-4.py` — scans a pack for `summaries/`, `propositions/`, `faq/`, `glossary-*.md` and produces a migration plan (which content goes where). Interactive or plan-file driven — asks the author about ambiguous cases (e.g., "this term could be promoted or embedded — your call"). Emits a `_migration-plan.md` for review before applying changes.
+- `ep-validate` updated to:
+  - Flag deprecated directories (`summaries/`, `propositions/`) in Schema 4.0+ packs
+  - Verify `supersedes:` targets no longer exist (or warn when they still do)
+  - Verify `parent_concept:` references resolve to a file with `concept_scope: composite`
+  - Warn on concept files above the 1,500-token hard ceiling
 
 ---
 
@@ -220,20 +248,25 @@ The `tools/` directory should gain:
 
 ---
 
-## Open questions
+## Resolved design decisions
 
-1. **Chunker tuning.** Does the current EP MCP chunker split consistently at `##` boundaries, or does it fall back to token windows? If the latter, larger consolidated files may re-fragment at arbitrary points. Needs verification before migration.
-2. **Cross-cutting FAQs / canonical ownership.** Some questions genuinely span multiple concepts ("What's the difference between territory alignment and rebalancing?"). **Proposed resolution:** pick the primary concept and cross-link via `## Related Concepts`. Validation refactor confirmed this works — duplicating Q/A across concept files would re-introduce the aggregator problem in miniature. Schema should state this explicitly.
-3. **Entity/reference files.** `entities.json`, lookup tables — unaffected by this RFC, or should they also be reconsidered?
-4. **Person pack verbatim/summary pattern.** Person packs mirror verbatim files to summary files in paired directories. This RFC is scoped to product packs; person-pack consequences need a follow-up RFC.
-5. **`_graph.yaml` changes.** Will the new structure produce a cleaner graph? Should `ep-graph-export.py` be updated to reflect the richer wikilink density inside concept files?
-6. **Concept hierarchy / composition.** Validation surfaced the need for explicit parent-child concept relationships (e.g. `Workload Partitioning` is a sub-concept of `Partitioning`, which is a sub-concept of `Scheduling`). **Proposed:** add optional `parent_concept:` and/or `part_of:` fields to concept frontmatter. Add optional `concept_scope: composite` to flag concepts that intentionally span multiple files. Needs a dedicated section in the final schema.
-7. **Declarative knowledge section.** Absorbing propositions into body prose sacrifices the crisp declarative style that was useful for logical extraction and some downstream tool uses. **Proposed:** allow an optional `## Key Propositions` or `## Principles` section in concept files when the concept has genuinely axiomatic statements worth surfacing. Keep it optional — not every concept has them.
-8. **Workflow vs. concept boundary.** Validation consistently surfaced a tension: procedural "how to do X" material wants to live in `workflows/`, while concept files should stay definitional ("what it is, why it matters, key tradeoffs"). The schema should state this boundary explicitly. Rule of thumb: if it has numbered steps, it's a workflow; if it describes behavior, tradeoffs, or mental models, it's a concept.
-9. **Soft vs. hard size targets.** Validation files came in at 520-720 tokens naturally. The current 1,500 hard ceiling is correct, but the 400-800 target may be too tight — richer concepts comfortably reach 900. **Proposed:** soft target 500-900 tokens; hard ceiling 1,500.
-10. **Deprecation / supersedes tracking.** When `con-territories-overview.md` is replaced by `territory.md`, how do we signal this to the loader and to readers? **Proposed:** add optional `supersedes:` frontmatter field listing deprecated filenames. `ep-validate` can warn if both the new and deprecated files coexist.
-11. **Granularity decision tree.** Validation showed author granularity judgment is the single hardest part of applying this schema. "Territory" wanted to swallow half the pack. The schema needs a concrete decision tree with worked examples of embed-vs-promote calls. **Proposed:** add a `schemas/references/granularity-guide.md` reference document with 10-20 worked examples.
-12. **Residual glossary.** Even with concept-level `## Related Terms`, some high-frequency cross-cutting terms (e.g. "EasyTerritory" itself, industry vocabulary) may benefit from a lightweight `glossary.md` index. **Proposed:** allow an optional, lean `glossary.md` for truly cross-cutting terms only — not as a retrieval layer, but as a navigation aid for authors and agents.
+Original open questions, resolved and folded into the spec above:
+
+1. **Chunker tuning** — RESOLVED. Verified against `ExpertPack_MCP/ep_mcp/index/chunker.py`: chunker splits consistently at `##` and `###` boundaries when a file exceeds `max_tokens`, with file-title prefixes preserved on each split. The atomic-conceptual format aligns with this behavior by design; no chunker changes required.
+2. **Cross-cutting FAQ ownership** — RESOLVED. Each Q/A lives in the primary concept it answers for; other concepts cross-link via `## Related Concepts`. Duplication is forbidden (would re-introduce aggregator-style displacement). Codified in the §Optional sections spec above.
+6. **Concept hierarchy / composition** — RESOLVED. Optional `parent_concept:` frontmatter field. `concept_scope: single | composite` distinguishes atomic concepts from parents spanning children. Codified in §File structure and in the granularity guide.
+7. **Declarative knowledge section** — RESOLVED. Optional `## Key Propositions` section preserved for concepts with genuinely axiomatic statements. Codified in §Optional sections.
+8. **Workflow vs. concept boundary** — RESOLVED. Explicit boundary rule in §Workflow vs. concept boundary above and detailed table in the granularity guide.
+9. **Size targets** — RESOLVED. Soft target 500–900 tokens; hard ceiling 1,500 tokens; lower bound ~200 tokens (below which prefer embedding). Codified in §Size targets.
+10. **Deprecation / supersedes tracking** — RESOLVED. Optional `supersedes:` frontmatter field. `ep-validate` warns when both new and deprecated files coexist. Codified in §Deprecation tracking.
+11. **Granularity decision tree** — RESOLVED. Full decision procedure + 8 worked examples shipped in [`schemas/references/granularity-guide.md`](../references/granularity-guide.md).
+12. **Residual glossary** — RESOLVED. A lean, optional `glossary.md` is permitted at the pack root for genuinely cross-cutting terms, explicitly scoped as an author/agent navigation aid rather than a retrieval layer. Codified in §Removed / deprecated.
+
+## Deferred (follow-up work)
+
+3. **Entity/reference files** (`entities.json`, lookup tables). DEFERRED to a follow-up RFC. This RFC is scoped to markdown concept organization; JSON navigation/index files serve a different purpose and remain unchanged.
+4. **Person pack verbatim/summary pattern.** DEFERRED to a follow-up RFC (RFC-002, prospective). Person packs use a verbatim↔summary mirroring pattern that interacts non-trivially with the atomic-conceptual model. Product packs migrate first; person-pack schema v4 consequences will be addressed separately after product-pack migration proves out.
+5. **`_graph.yaml` changes** and `ep-graph-export.py` tooling. DEFERRED pending first product-pack migration. Will revisit once a real Schema 4.0 pack exists to observe the graph topology it produces.
 
 ---
 
