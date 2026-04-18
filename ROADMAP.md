@@ -54,7 +54,8 @@ Make it easier to build and maintain packs.
 
 ### 5. Schema Evolution
 Keep the framework current as LLMs advance.
-- [ ] **Summary layers** — thin retrieval-optimized summaries over verbatim content; RAG hits summary first, pulls detail on demand. Each summary links back to source-of-truth file. (Source: OpenAI compaction analysis, 2026-03-05)
+- [x] **Atomic-conceptual chunks** *(shipped Core 4.0, 2026-04-18)* — RFC-001: concept files are self-contained retrieval units carrying definition, body, FAQs, related terms, and key propositions in one file. Deprecated `summaries/`, `propositions/`, per-domain `glossary-{domain}.md`, standalone `faq/` directory, and lead-summary blockquote pattern for product/process packs. Supersedes the v3.x "summary layers" roadmap item — empirical results showed aggregator files displace specific atomic files at retrieval time (opposite of what hierarchical retrieval theory predicted). Validated via first production migration (ezt-designer `territory.md`, pack -4 files). Person-pack consequences deferred to RFC-002.
+- [ ] **RFC-002: person-pack atomic-conceptual adaptation** — verbatim↔summary mirroring in person packs interacts non-trivially with the RFC-001 model. Needs dedicated RFC after product-pack migration proves out.
 - [ ] **Context-tier compaction** — ruthlessly compress Tier 1 to identity+voice+navigation only (<5KB); push everything else to Tier 2/3. Audit current packs for tier discipline.
 - [ ] **Structured fact tables** — replace narrative repetition with key/value facts, decision tables, canonicalized terms/glossaries for deduplication and retrieval precision
 - [ ] **Entity cross-reference indexes** — use entities.json as canonical registry with aliases for term normalization (evaluate whether current RAG actually benefits)
@@ -83,6 +84,14 @@ Stay current with developments that could improve the framework.
 ---
 
 ## Status Log
+
+### 2026-04-18 — Schema v4.0 shipped (RFC-001 atomic-conceptual chunks)
+- **RFC-001 accepted:** `schemas/rfcs/RFC-001-atomic-conceptual-chunks.md`. Concept files become self-contained retrieval units; aggregator directories (`summaries/`, `propositions/`, `sources/`, per-domain `glossary-*.md`) deprecated for product/process packs.
+- **Schemas bumped to 4.0:** `core.md` and `product.md` updated in-place. Replaced 180+ lines of v3.x Retrieval Optimization guidance with a single `## Atomic-Conceptual Content Files` section. New frontmatter fields: `concept_scope`, `parent_concept`, `schema_version`, `supersedes`.
+- **Granularity guide:** `schemas/references/granularity-guide.md` — 8 worked examples from ezt-designer validation refactor, 5-test decision procedure, boundary tables for the three hardest authoring decisions (concept-vs-workflow, concept-vs-term, concept-vs-FAQ).
+- **Migration tool:** `tools/migrate/ep-migrate-3-to-4.py` (plan mode). Tested against ezt-designer: 60 rename candidates, 33 glossary term decisions, 42 FAQ Q/A relocations, 2 oversized files flagged.
+- **First production migration:** `ezt-designer/concepts/territory.md` live on `ExpertPacks/main`. Supersedes 5 legacy files (territories-overview, territories-geometry, territory-overlaps FAQ, stuck-zip-codes FAQ, glossary-territory-markup). Pack 296 → 292 files. Eval pipeline will measure retrieval impact on next scheduled run.
+- **Deferred:** person-pack adaptation (RFC-002), example-pack migrations under `packs/` (blender-3d, home-assistant, solar-diy remain v3.x demos), `--scaffold`/`--apply` modes in the migration tool.
 
 ### 2026-03-05 — Project Kickoff + Baseline Captured
 - Defined the six improvement vectors

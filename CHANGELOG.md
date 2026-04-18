@@ -10,6 +10,43 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ---
 
+## [Core 4.0] — 2026-04-18 — Atomic-Conceptual Chunks (RFC-001)
+
+**Breaking change** — MAJOR version bump. Product and process packs adopt a single self-contained content model; v3.x aggregator directories are deprecated. Person packs retain their verbatim↔summary model pending a follow-up RFC.
+
+### Added
+- `schemas/rfcs/RFC-001-atomic-conceptual-chunks.md` — Accepted RFC documenting the atomic-conceptual content model: one concept = one self-contained file carrying definition, body, FAQs, related terms, and key propositions. Records motivation, resolved design decisions, migration plan, and validation findings.
+- `schemas/references/granularity-guide.md` — Companion reference for the hardest authoring decision: embed a term vs. promote it to its own concept file. 5-test decision procedure, 8 worked examples from the ezt-designer validation refactor, plus boundary tables for concept-vs-workflow, concept-vs-term, and concept-vs-FAQ.
+- `schemas/core.md` — New `## Atomic-Conceptual Content Files` section documenting concept file structure, required/optional sections (`## Frequently Asked`, `## Related Terms`, `## Key Propositions`, `## Related Concepts`), size targets (500-900 soft / 1,500 hard), granularity, composite concepts (`concept_scope: composite` + `parent_concept:`), workflow-vs-concept boundary, deprecation tracking (`supersedes:`), and optional lean root-level `glossary.md`.
+- `schemas/core.md` — New frontmatter fields: `concept_scope`, `parent_concept`, `schema_version`, `supersedes`.
+- `tools/migrate/ep-migrate-3-to-4.py` — Migration planner. Scans a v3.x pack and emits `_migration-plan.md` covering deprecated-directory inventory, FAQ relocations (heuristic), glossary term embed-vs-promote suggestions, lead-blockquote removals, concept-file renames (drop `con-` prefix), and oversized-file warnings. Plan mode only; `--scaffold` and `--apply` stubbed pending first real migration to validate the plan format.
+
+### Changed
+- `schemas/core.md` — Replaced v3.x `## Retrieval Optimization` section (which contained Summaries Directory, Lead Summaries, Glossary, Propositions Directory, and File Splitting subsections) with the new `## Atomic-Conceptual Content Files` section. Net -44 lines.
+- `schemas/core.md` — Updated scaffolding sequence, type registry (dropped `faq`/`proposition`/`summary` types for non-person packs), EK ratio measurement (now pulls propositions from concept-file `## Key Propositions` sections and body prose).
+- `schemas/product.md` — Removed `summaries/`, `propositions/`, and `sources/` directory blocks. Rewrote `## Retrieval Layers` section as pointer to core.md. Reframed `## Sources Directory` as DEPRECATED. Converted `### FAQ File` template into v4.0 embedded-in-concepts guidance. Updated directory tree and customer-flow description.
+
+### Deprecated
+- `summaries/` directory (product/process packs) — content absorbed into concept-file opening paragraphs.
+- `propositions/` directory — content absorbed into concept-file body prose and optional `## Key Propositions` sections.
+- `sources/` ingestion-artifacts directory — source-provenance tracking lives in per-file `verified_at`/`source:` frontmatter and pack-level `sources/_coverage.md`.
+- Per-domain `glossary-{domain}.md` files — terms either earn standalone concept files or embed as `## Related Terms`. A lean, optional `glossary.md` at pack root remains for cross-cutting terms only.
+- Standalone `faq/` directory for per-concept FAQs — FAQs move into primary concept files' `## Frequently Asked` sections. Cross-cutting FAQs may remain in `faq/` sparingly.
+- Lead-summary blockquote pattern — opening paragraph of concept file is the summary.
+
+### Validation
+- Validation refactor completed against `ezt-designer` pack: 3 concepts (`territory`, `workload-partitioning`, `capacity-planning`) refactored into atomic-conceptual format and stored at `ExpertPacks/ezt-designer/_schema-refactor/` (now superseded by real migration).
+- First production migration: `ezt-designer/concepts/territory.md` deployed to GitHub main, superseding `con-territories-overview.md`, `con-territories-geometry.md`, `faq/faq-territory-overlaps.md`, `faq/faq-stuck-zip-codes.md`, and `glossary-territory-markup.md`. Pack file count 296 → 292. Eval pipeline will measure retrieval impact on next scheduled run.
+
+### Deferred
+- `schemas/person.md` v4.0 migration — person packs use a verbatim↔summary mirroring pattern that interacts non-trivially with the atomic-conceptual model. RFC-002 will address person-pack consequences after product-pack migration proves out.
+- `schemas/process.md` v4.0 migration — same atomic-conceptual model applies; schema updated in-place but broader process-pack migration deferred until a real process pack proves the pattern.
+- `entities.json` and lookup-table reconsideration.
+- `_graph.yaml` tooling updates — will revisit once a real Schema 4.0 pack exists to observe graph topology.
+- Example packs under `packs/` (`blender-3d`, `home-assistant`, `solar-diy`) remain in v3.x format as legacy demonstrations. A separate migration pass will modernize them.
+
+---
+
 ## [Core 3.3] — 2026-04-14 — MCP Configuration
 
 ### Added
