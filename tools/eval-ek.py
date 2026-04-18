@@ -65,9 +65,20 @@ def get_api_key():
 
 
 # --- Proposition Extraction ---
+#
+# In schema v4.0+ (RFC-001), propositions live inside concept files under
+# the optional `## Key Propositions` section. In v3.x packs they live in a
+# top-level `propositions/` directory. This module supports both: v3.x sources
+# are collected first (for backward compatibility), then v4.0 concept-file
+# sources are added. If a pack has both, both are measured — duplicates are
+# expected during migration and simply widen the probe set.
 
 def find_proposition_files(pack_path: Path) -> list[Path]:
-    """Find all proposition files in the pack (handles flat and composite packs)."""
+    """Find all v3.x propositions/*.md aggregator files (flat and composite packs).
+
+    Returns empty list for v4.0 packs without a propositions/ directory. In
+    that case the v4.0 concept-file extractor below is the sole source.
+    """
     files = []
     for p in sorted(pack_path.rglob("propositions/*.md")):
         if p.name.startswith("_"):
@@ -77,20 +88,20 @@ def find_proposition_files(pack_path: Path) -> list[Path]:
 
 
 def parse_propositions(filepath: Path) -> list[dict]:
-    """Parse a propositions file into individual atomic statements with source context."""
+    """Parse a v3.x propositions/ file into atomic statements with source context."""
     propositions = []
     current_source = None
     section_name = filepath.stem  # e.g., "concepts", "workflows"
-    
+
     with open(filepath) as f:
         for line in f:
             line = line.rstrip()
-            
+
             # Track source file headers (### filename.md)
             if line.startswith("### "):
                 current_source = line[4:].strip()
                 continue
-            
+
             # Extract bullet-point propositions
             if line.startswith("- ") and len(line) > 10:
                 prop_text = line[2:].strip()
@@ -100,16 +111,88 @@ def parse_propositions(filepath: Path) -> list[dict]:
                     "section": section_name,
                     "prop_file": str(filepath),
                 })
-    
+
+    return propositions
+
+
+def find_concept_files(pack_path: Path) -> list[Path]:
+    """Find all concept files in the pack (v4.0 schema)."""
+    return [
+        p for p in sorted(pack_path.rglob("concepts/*.md"))
+        if p.name != "_index.md"
+    ]
+
+
+def parse_concept_propositions(filepath: Path) -> list[dict]:
+    """Extract propositions from a v4.0 concept file.
+
+    Pulls bullet-line propositions from the concept's optional
+    `## Key Propositions` section. These are the axiomatic statements
+    the author chose to surface for precise retrieval and logical
+    extraction — they are the v4.0 replacement for the deprecated
+    propositions/{section}.md aggregator files.
+
+    FAQ Q/A pairs and body-prose sentences are NOT extracted here — if
+    the author wanted them in the EK-measurement set, they should be
+    listed under Key Propositions.
+    """
+    propositions = []
+    source_name = filepath.name
+
+    try:
+        content = filepath.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return propositions
+
+    # Strip YAML frontmatter if present
+    if content.startswith("---\n"):
+        end = content.find("\n---\n", 4)
+        if end != -1:
+            content = content[end + 5:]
+
+    # Locate the `## Key Propositions` section (case-insensitive, allow
+    # variants like 'Key Principles' for process packs)
+    import re
+    section_pat = re.compile(
+        r"^##\s+(?:Key\s+Propositions|Key\s+Principles|Propositions)\s*$",
+        re.IGNORECASE | re.MULTILINE,
+    )
+    m = section_pat.search(content)
+    if not m:
+        return propositions
+
+    # Capture from the header to the next `##` heading (or EOF)
+    start = m.end()
+    next_h = re.search(r"^##\s", content[start:], re.MULTILINE)
+    section = content[start:start + next_h.start()] if next_h else content[start:]
+
+    for line in section.splitlines():
+        line = line.rstrip()
+        if line.startswith("- ") and len(line) > 10:
+            prop_text = line[2:].strip()
+            propositions.append({
+                "text": prop_text,
+                "source_file": source_name,
+                "section": "concepts",
+                "prop_file": str(filepath),
+            })
+
     return propositions
 
 
 def extract_all_propositions(pack_path: Path) -> list[dict]:
-    """Extract all propositions from the pack."""
+    """Extract all propositions from the pack.
+
+    Supports both v3.x (propositions/ directory) and v4.0 (concept-file
+    `## Key Propositions` sections). Both are collected when present.
+    """
     all_props = []
+    # v3.x propositions/ aggregator files
     for pf in find_proposition_files(pack_path):
-        props = parse_propositions(pf)
-        all_props.extend(props)
+        all_props.extend(parse_propositions(pf))
+    # v4.0 concept-file Key Propositions sections
+    for cf in find_concept_files(pack_path):
+        all_props.extend(parse_concept_propositions(cf))
     return all_props
 
 
@@ -344,10 +427,23 @@ def run_evaluation(pack_path: Path, models: list[str], sample_size: int = 0, api
     all_props = extract_all_propositions(pack_path)
     
     if not all_props:
-        print("ERROR: No propositions found. Run the improvement pipeline first to generate propositions/.", file=sys.stderr)
+        print(
+            "ERROR: No propositions found. Either: (a) v3.x pack — generate "
+            "propositions/ via the improvement pipeline, or (b) v4.0 pack — "
+            "add `## Key Propositions` sections to high-EK concept files.",
+            file=sys.stderr,
+        )
         sys.exit(1)
     
-    print(f"  Found {len(all_props)} propositions across {len(find_proposition_files(pack_path))} files")
+    n_v3 = len(find_proposition_files(pack_path))
+    n_v4 = sum(
+        1 for cf in find_concept_files(pack_path)
+        if parse_concept_propositions(cf)
+    )
+    print(
+        f"  Found {len(all_props)} propositions "
+        f"({n_v3} v3.x propositions/ files, {n_v4} v4.0 concept files with ## Key Propositions)"
+    )
     
     # 2. Sample if requested
     if sample_size and sample_size < len(all_props):

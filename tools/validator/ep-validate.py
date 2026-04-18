@@ -523,21 +523,35 @@ class Validator:
         if retrieval_model == 'full-context':
             return
 
-        # Check for antipattern directory names
+        # Check for antipattern directory names. sources/ is a special case:
+        # sources/_coverage.md is the legitimate research-tracking file and
+        # does not count as an aggregator. Only warn on sources/ when it
+        # contains per-source index files (the deprecated v3.x pattern).
         ANTIPATTERN_DIRS = {'summaries', 'propositions', 'sources'}
         found_dirs = set()
         for rel in self.files:
             parts = rel.split('/')
             for part in parts[:-1]:  # exclude filename itself
                 if part in ANTIPATTERN_DIRS:
+                    # Suppress sources/ warning if only _coverage.md is present
+                    if part == 'sources':
+                        sources_files = [
+                            r for r in self.files if r.startswith('sources/')
+                        ]
+                        non_coverage = [
+                            r for r in sources_files
+                            if os.path.basename(r) != '_coverage.md'
+                        ]
+                        if not non_coverage:
+                            continue
                     found_dirs.add(part)
 
         for d in sorted(found_dirs):
             self._add('WARN', 'W-RETR-01', f'{d}/',
                       f"Directory '{d}/' is a retrieval-first antipattern "
-                      f"(Axiom 12) — files here score broadly on every query "
-                      f"and displace specific EK files. "
-                      f"Delete or merge content into atomic files. "
+                      f"(Axiom 12, RFC-001) — files here score broadly on every "
+                      f"query and displace specific EK files. "
+                      f"Delete or merge content into atomic concept files. "
                       f"Set manifest retrieval_model: full-context to suppress.")
 
         # Check for antipattern frontmatter types
@@ -551,6 +565,93 @@ class Validator:
                           f"and displace atomic EK files. "
                           f"Merge content into the file it describes as a lead sentence. "
                           f"Set manifest retrieval_model: full-context to suppress.")
+
+    # -- Check: schema v4.0 atomic-conceptual compliance -------------------
+    def check_v40_atomic_conceptual(self):
+        """RFC-001 checks for Schema v4.0 packs:
+
+        W-V40-01: supersedes: target still exists in pack (migration not complete)
+        W-V40-02: parent_concept: target does not exist
+        W-V40-03: parent_concept: target is not concept_scope: composite
+        W-V40-04: concept file exceeds 1500-token hard ceiling
+
+        Only active when the manifest declares schema_version >= 4.0.
+        Packs on 3.x or missing the field skip these checks.
+        """
+        manifest_sv = str(self.manifest.get('schema_version', '')).strip()
+        if not manifest_sv:
+            return
+        try:
+            major = int(manifest_sv.split('.')[0])
+        except (ValueError, IndexError):
+            return
+        if major < 4:
+            return
+
+        # Build a set of all basenames in the pack for supersedes lookup
+        basenames = {os.path.basename(rel) for rel in self.files}
+        rels = set(self.files)
+
+        for rel, fm in self.fm.items():
+            # W-V40-01: supersedes target still present
+            sups = fm.get('supersedes') or []
+            if isinstance(sups, list):
+                for s in sups:
+                    if not isinstance(s, str):
+                        continue
+                    if s in rels:
+                        self._add('WARN', 'W-V40-01', rel,
+                                  f"supersedes: '{s}' still exists in the pack — "
+                                  f"delete the superseded file to complete the "
+                                  f"migration, or remove it from supersedes:.")
+                    else:
+                        # also check basename match if path-form didn't hit
+                        bn = os.path.basename(s)
+                        if bn in basenames and bn != os.path.basename(rel):
+                            self._add('WARN', 'W-V40-01', rel,
+                                      f"supersedes: '{s}' — a file with basename "
+                                      f"'{bn}' still exists in the pack. Verify "
+                                      f"the migration is complete.")
+
+            # W-V40-02 / W-V40-03: parent_concept resolution
+            parent = fm.get('parent_concept')
+            if parent and isinstance(parent, str):
+                parent_bn = parent if parent.endswith('.md') else f"{parent}.md"
+                # find the parent by basename match
+                parent_rel = None
+                for r in self.files:
+                    if os.path.basename(r) == parent_bn:
+                        parent_rel = r
+                        break
+                if parent_rel is None:
+                    self._add('WARN', 'W-V40-02', rel,
+                              f"parent_concept: '{parent}' — no matching file "
+                              f"found in the pack.")
+                else:
+                    parent_fm = self.fm.get(parent_rel, {})
+                    parent_scope = parent_fm.get('concept_scope', '')
+                    if parent_scope != 'composite':
+                        self._add('WARN', 'W-V40-03', rel,
+                                  f"parent_concept: '{parent}' resolves to "
+                                  f"'{parent_rel}' but that file is not "
+                                  f"concept_scope: composite (found: "
+                                  f"'{parent_scope or 'unset'}').")
+
+            # W-V40-04: concept file exceeds 1500-token hard ceiling
+            if fm.get('type') == 'concept':
+                full = os.path.join(self.pack_path, rel)
+                try:
+                    size_chars = os.path.getsize(full)
+                except OSError:
+                    continue
+                # Rough ~4 chars/token
+                est_tokens = int(size_chars / 4)
+                if est_tokens > 1500:
+                    self._add('WARN', 'W-V40-04', rel,
+                              f"concept file is ~{est_tokens} tokens, exceeds "
+                              f"v4.0 hard ceiling of 1,500. Split at ## "
+                              f"boundaries or decompose via concept_scope: "
+                              f"composite + parent_concept:.")
 
     # -- Checks 17-19: provenance (opt-in via --provenance) ----------------
     def check_provenance_fields(self):
@@ -634,6 +735,7 @@ class Validator:
         self.check_file_size()
         self.check_hub_files()
         self.check_retrieval_antipatterns()
+        self.check_v40_atomic_conceptual()
         if self.check_provenance:
             self.check_provenance_fields()
         return self.issues
