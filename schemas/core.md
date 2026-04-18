@@ -2,6 +2,10 @@
 
 *Shared principles and conventions that apply to every ExpertPack, regardless of type. Type-specific schemas (person, product, process) extend these rules — they don't replace them.*
 
+**Schema version:** 4.0 (2026-04-18)
+
+**What changed in 4.0** — Product and process packs adopt the **atomic-conceptual content model** per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md): each concept is a self-contained retrieval unit carrying its definition, body, FAQs, related terms, and key propositions in one file. The `summaries/`, `propositions/`, and per-domain `glossary-{domain}.md` aggregator patterns from v3.x are **deprecated**; see [Atomic-Conceptual Content Files](#atomic-conceptual-content-files). Person packs retain their verbatim↔summary mirroring model for now (RFC-002 pending).
+
 ---
 
 ## The MD-Canonical Principle
@@ -118,12 +122,11 @@ When creating a new ExpertPack from scratch, follow this sequence:
    ```
 3. **Create `manifest.yaml`** — fill in all required fields (name, slug, type, version, description, entry_point)
 4. **Create `overview.md`** — the entry point every agent reads first
-5. **Scaffold content directories** per the type schema — `concepts/`, `workflows/`, `troubleshooting/`, `faq/`, etc. Each directory gets an `_index.md`
-6. **Create `glossary.md`** — add terms as hydration proceeds
-7. **Create `sources/_coverage.md`** — track what sources have been researched
-8. **Begin hydration** — populate content files using EK-aware triage (esoteric knowledge first)
-9. **Add retrieval layers** as content grows — `summaries/`, `propositions/`, lead summaries in content files
-10. **Measure EK ratio** — run blind-probe eval once the pack has substantive content
+5. **Scaffold content directories** per the type schema — `concepts/`, `workflows/`, `troubleshooting/`, etc. Each directory gets an `_index.md`.
+6. **(Optional) Create a lean `glossary.md`** for genuinely cross-cutting terms only (product name, industry vocabulary). Do not create per-domain `glossary-*.md` aggregator files — terms either earn their own concept file or live embedded in a parent concept's `## Related Terms` section. See [`references/granularity-guide.md`](references/granularity-guide.md).
+7. **Create `sources/_coverage.md`** — track what sources have been researched. See [Research Coverage](#research-coverage-sources_coveragemd).
+8. **Begin hydration** — populate atomic-conceptual content files using EK-aware triage (esoteric knowledge first). Each concept file is a self-contained retrieval unit — definition, body, FAQs, and related terms co-located. See the [Atomic-Conceptual Content Files](#atomic-conceptual-content-files) section below.
+9. **Measure EK ratio** — run blind-probe eval once the pack has substantive content.
 
 **The `.obsidian/` folder is not optional.** Every pack should include it so the pack is immediately openable in Obsidian without any manual setup. It contains pre-configured Dataview and Templater settings that make authoring and reviewing the pack significantly easier.
 
@@ -242,9 +245,10 @@ Standard prefixes for person packs:
 | `mind/` | `mind-` | `mind-epistemology.md` |
 | `facts/` | `facts-` | `facts-timeline.md` |
 | `meta/` | `meta-` | `meta-changelog.md` |
-| `propositions/` | `prop-` | `prop-facts.md` |
 | `relationships/` | `rel-` | `rel-people.md` |
 | `presentation/` | `pres-` | `pres-modes.md` |
+
+*Note: person-pack prefixes above reflect the verbatim↔summary content model used in person packs. Product packs do not use these directories. The `propositions/` directory is deprecated schema-wide in v4.0 (see [Atomic-Conceptual Content Files](#atomic-conceptual-content-files)).*
 
 For other pack types (product, process, etc.), define prefixes in the pack's `manifest.yaml` under `file_prefixes`. Choose short (3–5 char) abbreviations that reflect content type.
 
@@ -254,153 +258,122 @@ The EP CLI validator (when available) will enforce this rule and flag any duplic
 
 ---
 
-## Retrieval Optimization
+## Atomic-Conceptual Content Files
 
-RAG retrieval quality depends on more than just file size. These patterns apply to every pack type and work together as a system — each layer compensates for what the others can't do alone.
+*This section supersedes the v3.x "Retrieval Optimization" layering (summaries/, propositions/, lead summaries, per-domain glossary files) with a single self-contained content model. See [`rfcs/RFC-001-atomic-conceptual-chunks.md`](rfcs/RFC-001-atomic-conceptual-chunks.md) for the full rationale and validation data.*
 
-### Summaries Directory (summaries/)
+### Core principle
 
-Recommended directory containing section-level summaries that enable hierarchical retrieval. Summaries give RAG a coarse-grained layer: broad questions match summaries first, then the agent drills into detail files. This follows the RAPTOR pattern — recursive summarization into a retrieval tree.
+**One concept = one retrievable unit.** All knowledge about a concept — definition, mechanics, examples, relative terminology, common questions — lives in a single markdown file. The file's structure is designed for both retrieval (via section-boundary chunking) and LLM reasoning (via natural narrative flow).
 
-**Why summaries matter:** Without summaries, every query competes against hundreds of fine-grained content files. A question like "what can this product do?" matches dozens of files with mediocre relevance. A summary file matches with high relevance and provides a complete broad answer. Fine-grained files then handle follow-ups like "how does the optimizer work exactly?"
+Aggregator directories (`summaries/`, `propositions/`, per-domain `glossary-*.md`) are deprecated. Empirical results show they score broadly on every query and displace specific atomic files — the opposite of what hierarchical retrieval theory predicted.
 
-**Structure:** One summary file per content section. Each summary is 1–3KB of dense, fact-packed bullet points covering the key topics in that section, with cross-references to the detailed files.
-
-```markdown
-# {Section Name} — Summary
-
-Dense bullet-point summary of all topics covered in this section.
-
-## Key Topics
-- **{Topic 1}** — {one-line summary}. See [{detail file}](../section/detail.md)
-- **{Topic 2}** — {one-line summary}. See [{detail file}](../section/detail.md)
-...
-```
-
-**Generation rules:**
-- Summaries are DERIVED from content files — they are not canonical content
-- Read all files in the section before writing the summary
-- Include cross-references to source files so agents can drill down
-- Regenerate summaries when source content changes significantly
-- Keep each summary under 3KB — dense facts, not prose paragraphs
-
-**Context tier:** Searchable (Tier 2). Summaries are indexed for RAG retrieval alongside content files.
-
-**Person pack note:** Person packs use a special verbatim→summary mirroring pattern where each verbatim content file has a corresponding summary file with story card frontmatter. See [person.md](person.md) for the full two-tier content system.
-
----
-
-### Lead Summaries
-
-Recommended pattern: add a 1–3 sentence blockquote at the very top of high-traffic content files that directly answers the most likely query. Lead summaries ensure that even if RAG retrieves only the first chunk of a file, the agent gets the core answer immediately.
-
-**Format:**
+### Concept file structure
 
 ```markdown
-# {Title}
-
-> **Lead summary:** {Direct answer to the most common question this file addresses. Include key anti-hallucination facts and common gotchas. 1-3 sentences max.}
-
-## What It Is
-...
-```
-
-**Why this matters:** RAG chunkers typically split files from the top. If the first 400 tokens are a table of contents or general introduction, the most relevant chunk may rank lower than a chunk from a less-relevant file that happens to lead with the answer. Lead summaries front-load the critical facts into the highest-ranked chunk position.
-
-**What to include in a lead summary:**
-- The direct answer to the most common query about this topic
-- Critical "NOT" facts (anti-hallucination) — things the system does NOT do
-- Key prerequisites or gotchas that users commonly miss
-- Vocabulary bridges — mention the common user language for technical terms
-
-**When to add lead summaries:** Focus on files that appear in eval failures or that address high-traffic support topics. Not every file needs one — start with the ~15 most-retrieved files and expand based on eval results.
-
-**Context tier:** Lead summaries are part of the content file itself — they inherit the file's tier (typically Tier 2, Searchable).
-
+---
+id: {pack-slug}/concepts/{concept-slug}
+title: "Concept Name"
+type: concept
+tags: [concept-slug, related-domain-tags]
+pack: {pack-slug}
+retrieval_strategy: standard
+concept_scope: single          # or "composite" for parent concepts spanning children
+parent_concept: parent-slug    # optional — set when this is a child in a composite hierarchy
+schema_version: "4.0"
+verified_at: "YYYY-MM-DD"
+supersedes:                    # optional — files replaced by this one (for migration tracking)
+  - old-filename.md
+related:
+  - sibling-concept.md
+  - related-workflow.md
 ---
 
-### Glossary (glossary.md)
+# Concept Name
 
-Recommended file at the pack root that maps common user language to precise technical terms. A glossary bridges the vocabulary gap between how users describe problems and how the pack documents solutions.
+Opening paragraph (1–3 sentences) that defines the concept in retriever-friendly terms. No "this document describes" preamble. This paragraph IS the summary — retrieval-anchored and reader-useful.
 
-**Why a glossary matters:** Users say "stuck ZIP codes" when the pack documents "locked territories." Users say "records missing" when the pack documents "silent truncation" or "upload record limit." Without a vocabulary bridge, RAG retrieval fails because the query terms don't match the content terms. A glossary file gives RAG an explicit mapping to match against.
+## [Body sections as needed]
 
-**Structure:**
+Full EK body: mechanics, behavior, usage, examples, constraints. Use `##` section headers at natural topic breaks so the chunker aligns to semantic boundaries.
 
-```markdown
-# {Pack Name} — Glossary
+## Frequently Asked
 
-Quick-reference definitions for {product/domain} terminology. Maps common user language to precise technical terms.
+### How does X differ from Y?
+Answer phrased to match likely user queries.
 
-## {Category}
+### When should I use X?
+Answer.
 
-| Term | Definition | Common User Language |
-|------|-----------|---------------------|
-| **{Technical Term}** | {Precise definition} | "{how users say it}", "{alternate phrasing}" |
-| **{Technical Term}** | {Precise definition} | "{how users say it}", "{alternate phrasing}" |
+## Related Terms
+
+- **Relative term:** Definition that only makes sense in context of this concept.
+- **Another term:** Definition.
+
+## Key Propositions
+
+- Axiomatic statement 1.
+- Axiomatic statement 2.
+
+## Related Concepts
+- [[sibling-concept]]
+- [[related-workflow]]
 ```
 
-**Guidelines:**
-- Group terms by category (e.g., "Territory Terms", "Data Terms", "Workflow Terms")
-- Include the `Common User Language` column — this is what makes glossaries effective for RAG
-- Keep definitions concise (1-2 sentences) with the key distinguishing fact
-- Include anti-patterns in definitions where relevant (e.g., "NOT drag-and-drop")
-- Update the glossary when eval failures reveal vocabulary gaps between user queries and pack content
-- Add the glossary to the manifest's `always` context tier so it loads every session
+### Required elements
 
-**Context tier:** Always (Tier 1). The glossary is small, high-value, and helps with every query.
+1. **Opening paragraph defines the concept.** First 1–3 sentences must be retriever-anchored: the concept named explicitly, the category it belongs to, its distinguishing characteristic. No throat-clearing. This paragraph replaces both the old `## What It Is` section and the old lead-summary blockquote.
+2. **Section headers at topic breaks.** Every `##` section is one coherent sub-topic that produces a clean chunk. The EP MCP chunker splits at `##` and `###` boundaries; structure your file to align with how you want it retrieved.
+3. **Wikilinks for graph expansion.** `related:` frontmatter + `## Related Concepts` section with `[[bare-filename]]` wikilinks. EP MCP's graph expansion pulls in siblings when relevant, so content does not need to be duplicated across files.
 
----
+### Optional sections
 
-### Propositions Directory (propositions/)
+4. **`## Frequently Asked`.** Include when the concept has documented questions that users actually ask. Each question as an H3 heading — the chunker splits on headings, so each Q/A becomes its own sub-chunk with strong query-matching surface. **Canonical ownership:** each Q/A lives in the primary concept it answers for; other concepts cross-link via `## Related Concepts` rather than duplicating the Q/A (duplication would re-introduce the aggregator problem in miniature).
 
-Recommended directory containing atomic factual statements extracted from content files. Propositions enable high-precision retrieval: when a user asks a specific factual question, the RAG system can match an exact proposition rather than a paragraph that happens to contain the answer.
+5. **`## Related Terms`.** Include when the concept has relative terminology that doesn't stand alone. If a term has its own definition, properties, and relationships, it earns its own concept file instead. See [`references/granularity-guide.md`](references/granularity-guide.md) for the embed-vs-promote decision procedure.
 
-**Why propositions matter:** Prose paragraphs contain multiple facts mixed with explanations, examples, and transitions. RAG retrieval against prose returns the whole paragraph, only part of which is relevant. Propositions isolate individual facts into standalone retrieval units — each one matches precisely or not at all.
+6. **`## Key Propositions`.** Include when the concept has genuinely axiomatic statements worth surfacing for logical extraction — invariants, hard rules, or formal properties. Each proposition as a concise bullet. Omit when the concept's truth is adequately carried by body prose. This is the schema-supported path for declarative statements that the deprecated `propositions/` directory used to carry, without the aggregator regression.
 
-**Structure:** One proposition file per content section. Each file contains atomic facts grouped by source file, formatted as bullet lists.
+### Granularity
 
-```markdown
-# {Section Name} — Propositions
+A term or sub-topic earns its own concept file when it has its own definition (not just "X in the context of Y"), its own properties or sub-concepts, its own relationships to other concepts, or enough content to justify standalone treatment. Otherwise it lives embedded in the parent concept. When tests are inconclusive, **prefer embed** — promotion is cheap later; demotion creates broken wikilinks and orphan files.
 
-### {source-filename.md}
-- {Self-contained factual statement}
-- {Self-contained factual statement}
-- {Self-contained factual statement}
+See [`references/granularity-guide.md`](references/granularity-guide.md) for the full decision procedure, boundary tables, and 8 worked examples.
 
-### {another-source-file.md}
-- {Self-contained factual statement}
-...
-```
+### Workflow vs. concept boundary
 
-**Extraction rules:**
-- Each proposition must be self-contained — readable without any surrounding context
-- Each proposition captures exactly ONE fact (not compound statements)
-- Propositions are DERIVED from content files — content files remain canonical
-- Do NOT invent facts — extract only what the source file states
-- Target 5–20 propositions per source file, depending on information density
-- Regenerate propositions when source content changes
+A concept file is definitional: what something is, why it matters, how it behaves, what tradeoffs it carries. A workflow file is procedural: numbered steps the user executes to accomplish a task. When content has both, split it:
 
-**Context tier:** Searchable (Tier 2). Propositions are indexed for RAG retrieval alongside content files and summaries.
+- Definitional content → `concepts/{concept}.md`
+- Procedural content → `workflows/{workflow}.md`
+- Wikilink the two together
 
-**Quality control:** Hallucinated propositions are dangerous — they inject false facts into the retrieval layer. When generating propositions, verify each statement against the source file. When in doubt, omit rather than fabricate.
+Rule of thumb: if you'd teach it by saying "do this, then this, then this," it's a workflow. If you'd teach it by saying "imagine a map where…", it's a concept.
 
----
+### Size targets
 
-### File Splitting Rules
+- **Soft target:** 500–900 tokens per concept file. Leaves room for the opening definition, body, FAQ section, and related terms without crowding.
+- **Hard ceiling:** 1,500 tokens. Files above this must be split at `##` boundaries or decomposed into parent+child concepts via `concept_scope: composite`.
+- **Lower bound:** ~200 tokens. Below this, prefer embedding as a related term in a parent concept — the file doesn't carry enough signal to justify its own retrieval slot.
 
-When a content file grows beyond the 1–3KB target, splitting it improves retrieval precision — but splitting alone is not enough.
+### Composite concepts
 
-**When to split:** When a content file exceeds ~10KB, split it into focused sub-files within a subdirectory. Each sub-file should cover one sub-topic and be independently useful without needing to load sibling files for context.
+Some concepts naturally span multiple files. Example: `partitioning.md` as a parent covering `simple-partitioning.md` and `workload-partitioning.md` as children. When using composite scope:
 
-**IMPORTANT — Naive splitting loses context.** When you split a large file, you break the cross-topic connections that existed when everything was in one place. An agent that retrieves only one sub-file after splitting loses the surrounding context it previously had. Splitting without compensating for this degradation makes quality worse, not better.
+- The parent file has `concept_scope: composite` in frontmatter
+- Children have `concept_scope: single` and `parent_concept: {parent-slug}`
+- The parent file's body introduces both variants and links out to children via `## Related Concepts`
+- Children cover their own mechanics without repeating the parent's framing
 
-**The fix — three layers together:**
-1. **Split the file** into focused sub-files (precision)
-2. **Generate a summary** for the section that covers all sub-files (broad context recovery)
-3. **Extract propositions** from each sub-file (precise fact retrieval)
+Use composite scope for **natural hierarchy**, not when a concept just got too big. If a concept exceeds the size ceiling, first tighten the writing; only split when there are genuinely distinct sub-concepts.
 
-The three-layer approach (split files + summaries + propositions) consistently outperforms any single change alone. Don't split without also generating the retrieval layers.
+### Optional root-level glossary
+
+A lean, optional `glossary.md` may live at the pack root for genuinely cross-cutting terms — the product name, industry vocabulary, or terms that don't belong to any single concept. Its role is **navigation for authors and agents**, not a retrieval layer. Do NOT create per-domain `glossary-{domain}.md` files — those are aggregators and will be flagged by `ep-validate` in v4.0+ packs.
+
+### Deprecation tracking (`supersedes:`)
+
+When a new atomic-conceptual file replaces one or more legacy files, list the legacy filenames in the new file's `supersedes:` frontmatter. This gives migration tooling a way to prune replaced files once the new file is validated, lets `ep-validate` detect orphans, and preserves the audit trail without baking stale paths into the content body.
 
 ---
 
@@ -496,7 +469,7 @@ A pack full of content the model already knows is dead weight — it burns token
 
 EK ratio is measured empirically using **proposition-level blind probing:**
 
-1. **Extract propositions** — use the pack's `propositions/` files (one atomic fact per line). If propositions don't exist yet, generate them.
+1. **Extract propositions** — pull atomic factual statements from concept-file `## Key Propositions` sections and from concept body prose (one atomic fact per line). If a pack predates schema v4.0 and still has a `propositions/` directory, use those files directly.
 
 2. **Generate probe questions** — convert each proposition into a natural question. *"The TSP optimizer uses a genetic algorithm with population size 32"* → *"What algorithm does EZT Designer use for route optimization, and what is the default population size?"*
 
@@ -1303,7 +1276,7 @@ For a specific question, the agent either:
 - **Searches:** Uses RAG/vector search to find relevant chunks across all Tier 2 files
 - **Both:** RAG finds candidates, agent reads the full file for complete context
 
-**Hierarchical retrieval:** Packs with `summaries/` and `propositions/` directories support multi-granular retrieval. Broad questions match section summaries first; factual questions match atomic propositions; detail questions match content files. This layered approach improves both precision and token efficiency. See the [Retrieval Optimization](#retrieval-optimization) section above for implementation details and anti-patterns.
+**Atomic-conceptual retrieval:** Schema v4.0+ packs use self-contained concept files where each concept's definition, body, FAQs, related terms, and key propositions co-locate in one file. The EP MCP chunker splits at `##`/`###` section boundaries, producing fine-grained chunks (definition paragraph, body sections, each FAQ Q/A, related terms, propositions) that retrieve precisely while the graph-expansion layer pulls in wikilinked siblings for context. See [Atomic-Conceptual Content Files](#atomic-conceptual-content-files) above for the full pattern.
 
 ### Deep Loading (Tier 3 — On-demand)
 When the task requires full source material:
@@ -1462,11 +1435,9 @@ The `concept_scope` field signals how many distinct topics a file covers. It is 
 | `concepts/` | `concept` | `standard` |
 | `workflows/` | `workflow` | `atomic` |
 | `troubleshooting/` | `troubleshooting` | `atomic` |
-| `faq/` | `faq` | `standard` |
-| `propositions/` | `proposition` | `standard` |
-| `summaries/` | `summary` | `standard` |
-| `sources/` | `source` | `standard` |
-| `glossary*.md` | `glossary` | `standard` |
+| `glossary.md` (optional, root) | `glossary` | `standard` |
+| `summaries/` (person packs only) | `summary` | `standard` |
+| `verbatim/` (person packs only) | `verbatim` | `standard` |
 | `overview.md` | `overview` | `standard` |
 | `_index.md` | `index` | `standard` |
 | `decisions/` | `decision` | `standard` |

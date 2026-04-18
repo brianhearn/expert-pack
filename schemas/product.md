@@ -2,6 +2,10 @@
 
 *Blueprint for ExpertPacks that capture deep knowledge about a product or platform — concepts, workflows, troubleshooting, and the tribal knowledge that lives in support teams' heads. Applicable to software, hardware, medical devices, consumer products, or any product with enough complexity to benefit from structured expert knowledge. This schema extends [core.md](core.md); all shared principles apply.*
 
+**Schema version:** 4.0 (2026-04-18)
+
+**What changed in 4.0** — Adopted the atomic-conceptual content model per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md). Removed `summaries/`, `propositions/`, and `sources/` directory recommendations. Per-concept FAQs and related terms now live inside concept files. See [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files).
+
 ---
 
 ## Purpose
@@ -45,7 +49,7 @@ packs/{product-slug}/
 │   └── common-mistakes/   ← Gotchas and forgotten steps
 │       └── {mistake}.md
 │
-├── faq/                   ← Common questions by category
+├── faq/                   ← Cross-cutting questions only (optional, v4.0+: per-concept FAQs live in concept files)
 │   └── {category}.md
 │
 ├── facts/                 ← Product history (optional)
@@ -62,17 +66,6 @@ packs/{product-slug}/
 │   ├── feedback.md        ← Pain points, objections, churn reasons, feature requests
 │   └── success-stories.md ← Wins, case studies, reference customers
 │
-├── summaries/             ← Section-level summaries for broad retrieval (recommended) ← See core.md Retrieval Optimization
-│   ├── _index.md          ← Directory of all summaries
-│   └── {section}.md       ← One summary per content section (~1-2KB each)
-│
-├── propositions/          ← Atomic factual statements for precise retrieval (recommended) ← See core.md Retrieval Optimization
-│   ├── _index.md          ← Directory of all proposition files
-│   └── {section}.md       ← Extracted facts grouped by source file
-│
-├── sources/               ← Ingestion artifacts and source indexes (optional)
-│   ├── _index.md          ← Directory of all source materials
-│   └── {source}.md        ← One index per source (video, doc set, interview)
 │
 └── commercial/            ← Business/sales information (optional)
     ├── _index.md
@@ -85,7 +78,7 @@ packs/{product-slug}/
 ```
 
 **Required:** `manifest.yaml`, `overview.md`
-**Recommended:** `entities.json`, at least one of `concepts/`, `workflows/`, or `faq/`
+**Recommended:** `entities.json`, `concepts/`, and `workflows/`
 **Optional:** Everything else, based on pack focus and available content
 
 ---
@@ -94,7 +87,7 @@ packs/{product-slug}/
 
 These aren't arbitrary. They map to how product interactions actually flow:
 
-1. **Customer asks a question** → Check `faq/` for a quick answer
+1. **Customer asks a question** → Check the relevant concept's `## Frequently Asked` section (v4.0) or `faq/` for cross-cutting questions
 2. **Customer needs to do something** → Load the relevant `workflows/` file
 3. **Customer doesn't understand something** → Load the relevant `concepts/` file
 4. **Something went wrong** → Navigate `troubleshooting/` decision trees
@@ -409,17 +402,11 @@ How to correct it.
 What to remember for next time.
 ```
 
-### FAQ File (faq/{category}.md)
+### FAQ content (v4.0: embedded in concept files)
 
-```markdown
-# {Category} FAQ
+Schema v4.0+ packs embed FAQs inside the primary concept file they answer for, as H3 questions under a `## Frequently Asked` section. See [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files).
 
-## {Question 1}
-{Answer}
-
-## {Question 2}
-{Answer}
-```
+A standalone `faq/` directory is only appropriate for cross-cutting questions that genuinely don't belong to any single concept (e.g., "What is {product-name}?"). Per-concept FAQs live with the concept; duplication across files is forbidden and will be flagged by `ep-validate`.
 
 ### Commercial Files (commercial/)
 
@@ -705,9 +692,11 @@ See [references/interface-vocabulary.md](references/interface-vocabulary.md) for
 
 ---
 
-## Retrieval Layers (summaries/ and propositions/)
+## Atomic-Conceptual Content
 
-For summaries and propositions directories, see [Retrieval Optimization](core.md#retrieval-optimization). Product packs follow the standard pattern.
+Schema v4.0+ product packs use **atomic-conceptual concept files**: each concept in `concepts/` is a self-contained retrieval unit carrying its definition, body, FAQs, related terms, and (optionally) key propositions in a single file. The deprecated `summaries/`, `propositions/`, and per-domain `glossary-{domain}.md` aggregator files are replaced by this model.
+
+See [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files) for the full pattern, and [`references/granularity-guide.md`](references/granularity-guide.md) for embed-vs-promote decision rules.
 
 ---
 
@@ -740,13 +729,9 @@ Technical parameters, tolerances, compliance statements, or API contracts.
 
 ---
 
-## Sources Directory (sources/)
+## Sources Directory (sources/) — DEPRECATED in v4.0
 
-Optional directory for ingestion artifacts — indexes of source materials used to build the pack. These files document *where content came from* and help builder agents trace pack content back to original materials for updates, verification, or gap analysis.
-
-**This is not content.** Sources files are metadata about the ingestion process. They complement the per-file provenance frontmatter defined in [core.md](core.md) by providing a bird's-eye view of all source materials and what was extracted from each.
-
-**Context tier:** Tier 3 (on-demand). Only loaded during pack maintenance, content audits, or update workflows.
+*The `sources/` ingestion-artifacts directory is deprecated in schema v4.0. It was found to score broadly as an aggregator during retrieval and was deleted from the reference ezt-designer pack on 2026-04-17 with measurable retrieval improvement. Source-provenance tracking lives in per-file `verified_at` / `source:` frontmatter (see [core.md](core.md#provenance-metadata)) and in the pack-level `sources/_coverage.md` coverage map. The old `sources/{source}.md` per-source index files are no longer part of the schema.*
 
 ### Source Index File (sources/{source}.md)
 
