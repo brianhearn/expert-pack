@@ -123,19 +123,20 @@ Creating a new pack means:
 
 ---
 
-## Retrieval Optimization
+## Retrieval Architecture
 
-Basic RAG — embed documents, retrieve top-k chunks — works, but it leaves precision and token efficiency on the table. ExpertPacks use a multi-layer retrieval system where each layer handles a different query granularity. See [schemas/core.md](schemas/core.md) for the full specification.
+Basic RAG — embed documents, retrieve top-k chunks — works, but it leaves precision and token efficiency on the table. ExpertPacks (schema v4.0+) solve this through **atomic-conceptual content files**: each concept is a single self-contained retrieval unit, structured so that the chunker produces precise, query-matching sub-chunks at natural section boundaries. See [schemas/core.md](schemas/core.md#atomic-conceptual-content-files) for the full specification.
 
-| Layer | What It Does | Best For |
-|-------|-------------|----------|
-| **Summaries** (`summaries/`) | Section-level summaries following the RAPTOR pattern | Broad questions ("what can this product do?") |
-| **Propositions** (`propositions/`) | Atomic factual statements extracted from content | Specific factual questions ("what's the upload limit?") |
-| **Lead Summaries** | 1–3 sentence blockquote at the top of content files | Ensuring first-chunk relevance for high-traffic topics |
-| **Glossary** (`glossary.md`) | Maps user language to technical terms | Bridging vocabulary gaps in retrieval |
-| **Content Files** | Focused 1–3KB files with `##` headers | Detailed topic coverage |
+| Element | What It Does | Best For |
+|---------|-------------|----------|
+| **Opening paragraph** | Retriever-anchored definition (1–3 sentences) | First chunk always carries the concept's core definition |
+| **Body sections (`##`)** | Sub-topics delimited at heading boundaries | Topic-specific detail retrieval |
+| **`## Frequently Asked` (H3 per Q)** | Natural-language question surface | Matching colloquial user queries |
+| **`## Related Terms`** | Co-located relative vocabulary | Glossary-style matching without aggregator displacement |
+| **`## Key Propositions`** (optional) | Axiomatic declarative statements | Precise fact retrieval when the concept has formal invariants |
+| **`## Related Concepts`** | Wikilinks to siblings | Graph expansion pulls in neighbors during retrieval |
 
-**The three-layer rule:** When splitting oversized files, always generate summaries and propositions alongside the split files. Naive splitting loses cross-topic context and makes retrieval worse, not better. The three layers together (split files + summaries + propositions) consistently outperform any single optimization.
+**v3.x → v4.0 change:** The old multi-layer pattern (separate `summaries/`, `propositions/`, per-domain `glossary-*.md`, and standalone `faq/` directories) was empirically found to displace specific atomic files at retrieval time — aggregator files scored broadly on every query. RFC-001 (schema v4.0) collapsed these into the atomic-conceptual model above. See [`schemas/rfcs/RFC-001-atomic-conceptual-chunks.md`](schemas/rfcs/RFC-001-atomic-conceptual-chunks.md) for the validation data.
 
 ---
 

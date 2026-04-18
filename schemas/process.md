@@ -52,13 +52,7 @@ packs/{process-slug}/
 ├── resources/             ← Tools, vendors, materials, buying guides
 ├── examples/              ← Case studies, post-mortems, and retrospectives
 ├── gotchas/               ← Common mistakes, traps, and prevention patterns
-├── faq/                   ← Frequently asked questions by category
-├── summaries/             ← Section-level summaries for broad retrieval (recommended) ← See core.md Retrieval Optimization
-│   ├── _index.md          ← Directory of all summaries
-│   └── {section}.md       ← One summary per phase and fundamentals section
-└── propositions/          ← Atomic factual statements for precise retrieval (recommended) ← See core.md Retrieval Optimization
-    ├── _index.md          ← Directory of all proposition files
-    └── {section}.md       ← Extracted facts from phases/, decisions/, gotchas/, regulations/
+└── faq/                   ← Cross-cutting questions only (optional, v4.0+: per-concept FAQs live inside concept files)
 ```
 
 Notes:
@@ -428,9 +422,17 @@ Keep these as before but follow the small-file guideline. Cross-link heavily.
 
 ---
 
-## Retrieval Layers (summaries/ and propositions/)
+## Atomic-Conceptual Content
 
-Process packs benefit from summaries and propositions — see [Retrieval Optimization](core.md#retrieval-optimization). Generate one summary per phase and per fundamentals section. Extract propositions from `phases/`, `decisions/`, `gotchas/`, and `regulations/` files.
+Schema v4.0+ process packs use **atomic-conceptual concept files** the same way product packs do: each concept in `concepts/` (or fundamentals file) is a self-contained retrieval unit carrying definition, body, FAQs, related terms, and (optionally) key propositions in one file. The deprecated `summaries/`, `propositions/`, and per-domain `glossary-{domain}.md` aggregator files are replaced by this model.
+
+**Process-pack specifics:**
+- `phases/*.md` files are atomic workflows by default (`retrieval_strategy: atomic`) — they retain their step-by-step structure and are NOT absorbed into concept files.
+- `decisions/*.md` files remain a first-class type; they document tradeoff reasoning and act as decision records, not concepts.
+- `gotchas/` entries live as their own atomic files (same as `troubleshooting/common-mistakes/` in product packs).
+- Fundamental concepts and conceptual knowledge gain the same atomic-conceptual treatment: one self-contained file per concept with `## Frequently Asked`, `## Related Terms`, and `## Key Propositions` sections as needed.
+
+See [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files) for the full pattern, and [`references/granularity-guide.md`](references/granularity-guide.md) for embed-vs-promote decision rules.
 
 ---
 
@@ -459,11 +461,13 @@ For process packs, the recommended combining order is:
 3. Technical artifact analysis → scripts, automation, monitoring configs
 4. Feedback mining → incident reports, audit findings
 5. Observation & testing → walk through each phase
-6. Generate retrieval layers → after content is populated, generate `summaries/` and `propositions/` per [core.md Retrieval Optimization](core.md#retrieval-optimization) guidelines. Add both to the manifest's `searchable` context tier.
+6. Consolidate into atomic-conceptual files → per [core.md Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files), ensure each concept's definition, FAQs, and related terms co-locate in a single concept file. Avoid aggregator directories (`summaries/`, `propositions/`, per-domain glossary files) — they score broadly and displace specific content at retrieval time.
 
 Prioritize practitioner interviews for decisions and gotchas. Use authoritative sources for regulations. Capture real timelines and budgets from case studies in `examples/`.
 
 ---
 
-*Schema version: 3.1*
-*Last updated: 2026-04-10*
+*Schema version: 4.0*
+*Last updated: 2026-04-18*
+
+**What changed in 4.0** — Adopted the atomic-conceptual content model per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md). Removed `summaries/` and `propositions/` directory recommendations. Per-concept FAQs and related terms now live inside concept files.

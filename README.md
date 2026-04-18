@@ -104,20 +104,26 @@ Open-source ExpertPacks built from real documentation, community forums, and sou
 
 ExpertPacks go beyond basic RAG with a multi-layer retrieval system and EK-aware hydration.
 
-### Retrieval Layers
+### Atomic-Conceptual Content (Schema v4.0+)
 
-| Layer | What It Does | Why It Matters |
-|-------|-------------|----------------|
-| **Summaries** (`summaries/`) | Section-level RAPTOR-style summaries | Broad questions match summaries first; agents drill into detail files |
-| **Propositions** (`propositions/`) | Atomic factual statements per section | Specific factual queries match exact propositions, not paragraphs |
-| **Lead Summaries** | Blockquote at top of content files | First RAG chunk contains the core answer, not preamble |
-| **Glossary** (`glossary.md`) | Maps user vocabulary to technical terms | Bridges the gap between how users ask and how docs are written |
+Each concept is a **single self-contained file** carrying everything the retriever needs:
+
+| Element | What It Does | Why It Matters |
+|---------|-------------|----------------|
+| **Opening paragraph** | 1–3 sentences that define the concept in retriever-friendly terms | First chunk carries the core definition; no throat-clearing |
+| **Body sections** | `##`-delimited sub-topics | Chunker splits at headings, aligning retrieval to semantic boundaries |
+| **`## Frequently Asked`** | H3-per-question FAQ block | Natural-language query surface; each Q/A becomes its own sub-chunk |
+| **`## Related Terms`** | Terms that don't stand alone | Co-locates glossary-style definitions with the parent concept |
+| **`## Key Propositions`** | Axiomatic statements (optional) | Precise fact retrieval without aggregator-directory displacement |
+| **`## Related Concepts`** | Wikilinks to siblings | EP MCP graph expansion pulls in neighbors when relevant |
+
+This replaces the v3.x pattern of separate `summaries/`, `propositions/`, per-domain `glossary-*.md`, and standalone `faq/` directories — those aggregator files scored broadly on every query and displaced specific content at retrieval time. See [`schemas/rfcs/RFC-001-atomic-conceptual-chunks.md`](schemas/rfcs/RFC-001-atomic-conceptual-chunks.md) for the empirical findings that drove the change and [`schemas/references/granularity-guide.md`](schemas/references/granularity-guide.md) for authoring decisions.
 
 ### EK Triage During Hydration
 
 Every extracted fact passes through the EK triage pipeline:
 
-- **EK** (model wrong/refuses) → Full treatment: dedicated file, lead summary, proposition extraction
+- **EK** (model wrong/refuses) → Full treatment: dedicated concept file with a retriever-anchored opening, detailed body, and `## Key Propositions` if the concept has axiomatic statements
 - **Partial** (model vague) → Standard treatment, highlight the specific detail the model missed
 - **GK scaffolding** (model correct, but needed for retrieval) → 1-3 sentences max, no dedicated file
 - **GK unnecessary** (model correct, no EK depends on it) → Skip entirely

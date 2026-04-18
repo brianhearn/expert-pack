@@ -164,7 +164,7 @@ Categories are pack-type flexible. Use what applies:
 | Metric | What It Measures | How to Score |
 |--------|-----------------|-------------|
 | **EK Ratio** | Proportion of pack propositions containing esoteric knowledge | See [core.md — EK Ratio](core.md#esoteric-knowledge-ek-ratio) for full methodology |
-| **EK by Section** | Which sections contribute most/least esoteric knowledge | EK ratio calculated per `propositions/{section}.md` file |
+| **EK by Section** | Which sections contribute most/least esoteric knowledge | EK ratio calculated per content section (e.g. per concept file or per phase) by aggregating propositions extracted from `## Key Propositions` sections and body prose |
 | **GK Bloat** | How much pack space is consumed by general knowledge | Total tokens in low-EK files / total pack tokens |
 
 **Methodology:** EK ratio is measured via proposition-level blind probing — asking frontier models each proposition as a question without pack context. See [core.md — Measuring EK Ratio](core.md#measuring-ek-ratio) for the complete protocol.
@@ -189,17 +189,19 @@ ek_ratio:
 
 **Actionable insights from EK metrics:**
 - **Low EK sections** (< 0.30) are candidates for compaction — compress to glossary entries or brief context
-- **High EK sections** (> 0.80) are the pack's core value — invest in deeper hydration, better propositions, and lead summaries
+- **High EK sections** (> 0.80) are the pack's core value — invest in deeper hydration and sharper opening paragraphs (v4.0 concept files front-load the definition; the opening is the retrieval anchor)
 - **GK bloat** above 30% suggests the pack needs an EK-focused pruning pass
 - **EK ratio trending down** between measurements means model training data is absorbing the pack's domain — time to deepen with more tribal knowledge
 
 ### Measuring EK Across Pack Types
 
-The standard EK measurement protocol uses `propositions/` files — atomic factual statements that can be converted to probe questions. This works directly for product and process packs. Person packs require adaptation:
+The standard EK measurement protocol extracts atomic factual statements (propositions) from pack content and converts them to probe questions. In schema v4.0+, propositions come from concept-file `## Key Propositions` sections and from body prose. In v3.x packs, propositions still live in `propositions/` files and the same protocol applies against those. Person packs require adaptation:
 
-**Product packs:** Standard protocol. Extract propositions from concepts, workflows, troubleshooting, specifications. Probe with factual questions.
+**Product packs (v4.0):** Extract propositions from each concept file's `## Key Propositions` section plus atomic statements from body prose and FAQs. Also pull from workflows, troubleshooting, and specifications. Probe with factual questions.
 
-**Process packs:** Standard protocol with adjustment. Extract propositions from phases, decisions, gotchas, regulations. Some process propositions are procedural ("Phase 3 requires a structural inspection before framing begins") — convert these to "what happens after X?" or "what is required before Y?" style questions.
+**Product packs (v3.x legacy):** Use the pack's `propositions/` files directly.
+
+**Process packs:** Extract propositions from phases, decisions, gotchas, and regulations files, plus concept-file `## Key Propositions` sections in v4.0+ packs. Some process propositions are procedural ("Phase 3 requires a structural inspection before framing begins") — convert these to "what happens after X?" or "what is required before Y?" style questions.
 
 **Person packs:** Adapted protocol. Person packs store knowledge in `verbatim/`, `mind/`, `facts/`, and `relationships/` — not traditional propositions. To measure EK:
 1. Extract testable claims from `facts/` (biographical data) and `mind/` (beliefs, positions) — these behave like propositions
