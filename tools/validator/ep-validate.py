@@ -504,6 +504,54 @@ class Validator:
                            f"consider splitting or setting concept_scope: reference/multi")
 
 
+    # -- Check: retrieval-first antipattern directories/types ---------------
+    def check_retrieval_antipatterns(self):
+        """W-RETR-01: warn on directories and file types that harm retrieval quality
+        in retrieval-first packs (EP MCP / RAG).
+
+        Antipatterns:
+        - Directories named summaries/, propositions/, sources/ at top level
+        - Files with type: summary or type: proposition in frontmatter
+
+        These files score broadly on every query and displace specific,
+        high-EK files from the result set (Axiom 12). They are only acceptable
+        in LLM-reads-all packs where the model ingests full context.
+
+        Suppressed if manifest declares retrieval_model: full-context.
+        """
+        retrieval_model = self.manifest.get('retrieval_model', 'retrieval-first')
+        if retrieval_model == 'full-context':
+            return
+
+        # Check for antipattern directory names
+        ANTIPATTERN_DIRS = {'summaries', 'propositions', 'sources'}
+        found_dirs = set()
+        for rel in self.files:
+            parts = rel.split('/')
+            for part in parts[:-1]:  # exclude filename itself
+                if part in ANTIPATTERN_DIRS:
+                    found_dirs.add(part)
+
+        for d in sorted(found_dirs):
+            self._add('WARN', 'W-RETR-01', f'{d}/',
+                      f"Directory '{d}/' is a retrieval-first antipattern "
+                      f"(Axiom 12) — files here score broadly on every query "
+                      f"and displace specific EK files. "
+                      f"Delete or merge content into atomic files. "
+                      f"Set manifest retrieval_model: full-context to suppress.")
+
+        # Check for antipattern frontmatter types
+        ANTIPATTERN_TYPES = {'summary', 'proposition'}
+        for rel, fm in self.fm.items():
+            t = fm.get('type', '')
+            if t in ANTIPATTERN_TYPES:
+                self._add('WARN', 'W-RETR-01', rel,
+                          f"type: '{t}' is a retrieval-first antipattern "
+                          f"(Axiom 12) — summary/proposition files score broadly "
+                          f"and displace atomic EK files. "
+                          f"Merge content into the file it describes as a lead sentence. "
+                          f"Set manifest retrieval_model: full-context to suppress.")
+
     # -- Checks 17-19: provenance (opt-in via --provenance) ----------------
     def check_provenance_fields(self):
         """W-PROV-01: missing verified_at; W-PROV-02: hash mismatch;
@@ -585,6 +633,7 @@ class Validator:
         self.check_orphaned()
         self.check_file_size()
         self.check_hub_files()
+        self.check_retrieval_antipatterns()
         if self.check_provenance:
             self.check_provenance_fields()
         return self.issues
