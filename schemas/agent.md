@@ -2,6 +2,8 @@
 
 *Blueprint for ExpertPacks that capture an AI agent — its identity, personality, operational knowledge, and accumulated expertise. This schema extends [person.md](person.md); all person pack rules apply unless explicitly overridden below.*
 
+**Subtype version:** 1.7 (2026-04-19) — aligned with person.md v4.1 atomic-conceptual. `verbatim/` + `summaries/` folded into atomic `decisions/` and `lessons/` directories.
+
 ---
 
 
@@ -26,7 +28,7 @@ slug: "easybot"
 type: "person"
 subtype: "agent"
 version: "1.0.0"
-schema_version: "1.6"
+schema_version: "1.7"
 description: "AI assistant for Brian Hearn — business-focused, casual, efficient"
 entry_point: "overview.md"
 
@@ -84,11 +86,11 @@ packs/{agent-slug}/
 │   ├── speech_patterns.md ← Tone, humor, formality level, emoji usage
 │   └── modes.md           ← Context-dependent voices: business mode, casual mode, group chat mode
 │
-├── verbatim/              ← OPTIONAL: Significant conversations or decisions worth preserving
-│   └── decisions/         ← Key discussions that shaped the agent's behavior
+├── decisions/             ← OPTIONAL: Significant decisions worth preserving (atomic)
+│   └── {slug}.md          ← One atom per key decision — carries the conversation/reasoning inline
 │
-├── summaries/             ← Distilled knowledge from accumulated experience
-│   └── lessons/           ← Patterns learned: what works, what doesn't, failure post-mortems
+├── lessons/               ← Distilled knowledge from accumulated experience (atomic)
+│   └── {slug}.md          ← Patterns learned: what works, what doesn't, failure post-mortems
 │
 ├── training/              ← Fine-tuning data from interaction history (optional)
 │
@@ -245,8 +247,8 @@ Recommended tier assignments:
 | Tier | Contents |
 |------|----------|
 | **Always (Tier 1)** | `overview.md`, `presentation/speech_patterns.md`, `operational/safety.md`, `mind/values.md` |
-| **Searchable (Tier 2)** | `mind/`, `relationships/`, `facts/`, `operational/`, `summaries/`, `presentation/modes.md` |
-| **On-demand (Tier 3)** | `verbatim/`, `training/`, `meta/` |
+| **Searchable (Tier 2)** | `mind/`, `relationships/`, `facts/`, `operational/`, `lessons/`, `decisions/`, `presentation/modes.md` |
+| **On-demand (Tier 3)** | `training/`, `meta/` |
 
 ### Access Tiers for Agent Packs
 
@@ -278,5 +280,5 @@ Manual creation follows the same general flow as the base person schema's "Creat
 
 ---
 
-*Schema version: 1.6*
-*Last updated: 2026-03-10*
+*Subtype version: 1.7 (person.md schema_version: 4.1)*
+*Last updated: 2026-04-19*

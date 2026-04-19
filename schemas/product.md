@@ -2,9 +2,11 @@
 
 *Blueprint for ExpertPacks that capture deep knowledge about a product or platform — concepts, workflows, troubleshooting, and the tribal knowledge that lives in support teams' heads. Applicable to software, hardware, medical devices, consumer products, or any product with enough complexity to benefit from structured expert knowledge. This schema extends [core.md](core.md); all shared principles apply.*
 
-**Schema version:** 4.0 (2026-04-18)
+**Schema version:** 4.1 (2026-04-19)
 
-**What changed in 4.0** — Adopted the atomic-conceptual content model per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md). Removed `summaries/`, `propositions/`, and `sources/` directory recommendations. Per-concept FAQs and related terms now live inside concept files. See [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files).
+**What changed in 4.1 (refinement of 4.0)** — Atomic-conceptual is now strictly single-file: one concept = one file = one retrieval unit. The `composite` / `parent_concept` hierarchy from 4.0 is **removed** — oversized concepts split into independent atoms with directional `requires:` dependencies. Size ceiling tightened from 1,500 to 1,000 tokens. `## Key Propositions` section deprecated (body prose already carries the propositions). See [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files).
+
+**What changed in 4.0** — Adopted the atomic-conceptual content model per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md). Removed `summaries/`, `propositions/`, and `sources/` directory recommendations. Per-concept FAQs and related terms now live inside concept files.
 
 ---
 
@@ -999,5 +1001,5 @@ Key principles:
 - Prioritize troubleshooting/ and interfaces/ early for support readiness.
 
 
-*Schema version: 3.1*
+*Schema version: 4.1*
 *Last updated: 2026-04-10*

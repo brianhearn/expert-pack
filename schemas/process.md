@@ -467,7 +467,5 @@ Prioritize practitioner interviews for decisions and gotchas. Use authoritative 
 
 ---
 
-*Schema version: 4.0*
-*Last updated: 2026-04-18*
-
-**What changed in 4.0** — Adopted the atomic-conceptual content model per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md). Removed `summaries/` and `propositions/` directory recommendations. Per-concept FAQs and related terms now live inside concept files.
+*Schema version: 4.1*
+*Last updated: 2026-04-19*

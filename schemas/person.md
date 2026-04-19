@@ -2,6 +2,12 @@
 
 *Blueprint for ExpertPacks that capture a person — their stories, mind, beliefs, relationships, and voice. This schema extends [core.md](core.md); all shared principles apply.*
 
+**Schema version:** 4.1 (2026-04-19)
+
+**What changed in 4.1 (major refactor)** — Person packs adopt the **atomic-conceptual content model** (per [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files)), reaching parity with product and process packs. The verbatim↔summary two-tier pattern is **retired**. Each story, reflection, opinion, fact cluster, relationship, and mind category is now a single self-contained atom: one file, one retrieval unit, 1,000-token ceiling, directional `requires:` dependencies for cross-atom linkage. Stories carry the person's actual words inside the atom body — no separate `verbatim/` or `summaries/` directories. Per-file `propositions/` is retired (propositions live in atom body prose). Story cards (the YAML frontmatter schema) are **retained** as the canonical metadata for story, reflection, and opinion atoms.
+
+**Migration from v3.x:** Collapse each `verbatim/{type}/{slug}.md` + `summaries/{type}/{slug}.md` pair into a single atom at `{type}/{slug}.md`. Keep the summary's story card frontmatter, replace the body with the person's verbatim prose (or a cleaned version of it), and delete the paired verbatim/summary files. Oversized stories split into independent atoms linked by `requires:`. See [guides/hydration.md](../guides/hydration.md) for the full migration procedure.
+
 ---
 
 ## Purpose
@@ -25,38 +31,43 @@ packs/{person-slug}/
 ├── SCHEMA.md              ← Points to this schema
 ├── LEGACY.md              ← Posthumous wishes, executor chain, memorial mode
 │
-├── verbatim/              ← The person's actual words (source of truth)
-│   ├── stories/           ← Life stories, childhood memories, adventures
-│   │   └── _access.json
-│   ├── reflections/       ← Essays, thought pieces, intellectual writing
-│   ├── opinions/          ← Positions on issues, arguments, commentary
-│   └── {custom}/          ← Additional content types as needed
+├── stories/               ← Life stories & memories (atomic)
+│   ├── _index.md          ← Directory of all stories
+│   ├── _access.json
+│   └── {story-slug}.md    ← One story per file. Body carries the person's actual words.
 │
-├── summaries/             ← AI-generated summaries of verbatim content
-│   ├── stories/           ← Story summaries with themes, people, lessons
-│   │   ├── _index.json    ← Master story navigation index
-│   │   └── _access.json
-│   ├── reflections/       ← Reflection summaries with key arguments
-│   ├── opinions/          ← Opinion summaries with positions
-│   └── {custom}/          ← Mirrors verbatim/ structure
+├── reflections/           ← Essays, thought pieces (atomic)
+│   ├── _index.md
+│   └── {slug}.md
 │
-├── propositions/          ← Atomic factual statements for precise retrieval (recommended) ← See core.md Retrieval Optimization
-│   ├── _index.md          ← Directory of all proposition files
-│   └── {section}.md       ← Extracted facts from facts/, mind/, relationships/ files
+├── opinions/              ← Positions on issues (atomic)
+│   ├── _index.md
+│   └── {slug}.md
 │
-├── facts/                 ← Biographical data (Markdown — canonical)
+├── conversations/         ← Captured dialogues, interviews (atomic)
+│   ├── _index.md
+│   └── {slug}.md
+│
+├── creative/              ← Fiction, poetry, lyrics (atomic, optional)
+├── letters/               ← Correspondence worth preserving (atomic, optional)
+├── speeches/              ← Talks, sermons, keynotes (atomic, optional)
+│
+├── facts/                 ← Biographical data (atomic concept files)
+│   ├── _index.md
 │   ├── _access.json
 │   ├── personal.md        ← Birth, family structure, locations, bio
-│   ├── family_tree.md     ← Full genealogy in narrative format
+│   ├── family-tree.md     ← Full genealogy in narrative format
 │   ├── career.md          ← Work history timeline
 │   ├── education.md       ← Schools, degrees, self-taught subjects
-│   └── timeline.md        ← Unified life timeline (events as the backbone)
+│   └── timeline.md        ← Unified life timeline (events as spine)
 │
-├── relationships/         ← The people graph
+├── relationships/         ← The people graph (atomic)
+│   ├── _index.md
 │   ├── _access.json
-│   └── people.md          ← Everyone mentioned: family, friends, mentors
+│   └── {person-id}.md     ← One file per significant relationship
 │
-├── mind/                  ← Mind taxonomy: beliefs, sense-making, motivations, and preferences
+├── mind/                  ← Inner life: beliefs, sense-making, motivations (atomic)
+│   ├── _index.md
 │   ├── _access.json
 │   ├── ontology.md        ← Ontology & Metaphysics
 │   ├── epistemology.md    ← Epistemology & Sense-Making
@@ -70,14 +81,15 @@ packs/{person-slug}/
 │   ├── reasoning.md       ← How beliefs cash out in conversation (optional)
 │   └── influences.md      ← Key thinkers, books, communities (optional)
 │
-├── presentation/          ← How the avatar should sound and look
+├── presentation/          ← How the avatar should sound and look (atomic)
+│   ├── _index.md
 │   ├── _access.json
-│   ├── speech_patterns.md ← Verbal style, humor, storytelling mode
+│   ├── speech-patterns.md ← Verbal style, humor, storytelling mode
 │   ├── modes.md           ← Role-based voice variants (Dad, Mentor, Professional, etc.)
 │   ├── voice/             ← Voice profile for TTS/synthesis
 │   └── appearance/        ← Visual appearance for avatar rendering
 │
-├── training/              ← Fine-tuning data (experimental)
+├── training/              ← Fine-tuning data (NOT a retrieval layer — archival)
 │   ├── _access.json
 │   ├── config.json        ← Format spec
 │   ├── qa_pairs.jsonl     ← Direct Q&A from the person
@@ -96,67 +108,67 @@ packs/{person-slug}/
     └── resolutions.md     ← Resolved contradictions (append-only)
 ```
 
-Not every directory is required from day one. Start with `facts/`, `verbatim/`, and `relationships/`, then expand as content is collected.
+Not every directory is required from day one. Start with `facts/`, `stories/`, and `relationships/`, then expand as content is collected.
+
+**Retired in v4.1:** `verbatim/` and `summaries/` (folded into type-specific atom directories); per-file `propositions/` (propositions live in atom body prose).
 
 ---
 
-## The Two-Tier Content System
+## Atomic-Conceptual Content (v4.1)
 
-Every piece of the person's writing or dictation exists in two forms:
+Every content file in a person pack is a **single self-contained atom** — one concept, one file, one retrieval unit. A story atom carries the story card frontmatter + the person's verbatim prose + optional `## Related` links, all in one file under the 1,000-token ceiling.
 
-| Layer | Directory | Purpose | Token Cost | When to Use |
-|-------|-----------|---------|------------|-------------|
-| **Verbatim** | `verbatim/` | Person's exact words | High | Retelling stories, exact quotes, avatar performance, fine-tuning |
-| **Summary** | `summaries/` | Structured distillation | Low | Context loading, search results, quick reference, theme analysis |
+See [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files) for the full pattern, and [`references/granularity-guide.md`](references/granularity-guide.md) for embed-vs-promote and when-to-split decision rules.
 
-### Why Both?
+### Person-pack-specific granularity guidance
 
-An AI retelling a person's story needs their actual words — the humor, the pacing, the details only they would include. But an AI answering "what themes run through their childhood?" just needs the summary. The two-tier system optimizes for both use cases without burning tokens.
-
-### Priority
-
-**Verbatim first, summaries second.** The person's actual words are the source of truth. Summaries are generated from verbatim content. If a summary and verbatim disagree, the verbatim wins.
-
-### Organizing Verbatim and Summary Content
-
-Verbatim and summary directories should mirror each other — if `verbatim/stories/{story-slug}.md` exists, there should be a corresponding `summaries/stories/{story-slug}.md`. Subdirectories within verbatim/ and summaries/ are organized by content type.
-
-**Cross-linking is required:** Every verbatim file must include a `related:` frontmatter entry pointing to its summary, and a `**Related:**` wikilink body link (e.g., `[[story-slug.md|Summary — Story Title]]`). Every summary must link back to its verbatim via `canonical_verbatim:` frontmatter. Verbatim files without a summary link are orphaned nodes in Obsidian's graph view and dead ends for agent traversal.
-
-Content Type Taxonomy
-
-Verbatim and summary directories are organized by content type. The following taxonomy provides recommended categories — use what fits, extend as needed:
-
-| Content Type | Directory | Description |
+| Content type | Default granularity | When to split |
 |---|---|---|
-| Life stories & memories | `stories/` | Narratives, experiences, adventures, childhood memories. Recommended for all person packs. |
-| Essays & reflections | `reflections/` | Thought pieces, intellectual writing, personal essays, philosophical or theological exploration |
-| Opinions & commentary | `opinions/` | Positions on specific issues, arguments, responses to events, political or cultural commentary |
-| Conversations | `conversations/` | Captured dialogues, interviews, dictated Q&A sessions |
-| Creative works | `creative/` | Fiction, poetry, song lyrics, music notes, artistic expression |
-| Letters & correspondence | `letters/` | Written communications worth preserving |
-| Speeches & presentations | `speeches/` | Talks, sermons, keynotes, prepared remarks, toasts |
+| **Story** | One atom per story | If a story exceeds 1,000 tokens, split into `story-overview.md` (summary + key moments) + `story-detail.md` (full narrative), linked via `requires:` |
+| **Reflection/Opinion** | One atom per reflection/opinion | Split if it bundles multiple distinct arguments (each becomes its own atom) |
+| **Fact cluster** | One atom per life-facet (`personal.md`, `career.md`, etc.) | Split when a facet grows beyond 1,000 tokens (e.g., `career-early.md` + `career-recent.md`) |
+| **Relationship** | One atom per significant person | Minor relationships can group into `relationships/acquaintances.md` until they warrant their own atom |
+| **Mind category** | One atom per category (`ontology.md`, `values.md`, etc.) | Split when a category grows past 1,000 tokens (e.g., `values-political.md` + `values-personal.md`) |
 
-**Extending the taxonomy:** Packs may add content types not listed here. A pastor might add `sermons/`, a musician `lyrics/`, a traveler `journals/`. Create the subdirectory in both `verbatim/` and `summaries/` and add it to the pack's `_index.md`.
+### Oversized stories — split pattern
 
-**Mirror rule:** Verbatim and summary directories should always mirror each other. If `verbatim/reflections/` exists, `summaries/reflections/` should too.
+When a story is too long to fit in 1,000 tokens:
 
-Person packs also benefit from propositions — see [Retrieval Optimization](core.md#retrieval-optimization). Extract propositions from `facts/`, `mind/`, and `relationships/` files. Person pack summaries follow the verbatim→summary mirroring pattern described above; propositions follow the standard core pattern.
+```
+stories/panama-city-summers.md              (overview atom, ~600 tokens)
+  ├─ story card frontmatter
+  ├─ narrative summary + key beats
+  └─ requires: [panama-city-summers-full]
 
-### Story Cards (Summary Frontmatter)
+stories/panama-city-summers-full.md         (detail atom, ~900 tokens)
+  ├─ provenance frontmatter
+  ├─ full verbatim prose
+  └─ (no outbound requires — leaf atom)
+```
 
-Every summary file should include standardized YAML frontmatter — the **story card**. This makes summaries filterable and retrievable by date, people, themes, emotions, and more, without requiring the agent to parse freeform text.
+Retrieving the overview auto-expands to include the full detail (directional `requires:`). Retrieving the detail alone does NOT pull the overview — asymmetric, as intended.
 
-**Required frontmatter for summary files:**
+---
+
+## Story Cards (Frontmatter for Story/Reflection/Opinion Atoms)
+
+The story card frontmatter that identified v3.x summary files is **retained** as the canonical metadata schema for story/reflection/opinion atoms in v4.1. This makes atoms filterable and retrievable by date, people, themes, emotions, and more.
+
+**Required frontmatter for story atoms:**
 
 ```yaml
 ---
-story_id: "childhood-fishing-trip"          # Matches the file slug
+id: "childhood-fishing-trip"                # Matches the file slug
 title: "The Fishing Trip That Changed Everything"
+type: story
+tags: [story, father, childhood]
+pack: "{person-slug}"
+retrieval_strategy: atomic                  # v4.1: always "atomic"
+schema_version: 4.1
 date_range: "1985-summer"                   # Flexible: YYYY, YYYY-MM, YYYY-MM-DD, "1985-summer", "late-1990s"
 location:
   - "Lake Talquin, FL"
-people:                                     # IDs matching relationships/people.md entries
+people:                                     # IDs matching relationships/ entries
   - "dad"
   - "uncle-mike"
 themes:
@@ -173,19 +185,21 @@ source: "voice-dictation"                   # voice-dictation | interview | writ
 verification: "self-confirmed"              # self-confirmed | third-party | documentary | inferred | unknown
 memory_quality: "vivid"                     # vivid | partial | hearsay | uncertain
 sensitivity: "public"                       # Matches access tier: public | friends | family | self
-canonical_verbatim: "verbatim/stories/childhood-fishing-trip.md"
+requires: []                                # Other atoms this one depends on (optional)
+verified_at: "2026-04-19"
 ---
 ```
 
 **Field notes:**
-- `story_id` must match the filename slug for cross-referencing
+- `id` must match the filename slug for cross-referencing
 - `date_range` is deliberately flexible — memories rarely come with exact dates
 - `people` uses stable IDs from the relationships registry (see [Relationships](#relationships) below)
 - `verification` and `memory_quality` prevent the avatar from projecting false confidence about uncertain memories. A `memory_quality: uncertain` story should be prefaced with "I think..." or "If I remember right..."
 - `stakes` and `turning_point` are optional but high-value for story retrieval — they capture *why* a story matters, not just what happened
 - `source` tracks how the content was captured, which affects how much editorial cleanup is appropriate
+- `requires:` declares directional dependencies on other atoms (e.g., a follow-up story that only makes sense after the original — `requires: [original-story-slug]`)
 
-**Applying to other content types:** The story card pattern extends to reflections, opinions, and other content types. Not all fields apply everywhere — `turning_point` doesn't make sense for an opinion piece. Use the fields that fit; the `story_id`, `title`, `date_range`, `source`, `verification`, and `memory_quality` fields are recommended for all summary files.
+**Applying to other content types:** The story card pattern extends to reflections, opinions, and other verbatim content types. Not all fields apply everywhere — `turning_point` doesn't make sense for an opinion piece. Use the fields that fit; `id`, `title`, `date_range`, `source`, `verification`, and `memory_quality` are recommended for all narrative atoms.
 
 ---
 
@@ -212,13 +226,21 @@ Person packs deal with human memory, which is inherently unreliable. The schema 
 | `hearsay` | Told *about* the person by others, not experienced directly | Attribute: "My [mom/friend] told me..." |
 | `uncertain` | The person themselves expressed doubt about accuracy | Preface: "I think..." or "If I remember right..." |
 
-These fields are **required** in story card frontmatter for all summary files. They are **recommended** as frontmatter in facts/ files when the source of a biographical fact isn't documentary (e.g., birth dates from memory vs. birth certificates).
+These fields are **required** in story card frontmatter for all story/reflection/opinion atoms. They are **recommended** as frontmatter in `facts/` files when the source of a biographical fact isn't documentary (e.g., birth dates from memory vs. birth certificates).
 
 ---
 
 ## Story Intake Workflow
 
-For each new story: capture verbatim → add `##` section headers (never alter words) → generate summary with story card frontmatter → cross-reference relationships and update `people.md` → flag contradictions in `meta/conflicts.md` → commit.
+For each new story:
+1. Capture the person's words verbatim (voice dictation, interview, written)
+2. Create the atom at `stories/{slug}.md`
+3. Add story card frontmatter (see above) — do the thematic/emotional tagging from the captured content
+4. Paste the verbatim prose as the atom body; add `##` section headers if it's long, but never alter the words
+5. If over 1,000 tokens: split into overview + detail atoms linked via `requires:`
+6. Cross-reference relationships — update each mentioned person's `relationships/{id}.md` atom
+7. Flag contradictions in `meta/conflicts.md`
+8. Commit
 
 For voice dictation: clean transcription errors but preserve phrasing, tangents, and style. The goal is *their voice*, not polished prose.
 
@@ -228,14 +250,16 @@ For the full agent-first creation playbook, see [guides/hydration.md](../guides/
 
 ## Biographical Data Patterns
 
+Each biographical atom is a self-contained file under the 1,000-token ceiling. When a life-facet grows beyond that, split into sub-atoms linked with `requires:`.
+
 ### facts/personal.md
 Birth date, family structure, locations lived, basic biographical data. Use `##` headers to organize by life period or topic.
 
-### facts/family_tree.md
-Full genealogy in narrative Markdown format. This is the canonical version — if a JSON genealogy file exists (e.g., GEDCOM-derived), it is archival only.
+### facts/family-tree.md
+Full genealogy in narrative Markdown format. This is the canonical version — if a JSON genealogy file exists (e.g., GEDCOM-derived), it is archival only. Splits naturally by branch when it grows (`family-tree-paternal.md`, `family-tree-maternal.md`) linked via `requires:` from the root.
 
 ### facts/career.md
-Work history as a timeline with highlights, key roles, and transitions.
+Work history as a timeline with highlights, key roles, and transitions. Split by era (`career-early.md`, `career-recent.md`) when needed.
 
 ### facts/education.md
 Schools, degrees, certifications, and self-taught subjects.
@@ -245,6 +269,16 @@ Schools, degrees, certifications, and self-taught subjects.
 The unified life timeline — events as the backbone of the person's story. While `career.md`, `education.md`, and `personal.md` organize facts by category, the timeline organizes them chronologically and connects events to stories, reflections, and relationships.
 
 ```markdown
+---
+id: timeline
+title: "Life Timeline"
+type: fact
+tags: [timeline, fact, spine]
+pack: "{person-slug}"
+retrieval_strategy: atomic
+schema_version: 4.1
+---
+
 # Life Timeline
 
 ## Early Childhood (1970–1978)
@@ -252,18 +286,15 @@ The unified life timeline — events as the backbone of the person's story. Whil
 ### 1970 — Born
 - **Type:** birth
 - **Place:** Tallahassee, FL
-- **People:** [mom](#), [dad](#)
-- **Related:** [Birth Story](../summaries/stories/birth-story.md)
+- **People:** [mom](../relationships/mom.md), [dad](../relationships/dad.md)
+- **Related:** [[../stories/birth-story.md|Birth Story]]
 
 ### 1975 — Started school
 - **Type:** education
 - **Place:** Lincoln Elementary
-- **Related:** [First Day of School](../summaries/stories/first-day.md)
+- **Related:** [[../stories/first-day.md|First Day of School]]
 
 ## Adolescence (1978–1988)
-...
-
-## College & Early Career (1988–1995)
 ...
 ```
 
@@ -272,86 +303,98 @@ The unified life timeline — events as the backbone of the person's story. Whil
 - Each event gets a `###` header with year/date and short title
 - Include: type, place, people involved, and links to related stories/reflections
 - Event types: `birth`, `move`, `education`, `job`, `marriage`, `divorce`, `death`, `crisis`, `conversion`, `achievement`, `travel`, `health`, `military`, `legal`, `creative`, `other`
-- Keep entries brief — the timeline is a spine, not a narrative. Details live in the linked files
-- When the timeline grows beyond ~100 events, consider splitting into separate files by life period
+- Keep entries brief — the timeline is a spine, not a narrative. Details live in the linked atoms
+- When the timeline grows beyond ~100 events, split into period atoms (`timeline-early.md`, `timeline-adolescence.md`) linked from the root via `requires:`
 
-### relationships/people.md
+### relationships/{person-id}.md
 
-Every person mentioned across the pack: family, friends, mentors, colleagues. Each entry uses a standardized template with stable IDs for cross-referencing from story cards, timeline events, and other content.
+Each significant person in the subject's life gets their own atom. The file slug is the stable ID used in story card `people` arrays and timeline entries.
 
-**Entry template:**
+**Atom template:**
 
 ```markdown
-## Mike Hearn {#uncle-mike}
+---
+id: uncle-mike
+title: "Mike Hearn (Uncle Mike)"
+type: relationship
+tags: [relationship, family, uncle]
+pack: "{person-slug}"
+retrieval_strategy: atomic
+schema_version: 4.1
+relationship: "Uncle (father's brother)"
+time_period: "Lifelong (born 1948)"
+consent: "not-asked"
+verified_at: "2026-04-19"
+---
 
-- **ID:** `uncle-mike`
-- **Relationship:** Uncle (father's brother)
-- **Time period:** Lifelong (born 1948)
-- **How they met/connect:** Dad's older brother, constant presence at family gatherings
-- **Key facts:** Vietnam veteran, taught me to fish, lived in Panama City
-- **Consent:** not-asked
-- **Appears in:**
-  - [Fishing Trip](../summaries/stories/childhood-fishing-trip.md)
-  - [Panama City Summers](../summaries/stories/panama-city-summers.md)
+# Mike Hearn (Uncle Mike)
+
+**Relationship:** Uncle (father's brother)
+**Time period:** Lifelong (born 1948)
+**How they connect:** Dad's older brother, constant presence at family gatherings
+
+## Key facts
+- Vietnam veteran
+- Taught me to fish
+- Lived in Panama City for decades
+
+## Appears in
+- [[../stories/childhood-fishing-trip.md|Fishing Trip]]
+- [[../stories/panama-city-summers.md|Panama City Summers]]
+
+## Consent
+Not asked about inclusion as of 2026-04-19.
 ```
 
-**Entry guidelines:**
-- **ID** must be stable and kebab-case — used in story card `people` arrays and timeline entries for cross-referencing
-- **Time period** captures when the relationship was active: `lifelong`, `1995–2003`, `childhood`, `ongoing`. This prevents the agent from flattening a life into one static social graph
-- **Consent** tracks whether this person has been asked about inclusion: `consented`, `not-asked`, `declined`, `deceased`, `public-figure`. See [Privacy & Consent](#privacy--consent) for rules
-- **Appears in** links to every file where this person is mentioned — keep this list current when new content references them
-
-**Scaling guidance:** When `people.md` exceeds ~50 entries, split into category files: `relationships/family.md`, `relationships/professional.md`, `relationships/personal.md`. Maintain the same entry template and ID scheme across all files. Update `relationships/_index.md` to list all files.
+**Guidelines:**
+- **File slug** (`uncle-mike`) is the stable ID used everywhere — in story card `people:` arrays, timeline entries, and other atoms' body links
+- **`time_period`** captures when the relationship was active: `lifelong`, `1995–2003`, `childhood`, `ongoing`. Prevents the agent from flattening a life into one static social graph
+- **`consent`** tracks whether this person has been asked about inclusion: `consented`, `not-asked`, `declined`, `deceased`, `public-figure`. See [Privacy & Consent](#privacy--consent) for rules
+- **Appears in** should cross-link to every atom where this person is mentioned — keep this list current when new content references them
+- **Minor relationships** can group into `relationships/acquaintances.md` until they warrant their own atom
 
 ---
 
 ## The Mind Taxonomy
 
-The person's inner life (formerly "worldview" + "preferences") is captured under a unified `mind/` directory. This organizes beliefs, sense-making approaches, values, preferences, skills, and tensions into a consistent filing system for agents.
-
-Each category starts as a single `.md` file but may expand into a subdirectory as content grows (e.g., `mind/ontology/` with multiple files).
+The person's inner life (formerly "worldview" + "preferences") is captured under the `mind/` directory as atomic concept files. Each category is a single atom under the 1,000-token ceiling. Split into sub-atoms when a category grows.
 
 ### Mind Taxonomy Categories
 
-1. ontology.md — Ontology & Metaphysics
-What the person believes is ultimately real and how reality is structured. Includes religious/spiritual worldview, views on consciousness, the nature of God, the soul, materialism vs. dualism, cosmology (as it relates to meaning), and any framework for understanding existence itself.
+1. **ontology.md** — Ontology & Metaphysics. What the person believes is ultimately real and how reality is structured. Includes religious/spiritual worldview, views on consciousness, the nature of God, the soul, materialism vs. dualism, cosmology (as it relates to meaning), and any framework for understanding existence itself.
 
-2. epistemology.md — Epistemology & Sense-Making
-How the person determines what is true and updates beliefs. Includes their relationship between faith and reason, trust in institutions, how they weigh evidence, their approach to certainty and doubt, intellectual influences, and how they process new information that challenges existing views.
+2. **epistemology.md** — Epistemology & Sense-Making. How the person determines what is true and updates beliefs. Includes their relationship between faith and reason, trust in institutions, how they weigh evidence, their approach to certainty and doubt, intellectual influences, and how they process new information that challenges existing views.
 
-3. values.md — Values & Moral Framework
-What the person considers good, bad, right, and worth protecting. Includes ethical principles, political philosophy (as it reflects values), priorities in life, what they'd sacrifice for, views on justice and fairness, and the moral reasoning behind their positions. Political views live here primarily, with cross-references to epistemology and ontology where those inform the positions.
+3. **values.md** — Values & Moral Framework. What the person considers good, bad, right, and worth protecting. Includes ethical principles, political philosophy (as it reflects values), priorities in life, what they'd sacrifice for, views on justice and fairness, and the moral reasoning behind their positions. Political views live here primarily, with cross-references to epistemology and ontology where those inform the positions.
 
-4. identity.md — Identity & Self-Narrative
-How the person understands who they are across roles and time. The story they tell about themselves — key turning points, how they see their own arc, the roles that define them (father, engineer, pilot, apologist), how past experiences shaped who they became. Not external biography (that's `facts/`), but internal self-concept.
+4. **identity.md** — Identity & Self-Narrative. How the person understands who they are across roles and time. The story they tell about themselves — key turning points, how they see their own arc, the roles that define them (father, engineer, pilot, apologist), how past experiences shaped who they became. Not external biography (that's `facts/`), but internal self-concept.
 
-5. motivations.md — Motivations, Drives & Temperament
-What energizes behavior and shapes emotional responses. Includes personality traits, ambition, what gives them energy vs. drains them, emotional patterns, how they handle stress/failure/success, risk tolerance, introversion/extroversion, and the deeper drives behind their choices.
+5. **motivations.md** — Motivations, Drives & Temperament. What energizes behavior and shapes emotional responses. Includes personality traits, ambition, what gives them energy vs. drains them, emotional patterns, how they handle stress/failure/success, risk tolerance, introversion/extroversion, and the deeper drives behind their choices.
 
-6. relational.md — Relational & Social Orientation
-How the person connects with others. Trust patterns, communication style, conflict approach, how they form and maintain friendships, authority orientation, group behavior vs. one-on-one, loyalty patterns, what they value in others, and how they show care.
+6. **relational.md** — Relational & Social Orientation. How the person connects with others. Trust patterns, communication style, conflict approach, how they form and maintain friendships, authority orientation, group behavior vs. one-on-one, loyalty patterns, what they value in others, and how they show care.
 
-7. preferences.md — Preferences, Tastes & Aesthetic Orientation
-What the person is drawn to, enjoys, and finds meaningful. Hobbies, media consumption, aesthetic sensibilities, food/music/film/book preferences, leisure activities, guilty pleasures, and what they find beautiful or compelling. Lighter than values — this is about taste, not morality.
+7. **preferences.md** — Preferences, Tastes & Aesthetic Orientation. What the person is drawn to, enjoys, and finds meaningful. Hobbies, media consumption, aesthetic sensibilities, food/music/film/book preferences, leisure activities, guilty pleasures, and what they find beautiful or compelling. Lighter than values — this is about taste, not morality.
 
-8. skills.md — Skills, Competencies & Action Patterns
-What the person can do and how they tend to act in the world. Professional expertise, learned skills, problem-solving approach, how they learn new things, domains of competence, work style, tools they reach for, and patterns in how they execute on goals.
+8. **skills.md** — Skills, Competencies & Action Patterns. What the person can do and how they tend to act in the world. Professional expertise, learned skills, problem-solving approach, how they learn new things, domains of competence, work style, tools they reach for, and patterns in how they execute on goals.
 
-9. tensions.md — Tensions, Contradictions & Edge Cases
-Where the model breaks — the places where other categories don't fully cohere. Context-dependent behavior switches, acknowledged blind spots, unresolved internal conflicts, things they believe but don't practice (or vice versa), and the messy human reality that neat categories miss. This is some of the most valuable content for authenticity.
+9. **tensions.md** — Tensions, Contradictions & Edge Cases. Where the model breaks — the places where other categories don't fully cohere. Context-dependent behavior switches, acknowledged blind spots, unresolved internal conflicts, things they believe but don't practice (or vice versa), and the messy human reality that neat categories miss. This is some of the most valuable content for authenticity.
 
-### Additional Mind Files (Optional)
+### Additional Mind Atoms (Optional)
 
-10. reasoning.md — Reasoning Patterns & Decision Rules
-How the person's beliefs cash out in actual conversation and decision-making. Not *what* they believe (that's the other 9 categories) but *how they reason* when challenged, asked, or deciding. Patterns like: "When asked about X, I reason from Y principle," "I tend to steelman before responding," "I distinguish between confident claims and speculative ones." This file bridges the gap between a list of positions and a living reasoning style. Include examples of real reasoning chains from verbatim content.
+10. **reasoning.md** — Reasoning Patterns & Decision Rules. How the person's beliefs cash out in actual conversation and decision-making. Not *what* they believe (that's the other 9 categories) but *how they reason* when challenged, asked, or deciding. Patterns like: "When asked about X, I reason from Y principle," "I tend to steelman before responding," "I distinguish between confident claims and speculative ones." This atom bridges the gap between a list of positions and a living reasoning style. Include examples of real reasoning chains from captured content. Often `requires: [epistemology, values]`.
 
-11. influences.md — Key Thinkers, Books & Communities
-The intellectual and social inputs that shaped the person's mind. Authors, books, podcasts, thinkers, mentors, faith communities, professional networks, formative experiences. Each influence entry should note: what they contributed to the person's thinking, when the influence was strongest, and links to relevant verbatim reflections or opinions where the influence is visible.
+11. **influences.md** — Key Thinkers, Books & Communities. The intellectual and social inputs that shaped the person's mind. Authors, books, podcasts, thinkers, mentors, faith communities, professional networks, formative experiences. Each influence entry should note: what they contributed to the person's thinking, when the influence was strongest, and links to relevant reflection atoms where the influence is visible.
 
-**Steelman positions** — Rather than a separate file, capture "strongest arguments against my position and my best response" inline in the relevant mind/ files (ontology, values, epistemology, etc.) under a `## Strongest Counterarguments` section. This keeps counterarguments findable in context rather than siloed.
+**Steelman positions** — Rather than a separate atom, capture "strongest arguments against my position and my best response" inline in the relevant mind/ atoms (ontology, values, epistemology, etc.) under a `## Strongest Counterarguments` section. This keeps counterarguments findable in context rather than siloed.
+
+### Splitting Mind Categories
+
+When a mind atom grows past the 1,000-token ceiling, split along natural internal subdivisions. Examples:
+- `values.md` → `values.md` (core summary) + `values-political.md` + `values-personal.md`, with `values.md` carrying `requires: [values-political, values-personal]`
+- `preferences.md` → split by domain: `preferences-media.md`, `preferences-food.md`, `preferences-leisure.md`
 
 ### Political Views
-Political views are cross-cutting: they live primarily in `mind/values.md` with cross-references to `mind/epistemology.md` and `mind/ontology.md` when those domains inform political positions.
+Political views are cross-cutting: they live primarily in `mind/values.md` (or `mind/values-political.md` if split) with cross-references to `mind/epistemology.md` and `mind/ontology.md` when those domains inform political positions. Use `requires:` if the political values atom depends on reading the epistemology atom to make sense.
 
 ---
 
@@ -362,6 +405,16 @@ The same person speaks differently as a dad, a CEO, a mentor, and a friend. `pre
 **Template for `presentation/modes.md`:**
 
 ```markdown
+---
+id: modes
+title: "Avatar Modes"
+type: presentation
+tags: [presentation, modes, voice]
+pack: "{person-slug}"
+retrieval_strategy: atomic
+schema_version: 4.1
+---
+
 # Avatar Modes
 
 ## Default
@@ -394,7 +447,7 @@ The baseline voice — how the person sounds in most casual interactions.
 - Modes are hints, not hard constraints — the avatar should blend naturally between modes based on context
 - The agent selects modes based on conversational context (who's asking, what topic, what relationship tier)
 - Start with 2-3 modes and expand as patterns emerge from story collection
-- Modes complement `speech_patterns.md` — patterns define *how* the person talks; modes define *which version* of them shows up
+- Modes complement `speech-patterns.md` — patterns define *how* the person talks; modes define *which version* of them shows up
 
 ---
 
@@ -468,7 +521,7 @@ Open contradictions awaiting the pack owner's adjudication. The agent adds entri
 
 ## CF-001: Panama City trip — 1983 or 1985?
 - **Detected:** 2026-03-01
-- **Source A:** verbatim/stories/panama-city-summers.md says "summer of '83"
+- **Source A:** stories/panama-city-summers.md says "summer of '83"
 - **Source B:** facts/timeline.md places the family's first Panama City visit in 1985
 - **Notes:** Mom's version (hearsay) says 1985. Uncle Mike's photo album has a 1983 date.
 - **Status:** Awaiting owner review
@@ -488,13 +541,13 @@ Append-only log of resolved contradictions. When the owner makes a call, move th
 - **Resolved:** 2026-03-05
 - **Decision:** 1983 — confirmed by photo album with dated prints
 - **Rationale:** Documentary evidence (photos with processing date) outweighs memory
-- **Files updated:** facts/timeline.md, summaries/stories/panama-city-summers.md
+- **Files updated:** facts/timeline.md, stories/panama-city-summers.md
 ```
 
 **Agent rules:**
 - Add to `conflicts.md` immediately when a contradiction is detected — don't wait for the next session
 - Never resolve a conflict autonomously — always ask the pack owner
-- When resolved, move the entry to `resolutions.md` (append), remove from `conflicts.md`, and update all affected files
+- When resolved, move the entry to `resolutions.md` (append), remove from `conflicts.md`, and update all affected atoms
 - Assign conflict IDs (CF-001, CF-002, ...) for easy reference in conversation
 
 ---
@@ -511,6 +564,7 @@ type: "person"
 version: "1.0.0"
 description: "What this pack captures"
 entry_point: "overview.md"
+schema_version: 4.1
 
 # Person-specific
 subject:
@@ -519,10 +573,11 @@ subject:
   location: "City, State"
   alive: true
 
-# Content inventory
+# Content inventory (v4.1 — flat atom directories, no verbatim/summaries split)
 sections:
-  - verbatim
-  - summaries
+  - stories
+  - reflections
+  - opinions
   - facts
   - relationships
   - mind
@@ -570,17 +625,19 @@ Place `_access.json` in any directory to set its default access tier and per-fil
 
 ## Tags Taxonomy
 
-Use the 25-type taxonomy from core.md frontmatter. Key types for person packs:
+Use the 25-type taxonomy from core.md frontmatter. Key types for person packs in v4.1:
 
 | Type | Used In |
 |---|---|
-| `story` | verbatim/stories/, summaries/stories/ |
-| `reflection` | verbatim/reflections/, summaries/reflections/ |
-| `opinion` | verbatim/opinions/, summaries/opinions/ |
-| `fact` | facts/ |
-| `relationship` | relationships/ |
-| `mind` | mind/ |
-| `index` | _index.md files |
+| `story` | `stories/` atoms |
+| `reflection` | `reflections/` atoms |
+| `opinion` | `opinions/` atoms |
+| `conversation` | `conversations/` atoms |
+| `fact` | `facts/` atoms |
+| `relationship` | `relationships/` atoms |
+| `mind` | `mind/` atoms |
+| `presentation` | `presentation/` atoms |
+| `index` | `_index.md` files |
 
 Full taxonomy in [core.md](core.md#per-file-yaml-frontmatter).
 
@@ -588,7 +645,9 @@ Full taxonomy in [core.md](core.md#per-file-yaml-frontmatter).
 
 ## Universal Metadata
 
-All person pack content files should include standard frontmatter fields: `title`, `type`, `tags`, `pack`, `retrieval_strategy`, and provenance fields (`id`, `content_hash`, `verified_at`, `verified_by`). See [core.md](core.md#provenance) for the full frontmatter spec.
+All person pack atoms should include standard frontmatter fields: `id`, `title`, `type`, `tags`, `pack`, `retrieval_strategy: atomic`, `schema_version: 4.1`, and provenance fields (`content_hash`, `verified_at`, `verified_by`, `supersedes` where applicable). See [core.md](core.md#atomic-conceptual-content-files) for the full frontmatter spec.
+
+The `requires:` field is optional but recommended whenever an atom's meaning depends on another atom being in context (e.g., a follow-up story, a political-values atom that depends on epistemology, a timeline-era atom that depends on the root timeline).
 
 ---
 
@@ -610,13 +669,13 @@ For person packs, the recommended combining order is:
 For the full agent-first creation playbook (14-step sequence covering pack initialization, story capture, mind taxonomy, relationships, privacy, and verification), see [guides/hydration.md](../guides/hydration.md).
 
 Key principles:
-- Verbatim first, summaries second. The person's actual words are the source of truth.
-- Record provenance for every file. Never overwrite expert-verified content without reconfirmation.
-- Log contradictions in `meta/conflicts.md` immediately. Never resolve autonomously.
-- Use short, specific prompts — one story or fact at a time.
+- **Atomic-conceptual from day one.** Each story, reflection, opinion, fact cluster, relationship, and mind category is a self-contained atom under the 1,000-token ceiling.
+- **Verbatim prose lives inside the atom.** The person's actual words are the body of the story/reflection/opinion atom — no separate verbatim/summary directories.
+- **Record provenance for every file.** Never overwrite expert-verified content without reconfirmation.
+- **Log contradictions in `meta/conflicts.md` immediately.** Never resolve autonomously.
+- **Use short, specific prompts** — one story or fact at a time.
 
 ---
-
 
 ## Agent Extension (subtype: agent)
 
@@ -624,5 +683,5 @@ For packs with `subtype: agent`, see [agent.md](agent.md).
 
 ---
 
-*Schema version: 3.1*
-*Last updated: 2026-04-10*
+*Schema version: 4.1*
+*Last updated: 2026-04-19*

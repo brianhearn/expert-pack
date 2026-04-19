@@ -6,7 +6,7 @@
 
 **What changed in 4.1 (refinement of 4.0)** — Atomic-conceptual is now strictly single-file: one concept = one file = one retrieval unit. The `composite` / `parent_concept` hierarchy from 4.0 is **removed** — oversized concepts split into independent atoms, and cross-atom dependencies are declared via the new `requires:` frontmatter field (directional, retrieved with the atom). Size ceiling tightened from 1,500 to 1,000 tokens. `## Key Propositions` section deprecated (body prose already carries the propositions; the section was a retrieval hack from the aggregator era). See [Atomic-Conceptual Content Files](#atomic-conceptual-content-files).
 
-**What changed in 4.0** — Product and process packs adopted the **atomic-conceptual content model** per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md): concepts became self-contained retrieval units. The `summaries/`, `propositions/`, and per-domain `glossary-{domain}.md` aggregator patterns from v3.x were **deprecated**. Person packs retain their verbatim↔summary mirroring model for now (RFC-002 pending).
+**What changed in 4.0** — Product and process packs adopted the **atomic-conceptual content model** per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md): concepts became self-contained retrieval units. The `summaries/`, `propositions/`, and per-domain `glossary-{domain}.md` aggregator patterns from v3.x were **deprecated**. Person packs followed in v4.1 (see [person.md](person.md)) — verbatim↔summary mirroring retired, stories/reflections/opinions are now atomic with the verbatim prose living inside the atom body.
 
 ---
 
