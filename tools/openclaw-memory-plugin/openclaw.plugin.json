@@ -1,0 +1,123 @@
+{
+  "id": "ep-memory-mcp",
+  "kind": "memory",
+  "uiHints": {
+    "endpoint": {
+      "label": "EP MCP Endpoint",
+      "placeholder": "https://expertpack.ai/mcp",
+      "help": "Base URL of the ExpertPack MCP server (without trailing slash)."
+    },
+    "apiKey": {
+      "label": "EP MCP API Key",
+      "sensitive": true,
+      "help": "Bearer token for the configured pack (from EP MCP config.yaml)."
+    },
+    "pack": {
+      "label": "Pack Slug",
+      "placeholder": "ezt-designer",
+      "help": "The pack slug to query (must be configured on the EP MCP server)."
+    },
+    "embedding.apiKey": {
+      "label": "Gemini API Key",
+      "sensitive": true,
+      "help": "API key for the Gemini embedding provider (or use ${GEMINI_API_KEY})."
+    },
+    "embedding.model": {
+      "label": "Gemini Model",
+      "placeholder": "gemini-embedding-001",
+      "help": "Gemini embedding model. Must match the pack's configured provider on the server.",
+      "advanced": true
+    },
+    "embedding.taskType": {
+      "label": "Task Type",
+      "placeholder": "RETRIEVAL_QUERY",
+      "help": "Gemini embedContent task type. Keep RETRIEVAL_QUERY to match the server's index.",
+      "advanced": true
+    },
+    "maxResults": {
+      "label": "Max Results",
+      "placeholder": "10",
+      "advanced": true
+    },
+    "minScore": {
+      "label": "Min Score",
+      "placeholder": "0.2",
+      "advanced": true
+    },
+    "includeLocalFiles": {
+      "label": "Always-inject Local Files",
+      "help": "Workspace-relative paths to always inject into agent context (e.g. SOUL.md, IDENTITY.md).",
+      "advanced": true
+    },
+    "timeoutMs": {
+      "label": "Request Timeout (ms)",
+      "placeholder": "15000",
+      "advanced": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "endpoint": {
+        "type": "string",
+        "description": "Base URL of the EP MCP server (e.g. https://expertpack.ai/mcp)."
+      },
+      "apiKey": {
+        "type": "string",
+        "description": "Bearer token for the configured pack."
+      },
+      "pack": {
+        "type": "string",
+        "description": "Pack slug (e.g. ezt-designer)."
+      },
+      "embedding": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "apiKey": { "type": "string" },
+          "model": { "type": "string" },
+          "taskType": {
+            "type": "string",
+            "enum": [
+              "RETRIEVAL_QUERY",
+              "RETRIEVAL_DOCUMENT",
+              "SEMANTIC_SIMILARITY",
+              "QUESTION_ANSWERING",
+              "FACT_VERIFICATION",
+              "CODE_RETRIEVAL_QUERY",
+              "CLASSIFICATION",
+              "CLUSTERING"
+            ]
+          },
+          "outputDimensionality": {
+            "type": "number",
+            "description": "Optional MRL dimension. Leave unset for full 3072d (matches server default)."
+          }
+        },
+        "required": ["apiKey"]
+      },
+      "maxResults": {
+        "type": "number",
+        "minimum": 1,
+        "maximum": 50
+      },
+      "minScore": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "includeLocalFiles": {
+        "type": "array",
+        "items": { "type": "string" },
+        "description": "Workspace-relative paths (e.g. SOUL.md) always injected when read_file hits them."
+      },
+      "timeoutMs": {
+        "type": "number",
+        "minimum": 1000,
+        "maximum": 120000
+      }
+    },
+    "required": ["endpoint", "pack", "embedding"]
+  }
+}

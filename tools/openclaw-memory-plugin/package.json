@@ -1,0 +1,39 @@
+{
+  "name": "@expertpack/openclaw-memory-plugin",
+  "version": "0.1.0-alpha.1",
+  "description": "OpenClaw memory plugin backed by an EP MCP server. Replaces memory-core's local vector store with a single remote /search call; ideal for agents whose 'memory' is really an ExpertPack knowledge pack.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "openclaw.plugin.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.11",
+    "typescript": "^5.9.3"
+  },
+  "openclaw": {
+    "extensions": [
+      "./dist/index.js"
+    ],
+    "install": {
+      "defaultChoice": "local",
+      "minHostVersion": ">=2026.4.10"
+    },
+    "compat": {
+      "pluginApi": ">=2026.4.15-beta.1"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
