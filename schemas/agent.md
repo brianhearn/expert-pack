@@ -2,7 +2,7 @@
 
 *Blueprint for ExpertPacks that capture an AI agent — its identity, personality, operational knowledge, and accumulated expertise. This schema extends [person.md](person.md); all person pack rules apply unless explicitly overridden below.*
 
-**Subtype version:** 1.7 (2026-04-19) — aligned with person.md v4.1 atomic-conceptual. `verbatim/` + `summaries/` folded into atomic `decisions/` and `lessons/` directories.
+**Subtype version:** 1.7 (2026-04-19)
 
 ---
 

@@ -4,10 +4,6 @@
 
 **Schema version:** 4.1 (2026-04-19)
 
-**What changed in 4.1 (major refactor)** — Person packs adopt the **atomic-conceptual content model** (per [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-content-files)), reaching parity with product and process packs. The verbatim↔summary two-tier pattern is **retired**. Each story, reflection, opinion, fact cluster, relationship, and mind category is now a single self-contained atom: one file, one retrieval unit, 1,000-token ceiling, directional `requires:` dependencies for cross-atom linkage. Stories carry the person's actual words inside the atom body — no separate `verbatim/` or `summaries/` directories. Per-file `propositions/` is retired (propositions live in atom body prose). Story cards (the YAML frontmatter schema) are **retained** as the canonical metadata for story, reflection, and opinion atoms.
-
-**Migration from v3.x:** Collapse each `verbatim/{type}/{slug}.md` + `summaries/{type}/{slug}.md` pair into a single atom at `{type}/{slug}.md`. Keep the summary's story card frontmatter, replace the body with the person's verbatim prose (or a cleaned version of it), and delete the paired verbatim/summary files. Oversized stories split into independent atoms linked by `requires:`. See [guides/hydration.md](../guides/hydration.md) for the full migration procedure.
-
 ---
 
 ## Purpose

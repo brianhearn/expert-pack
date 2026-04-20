@@ -4,10 +4,6 @@
 
 **Schema version:** 4.1 (2026-04-19)
 
-**What changed in 4.1 (refinement of 4.0)** — Atomic-conceptual is now strictly single-file: one concept = one file = one retrieval unit. The `composite` / `parent_concept` hierarchy from 4.0 is **removed** — oversized concepts split into independent atoms, and cross-atom dependencies are declared via the new `requires:` frontmatter field (directional, retrieved with the atom). Size ceiling tightened from 1,500 to 1,000 tokens. `## Key Propositions` section deprecated (body prose already carries the propositions; the section was a retrieval hack from the aggregator era). See [Atomic-Conceptual Content Files](#atomic-conceptual-content-files).
-
-**What changed in 4.0** — Product and process packs adopted the **atomic-conceptual content model** per [RFC-001](rfcs/RFC-001-atomic-conceptual-chunks.md): concepts became self-contained retrieval units. The `summaries/`, `propositions/`, and per-domain `glossary-{domain}.md` aggregator patterns from v3.x were **deprecated**. Person packs followed in v4.1 (see [person.md](person.md)) — verbatim↔summary mirroring retired, stories/reflections/opinions are now atomic with the verbatim prose living inside the atom body.
-
 ---
 
 ## The MD-Canonical Principle
@@ -328,11 +324,6 @@ Answer.
 4. **`## Frequently Asked`.** Include when the concept has documented questions users actually ask. Each question as an H3 heading. **Canonical ownership:** each Q/A lives in the primary concept it answers for; other concepts cross-link via `## Related Concepts` rather than duplicating the Q/A.
 
 5. **`## Related Terms`.** Include when the concept has relative terminology that doesn't stand alone. If a term has its own definition, properties, and relationships, it earns its own concept file instead. See [`references/granularity-guide.md`](references/granularity-guide.md) for the embed-vs-promote decision procedure.
-
-### Removed from v4.0
-
-- **`## Key Propositions`** — deprecated in v4.1. Key propositions were a retrieval hack for the aggregator era; when the whole atom retrieves together as ~800 tokens of focused content, BM25 + embeddings on the atom body already provide precise targeting. The body itself states the propositions. Drop this section from new atoms; existing atoms may keep it until next revision.
-- **`concept_scope: composite`** and **`parent_concept:`** — removed. Concepts that used these split into independent atoms declaring `requires:` dependencies instead.
 
 ### Granularity
 
