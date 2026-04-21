@@ -5,8 +5,10 @@ tags: [specification, battery-storage, powerwall, enphase, solar-diy-product]
 pack: solar-diy-product
 retrieval_strategy: standard
 id: solar-diy/product/specifications/battery-systems-2026
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 
 ---

@@ -5,8 +5,10 @@ tags: [component-selection, decision-inverter-topology, inverter-types, nec-rapi
 pack: "solar-diy-process"
 retrieval_strategy: "standard"
 id: solar-diy/process/decisions/inverter-topology
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 
 # Decision: Inverter Topology (String vs Optimizer vs Microinverter)

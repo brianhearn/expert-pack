@@ -5,8 +5,9 @@ tags: [troubleshooting]
 pack: "home-assistant-product"
 retrieval_strategy: "standard"
 id: home-assistant/product/troubleshooting/_index
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 # Troubleshooting
 

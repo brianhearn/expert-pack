@@ -12,8 +12,9 @@ tags:
 pack: blender-3d
 retrieval_strategy: atomic
 id: blender-3d/troubleshooting/common-mistakes
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 
 <!-- context: section=troubleshooting, topic=common-mistakes, related=modeling-fundamentals,shading-rendering,animation-rigging,physics-simulation,sculpting -->

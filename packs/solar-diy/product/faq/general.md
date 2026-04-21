@@ -12,8 +12,10 @@ tags:
 pack: solar-diy-product
 retrieval_strategy: standard
 id: solar-diy/product/faq/general
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 <!-- context: section=product, topic=faq-general, related=system-design-fundamentals,inverter-types,battery-systems-2026,diy-vs-contractor,grid-tied-vs-hybrid -->
 

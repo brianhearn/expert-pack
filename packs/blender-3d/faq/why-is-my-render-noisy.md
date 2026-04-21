@@ -10,8 +10,9 @@ tags:
 pack: blender-3d
 retrieval_strategy: standard
 id: blender-3d/faq/why-is-my-render-noisy
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 <!-- context: section=faq, topic=render-noise, related=shading-rendering,compositing,troubleshooting/common-mistakes -->
 
@@ -128,4 +129,4 @@ If your scene doesn't require Cycles' physical accuracy, switch to EEVEE:
 
 EEVEE is appropriate for: product visualization (many studios), motion graphics, stylized art, Grease Pencil work.
 
-→ See: [[shading-rendering.md]] for EEVEE vs Cycles decision guide.
+→ See: [[shading-engines.md]] for EEVEE vs Cycles decision guide.

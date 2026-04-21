@@ -10,8 +10,9 @@ tags:
 pack: home-assistant-product
 retrieval_strategy: atomic
 id: home-assistant/product/troubleshooting/common-mistakes/top-ha-mistakes
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 <!-- context: section=troubleshooting, topic=top-ha-mistakes, related=protocols,automation-fundamentals,backup-migration -->
 # Top Home Assistant Mistakes

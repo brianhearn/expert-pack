@@ -5,8 +5,10 @@ tags: []
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/overview
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 # Home Assistant Platform Reference
 
@@ -32,8 +34,8 @@ This is the **reference layer** — it answers questions about what Home Assista
 
 | Section | Contents |
 |---------|----------|
-| [[_index.md|concepts/]] | Architecture, protocols, automation engine, YAML, ESPHome, dashboards, integrations, presence detection, voice assistant, energy management, networking, backup |
-| [[_index.md|troubleshooting/]] | Diagnostic guide, common mistakes |
+| concepts/ | Architecture, protocols, automation engine, YAML, ESPHome, dashboards, integrations, presence detection, voice assistant, energy management, networking, backup |
+| troubleshooting/ | Diagnostic guide, common mistakes |
 | [[common-questions.md|faq/]] | Frequently asked questions |
 | [[glossary.md]] | Terminology and definitions |
 

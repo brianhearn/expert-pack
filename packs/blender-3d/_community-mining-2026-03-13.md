@@ -7,8 +7,9 @@ tags:
 pack: blender-3d
 retrieval_strategy: standard
 id: blender-3d/_community-mining-2026-03-13
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 
 # Blender Community Mining — 2026-03-13

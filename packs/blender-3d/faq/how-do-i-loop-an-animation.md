@@ -10,8 +10,9 @@ tags:
 pack: blender-3d
 retrieval_strategy: standard
 id: blender-3d/faq/how-do-i-loop-an-animation
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 <!-- context: section=faq, topic=animation-looping, related=animation-rigging,character-animation,motion-graphics -->
 
@@ -57,6 +58,6 @@ For a walk cycle that moves forward:
 
 ## Related
 
-- [[animation-rigging.md|Animation & Rigging]]
+- [[animation-data-model.md|Animation & Rigging]]
 - [[character-animation.md|Character Animation Workflow]]
 - [[motion-graphics.md|Motion Graphics Workflow]]

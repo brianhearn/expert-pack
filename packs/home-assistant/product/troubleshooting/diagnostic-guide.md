@@ -10,8 +10,9 @@ tags:
 pack: home-assistant-product
 retrieval_strategy: atomic
 id: home-assistant/product/troubleshooting/diagnostic-guide
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 <!-- context: section=troubleshooting, topic=diagnostic-guide, related=core-architecture,yaml-configuration,integrations-guide -->
 ---

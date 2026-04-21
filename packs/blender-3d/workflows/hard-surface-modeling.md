@@ -10,8 +10,9 @@ tags:
 pack: blender-3d
 retrieval_strategy: atomic
 id: blender-3d/workflows/hard-surface-modeling
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 
 <!-- context: section=workflows, topic=hard-surface-modeling, related=modeling-fundamentals,shading-rendering,scene-optimization -->

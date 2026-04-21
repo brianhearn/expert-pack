@@ -7,8 +7,9 @@ tags:
 pack: home-assistant-process
 retrieval_strategy: atomic
 id: home-assistant/process/phases/01-planning
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 # Phase 1: Planning
 

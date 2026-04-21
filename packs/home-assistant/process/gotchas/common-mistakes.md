@@ -7,8 +7,9 @@ tags:
 pack: home-assistant-process
 retrieval_strategy: atomic
 id: home-assistant/process/gotchas/common-mistakes
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 # Common Mistakes in Home Assistant
 

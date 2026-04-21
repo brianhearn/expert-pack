@@ -5,8 +5,10 @@ tags: [common-mistakes, installation, nec-rapid-shutdown, permitting, process, s
 pack: "solar-diy-process"
 retrieval_strategy: "atomic"
 id: solar-diy/process/gotchas/common-mistakes
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 
 # Common Mistakes in Residential Solar Projects

@@ -5,8 +5,10 @@ tags: [battery-systems-2026, inspection-commissioning, monitoring, phase-7-opera
 pack: "solar-diy-process"
 retrieval_strategy: "atomic"
 id: solar-diy/process/phases/07-operations-maintenance
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 
 # Phase 7: Operations & Maintenance

@@ -5,8 +5,9 @@ tags: [decisions]
 pack: "solar-diy-process"
 retrieval_strategy: "standard"
 id: solar-diy/process/decisions/_index
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 
 # Decisions Index

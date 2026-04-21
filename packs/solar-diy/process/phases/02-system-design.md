@@ -5,8 +5,10 @@ tags: [battery-systems-2026, component-selection, inverter-types, phase-2-system
 pack: "solar-diy-process"
 retrieval_strategy: "atomic"
 id: solar-diy/process/phases/02-system-design
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 
 # Phase 2: System Design

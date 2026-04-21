@@ -7,8 +7,9 @@ tags:
 pack: home-assistant-process
 retrieval_strategy: atomic
 id: home-assistant/process/phases/04-automation-building
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 # Phase 4: Automation Building
 

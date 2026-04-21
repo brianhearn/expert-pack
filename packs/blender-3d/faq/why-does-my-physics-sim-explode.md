@@ -9,8 +9,9 @@ tags:
 pack: blender-3d
 retrieval_strategy: standard
 id: blender-3d/faq/why-does-my-physics-sim-explode
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 <!-- context: section=faq, topic=physics-troubleshooting, related=physics-simulation,common-mistakes -->
 
@@ -53,5 +54,5 @@ Blender's physics engine assumes **1 Blender unit = 1 meter**. A "building" that
 
 ## Related
 
-- [[physics-simulation.md|Physics & Simulation]]
+- [[physics-rigid-soft-cloth.md|Physics & Simulation]]
 - [[common-mistakes.md|Common Mistakes]]

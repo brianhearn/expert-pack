@@ -5,8 +5,10 @@ tags: [battery-systems-2026, glossary, inverter-types, nec-rapid-shutdown, produ
 pack: "solar-diy-product"
 retrieval_strategy: "standard"
 id: solar-diy/product/glossary
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 
 <!-- context: section=product, topic=glossary, related=system-design-fundamentals,inverter-types,nec-rapid-shutdown,battery-systems-2026 -->

@@ -7,8 +7,9 @@ tags:
 pack: blender-3d
 retrieval_strategy: atomic
 id: blender-3d/workflows/character-animation
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 
 <!-- context: blender-3d/workflows/character-animation -->

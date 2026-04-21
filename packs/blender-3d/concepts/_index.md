@@ -6,7 +6,8 @@ tags:
 pack: blender-3d
 retrieval_strategy: standard
 id: blender-3d/concepts/_index
-verified_at: '2026-04-10'
+schema_version: "4.1"
+verified_at: "2026-04-21"
 verified_by: agent
 ---
 
@@ -14,13 +15,49 @@ verified_by: agent
 
 Core knowledge concepts for Blender — the underlying principles and mental models required to work effectively with the software.
 
-- core-architecture.md — The data-block system, Object vs Object Data, Collections, Scenes/View Layers, the Mode system, and Blender's Python API. Start here.
-- modeling-fundamentals.md — Topology theory, Edit Mode tools, the modifier stack, key modifier deep dives, hard surface vs organic philosophies, retopology.
-- shading-rendering.md — EEVEE vs Cycles decision framework, the Principled BSDF, UV mapping, normal maps, HDRI lighting, render settings, and common rendering mistakes.
-- geometry-nodes.md — The procedural geometry system: fields, attributes, instances, essential nodes, common patterns, performance, and Simulation Nodes.
-- animation-rigging.md — Keyframing, F-curves, the Action/NLA stack, Armature rigging, IK/FK, bone constraints, drivers, and shape keys.
-- sculpting.md — Dynamic Topology (Dyntopo), Multi-Resolution sculpting, brush types, masking, face sets, and the sculpting-to-retopology pipeline.
-- compositing.md — Node-based compositing, render passes, color grading, glare, depth of field, and integrating CG with live footage.
-- physics-simulation.md — Rigid body, soft body, cloth, fluid (FLIP), smoke/fire (Mantaflow), particles, and cache/bake management.
-- video-editing.md — The Video Sequence Editor: strips, effects, audio sync, color grading, and using Blender as a non-linear editor.
-- python-scripting.md — bpy API, data access, operators, context system, custom panels/operators, add-on structure, batch scripting, and command-line rendering.
+## Core Architecture
+- `core-architecture-data-blocks.md` — Data-blocks, objects, collections, scenes, and view layers
+- `core-architecture-blend-file.md` — The .blend file format, linking, appending, and asset management
+- `core-architecture-editors.md` — Blender editors, workspaces, interface customization, and modes
+
+## Modeling
+- `modeling-topology.md` — Topology theory, edit mode tools, and organic vs hard-surface principles
+- `modeling-modifiers.md` — The modifier stack: key modifiers, order effects, and non-destructive workflows
+
+## Shading & Rendering
+- `shading-engines.md` — EEVEE vs Cycles decision framework and GPU render settings
+- `shading-materials.md` — Principled BSDF, procedural textures, UV mapping, and HDRI lighting
+
+## Animation
+- `animation-data-model.md` — Keyframing, F-curves, actions, and the Graph Editor
+- `animation-nla-drivers.md` — NLA editor, drivers, and expression-based animation
+- `animation-shape-keys.md` — Shape keys, relative vs absolute, and facial rigging
+- `rigging-armatures.md` — Armatures, IK/FK, constraints, and weight painting
+
+## Geometry Nodes
+- `geometry-nodes-core.md` — Fields, attributes, instances, and the node evaluation model
+- `geometry-nodes-nodes-reference.md` — Essential nodes reference guide
+- `geometry-nodes-patterns.md` — Common procedural patterns and instancing workflows
+- `geometry-nodes-simulation.md` — Simulation Zone (Blender 4.0+) temporal simulations
+
+## Sculpting
+- `sculpting-paradigms.md` — Dyntopo, Multi-resolution, and remesh paradigms
+- `sculpting-brushes-masking.md` — Core brushes, face sets, masking, and retopology
+
+## Compositing
+- `compositing-core.md` — Node compositor setup, render passes, and denoising
+- `compositing-color-grading.md` — Color management, AgX, and color grading
+- `compositing-effects.md` — Glare, depth of field, and common effects nodes
+
+## Physics
+- `physics-rigid-soft-cloth.md` — Rigid body, soft body, and cloth simulation
+- `physics-fluids-particles.md` — Mantaflow fluids/smoke/fire and particle systems
+
+## Python Scripting
+- `python-bpy-api.md` — bpy module, data API, and operators
+- `python-addons.md` — Custom operators, panels, and add-on structure
+- `python-batch-scripting.md` — Batch scripting and command-line rendering
+
+## Video Editing
+- `video-editing-vse.md` — VSE interface, strips, transitions, and workflow
+- `video-editing-render.md` — Rendering, audio, and output format guide

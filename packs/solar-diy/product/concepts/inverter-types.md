@@ -11,8 +11,10 @@ tags:
 pack: solar-diy-product
 retrieval_strategy: standard
 id: solar-diy/product/concepts/inverter-types
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 # Inverter Types — Microinverters vs String Inverters vs Optimizers
 

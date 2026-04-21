@@ -7,8 +7,10 @@ tags:
 pack: home-assistant-process
 retrieval_strategy: standard
 id: home-assistant/process/decisions/protocol-selection
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 # Decision: Smart Home Protocol Selection
 

@@ -18,8 +18,10 @@ sources:
 - https://github.com/Koenkk/zigbee2mqtt/issues/25461
 - https://community.home-assistant.io/t/action-entity-missing-for-zigbee-switches-zigbee2mqtt/630468
 id: home-assistant/product/faq/zigbee2mqtt-2-migration
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 # Zigbee2MQTT 2.0 Migration Guide
 

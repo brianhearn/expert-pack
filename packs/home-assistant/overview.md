@@ -4,6 +4,8 @@ type: overview
 tags: []
 pack: home-assistant
 retrieval_strategy: standard
+schema_version: "4.1"
+concept_scope: single
 ---
 # Home Assistant Smart Home Guide
 
@@ -37,8 +39,8 @@ The decisions directory distills the major choice points into structured framewo
 The product pack is your reference layer. It covers the platform's internals, protocols, automation fundamentals, and common failure modes.
 
 → [[overview.md|Product overview]]  
-→ [[_index.md|Troubleshooting]]  
-→ [[_index.md|Concepts]]
+→ Troubleshooting  
+→ Concepts
 
 ### If you want proven automation patterns
 The process pack includes battle-tested implementation patterns for common automation scenarios.

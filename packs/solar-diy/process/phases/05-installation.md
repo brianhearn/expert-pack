@@ -5,8 +5,10 @@ tags: [common-mistakes, dc-wiring, inspection-commissioning, nec-rapid-shutdown,
 pack: "solar-diy-process"
 retrieval_strategy: "atomic"
 id: solar-diy/process/phases/05-installation
-verified_at: "2026-04-10"
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
+concept_scope: single
 ---
 
 # Phase 5: Installation

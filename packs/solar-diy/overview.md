@@ -4,6 +4,8 @@ type: "overview"
 tags: [inverter-types, overview, pack-index, process-overview, product-overview, system-design-fundamentals]
 pack: "solar-diy"
 retrieval_strategy: "standard"
+schema_version: "4.1"
+concept_scope: single
 ---
 
 <!-- context: section=overview, topic=pack-index, related=product-overview,process-overview,system-design-fundamentals,inverter-types -->

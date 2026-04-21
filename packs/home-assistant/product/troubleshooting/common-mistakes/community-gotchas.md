@@ -1,6 +1,6 @@
 ---
 title: Community-Sourced Gotchas and Practitioner Knowledge
-type: gotcha
+type: troubleshooting
 tags: [gotcha, community, practitioner-knowledge, home-assistant-product, troubleshooting]
 pack: home-assistant-product
 retrieval_strategy: atomic
@@ -16,8 +16,9 @@ sources:
   - https://www.xda-developers.com/things-wish-knew-before-going-all-in-home-assistant/
   - https://edvoncken.net/2025/01/reduce-homeassistant-database/
 id: home-assistant/product/troubleshooting/common-mistakes/community-gotchas
-verified_at: '2026-04-10'
+verified_at: "2026-04-21"
 verified_by: agent
+schema_version: "4.1"
 ---
 # Community-Sourced Gotchas and Practitioner Knowledge
 
