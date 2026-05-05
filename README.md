@@ -191,14 +191,14 @@ The canonical compatibility matrix lives in [`schemas/schema-index.yaml`](schema
 
 | Schema | Version | What It Covers |
 |--------|---------|---------------|
-| [core.md](schemas/core.md) | 4.1 | Shared principles: MD-canonical, atomic-conceptual model, `requires:` dependencies, EK ratio, context tiers, provenance, graph export, registry projections |
+| [core.md](schemas/core.md) | 4.1 | MD-canonical packs, atomic-conceptual model, `requires:`, provenance, graph export, retrieval strategy |
 | [product.md](schemas/product.md) | 4.1 | Product packs: concepts, workflows, interfaces, troubleshooting, commercial, customers |
-| [person.md](schemas/person.md) | 4.1 | Person packs: stories, reflections, opinions, conversations, mind taxonomy, relationships, presentation |
-| [agent.md](schemas/agent.md) | 1.7 | Agent extension: persona, capabilities, tool access, behavioral rules |
+| [person.md](schemas/person.md) | 4.1 | Person packs: stories, reflections, opinions, conversations, facts, relationships, mind, presentation |
+| [agent.md](schemas/agent.md) | 1.7 | Agent subtype: operational knowledge, tool access, behavior, migration, safety contracts |
 | [process.md](schemas/process.md) | 4.1 | Process packs: phases, decisions, checklists, exceptions, scheduling, regulations |
 | [composite.md](schemas/composite.md) | 1.1 | Composites: multi-pack deployment, role assignments, auto-discovery & export |
 | [eval.md](schemas/eval.md) | 1.3 | Evaluation: EK ratio, correctness, hallucination, retrieval quality, structural health |
-| [registry/agent-knowledge.spec.yaml](schemas/registry/agent-knowledge.spec.yaml) | 1.0 | Compact Agent Knowledge Schema (AKS) JSONL descriptive spec for grounded agent retrieval pipelines |
+| [registry/agent-knowledge.spec.yaml](schemas/registry/agent-knowledge.spec.yaml) | 1.0 | Compact Agent Knowledge Schema JSONL for grounded agent retrieval |
 | [registry/ontology.spec.yaml](schemas/registry/ontology.spec.yaml) | 1.0 | Accepted ontology registry descriptive spec for graph/entity interop |
 
 ---
@@ -233,7 +233,7 @@ ExpertPack/
 ├── schemas/                 ← Pack blueprints (the framework)
 │   ├── core.md              ← Shared principles (v4.1)
 │   ├── person.md            ← Person-pack schema (v4.1)
-│   ├── agent.md             ← Agent extension schema (v1.7)
+│   ├── agent.md             ← Agent subtype schema (v1.7)
 │   ├── product.md           ← Product-pack schema (v4.1)
 │   ├── process.md           ← Process-pack schema (v4.1)
 │   ├── composite.md         ← Composite schema (v1.1)
