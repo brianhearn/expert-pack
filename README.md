@@ -176,7 +176,7 @@ ExpertPack is an actively evolving framework. The table below shows which featur
 | Automated eval runner | ✅ Full | `eval-runner/` with LLM-as-judge scoring |
 | Graph export | ✅ Full | `ep-graph-export.py`; `_graph.yaml` output |
 | Agent Knowledge Schema (AKS) export | ✅ Full | `ep-micro-record-export.py --compact`; compact provenance-first JSONL for agent pipelines |
-| Pack validation CLI | ✅ Full | `ep-validate`; structural + schema checks |
+| Pack validation CLI | ✅ Full | `ep-validate`; structural + schema/provenance/AKS-readiness checks |
 | MCP server (EP MCP) | ✅ Full | BM25 + vector hybrid retrieval; multi-pack routing |
 | Provenance display in agent responses | ✅ Runtime-supported | EP MCP supports opt-in reconstruct mode with original spans and provenance blocks; final rendering is host-dependent |
 | Scaffolding CLI / guided creation | 🚧 Roadmap | Planned; current creation requires agent-operated workflow |

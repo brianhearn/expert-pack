@@ -4,12 +4,14 @@ Two companion tools for validating and auto-fixing ExpertPack files.
 
 ## ep-validate.py
 
-Runs 16 checks across a pack and reports errors and warnings.
+Runs structural, retrieval, provenance, and optional AKS export-readiness checks across a pack and reports errors and warnings.
 
 ```bash
 python3 ep-validate.py /path/to/your-pack
 python3 ep-validate.py /path/to/your-pack --verbose
 python3 ep-validate.py /path/to/your-pack --json
+python3 ep-validate.py /path/to/your-pack --provenance
+python3 ep-validate.py /path/to/your-pack --aks
 ```
 
 ### Checks
@@ -34,6 +36,17 @@ python3 ep-validate.py /path/to/your-pack --json
 | 16 | Stale paths in related: frontmatter | ERROR |
 
 **Standing rule:** A pack must pass with **0 errors** before committing.
+
+### Provenance and AKS readiness
+
+Use `--provenance` to check stable citation/freshness fields (`id`, `verified_at`, `content_hash`). Use `--aks` when a pack needs to produce complete compact Agent Knowledge Schema JSONL for retrieval pipelines. `--aks` implies provenance checks and adds:
+
+| Check | Meaning |
+|-------|---------|
+| `W-AKS-01` | File will be skipped by AKS export because it lacks stable `id` |
+| `W-AKS-02` | AKS row will lack `verified_at` freshness metadata |
+| `W-AKS-03` | Exporter can compute `content_hash`, but no stored frontmatter hash exists for drift detection |
+| `W-AKS-04` | Exporter has weak `canonical_statement` fallback; add lead summary or opening prose |
 
 ## ep-doctor.py
 

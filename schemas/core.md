@@ -1686,6 +1686,15 @@ python tools/micro-record-exporter/ep-micro-record-export.py \
   --pack path/to/pack \
   --compact \
   --output exports/pack.aks.jsonl
+
+# CI/export-readiness gate
+python tools/validator/ep-validate.py path/to/pack --aks
+python tools/micro-record-exporter/ep-micro-record-export.py \
+  --pack path/to/pack \
+  --compact \
+  --strict \
+  --report-json exports/pack.aks-report.json \
+  --output exports/pack.aks.jsonl
 ```
 
 The `canonical_statement` is the one field that may require human or LLM authoring — it cannot always be derived mechanically from frontmatter alone. The exporter falls back to the lead summary or first prose paragraph when no generated statement is provided.

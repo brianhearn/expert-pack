@@ -31,6 +31,14 @@ Usage:
         --compact \
         --output exports/ezt-designer.aks.jsonl
 
+    # Strict CI mode — fail if exportable content files are skipped:
+    python tools/micro-record-exporter/ep-micro-record-export.py \
+        --pack ExpertPacks/ezt-designer \
+        --compact \
+        --strict \
+        --report-json exports/ezt-designer.aks-report.json \
+        --output exports/ezt-designer.aks.jsonl
+
     # Dry run — show what would be exported without writing:
     python tools/micro-record-exporter/ep-micro-record-export.py \
         --pack ExpertPacks/ezt-designer \
@@ -167,6 +175,19 @@ def compute_hash(body: str) -> str:
     return "sha256:" + hashlib.sha256(body.encode("utf-8")).hexdigest()
 
 
+def is_exportable_markdown(pack_path: Path, file_path: Path) -> bool:
+    """Return True for content Markdown files the exporter should consider."""
+    try:
+        rel_path = file_path.relative_to(pack_path)
+    except ValueError:
+        return False
+    if file_path.suffix != ".md":
+        return False
+    if file_path.name.startswith("_") or file_path.name in SKIP_FILES:
+        return False
+    return not any(part.startswith(".") for part in rel_path.parts[:-1])
+
+
 # ---------------------------------------------------------------------------
 # Graph loading
 # ---------------------------------------------------------------------------
@@ -298,18 +319,8 @@ def build_micro_record(
     rel_path = file_path.relative_to(pack_path)
     rel_str = str(rel_path)
 
-    # Skip non-markdown files
-    if file_path.suffix != ".md":
+    if not is_exportable_markdown(pack_path, file_path):
         return None
-
-    # Skip structural files
-    if file_path.name.startswith("_") or file_path.name in SKIP_FILES:
-        return None
-
-    # Skip hidden dirs
-    for part in rel_path.parts[:-1]:
-        if part.startswith("."):
-            return None
 
     try:
         raw = file_path.read_text(encoding="utf-8")
@@ -559,12 +570,20 @@ def run(args):
             try:
                 raw = fp.read_text(encoding="utf-8")
                 fm, _ = parse_frontmatter(raw)
-                if fp.suffix == ".md" and not fp.name.startswith("_") and not fm.get("id"):
+                if is_exportable_markdown(pack_path, fp) and not fm.get("id"):
                     skipped_no_id.append(rel)
             except Exception:
                 pass
         else:
             records.append(record)
+
+    report = {
+        "pack": pack_slug,
+        "mode": "aks" if args.compact else "micro_record",
+        "records": len(records),
+        "skipped_no_id": skipped_no_id,
+        "skipped_no_id_count": len(skipped_no_id),
+    }
 
     print(f"Exported: {len(records)} records")
     if skipped_no_id:
@@ -572,6 +591,16 @@ def run(args):
         if args.verbose:
             for f in skipped_no_id[:20]:
                 print(f"  {f}")
+
+    if args.report_json:
+        report_path = Path(args.report_json)
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False))
+        print(f"Report → {report_path}")
+
+    if args.strict and skipped_no_id:
+        print("Error: --strict set and one or more exportable files are missing frontmatter id.")
+        sys.exit(2)
 
     if not records:
         print("No records to write.")
@@ -618,6 +647,10 @@ def main():
                         help="Seconds between LLM calls when --generate-statements (default: 0.3)")
     parser.add_argument("--compact", action="store_true",
                         help="Emit lean JSONL with first-class provenance fields for token-efficient pipelines")
+    parser.add_argument("--strict", action="store_true",
+                        help="Exit nonzero if exportable content files are skipped (for CI/export readiness gates)")
+    parser.add_argument("--report-json", default=None,
+                        help="Write machine-readable export report JSON")
     parser.add_argument("--dry-run", action="store_true",
                         help="Show what would be exported without writing files")
     parser.add_argument("--verbose", action="store_true",

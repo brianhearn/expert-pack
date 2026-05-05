@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """ExpertPack Validator v2 - comprehensive pack compliance checker.
 
-Usage: python3 ep-validate-v2.py /path/to/pack [--verbose] [--json] [--provenance]
+Usage: python3 ep-validate-v2.py /path/to/pack [--verbose] [--json] [--provenance] [--aks]
 
-Checks (20):
+Checks (21):
   1. manifest.yaml exists and has required fields
   2. manifest.yaml field validation (type, slug format, entry_point exists)
   3. Duplicate basenames across the vault
@@ -24,8 +24,10 @@ Checks (20):
  18. W-PROV-02: content_hash present but doesn't match actual file body [--provenance]
  19. W-PROV-04: content file missing id field (provenance) [--provenance]
  20. W-HUB-01: concept-dense hub file detected (high topic count, standard retrieval_strategy)
+ 21. W-AKS-01..04: compact Agent Knowledge Schema export readiness [--aks]
 
 Provenance checks (17-19) are opt-in via --provenance flag.
+AKS readiness checks are opt-in via --aks and imply provenance checks.
 """
 
 import os, re, sys, yaml, json, hashlib
@@ -90,12 +92,43 @@ def get_md_links(body):
     return RE_MDLINK.findall(body)
 
 
+def _has_canonical_statement_surface(body):
+    """Return True when exporter can derive a useful canonical_statement."""
+    lines = body.splitlines()
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith('>') and 'lead summary' in stripped.lower() and len(stripped) > 30:
+            return True
+
+    paragraph_lines = []
+    in_para = False
+    for line in lines:
+        stripped = line.strip()
+        if not stripped:
+            if in_para:
+                break
+            continue
+        if stripped.startswith(('#', '---', '```', '|', '>', '<!--', '!')):
+            if in_para:
+                break
+            continue
+        if stripped.endswith('-->'):
+            if in_para:
+                break
+            continue
+        in_para = True
+        paragraph_lines.append(stripped)
+
+    return len(' '.join(paragraph_lines).strip()) >= 30
+
+
 class Validator:
-    def __init__(self, pack_path, verbose=False, check_provenance=False):
+    def __init__(self, pack_path, verbose=False, check_provenance=False, check_aks=False):
         self.pack_path = os.path.abspath(pack_path)
         self.pack_name = os.path.basename(self.pack_path)
         self.verbose = verbose
-        self.check_provenance = check_provenance
+        self.check_aks = check_aks
+        self.check_provenance = check_provenance or check_aks
         self.manifest = {}
         self.pack_type = 'unknown'
         self.pack_slug = ''
@@ -737,6 +770,15 @@ class Validator:
                                   f"v4.0 ceiling of 1,500. Split at ## boundaries "
                                   f"or bump to schema 4.1 and split into independent atoms.")
 
+    def _provenance_skip_types(self):
+        return {'index', 'source', 'proposition', 'summary', 'training'}
+
+    def _is_provenance_exempt(self, rel, fm):
+        rel_dir = os.path.dirname(rel)
+        if not rel_dir:
+            return True  # root-level structural files exempt
+        return fm.get('type', '') in self._provenance_skip_types()
+
     # -- Checks 17-19: provenance (opt-in via --provenance) ----------------
     def check_provenance_fields(self):
         """W-PROV-01: missing verified_at; W-PROV-02: hash mismatch;
@@ -753,14 +795,9 @@ class Validator:
                 refresh_cycle_days = y * 365 + mo * 30 + d
 
         today = date.today()
-        PROV_SKIP_TYPES = {'index', 'source', 'proposition', 'summary', 'training'}
 
         for rel, fm in self.fm.items():
-            rel_dir = os.path.dirname(rel)
-            if not rel_dir:
-                continue  # root-level structural files exempt
-            file_type = fm.get('type', '')
-            if file_type in PROV_SKIP_TYPES:
+            if self._is_provenance_exempt(rel, fm):
                 continue
 
             # W-PROV-04: missing id
@@ -797,6 +834,39 @@ class Validator:
                                f'content_hash mismatch -- body changed since last hash '
                                f'(stored: {stored_hash[:26]}... actual: {actual[:26]}...)')
 
+    # -- Check 21: AKS export readiness (opt-in via --aks) ----------------
+    def check_aks_readiness(self):
+        """Validate compact Agent Knowledge Schema export readiness.
+
+        AKS requires each exportable content file to have a stable id and enough
+        metadata/prose to generate a grounded compact row. The exporter can
+        compute hashes and derive canonical statements, but missing ids or weak
+        source prose make deterministic agent retrieval less trustworthy.
+        """
+        if not self.check_aks:
+            return
+
+        for rel, fm in self.fm.items():
+            if self._is_provenance_exempt(rel, fm):
+                continue
+            body = self.bodies.get(rel, '')
+
+            if not fm.get('id'):
+                self._add('WARN', 'W-AKS-01', rel,
+                          'AKS export will skip this file: missing stable id field.')
+
+            if not fm.get('verified_at'):
+                self._add('WARN', 'W-AKS-02', rel,
+                          'AKS row will lack verified_at freshness metadata.')
+
+            if not fm.get('content_hash'):
+                self._add('WARN', 'W-AKS-03', rel,
+                          'AKS exporter will compute content_hash, but frontmatter lacks a stored hash for drift detection.')
+
+            if not _has_canonical_statement_surface(body):
+                self._add('WARN', 'W-AKS-04', rel,
+                          'AKS canonical_statement fallback is weak: add a Lead summary blockquote or an opening prose paragraph.')
+
     # ── Run all checks ───────────────────────────────────────────────────
     def validate(self):
         self.load_manifest()
@@ -822,6 +892,8 @@ class Validator:
         self.check_v40_atomic_conceptual()
         if self.check_provenance:
             self.check_provenance_fields()
+        if self.check_aks:
+            self.check_aks_readiness()
         return self.issues
 
     def report(self, as_json=False):
@@ -899,6 +971,9 @@ def main():
     parser.add_argument('--provenance', action='store_true',
                         help='Enable provenance checks (W-PROV-01 to W-PROV-04): '
                              'missing id, missing verified_at, stale content, hash mismatch')
+    parser.add_argument('--aks', action='store_true',
+                        help='Enable Agent Knowledge Schema export-readiness checks '
+                             '(implies --provenance)')
     args = parser.parse_args()
 
     if not os.path.isdir(args.pack):
@@ -927,13 +1002,13 @@ def main():
             print("  WARNING: No sub-packs found with manifest.yaml")
             sys.exit(1)
         for sub in subs:
-            v = Validator(sub, verbose=args.verbose, check_provenance=args.provenance)
+            v = Validator(sub, verbose=args.verbose, check_provenance=args.provenance, check_aks=args.aks)
             v.validate()
             rc = v.report(as_json=args.json)
             if rc > exit_code:
                 exit_code = rc
     else:
-        v = Validator(pack_path, verbose=args.verbose, check_provenance=args.provenance)
+        v = Validator(pack_path, verbose=args.verbose, check_provenance=args.provenance, check_aks=args.aks)
         v.validate()
         exit_code = v.report(as_json=args.json)
 
