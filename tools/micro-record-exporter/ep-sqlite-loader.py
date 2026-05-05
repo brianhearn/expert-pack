@@ -6,7 +6,7 @@ Loads a micro-records JSONL file (from ep-micro-record-export.py) into a
 SQLite database for deterministic ID lookups alongside vector search.
 
 Schema:
-  records   — one row per micro-record (id, label, canonical_statement, type, pack, ...)
+  records   — one row per micro-record or compact AKS record (id, label, canonical_statement, type, pack, ...)
   provenance — provenance fields per record (recorded_at, valid_from, verified_at, ...)
   edges      — graph edges between records (source_id, target_id, kind)
   tags       — many-to-many tag associations
@@ -149,7 +149,7 @@ def load_jsonl(path: Path, db_path: Path) -> dict:
                 (
                     rid,
                     r.get("source_span_uri", ""),
-                    r.get("label", ""),
+                    r.get("label") or r.get("title", ""),
                     r.get("canonical_statement", ""),
                     r.get("type", ""),
                     r.get("pack", ""),
@@ -160,25 +160,41 @@ def load_jsonl(path: Path, db_path: Path) -> dict:
             )
             records_inserted += 1
 
-            # provenance
-            prov = r.get("provenance", {})
-            if prov:
+            # provenance. Full records use nested provenance; compact AKS
+            # records promote these fields to the top level.
+            prov = r.get("provenance", {}) or {}
+            content_hash = prov.get("content_hash") or r.get("content_hash") or r.get("source_checksum")
+            if prov or any(k in r for k in ("recorded_at", "valid_from", "verified_at", "verified_by", "source", "content_hash", "source_checksum")):
                 conn.execute(
                     """INSERT OR REPLACE INTO provenance
                        (id, recorded_at, valid_from, verified_at, verified_by, source, content_hash)
                        VALUES (?,?,?,?,?,?,?)""",
                     (
                         rid,
-                        prov.get("recorded_at"),
-                        prov.get("valid_from"),
-                        prov.get("verified_at"),
-                        prov.get("verified_by"),
-                        prov.get("source"),
-                        prov.get("content_hash"),
+                        prov.get("recorded_at") or r.get("recorded_at"),
+                        prov.get("valid_from") or r.get("valid_from"),
+                        prov.get("verified_at") or r.get("verified_at"),
+                        prov.get("verified_by") or r.get("verified_by"),
+                        prov.get("source") or r.get("source"),
+                        content_hash,
                     ),
                 )
 
             # edges
+            for req in r.get("requires", []):
+                if req:
+                    conn.execute(
+                        "INSERT OR IGNORE INTO edges (source_id, target_id, kind) VALUES (?,?,?)",
+                        (rid, str(req), "requires"),
+                    )
+                    edges_inserted += 1
+            for sup in r.get("supersedes", []):
+                if sup:
+                    conn.execute(
+                        "INSERT OR IGNORE INTO edges (source_id, target_id, kind) VALUES (?,?,?)",
+                        (rid, str(sup), "supersedes"),
+                    )
+                    edges_inserted += 1
             for edge in r.get("related", []):
                 target = edge.get("id")
                 kind = edge.get("kind", "wikilink")

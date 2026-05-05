@@ -150,7 +150,7 @@ The schema itself is now the chunking strategy. Author concept files as self-con
 
 ### Provenance Metadata (Schema 3.0+)
 
-Every content file can carry provenance frontmatter — `id`, `content_hash`, `verified_at`, `verified_by` — enabling auditable citations, change detection, and freshness tracking. The pack manifest includes a `freshness` block for sweep coverage metrics. See the [Citation Response Contract](schemas/core.md) for how retrieval systems should surface provenance. The micro-record exporter can now emit compact provenance-first JSONL (`--compact`) with first-class `id`, `source_span_uri`, `content_hash`, `verified_at`, `requires`, and `related` fields for token-efficient agent pipelines.
+Every content file can carry provenance frontmatter — `id`, `content_hash`, `verified_at`, `verified_by` — enabling auditable citations, change detection, and freshness tracking. The pack manifest includes a `freshness` block for sweep coverage metrics. See the [Citation Response Contract](schemas/core.md) for how retrieval systems should surface provenance. The micro-record exporter can now emit compact **Agent Knowledge Schema (AKS)** JSONL (`--compact`) with first-class `id`, `canonical_path`, `source_span_uri`, `content_hash`, `source_checksum`, `verified_at`, `requires`, and `related` fields for token-efficient agent pipelines.
 
 ### Graph Export (Schema 3.1+)
 
@@ -175,6 +175,7 @@ ExpertPack is an actively evolving framework. The table below shows which featur
 | Volatile data isolation | ✅ Full | `volatile/` convention + frontmatter TTL |
 | Automated eval runner | ✅ Full | `eval-runner/` with LLM-as-judge scoring |
 | Graph export | ✅ Full | `ep-graph-export.py`; `_graph.yaml` output |
+| Agent Knowledge Schema (AKS) export | ✅ Full | `ep-micro-record-export.py --compact`; compact provenance-first JSONL for agent pipelines |
 | Pack validation CLI | ✅ Full | `ep-validate`; structural + schema checks |
 | MCP server (EP MCP) | ✅ Full | BM25 + vector hybrid retrieval; multi-pack routing |
 | Provenance display in agent responses | ✅ Runtime-supported | EP MCP supports opt-in reconstruct mode with original spans and provenance blocks; final rendering is host-dependent |
@@ -187,7 +188,8 @@ ExpertPack is an actively evolving framework. The table below shows which featur
 
 | Schema | Version | What It Covers |
 |--------|---------|---------------|
-| [core.md](schemas/core.md) | 4.1 | Shared principles: MD-canonical, atomic-conceptual model, `requires:` dependencies, EK ratio, context tiers, provenance, graph export |
+| [core.md](schemas/core.md) | 4.1 | Shared principles: MD-canonical, atomic-conceptual model, `requires:` dependencies, EK ratio, context tiers, provenance, graph export, registry projections |
+| [registry/agent-knowledge.schema.yaml](schemas/registry/agent-knowledge.schema.yaml) | 1.0 | Compact Agent Knowledge Schema (AKS) JSONL for grounded agent retrieval pipelines |
 | [person.md](schemas/person.md) | 4.1 | Person packs: verbatim, mind taxonomy, relationships, presentation |
 | [agent.md](schemas/agent.md) | 1.0 | Agent extension: persona, capabilities, tool access, behavioral rules |
 | [product.md](schemas/product.md) | 4.1 | Product packs: concepts, workflows, interfaces, troubleshooting, commercial, customers |

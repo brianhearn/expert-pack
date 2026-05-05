@@ -1,0 +1,128 @@
+# ExpertPack Agent Knowledge Schema (AKS)
+# Version: 1.0
+# Date: 2026-05-05
+#
+# A compact, provenance-first JSONL projection of ExpertPack Markdown atoms.
+# Markdown remains canonical; AKS records are deterministic export artifacts for
+# agent retrieval pipelines, exact ID lookup, graph stores, and verification.
+
+schema: expertpack.agent_knowledge.v1
+version: "1.0"
+format: jsonl
+record_name: AgentKnowledgeRecord
+provenance_first: true
+canonical_source: markdown
+
+required:
+  - schema
+  - id
+  - canonical_statement
+  - title
+  - type
+  - pack
+  - canonical_path
+  - source_span_uri
+  - content_hash
+  - source_checksum
+
+fields:
+  schema:
+    type: string
+    const: expertpack.agent_knowledge.v1
+    description: Stable schema identifier for AKS v1 records.
+
+  id:
+    type: string
+    description: Stable pack-scoped record ID. Must match the source file frontmatter id.
+    example: ezt-designer/concepts/routing-directions
+
+  canonical_statement:
+    type: string
+    max_length: 800
+    description: One self-contained sentence or compact paragraph representing the primary claim or purpose of the atom.
+
+  title:
+    type: string
+    description: Human-readable display title. Usually frontmatter title or first H1.
+
+  type:
+    type: string
+    description: ExpertPack content type such as concept, workflow, troubleshooting, faq, reference, fact, relationship, or pattern.
+
+  pack:
+    type: string
+    description: Pack slug that owns the record.
+
+  canonical_path:
+    type: string
+    description: Pack-relative Markdown source path.
+    example: concepts/routing-directions.md
+
+  source_span_uri:
+    type: string
+    description: Stable citation URI for the source span. For whole-file atoms, pack/canonical_path.
+    example: ezt-designer/concepts/routing-directions.md
+
+  content_hash:
+    type: string
+    pattern: ^sha256:[a-f0-9]{64}$
+    description: SHA-256 hash of the frontmatter-stripped Markdown body.
+
+  source_checksum:
+    type: string
+    pattern: ^sha256:[a-f0-9]{64}$
+    description: Alias of content_hash for systems that use checksum terminology.
+
+optional:
+  verified_at:
+    type: string
+    format: date
+    description: Date the source atom was last verified accurate.
+
+  verified_by:
+    type: string
+    description: Who/what verified the source atom.
+
+  recorded_at:
+    type: string
+    format: date
+    description: Date the knowledge was first recorded in the pack.
+
+  valid_from:
+    type: string
+    format: date
+    description: Date the described knowledge became true in the world.
+
+  tags:
+    type: array
+    items: string
+    description: Semantic tags copied from source frontmatter.
+
+  requires:
+    type: array
+    items: string
+    description: Directional dependencies. If this record is retrieved, these atoms may be needed for full understanding.
+
+  related:
+    type: array
+    items:
+      type: object
+      required: [id, kind]
+      fields:
+        id:
+          type: string
+        kind:
+          type: string
+          enum: [wikilink, related, context, context_hint, supersedes, entity_mention, requires]
+    description: Graph edges to related records.
+
+  supersedes:
+    type: array
+    items: string
+    description: Older record IDs or paths replaced by this record.
+
+notes:
+  - AKS is intentionally small. It is not a replacement for full ExpertPack Markdown or full JSON-LD micro-records.
+  - source_checksum duplicates content_hash by design for compatibility with checksum-oriented systems.
+  - canonical_path is pack-relative; source_span_uri is citation-oriented and includes pack slug.
+  - Records should be sorted by id for reproducible JSONL diffs.

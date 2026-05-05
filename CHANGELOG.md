@@ -9,6 +9,7 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Unreleased]
 
 ### Added
+- **Agent Knowledge Schema (AKS) v1** — added `schemas/registry/agent-knowledge.schema.yaml` and `schemas/registry/README.md`. AKS formalizes the compact provenance-first JSONL shape for grounded agent retrieval pipelines: stable `id`, `canonical_statement`, `title`, `type`, `pack`, `canonical_path`, `source_span_uri`, `content_hash`, `source_checksum`, plus optional verification and graph fields.
 - **Compact provenance-first micro-record export** — `tools/micro-record-exporter/ep-micro-record-export.py --compact` now emits lean JSONL for token-efficient agent pipelines. Compact records keep the fields agents need for deterministic grounding (`id`, `canonical_statement`, `type`, `pack`, `source_span_uri`, `content_hash`, `verified_at`, `requires`, `related`) without the full JSON-LD envelope. Full exports also promote provenance fields (`content_hash`, `verified_at`, `recorded_at`, `valid_from`) to top-level while preserving the nested `provenance` block for registry compatibility.
 
 ---

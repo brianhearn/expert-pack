@@ -2,9 +2,10 @@
 """
 ExpertPack Micro-Record Exporter
 
-Generates canonical micro-records (schemas/registry/micro-record.schema.yaml)
-from pack content files. Reads frontmatter + _graph.yaml; optionally uses
-an LLM to generate canonical_statement for files that don't have one.
+Generates canonical micro-records from pack content files. Default output is
+full JSONL micro-records; --compact emits Agent Knowledge Schema (AKS) JSONL
+(schemas/registry/agent-knowledge.schema.yaml). Reads frontmatter + _graph.yaml;
+optionally uses an LLM to generate canonical_statement for files that don't have one.
 
 Usage:
     # Export all files in a pack to micro-records:
@@ -24,6 +25,12 @@ Usage:
         --output exports/ezt-designer-micro-records.jsonl \
         --generate-statements
 
+    # Compact AKS export for token-efficient retrieval pipelines:
+    python tools/micro-record-exporter/ep-micro-record-export.py \
+        --pack ExpertPacks/ezt-designer \
+        --compact \
+        --output exports/ezt-designer.aks.jsonl
+
     # Dry run — show what would be exported without writing:
     python tools/micro-record-exporter/ep-micro-record-export.py \
         --pack ExpertPacks/ezt-designer \
@@ -31,7 +38,8 @@ Usage:
 
 Output:
     JSONL file (one micro-record per line) or single JSON for --file.
-    Each record conforms to schemas/registry/micro-record.schema.yaml.
+    Default records are full micro-records. --compact records conform to
+    schemas/registry/agent-knowledge.schema.yaml.
 
 Notes:
     - canonical_statement is the one field that can't be derived from frontmatter alone.
@@ -398,23 +406,38 @@ def build_micro_record(
 
     if compact:
         record = {
+            "schema": "expertpack.agent_knowledge.v1",
             "id": record_id,
             "canonical_statement": canonical_statement,
+            "title": label,
             "type": content_type,
             "pack": pack_slug,
+            "canonical_path": rel_str,
             "source_span_uri": f"{pack_slug}/{rel_str}",
             "content_hash": content_hash,
+            "source_checksum": content_hash,
         }
         if verified_at:
             record["verified_at"] = verified_at
+        if verified_by:
+            record["verified_by"] = verified_by
+        if recorded_at:
+            record["recorded_at"] = recorded_at
+        if valid_from:
+            record["valid_from"] = valid_from
+        if tags:
+            record["tags"] = tags
         if requires:
             record["requires"] = requires
         if related:
             record["related"] = related
+        if supersedes:
+            record["supersedes"] = supersedes
         return record
 
     record = {
         "@context": "https://expertpack.ai/schema/1.0/context.jsonld",
+        "schema": "expertpack.micro_record.v1",
         "id": record_id,
         "source_span_uri": f"{pack_slug}/{rel_str}",
         "label": label,

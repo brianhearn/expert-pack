@@ -1606,7 +1606,12 @@ With frontmatter in place, Obsidian users get:
 
 ## Schema Registry and Micro-Record Format
 
-The `schemas/registry/` directory defines the **canonical micro-record format** — a compact, machine-readable representation of any pack file suitable for triple stores, knowledge graphs, and deterministic lookups.
+The `schemas/registry/` directory defines machine-readable projections of ExpertPack Markdown atoms. Markdown remains canonical; registry records are deterministic export artifacts for triple stores, knowledge graphs, compact agent retrieval, and exact-ID lookup.
+
+There are two supported projections:
+
+1. **Full micro-records** — rich JSON-LD-style records for graph/registry interchange.
+2. **Agent Knowledge Schema (AKS)** — compact, provenance-first JSONL rows for token-efficient agent pipelines.
 
 ### What Is a Micro-Record?
 
@@ -1635,21 +1640,55 @@ Micro-records distinguish two timestamps:
 
 This enables historical queries ("what was true about feature X as of Q3 2025?") and automated fact invalidation via `lifecycle.superseded_by`.
 
+### Agent Knowledge Schema (AKS)
+
+AKS is the compact export shape for runtime agent retrieval. It keeps the fields needed to ground and verify an answer without the full JSON-LD envelope:
+
+- `schema: expertpack.agent_knowledge.v1`
+- `id`
+- `canonical_statement`
+- `title`
+- `type`
+- `pack`
+- `canonical_path`
+- `source_span_uri`
+- `content_hash`
+- `source_checksum`
+- optional `verified_at`, `verified_by`, `recorded_at`, `valid_from`
+- optional `tags`, `requires`, `related`, `supersedes`
+
+Use AKS when token efficiency and deterministic citations matter more than archival interchange. Use full micro-records when a graph registry wants the richer envelope.
+
 ### Registry Files
 
 | File | Purpose |
 |---|---|
-| `schemas/registry/micro-record.schema.yaml` | Field definitions and constraints |
+| `schemas/registry/agent-knowledge.schema.yaml` | Compact AKS v1 field definitions and constraints |
+| `schemas/registry/README.md` | Registry usage guide |
+| `schemas/registry/micro-record.schema.yaml` | Full micro-record field definitions and constraints |
 | `schemas/registry/micro-record.jsonld.json` | JSON-LD context (stable URIs at `expertpack.ai/schema/1.0/`) |
-| `schemas/registry/types.yaml` | All 25 declared content types with descriptions |
-| `schemas/registry/edge-kinds.yaml` | All declared edge kinds (wikilink, related, context, supersedes, entity_mention) |
-| `schemas/registry/examples/` | Concrete example records (concept, workflow, FAQ) |
+| `schemas/registry/types.yaml` | All declared content types with descriptions |
+| `schemas/registry/edge-kinds.yaml` | All declared edge kinds (wikilink, related, context, supersedes, entity_mention, requires) |
+| `schemas/registry/examples/` | Concrete example records |
 
 ### Generating Micro-Records
 
-Micro-records are generated from pack files by `tools/micro-record-exporter/` (planned — see ROADMAP). For now, they can be authored manually for high-value files or generated from frontmatter + `_graph.yaml`.
+Micro-records are generated from pack files by `tools/micro-record-exporter/`:
 
-The `canonical_statement` is the one field that requires human or LLM authoring — it cannot be derived mechanically from frontmatter alone.
+```bash
+# Full records
+python tools/micro-record-exporter/ep-micro-record-export.py \
+  --pack path/to/pack \
+  --output exports/pack.micro-records.jsonl
+
+# Compact AKS records
+python tools/micro-record-exporter/ep-micro-record-export.py \
+  --pack path/to/pack \
+  --compact \
+  --output exports/pack.aks.jsonl
+```
+
+The `canonical_statement` is the one field that may require human or LLM authoring — it cannot always be derived mechanically from frontmatter alone. The exporter falls back to the lead summary or first prose paragraph when no generated statement is provided.
 
 ---
 
