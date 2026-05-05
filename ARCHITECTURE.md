@@ -141,6 +141,18 @@ This is the current retrieval model as of schema v4.1. See [`schemas/core.md`](s
 
 ---
 
+
+### Provenance-First Micro-Records
+
+For machine pipelines, ExpertPack can export each Markdown atom as a canonical micro-record JSONL row. The Markdown file remains the source of truth; the micro-record is a deterministic projection optimized for graph stores, exact ID lookup, compact retrieval, and agent verification.
+
+Two export shapes are supported:
+
+- **Full JSON-LD record** — preserves the registry-style envelope, nested `provenance`, lifecycle metadata, tags, `requires`, and graph-derived `related` edges.
+- **Compact record (`--compact`)** — keeps only the fields needed for token-efficient grounded retrieval: `id`, `canonical_statement`, `type`, `pack`, `source_span_uri`, `content_hash`, `verified_at`, `requires`, and `related`.
+
+This gives ExpertPack a clean bridge between human-readable Markdown and hybrid KG/vector systems: Markdown for authorship, compact JSONL for deterministic retrieval infrastructure.
+
 ## How Agents Consume Packs
 
 ### Discovery

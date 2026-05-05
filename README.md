@@ -150,7 +150,7 @@ The schema itself is now the chunking strategy. Author concept files as self-con
 
 ### Provenance Metadata (Schema 3.0+)
 
-Every content file can carry provenance frontmatter — `id`, `content_hash`, `verified_at`, `verified_by` — enabling auditable citations, change detection, and freshness tracking. The pack manifest includes a `freshness` block for sweep coverage metrics. See the [Citation Response Contract](schemas/core.md) for how retrieval systems should surface provenance.
+Every content file can carry provenance frontmatter — `id`, `content_hash`, `verified_at`, `verified_by` — enabling auditable citations, change detection, and freshness tracking. The pack manifest includes a `freshness` block for sweep coverage metrics. See the [Citation Response Contract](schemas/core.md) for how retrieval systems should surface provenance. The micro-record exporter can now emit compact provenance-first JSONL (`--compact`) with first-class `id`, `source_span_uri`, `content_hash`, `verified_at`, `requires`, and `related` fields for token-efficient agent pipelines.
 
 ### Graph Export (Schema 3.1+)
 
@@ -171,13 +171,13 @@ ExpertPack is an actively evolving framework. The table below shows which featur
 | Atomic-conceptual content model | ✅ Full | Schema v4.0+; all new packs use this model |
 | `requires:` dependency frontmatter | ✅ Full | Spec + EP MCP runtime expansion live (depth 2, count 3 cap) |
 | EK triage during hydration | ✅ Full | Spec + tooling (`eval-ek.py`) |
-| Provenance frontmatter | ✅ Full | Spec defined; authoring tooling honors it |
+| Provenance frontmatter | ✅ Full | Spec defined; authoring + micro-record tooling honors it |
 | Volatile data isolation | ✅ Full | `volatile/` convention + frontmatter TTL |
 | Automated eval runner | ✅ Full | `eval-runner/` with LLM-as-judge scoring |
 | Graph export | ✅ Full | `ep-graph-export.py`; `_graph.yaml` output |
 | Pack validation CLI | ✅ Full | `ep-validate`; structural + schema checks |
 | MCP server (EP MCP) | ✅ Full | BM25 + vector hybrid retrieval; multi-pack routing |
-| Provenance display in agent responses | ⚠️ Partial | Metadata available; surface-level rendering is runtime-dependent |
+| Provenance display in agent responses | ✅ Runtime-supported | EP MCP supports opt-in reconstruct mode with original spans and provenance blocks; final rendering is host-dependent |
 | Scaffolding CLI / guided creation | 🚧 Roadmap | Planned; current creation requires agent-operated workflow |
 | Process schema (v1.4) | ⚠️ Partial | Core patterns stable; some v4.1 refinements not yet backported |
 
@@ -242,6 +242,7 @@ ExpertPack/
 │   ├── validator/           ← ep-validate.py — structural + provenance validation (19 checks)
 │   ├── graph-export/        ← ep-graph-export.py — generate _graph.yaml adjacency files
 │   ├── deploy-prep/         ← ep-strip-frontmatter.py — strip provenance metadata before RAG deploy
+│   ├── micro-record-exporter/ ← ep-micro-record-export.py — full/compact provenance-first JSONL export
 │   └── eval-ek.py           ← EK ratio measurement via blind probing
 │
 ├── skills/                  ← OpenClaw agent skills (also on ClawHub)

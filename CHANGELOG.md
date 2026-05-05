@@ -8,6 +8,9 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ## [Unreleased]
 
+### Added
+- **Compact provenance-first micro-record export** — `tools/micro-record-exporter/ep-micro-record-export.py --compact` now emits lean JSONL for token-efficient agent pipelines. Compact records keep the fields agents need for deterministic grounding (`id`, `canonical_statement`, `type`, `pack`, `source_span_uri`, `content_hash`, `verified_at`, `requires`, `related`) without the full JSON-LD envelope. Full exports also promote provenance fields (`content_hash`, `verified_at`, `recorded_at`, `valid_from`) to top-level while preserving the nested `provenance` block for registry compatibility.
+
 ---
 
 ## [Core 4.1] — 2026-04-19 — Atomic-Conceptual Refinement (`requires:` dependencies)
