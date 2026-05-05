@@ -9,6 +9,7 @@ Usage:
     python tools/ontology-suggest/ep-ontology-suggest.py /path/to/pack
     python tools/ontology-suggest/ep-ontology-suggest.py /path/to/pack --format json
     python tools/ontology-suggest/ep-ontology-suggest.py /path/to/pack --output ontology-suggestions.yaml
+    python tools/ontology-suggest/ep-ontology-suggest.py /path/to/pack --init-ontology
 """
 
 from __future__ import annotations
@@ -70,6 +71,10 @@ def slugify(text: str) -> str:
     return text or "unknown"
 
 
+def today() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+
 def load_manifest(pack_path: Path) -> dict[str, Any]:
     mp = pack_path / "manifest.yaml"
     if not mp.exists():
@@ -78,6 +83,38 @@ def load_manifest(pack_path: Path) -> dict[str, Any]:
         return yaml.safe_load(mp.read_text(encoding="utf-8")) or {}
     except Exception:
         return {}
+
+
+def load_accepted_ontology(pack_path: Path, ontology_path: Path | None = None) -> dict[str, Any]:
+    path = ontology_path or (pack_path / "ontology.yaml")
+    if not path.exists():
+        return {"schema": "expertpack.ontology.v1", "entities": [], "relations": []}
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    except Exception:
+        return {"schema": "expertpack.ontology.v1", "entities": [], "relations": []}
+    data.setdefault("entities", [])
+    data.setdefault("relations", [])
+    return data
+
+
+def ontology_indexes(ontology: dict[str, Any]) -> tuple[set[str], set[tuple[str, str, str]], dict[str, str]]:
+    entity_ids = {str(e.get("id")) for e in ontology.get("entities", []) if e.get("id")}
+    relation_keys = {
+        (str(r.get("source")), str(r.get("target")), str(r.get("kind")))
+        for r in ontology.get("relations", [])
+        if r.get("source") and r.get("target") and r.get("kind")
+    }
+    alias_to_id: dict[str, str] = {}
+    for entity in ontology.get("entities", []):
+        eid = entity.get("id")
+        if not eid:
+            continue
+        labels = [entity.get("label", ""), *entity.get("aliases", [])]
+        for label in labels:
+            if str(label).strip():
+                alias_to_id[slugify(str(label))] = str(eid)
+    return entity_ids, relation_keys, alias_to_id
 
 
 def build_records(pack_path: Path, slug: str) -> list[dict[str, Any]]:
@@ -135,10 +172,12 @@ def infer_category(record: dict[str, Any]) -> str:
     return rtype or "concept"
 
 
-def suggest_ontology(pack_path: Path) -> dict[str, Any]:
+def suggest_ontology(pack_path: Path, ontology_path: Path | None = None) -> dict[str, Any]:
     manifest = load_manifest(pack_path)
     slug = manifest.get("slug") or pack_path.name
     records = build_records(pack_path, slug)
+    accepted = load_accepted_ontology(pack_path, ontology_path)
+    accepted_entity_ids, accepted_relation_keys, alias_to_id = ontology_indexes(accepted)
 
     categories: dict[str, list[str]] = defaultdict(list)
     term_records: dict[str, set[str]] = defaultdict(set)
@@ -163,13 +202,15 @@ def suggest_ontology(pack_path: Path) -> dict[str, Any]:
     for term, refs in sorted(term_records.items(), key=lambda x: (-len(x[1]), x[0].lower())):
         if len(refs) < 2:
             continue
+        eid = alias_to_id.get(slugify(term), f"entity:{slugify(term)}")
+        status = "existing" if eid in accepted_entity_ids else "suggested"
         entities.append({
-            "id": f"entity:{slugify(term)}",
+            "id": eid,
             "label": term,
             "kind": "term",
             "evidence_count": len(refs),
             "evidence": sorted(refs)[:10],
-            "status": "suggested",
+            "status": status,
         })
 
     category_nodes = [
@@ -184,6 +225,10 @@ def suggest_ontology(pack_path: Path) -> dict[str, Any]:
         for cat, ids in sorted(categories.items())
     ]
 
+    for edge in explicit_edges:
+        key = (edge.get("source", ""), edge.get("target", ""), edge.get("kind", ""))
+        edge["status"] = "existing" if key in accepted_relation_keys else "suggested"
+
     relation_counts = Counter(edge["kind"] for edge in explicit_edges)
 
     return {
@@ -197,6 +242,8 @@ def suggest_ontology(pack_path: Path) -> dict[str, Any]:
             "explicit_edge_count": len(explicit_edges),
             "relation_kinds": dict(sorted(relation_counts.items())),
             "review_required": True,
+            "accepted_ontology_entities": len(accepted_entity_ids),
+            "accepted_ontology_relations": len(accepted_relation_keys),
         },
         "review_instructions": [
             "This file is suggestions only. Do not treat entities/categories as authoritative until reviewed.",
@@ -209,11 +256,33 @@ def suggest_ontology(pack_path: Path) -> dict[str, Any]:
     }
 
 
+def init_ontology(pack_path: Path, output: Path | None = None, force: bool = False) -> Path:
+    manifest = load_manifest(pack_path)
+    slug = manifest.get("slug") or pack_path.name
+    out_path = output or (pack_path / "ontology.yaml")
+    if out_path.exists() and not force:
+        print(f"Error: {out_path} already exists (use --force to overwrite)", file=sys.stderr)
+        sys.exit(2)
+    ontology = {
+        "schema": "expertpack.ontology.v1",
+        "pack": slug,
+        "updated_at": today(),
+        "entities": [],
+        "relations": [],
+    }
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(yaml.safe_dump(ontology, sort_keys=False, allow_unicode=True), encoding="utf-8")
+    return out_path
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="ExpertPack ontology suggestion generator")
     parser.add_argument("pack", help="Path to pack directory")
     parser.add_argument("--output", default="ontology-suggestions.yaml", help="Output path (default: pack/ontology-suggestions.yaml)")
     parser.add_argument("--format", choices=["yaml", "json"], default="yaml", help="Output format")
+    parser.add_argument("--ontology", default=None, help="Accepted ontology path (default: pack/ontology.yaml)")
+    parser.add_argument("--init-ontology", action="store_true", help="Create an empty accepted ontology.yaml and exit")
+    parser.add_argument("--force", action="store_true", help="Allow --init-ontology to overwrite existing ontology file")
     args = parser.parse_args()
 
     pack_path = Path(args.pack).resolve()
@@ -221,7 +290,14 @@ def main() -> None:
         print(f"Error: {pack_path} is not a directory", file=sys.stderr)
         sys.exit(1)
 
-    suggestions = suggest_ontology(pack_path)
+    ontology_path = Path(args.ontology).resolve() if args.ontology else None
+    if args.init_ontology:
+        out = Path(args.output).resolve() if args.output != "ontology-suggestions.yaml" else None
+        written = init_ontology(pack_path, output=out, force=args.force)
+        print(f"Written: {written}", file=sys.stderr)
+        return
+
+    suggestions = suggest_ontology(pack_path, ontology_path=ontology_path)
     out_path = Path(args.output)
     if not out_path.is_absolute():
         out_path = pack_path / out_path

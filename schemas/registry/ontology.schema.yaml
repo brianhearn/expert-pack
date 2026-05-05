@@ -1,0 +1,102 @@
+# ExpertPack Accepted Ontology Schema
+# Version: 1.0
+# Date: 2026-05-05
+#
+# Review-approved domain ontology for an ExpertPack. Ontology suggestions are
+# generated separately; this file records what the pack maintainer accepted.
+
+schema: expertpack.ontology.v1
+version: "1.0"
+canonical_path: ontology.yaml
+review_required: false
+
+required:
+  - schema
+  - pack
+  - entities
+  - relations
+
+fields:
+  schema:
+    type: string
+    const: expertpack.ontology.v1
+
+  pack:
+    type: string
+    description: Pack slug this ontology belongs to.
+
+  generated_from:
+    type: string
+    description: Optional suggestions file, commit, or tool run that seeded this ontology.
+
+  updated_at:
+    type: string
+    format: date
+
+  entities:
+    type: array
+    items:
+      type: object
+      required: [id, label, kind]
+      fields:
+        id:
+          type: string
+          pattern: ^entity:[a-z0-9][a-z0-9-]*$
+          description: Stable ontology entity ID.
+        label:
+          type: string
+          description: Human-readable canonical label.
+        kind:
+          type: string
+          enum: [term, concept, product, person, organization, place, workflow, artifact, category, system, feature, error, other]
+        aliases:
+          type: array
+          items: string
+        description:
+          type: string
+        evidence:
+          type: array
+          items: string
+          description: Record IDs or source paths that justify accepting the entity.
+        accepted_at:
+          type: string
+          format: date
+        accepted_by:
+          type: string
+        status:
+          type: string
+          enum: [accepted, deprecated]
+          default: accepted
+
+  relations:
+    type: array
+    items:
+      type: object
+      required: [source, target, kind]
+      fields:
+        source:
+          type: string
+          description: Entity ID or record ID.
+        target:
+          type: string
+          description: Entity ID or record ID.
+        kind:
+          type: string
+          enum: [is_a, part_of, contains, depends_on, requires, related_to, supersedes, mentions, implements, causes, prevents, uses, produces, other]
+        evidence:
+          type: array
+          items: string
+        accepted_at:
+          type: string
+          format: date
+        accepted_by:
+          type: string
+        status:
+          type: string
+          enum: [accepted, deprecated]
+          default: accepted
+
+notes:
+  - ontology.yaml is maintainer-approved. ontology-suggestions.yaml is not.
+  - Entity IDs should be stable once accepted; add aliases rather than renaming IDs.
+  - Evidence should point to AKS/ExpertPack record IDs where possible.

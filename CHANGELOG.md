@@ -9,7 +9,7 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Unreleased]
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
+- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers accept/reject into `ontology.yaml`, the new accepted ontology registry (`schemas/registry/ontology.schema.yaml`).
 - **AKS export-readiness gates** — `ep-validate.py --aks` now checks whether content files can produce complete compact Agent Knowledge Schema rows (stable IDs, freshness metadata, stored content hashes, and canonical-statement surfaces). `ep-micro-record-export.py` now supports `--strict` and `--report-json` for CI/export gates; `--strict` exits nonzero when exportable content would be skipped.
 - **Agent Knowledge Schema (AKS) v1** — added `schemas/registry/agent-knowledge.schema.yaml` and `schemas/registry/README.md`. AKS formalizes the compact provenance-first JSONL shape for grounded agent retrieval pipelines: stable `id`, `canonical_statement`, `title`, `type`, `pack`, `canonical_path`, `source_span_uri`, `content_hash`, `source_checksum`, plus optional verification and graph fields.
 - **Compact provenance-first micro-record export** — `tools/micro-record-exporter/ep-micro-record-export.py --compact` now emits lean JSONL for token-efficient agent pipelines. Compact records keep the fields agents need for deterministic grounding (`id`, `canonical_statement`, `type`, `pack`, `source_span_uri`, `content_hash`, `verified_at`, `requires`, `related`) without the full JSON-LD envelope. Full exports also promote provenance fields (`content_hash`, `verified_at`, `recorded_at`, `valid_from`) to top-level while preserving the nested `provenance` block for registry compatibility.
@@ -21,7 +21,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 **Minor version bump.** Refines the v4.0 atomic-conceptual model after the first real post-territory migration surfaced that the composite parent-child pattern added ceremony without retrieval gain. Schema v4.1 keeps every v4.0 deprecation (summaries, propositions directories, per-domain glossary, standalone faq) and strengthens the single-atom principle.
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - **`requires:` frontmatter field** — directional dependencies between atoms. `A requires B` means B's content is needed to understand A; asymmetric. EP MCP expands a matched atom's context to include its `requires:` chain at retrieval time (depth cap 2, count cap 3 atoms total per expansion, token-budget cap).
 - `schemas/rfcs/RFC-001-atomic-conceptual-chunks.md` — appended "v4.1 refinement" section documenting why composite hierarchy was retired.
 - `schemas/references/granularity-guide.md` — new "Splitting oversized concepts" section with v4.1 decision procedure and an Authentication worked example.
@@ -56,7 +55,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 **Breaking change** — MAJOR version bump. Product and process packs adopt a single self-contained content model; v3.x aggregator directories are deprecated. Person packs retain their verbatim↔summary model pending a follow-up RFC.
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - `schemas/rfcs/RFC-001-atomic-conceptual-chunks.md` — Accepted RFC documenting the atomic-conceptual content model: one concept = one self-contained file carrying definition, body, FAQs, related terms, and key propositions. Records motivation, resolved design decisions, migration plan, and validation findings.
 - `schemas/references/granularity-guide.md` — Companion reference for the hardest authoring decision: embed a term vs. promote it to its own concept file. 5-test decision procedure, 8 worked examples from the ezt-designer validation refactor, plus boundary tables for concept-vs-workflow, concept-vs-term, and concept-vs-FAQ.
 - `schemas/core.md` — New `## Atomic-Conceptual Content Files` section documenting concept file structure, required/optional sections (`## Frequently Asked`, `## Related Terms`, `## Key Propositions`, `## Related Concepts`), size targets (500-900 soft / 1,500 hard), granularity, composite concepts (`concept_scope: composite` + `parent_concept:`), workflow-vs-concept boundary, deprecation tracking (`supersedes:`), and optional lean root-level `glossary.md`.
@@ -92,7 +90,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 3.3] — 2026-04-14 — MCP Configuration
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - `schemas/core.md` — New `mcp` block in `manifest.yaml` spec: `mcp.instructions`, `mcp.prompts`, and `mcp.resources` fields. Enables EP MCP to serve packs as full expertise injection layers (orientation via `instructions=`, foundational context via Resources, workflow guidance via Prompts).
 - `schemas/core.md` — New `## MCP Configuration` section documenting the three MCP primitives, their EP source mapping, per-field guidance, pack-type applicability (product/process/person/composite), auto-discovery fallback for prompts, validator rules (W-MCP-01/02/03, E-MCP-01), and a full example.
 - `schemas/core.md` — Validator rules table for MCP block: source file type/atomic checks, instructions length warning.
@@ -113,7 +110,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 - `schemas/process.md` — Version/date update only (already cleanest schema)
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - `schemas/agent.md` — New standalone Agent Extension schema (split from person.md)
 - `schemas/references/interface-vocabulary.md` — Extracted interface reference tables from product.md
 
@@ -125,7 +121,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 3.1] — 2026-04-10 — Graph Export
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - **Graph Export section** in `schemas/core.md` — `_graph.yaml` adjacency file spec
   - Format: nodes (file path + title + type) and edges (source → target + kind)
   - Edge kinds: `wikilink`, `related`, `context_hint`
@@ -144,7 +139,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 3.0] — 2026-04-10 — Provenance Metadata
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - **Provenance Metadata section** in `schemas/core.md` — per-file frontmatter fields:
   - `id` — stable pack-relative path identifier (e.g. `pack-name/dir/filename`)
   - `content_hash` — SHA-256 of file body for change detection
@@ -175,7 +169,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 2.9] — 2026-04-06 — Graph View: Clean Topology
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - `.obsidian/graph.json` — pre-configured graph view settings:
   - `_index.md` files excluded by default (`-_index` filter) — removes hub-spoke noise, reveals true concept topology
   - Color groups: blue=concept, green=workflow, orange=faq, red=troubleshooting
@@ -210,7 +203,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [2026-04-06] — Community Packs: Obsidian Ready Out of the Box
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - `.obsidian/` config folder copied into each community pack directory:
   - `packs/blender-3d/.obsidian/`
   - `packs/home-assistant/.obsidian/`
@@ -222,7 +214,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [2026-04-06] — Obsidian Vault Template
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - `template/` — complete Obsidian vault template for building ExpertPacks inside Obsidian
   - Full EP directory structure with stubs for every content type
   - `manifest.yaml`, `overview.md`, `glossary.md`, `Dashboard.md` pre-filled
@@ -239,7 +230,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 2.8] — 2026-04-06 — Obsidian Compatibility
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - **Per-file YAML frontmatter standard** — all content files now require `title`, `type`, `tags`, `pack` fields; `retrieval_strategy` and `ek_score` recommended
 - **Type taxonomy** — 25 defined `type` values mapped to directory conventions with default `retrieval_strategy` per type
 - **`.obsidian/` reference folder** — pre-configured Obsidian vault settings in repo root; includes Dataview + Templater plugin config and setup guide with example queries
@@ -261,7 +251,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [2026-04-02] — Tooling: Public Eval Runner + Benchmark Pack
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - `tools/eval-runner/run_eval.py` — fully rewritten as a pack-agnostic eval runner
   - `--pack` + `--eval` flags; no agent endpoint required
   - Loads pack `.md` files directly as LLM context and queries OpenRouter
@@ -282,7 +271,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 2.7] — 2026-04-01 — Volatile Data Isolation
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - `volatile/` directory convention for time-bound EK (pricing, API specs, leaderboards, anything with a shelf life)
 - Frontmatter TTL fields: `refresh` (ISO 8601 duration), `source`, `fetched_at`, `expires_at`
 - Passive staleness detection: agents check freshness at session start, not via cron
@@ -298,7 +286,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 2.6] — 2026-03-31 — Pack–Consumer Coordination Contract
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - Pack–Consumer Coordination Contract section in `schemas/core.md`
 - Defines what packs must provide vs. what consuming agents are responsible for
 - Clarifies authority boundaries: pack content is authoritative within its declared scope
@@ -324,7 +311,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 2.4] — 2026-03-24 — Chunking Strategy
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - Chunking Strategy section to `schemas/core.md`
 - Two authoring modes: atomic (one concept per file) and sectioned (multiple `##` headers)
 - Guidance on when to split vs. consolidate files
@@ -334,7 +320,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Core 2.3] — 2026-03-16 — Entity Relation Graph
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - Optional `relations.yaml` for entity relation graphs
 - Enables cross-referencing entities within a pack with typed relationships
 
@@ -350,7 +335,6 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Eval 1.2] — 2026-03-12 — EK Ratio as First-Class Metric
 
 ### Added
-- **Ontology suggestion CLI** — added `tools/ontology-suggest/ep-ontology-suggest.py`. It builds on the compact AKS projection plus existing `requires:` / `related` edges to propose review-first category nodes, repeated domain entities/terms, and explicit graph edges. Output is suggestions only (`ontology-suggestions.yaml` by default); maintainers must accept/reject before using it as authoritative ontology.
 - EK ratio metric to eval schema: proportion of propositions frontier models can't answer without the pack
 - Per-section EK ratio tracking
 - GK bloat measurement (general knowledge that could be cut)
