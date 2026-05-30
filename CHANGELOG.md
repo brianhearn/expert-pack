@@ -8,7 +8,12 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ## [Unreleased]
 
+### Added
+- **Content confidence grade** — optional `confidence` provenance frontmatter field documented in `schemas/core.md`, with three grades: `expert-verified`, `crawled`, `inferred`. It records *how* knowledge was sourced (orthogonal to `verified_at`/`verified_by`, which record *when/by whom* it was reviewed), letting consuming agents down-weight or caveat lower-grade content at retrieval time. The field is optional and makes no assertion when omitted.
+- **Validator `W-PROV-06`** — `ep-validate.py --provenance` now warns when a `confidence` value is present but is not one of the three valid grades. Only checked when the field is present, so the rule is non-breaking for existing packs. Validator and `tools/validator/README.md` updated.
+
 ### Fixed
+- Bumped `schemas/schema-index.yaml` `updated:` date to reflect the confidence-grade addition.
 - Added `schemas/schema-index.yaml` as the central compatibility matrix and synchronized README schema versions from it.
 - Replaced stale v3 retrieval-layer guidance with v4.1 atom guidance (`requires:`, opening definitions, `_index.md` navigation).
 - Updated product concept and interface templates to match core v4.1 atom/interface patterns.

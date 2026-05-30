@@ -39,7 +39,7 @@ python3 ep-validate.py /path/to/your-pack --aks
 
 ### Provenance and AKS readiness
 
-Use `--provenance` to check stable citation/freshness fields (`id`, `verified_at`, `content_hash`). Use `--aks` when a pack needs to produce complete compact Agent Knowledge Schema JSONL for retrieval pipelines. `--aks` implies provenance checks and adds:
+Use `--provenance` to check stable citation/freshness fields (`id`, `verified_at`, `content_hash`, and the optional `confidence` grade — `expert-verified` / `crawled` / `inferred`, flagged by `W-PROV-06` when invalid). Use `--aks` when a pack needs to produce complete compact Agent Knowledge Schema JSONL for retrieval pipelines. `--aks` implies provenance checks and adds:
 
 | Check | Meaning |
 |-------|---------|

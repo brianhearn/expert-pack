@@ -573,6 +573,7 @@ id: "my-pack/concepts/feature-x"
 content_hash: "sha256:a3f1c..."   # SHA-256 of file body (below closing ---)
 verified_at: "2026-04-10"         # When content was last confirmed accurate
 verified_by: "agent"              # "agent" or "human"
+confidence: "expert-verified"     # optional — "expert-verified" | "crawled" | "inferred"
 
 # Bi-temporal provenance (Schema 3.4 — optional, add when known)
 recorded_at: "2026-04-10"         # When this file was first added to the pack
@@ -602,6 +603,18 @@ ISO date when the content was last confirmed accurate. This is NOT the same as t
 
 - `verified_by: "human"` — an SME or pack owner reviewed the content
 - `verified_by: "agent"` — an agent performed a structured review pass
+
+#### `confidence` — Provenance Grade *(optional)*
+
+The trust grade of the content, signalling how the knowledge was obtained. Where `verified_at`/`verified_by` answer *"when and by whom was this reviewed?"*, `confidence` answers *"how was this knowledge sourced in the first place?"* — a complementary, orthogonal axis. Consuming agents can use it to caveat or down-weight lower-grade content at retrieval time.
+
+| Value | Meaning |
+|-------|---------|
+| `expert-verified` | Confirmed by a subject-matter expert or pack owner — the highest grade. Typically paired with `verified_by: "human"`. |
+| `crawled` | Extracted from a concrete external source (documentation, source code, forum thread, transcript). Traceable but not expert-confirmed. |
+| `inferred` | Synthesized or generalized by an agent without a single authoritative source. Lowest grade; treat as a hypothesis until verified. |
+
+**Optional.** Omitting `confidence` makes no assertion about provenance grade. When present, it must be one of the three values above (`W-PROV-06`). It pairs naturally with `sources` (see Source Provenance below): `crawled` content should usually carry a `sources` block.
 
 #### `recorded_at` — Ingestion Date *(Schema 3.4)*
 
@@ -651,6 +664,7 @@ Maintain a `freshness` block in `manifest.yaml` (see manifest spec above). Updat
 | `W-PROV-03` | `verified_at` older than `manifest.yaml freshness.refresh_cycle` | Warning |
 | `W-PROV-04` | Content file missing `id` field | Info |
 | `W-PROV-05` | `valid_from` is later than `verified_at` (world truth can't postdate verification) | Warning |
+| `W-PROV-06` | `confidence` present but not one of `expert-verified` / `crawled` / `inferred` | Warning |
 
 Provenance warnings do not break the zero-error requirement — they are surfaced separately as quality indicators.
 

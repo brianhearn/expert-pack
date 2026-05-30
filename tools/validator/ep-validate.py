@@ -23,6 +23,7 @@ Checks (21):
  17. W-PROV-01: content file missing verified_at (provenance) [--provenance]
  18. W-PROV-02: content_hash present but doesn't match actual file body [--provenance]
  19. W-PROV-04: content file missing id field (provenance) [--provenance]
+ 19a. W-PROV-06: confidence present but not a valid grade (provenance) [--provenance]
  20. W-HUB-01: concept-dense hub file detected (high topic count, standard retrieval_strategy)
  21. W-AKS-01..04: compact Agent Knowledge Schema export readiness [--aks]
 
@@ -792,7 +793,9 @@ class Validator:
     # -- Checks 17-19: provenance (opt-in via --provenance) ----------------
     def check_provenance_fields(self):
         """W-PROV-01: missing verified_at; W-PROV-02: hash mismatch;
-        W-PROV-03: stale content; W-PROV-04: missing id."""
+        W-PROV-03: stale content; W-PROV-04: missing id;
+        W-PROV-06: invalid confidence value."""
+        VALID_CONFIDENCE = ('expert-verified', 'crawled', 'inferred')
         refresh_cycle_days = None
         freshness = self.manifest.get('freshness') or {}
         rc = freshness.get('refresh_cycle', '')
@@ -843,6 +846,13 @@ class Validator:
                     self._add('WARN', 'W-PROV-02', rel,
                                f'content_hash mismatch -- body changed since last hash '
                                f'(stored: {stored_hash[:26]}... actual: {actual[:26]}...)')
+
+            # W-PROV-06: invalid confidence value (optional field; only checked when present)
+            confidence = fm.get('confidence')
+            if confidence is not None and confidence not in VALID_CONFIDENCE:
+                self._add('WARN', 'W-PROV-06', rel,
+                           f'confidence {confidence!r} is invalid -- must be one of '
+                           f"{', '.join(VALID_CONFIDENCE)}")
 
     # -- Check 21: AKS export readiness (opt-in via --aks) ----------------
     def check_aks_readiness(self):
@@ -979,7 +989,7 @@ def main():
     parser.add_argument('--json', action='store_true',
                         help='Output as JSON')
     parser.add_argument('--provenance', action='store_true',
-                        help='Enable provenance checks (W-PROV-01 to W-PROV-04): '
+                        help='Enable provenance checks (W-PROV-01 to W-PROV-06): '
                              'missing id, missing verified_at, stale content, hash mismatch')
     parser.add_argument('--aks', action='store_true',
                         help='Enable Agent Knowledge Schema export-readiness checks '

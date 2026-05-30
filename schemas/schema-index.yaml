@@ -2,7 +2,7 @@
 # Generated/maintained as the single source for README schema tables.
 
 expertpack_schema_family: "4.1"
-updated: "2026-05-05"
+updated: "2026-05-30"
 schemas:
   core:
     file: schemas/core.md
