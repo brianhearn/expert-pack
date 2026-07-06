@@ -1,10 +1,13 @@
 # ExpertPack Validator & Doctor
 
-Two companion tools for validating and auto-fixing ExpertPack files.
+Two companion tools for validating and auto-fixing ExpertPack files. On
+Windows, invoke them with `python` instead of `python3`.
 
 ## ep-validate.py
 
-Runs structural, retrieval, provenance, and optional AKS export-readiness checks across a pack and reports errors and warnings.
+Runs structural, retrieval, provenance, and optional AKS export-readiness checks
+across a pack and reports errors and warnings. Composite packs are auto-detected
+and each sub-pack is validated in turn.
 
 ```bash
 python3 ep-validate.py /path/to/your-pack
@@ -12,34 +15,39 @@ python3 ep-validate.py /path/to/your-pack --verbose
 python3 ep-validate.py /path/to/your-pack --json
 python3 ep-validate.py /path/to/your-pack --provenance
 python3 ep-validate.py /path/to/your-pack --aks
+python3 ep-validate.py /path/to/your-pack --strict
+python3 ep-validate.py /path/to/your-pack --strict --fail-on-warn
+python3 ep-validate.py /path/to/your-pack --strict --ignore W-V41-01
 ```
 
-### Checks
+### Default checks
 
-| # | Check | Level |
-|---|-------|-------|
-| 1 | `manifest.yaml` exists and has required fields | ERROR |
-| 2 | `manifest.yaml` slug format | WARN |
-| 3 | Entry point file exists | ERROR |
-| 4 | `_index.md` present in each content directory | WARN |
-| 5 | File size (default: warn >50KB) | WARN |
-| 6 | Frontmatter present | WARN |
-| 7 | Required frontmatter fields (`type`, `pack`, `tags`) | WARN |
-| 8 | `type` matches directory convention | ERROR |
-| 9 | Duplicate basenames (vault-wide uniqueness) | ERROR |
-| 10 | Verbatim↔summary cross-links (bidirectionality) | ERROR/WARN |
-| 11 | Broken `[[wikilinks]]` | ERROR |
-| 12 | Markdown links that should be wikilinks | WARN |
-| 13 | Orphaned files (no related: and no incoming links) | WARN |
-| 14 | Composite sub-pack references | ERROR |
-| 15 | Missing frontmatter fields (title, retrieval_strategy) | WARN |
-| 16 | Stale paths in related: frontmatter | ERROR |
+Structural checks run by default and set the exit code (nonzero on any ERROR):
+manifest presence/fields/type/slug/entry_point, duplicate basenames, directory
+prefixes, required frontmatter fields (`title`, `type`, `tags`, `pack`),
+type↔directory consistency, `_index.md` presence, broken/path-based `related:`,
+broken `[[wikilinks]]`, markdown-vs-wikilinks, orphaned files, file size, the
+`W-HUB-01` hub-density check, the `W-RETR-01` retrieval antipattern check, and
+the `W-V4x` atomic-conceptual checks (active when the manifest declares
+`schema_version >= 4.x`).
 
 **Standing rule:** A pack must pass with **0 errors** before committing.
 
 ### Provenance and AKS readiness
 
-Use `--provenance` to check stable citation/freshness fields (`id`, `verified_at`, `content_hash`, and the optional `confidence` grade — `expert-verified` / `crawled` / `inferred`, flagged by `W-PROV-06` when invalid). Use `--aks` when a pack needs to produce complete compact Agent Knowledge Schema JSONL for retrieval pipelines. `--aks` implies provenance checks and adds:
+Use `--provenance` to check stable citation/freshness fields:
+
+| Check | Meaning |
+|-------|---------|
+| `W-PROV-01` | Content file missing `verified_at` (or an unparseable date) |
+| `W-PROV-02` | Stored `content_hash` does not match the current body |
+| `W-PROV-03` | `verified_at` older than `manifest.freshness.refresh_cycle` |
+| `W-PROV-04` | Content file missing `id` |
+| `W-PROV-05` | `valid_from` is later than `verified_at` |
+| `W-PROV-06` | `confidence` is not `expert-verified` / `crawled` / `inferred` |
+
+Use `--aks` (implies `--provenance`) when a pack must produce complete compact
+Agent Knowledge Schema JSONL for retrieval pipelines:
 
 | Check | Meaning |
 |-------|---------|
@@ -48,9 +56,44 @@ Use `--provenance` to check stable citation/freshness fields (`id`, `verified_at
 | `W-AKS-03` | Exporter can compute `content_hash`, but no stored frontmatter hash exists for drift detection |
 | `W-AKS-04` | Exporter has weak `canonical_statement` fallback; add a retriever-anchored opening prose paragraph |
 
+### Strict mode (the hard gate)
+
+`--strict` turns the frontmatter contract into an enforceable gate. It implies
+`--provenance` and promotes the following from WARN to ERROR so non-conforming
+files fail before they can enter an index:
+
+- missing frontmatter, or any required field (`title`, `type`, `tags`, `pack`)
+- missing `id` / `verified_at` (`W-PROV-04` / `W-PROV-01`)
+- missing `content_hash` / `schema_version` / `retrieval_strategy` (`strict-missing-field`)
+- `content_hash` drift (`W-PROV-02`) and `valid_from` after `verified_at` (`W-PROV-05`)
+- concept files over the v4.1 token ceiling (`W-V41-01`), unless the file
+  declares `retrieval_strategy: atomic` or `navigation`
+- manifest missing `schema_version`
+
+`--fail-on-warn` additionally fails the run if any warning remains.
+
+`--ignore CODE` demotes a specific check code back to WARN so it does not fail
+the run — useful for a tracked backlog. For example, the bundled demo packs pass
+`--strict --ignore W-V41-01` while their oversized concept files await the
+atomic-split backfill.
+
+### Chunk sidecars (RFC-004)
+
+For oversized files that intentionally stay whole (`retrieval_strategy: atomic`)
+or reference-scoped files, chunk boundaries live in a `<name>.chunks.yaml`
+sidecar generated by [`../chunker/ep-chunk-annotate.py`](../chunker/ep-chunk-annotate.py).
+The validator adds (WARN):
+
+| Code | Meaning |
+|------|---------|
+| `W-CHUNK-01` | Oversized atomic/reference file has no sidecar |
+| `W-CHUNK-02` | Sidecar `content_hash` does not match the file body |
+| `W-CHUNK-03` | `chunk_order` has gaps/duplicates, or a `chunk_id` is duplicated |
+
 ## ep-doctor.py
 
-Auto-fixes mechanical issues found by the validator.
+Auto-fixes mechanical issues found by the validator. Runs the sibling
+`ep-validate.py` (with the current interpreter) before and after.
 
 ```bash
 # Dry run (safe — shows what would change)
@@ -60,35 +103,33 @@ python3 ep-doctor.py /path/to/your-pack
 python3 ep-doctor.py /path/to/your-pack --apply
 
 # Scope to specific fix types
-python3 ep-doctor.py /path/to/your-pack --fix wikilinks
-python3 ep-doctor.py /path/to/your-pack --fix reverse-related --apply
+python3 ep-doctor.py /path/to/your-pack --fix hash --apply
 ```
 
-### Fix Operations
+### Fix Operations (`--fix`)
 
-| Fix | What it does |
-|-----|-------------|
-| `wikilinks` | Converts `[text](file.md)` → `[[file\|text]]` |
-| `reverse-related` | Adds missing bidirectional `related:` frontmatter entries |
-| `frontmatter` | Adds missing required frontmatter fields |
-| `orphan-links` | Removes stale paths from `related:` |
-| `index` | Creates missing `_index.md` stubs |
-| `prefixes` | Renames files to match content-type prefix convention |
+| Scope | What it does |
+|-------|-------------|
+| `all` | Everything below (default) |
+| `links` | Path-based `related:` → bare filenames; markdown links → wikilinks; legacy verbatim↔summary and bidirectional `related:` |
+| `fm` | Adds missing `title`/`type`/`tags`/`pack`; fixes legacy `canonical_verbatim` paths |
+| `hash` | Backfills the `--strict` provenance contract (`id`, `schema_version`, `retrieval_strategy`, `verified_at`, `content_hash`) via minimal textual inserts |
+| `prefix` | Renames files to match the content-type prefix convention |
 
 ## Workflow
 
 ```bash
 # 1. Validate first
-python3 ep-validate.py /path/to/pack
+python3 ep-validate.py /path/to/pack --strict
 
 # 2. Dry-run doctor to preview fixes
-python3 ep-doctor.py /path/to/pack
+python3 ep-doctor.py /path/to/pack --fix hash
 
 # 3. Apply
-python3 ep-doctor.py /path/to/pack --apply
+python3 ep-doctor.py /path/to/pack --fix hash --apply
 
 # 4. Validate again — must be 0 errors before committing
-python3 ep-validate.py /path/to/pack
+python3 ep-validate.py /path/to/pack --strict
 ```
 
 ## Requirements

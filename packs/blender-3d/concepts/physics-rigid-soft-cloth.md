@@ -18,6 +18,7 @@ supersedes:
 related:
   - physics-fluids-particles.md
   - geometry-nodes-simulation.md
+content_hash: sha256:80236d3110af7acc9850519ab2b542611dbf3a2b09874417dba98dcd61c7695e
 ---
 
 # Physics — Rigid Body, Soft Body, and Cloth

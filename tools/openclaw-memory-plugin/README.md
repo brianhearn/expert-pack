@@ -96,6 +96,7 @@ Restart the OpenClaw gateway. `memory_search` now queries EP MCP directly.
 | `minScore` | no | `0.2` | Applied client-side after server returns |
 | `includeLocalFiles` | no | `[]` | Workspace-relative paths readable via `readFile` |
 | `timeoutMs` | no | `15000` | Per-request HTTP timeout |
+| `reconstruct` | no | `false` | Request span-level provenance (RFC-003) on every search |
 
 ## Behavior
 
@@ -104,6 +105,13 @@ Restart the OpenClaw gateway. `memory_search` now queries EP MCP directly.
   server-side embedding automatically. Filters by `minScore` client-side.
   Results flagged `requires_expanded` / `graph_expanded` on the server get a
   trailing HTML comment in the snippet so the agent can see the provenance.
+- **Reconstruct Mode**: when `reconstruct: true`, the request asks EP MCP for
+  span-level provenance (RFC-003). Each result then carries a content-addressed
+  `fragment_id`, `line_range`, span `content_hash`, and a `stale` flag. The
+  fragment ID becomes the result's `citation`, the line range sets
+  `startLine`/`endLine`, and a `<!-- provenance: ... -->` block is appended to
+  the snippet so the agent can prove exactly what it retrieved. Off by default
+  because returning the original span costs tokens.
 - **`readFile`**: only permits reads for paths explicitly listed in
   `includeLocalFiles` (or matching by basename). This keeps the plugin from
   exposing arbitrary workspace files.

@@ -10,6 +10,7 @@ id: blender-3d/workflows/character-animation
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:841311d1d547745cd37faf1856aa6451715cb07751561272475cf18e3849ff03
 ---
 
 <!-- context: blender-3d/workflows/character-animation -->

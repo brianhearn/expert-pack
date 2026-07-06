@@ -15,6 +15,7 @@ id: blender-3d/troubleshooting/common-mistakes
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:617c8acd32022269877e4b40f00351334bfb55b2798b27096d43ccca87a4e147
 ---
 
 <!-- context: section=troubleshooting, topic=common-mistakes, related=modeling-fundamentals,shading-rendering,animation-rigging,physics-simulation,sculpting -->

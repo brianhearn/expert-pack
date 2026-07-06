@@ -34,6 +34,8 @@ your-pack/
 │       └── new-volatile.md
 ├── manifest.yaml           ← Pack identity (fill this in first)
 ├── overview.md             ← Entry point for AI agents
+├── DESIGN.md               ← Author notes: scope, audience, non-goals, key decisions
+├── TOOLS.md                ← Integrator notes: retrieval, MCP tools, agent workflows
 ├── glossary.md             ← (Optional) lean cross-cutting terms only
 ├── Dashboard.md            ← Live Dataview dashboard
 ├── concepts/               ← Atomic-conceptual concept files (v4.1): one self-contained file per concept

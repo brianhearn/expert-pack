@@ -13,6 +13,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:84477f87258c6837d71f4db2ccf615780892a9562e2349740c424743a67870b0
 ---
 <!-- context: section=faq, topic=automation-debugging, related=automation-fundamentals,diagnostic-guide -->
 

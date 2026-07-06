@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:2aee6621c476fe95ce4c2abd2fc5a65a8309c5522f58184f0318e9d38fdc15da
 ---
 
 # Common Mistakes in Residential Solar Projects

@@ -1,0 +1,36 @@
+{
+  "schema": "expertpack.typed_answer.v1",
+  "answer_id": "ans-2026-07-06-001",
+  "pack": "blender-3d",
+  "retrieval_mode": "reconstruct",
+  "model": "example/model",
+  "answer_text": "Poles are vertices where the edge count is not four; concentrate them in flat, hidden areas so they do not distort shading or subdivision.",
+  "claims": [
+    {
+      "claim_id": "c1",
+      "text": "A pole is any vertex where the number of connected edges is not 4.",
+      "confidence": "expert-verified",
+      "sources": [
+        {
+          "fragment_id": "blender-3d/concepts/modeling-topology#poles:a3f1c0d29e4b",
+          "source_file": "concepts/modeling-topology.md",
+          "excerpt": "A pole is any vertex where the number of connected edges is not 4.",
+          "support": "supported"
+        }
+      ]
+    },
+    {
+      "claim_id": "c2",
+      "text": "Poles should be placed in flat or hidden regions to avoid shading artifacts.",
+      "confidence": "expert-verified",
+      "sources": [
+        {
+          "fragment_id": "blender-3d/concepts/modeling-topology#poles:a3f1c0d29e4b",
+          "source_file": "concepts/modeling-topology.md",
+          "excerpt": "Place poles in flat areas where shading and subdivision artifacts are least visible.",
+          "support": "supported"
+        }
+      ]
+    }
+  ]
+}

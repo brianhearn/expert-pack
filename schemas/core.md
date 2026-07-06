@@ -651,6 +651,33 @@ excerpt     — the specific passage retrieved
 
 This gives downstream consumers everything needed to build auditable, citable answers — without requiring the agent to re-read files.
 
+### Fragment Provenance and Reconstruct Mode
+
+The Citation Response Contract above is file-level. For span-level auditability — proving *which part* of a file was retrieved and that it was not modified — a retriever MAY additionally return a **fragment provenance** envelope per result. This is the retrieval-layer contract for "Reconstruct Mode" (implemented in EP MCP; see [RFC-003](rfcs/RFC-003-fragment-provenance-reconstruct-mode.md)).
+
+```
+fragment_id   — content-addressed span ID: {id}#{section-slug}:{span-hash-prefix}
+source_file   — pack-relative path to the source file
+id            — stable frontmatter id of the source atom
+line_range    — [start, end], 1-indexed inclusive, of the matched span
+byte_offset   — [start, end], optional, for binary-safe consumers
+content_hash  — sha256: of the matched span, computed at retrieval time
+verified_at   — from frontmatter
+excerpt       — the matched passage
+original_markdown — full source span with the match highlighted (host-rendered)
+stale         — true if the span hash no longer matches the frontmatter content_hash
+```
+
+**Fragment ID format:** `{id}#{section-slug}:{sha256-prefix}` where `section-slug` is the kebab-cased nearest heading (or `opening` for the lead paragraph) and `sha256-prefix` is the first 12 hex chars of the span hash. Example:
+
+```
+blender-3d/concepts/modeling-topology#why-topology-matters:a3f1c0d29e4b
+```
+
+A fragment ID is stable across re-indexes as long as the span text is unchanged. When the span changes, its hash — and therefore its fragment ID — changes, which is the signal that a previously cited fragment is stale. Consumers verify a citation by recomputing the span hash and comparing it to the `sha256-prefix` embedded in the fragment ID (and to the file's frontmatter `content_hash`).
+
+Reconstruct Mode is opt-in: a retriever exposes it behind a flag (e.g. `reconstruct=true`) because returning `original_markdown` costs tokens. Discovery uses vectors; verification uses `source_file` + `line_range` + span hash.
+
 ### Pack-Level Freshness (manifest.yaml)
 
 Maintain a `freshness` block in `manifest.yaml` (see manifest spec above). Update `verified_file_count`, `total_file_count`, and `coverage_pct` after each review pass. This is a manually maintained summary — it gives consuming agents a single-glance freshness signal without scanning every file.

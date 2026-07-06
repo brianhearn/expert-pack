@@ -13,6 +13,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:9eacf1a74ac6c00ff532d5a7b8b2b5535314b4cf4dd442f56df26aa8603edbe8
 ---
 <!-- context: section=concepts, topic=presence-detection, related=esphome-fundamentals,automation-fundamentals -->
 ---

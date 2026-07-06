@@ -47,8 +47,8 @@ Reduce hallucinations and improve answer completeness.
 
 ### 4. Pack Creation & Training
 Make it easier to build and maintain packs.
-- [ ] **Pack scaffolding CLI** — `expertpack init --type product --name "Acme"`
-- [x] **Validation tool** — `ep-validate.py` (19 checks) + `ep-doctor.py` (auto-fix) + `ep-fix-broken-wikilinks.py`. Ships in `tools/validator/`.
+- [x] **Pack scaffolding CLI** — `expertpack init <slug> --type product` scaffolds from `template/`, substitutes the manifest, backfills provenance, and validates. Unified `tools/cli/expertpack.py` also wraps validate/doctor/checksum/chunk-annotate/migrate.
+- [x] **Validation tool** — `ep-validate.py` (strict frontmatter gate + provenance + chunk checks) + `ep-doctor.py` (auto-fix: links incl. broken-wikilink removal, fm, hash backfill, prefix). Ships in `tools/validator/`.
 - [ ] **Guided interview mode** — agent-driven structured knowledge capture
 - [ ] **Population playbooks** — interactive recipes per source type
 
@@ -87,6 +87,16 @@ Stay current with developments that could improve the framework.
 ---
 
 ## Status Log
+
+### 2026-07-06 — Top-5 improvements: enforcement, provenance, chunking, typed answers, onboarding
+- **Strict validator (`ep-validate --strict`):** turns the frontmatter contract into a hard gate. Implies `--provenance` and promotes required-field, hash, size, and provenance rules from WARN to ERROR (`title`/`type`/`tags`/`pack`/`id`/`schema_version`/`retrieval_strategy`/`verified_at`/`content_hash`, W-PROV-02/05, W-V41-01, manifest `schema_version`). Added `--fail-on-warn` and `--ignore CODE` (demote a tracked backlog). Implemented the previously-documented W-PROV-05. Fixed cross-platform UTF-8 file/stdout handling so the tools run on Windows.
+- **Doctor backfill (`ep-doctor --fix hash`):** minimal textual insertion of `id`/`schema_version`/`retrieval_strategy`/`verified_at`/`content_hash`. Backfilled all three demo packs and the template; every target now passes `--strict` (`packs/*` with `--ignore W-V41-01` for the oversized-concept backlog awaiting the atomic-split sprint).
+- **Hard gates:** `.github/workflows/validate.yml` (template + per-pack matrix), `.pre-commit-config.yaml`, `tools/validate-all.py`, and `tools/ingest-gate.py` (validate → strip → export). No pack enters the index without passing `--strict`.
+- **Machine-readable schema:** `schemas/registry/frontmatter.spec.yaml` + `frontmatter.schema.json` (JSON Schema 2020-12) — validated against all 94 content files.
+- **Reconstruct Mode (RFC-003):** fragment provenance contract added to `schemas/core.md` and `schemas/rfcs/RFC-003-fragment-provenance-reconstruct-mode.md` (content-addressed `fragment_id`, `line_range`, span hash, `stale`). AKS spec extended with `fragment_id`/`line_range`/`span_hash`. The OpenClaw plugin now sends `reconstruct` and surfaces the returned provenance; the EP MCP runtime is the remaining external milestone (checklist in RFC-003).
+- **Semantic chunk sidecars (RFC-004):** `tools/chunker/ep-chunk-annotate.py` generates header-aware `<name>.chunks.yaml` sidecars (git-tracked, out of the embeddable body). Format spec in `schemas/registry/chunk-sidecar.spec.yaml`; validator adds `W-CHUNK-01..03`; CI runs `--check` for drift. Sidecars generated for the oversized atomic/reference files across all three demo packs. EP MCP consuming the sidecar for deterministic re-assembly is the remaining external milestone (boundary noted in RFC-004).
+- **Typed Answer Contract (TAC v1):** machine-verifiable response envelope where every claim maps to a retrieved source fragment (`supported`/`partial`/`unsupported`). Spec in `schemas/registry/typed-answer.spec.yaml` + `typed-answer.schema.json` (JSON Schema 2020-12); agent prompt in `templates/TAC-PROMPT.md`; TypeScript types in `tools/openclaw-memory-plugin/src/tac-types.ts`. `tools/tac/validate_tac.py` enforces the structural + semantic contract (every claim grounded, `reconstruct` requires `fragment_id`); `claim_verifier.py --tac` scores envelopes in the eval pipeline. TAC is the response layer on top of RFC-003 retrieval.
+- **Guided onboarding CLI:** `tools/cli/expertpack.py` is one entrypoint over the existing tools — `init` (scaffold + provenance backfill + validate), `validate`, `doctor`, `checksum`, `chunk-annotate`, and `migrate obsidian|v3-to-v4`. Optional `pip install -e .` exposes it as `expertpack`. Added `template/DESIGN.md` (scope/audience/non-goals/decisions) and `template/TOOLS.md` (retrieval, MCP tools, workflows) starter docs. The Obsidian converter now emits `_migration-report.md` (ambiguous types, oversized files + split suggestions, provenance backfill). Consolidated the never-shipped `ep-fix-broken-wikilinks.py` into `ep-doctor --fix links` (composite-safe broken-wikilink removal; also stopped mis-converting `.md` URLs) and fixed the dangling references across the skills docs.
 
 ### 2026-04-18 — Schema v4.0 shipped (RFC-001 atomic-conceptual chunks)
 - **RFC-001 accepted:** `schemas/rfcs/RFC-001-atomic-conceptual-chunks.md`. Concept files become self-contained retrieval units; aggregator directories (`summaries/`, `propositions/`, `sources/`, per-domain `glossary-*.md`) deprecated for product/process packs.
@@ -129,7 +139,7 @@ Stay current with developments that could improve the framework.
 ### 2026-04-06 — Obsidian compatibility + validator tooling
 - **Schema 2.8** — per-file YAML frontmatter standard; 25-type taxonomy; `.obsidian/` vault config; Dataview + Templater templates
 - **Schema 2.9** — `related:` frontmatter field; `.obsidian/graph.json` pre-configured with type color groups and `_index.md` exclusion filter
-- `ep-validate.py` — 16-check compliance validator; `ep-doctor.py` — auto-fix (links, frontmatter, prefixes); `ep-fix-broken-wikilinks.py` — safe wikilink cleanup
+- `ep-validate.py` — 16-check compliance validator; `ep-doctor.py` — auto-fix (links incl. safe broken-wikilink cleanup, frontmatter, prefixes)
 - All community packs (blender-3d, home-assistant, solar-diy) Obsidian-ready with bundled `.obsidian/`
 - `template/` vault template — full scaffolding with 5 Templater templates and 7 live Dataview queries
 - `obsidian-to-expertpack` skill published to ClawHub (v1.0.1)

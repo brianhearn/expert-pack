@@ -16,6 +16,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:49b4b9f42d36d65881e276ab96e77f9a073a4854eafb9fbe5404cbb23724ea9c
 ---
 <!-- context: section=product, topic=faq-general, related=system-design-fundamentals,inverter-types,battery-systems-2026,diy-vs-contractor,grid-tied-vs-hybrid -->
 

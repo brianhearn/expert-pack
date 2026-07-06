@@ -1,0 +1,110 @@
+schema_version: '1.0'
+source_id: home-assistant/process/phases/01-planning
+content_hash: sha256:4c98072f458c3a40a7ddd5b01567d6c0a964d23b40dc802d78065327d49739b4
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: 01-planning--opening
+  chunk_order: 0
+  section: null
+  line_range: [15, 16]
+  tokenizer_tokens: 5
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--goal
+  chunk_order: 1
+  section: Goal
+  line_range: [17, 20]
+  tokenizer_tokens: 52
+  chunk_summary: 'Make three key decisions before spending money: **what hardware to run HA on**, **which installation method to use**, and **how to structure your network**. ...'
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--prerequisites
+  chunk_order: 2
+  section: Prerequisites
+  line_range: [21, 24]
+  tokenizer_tokens: 13
+  chunk_summary: None — this is the starting point.
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--outputs
+  chunk_order: 3
+  section: Outputs
+  line_range: [25, 32]
+  tokenizer_tokens: 42
+  chunk_summary: '- Hardware selected and ordered (or repurposed)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--step-1-choose-your-hardware
+  chunk_order: 4
+  section: 'Step 1: Choose Your Hardware'
+  line_range: [33, 36]
+  tokenizer_tokens: 54
+  chunk_summary: Your HA server needs to run 24/7. It needs enough CPU and RAM to handle integrations, automations, and add-ons without lag. It also needs reliable storage — ...
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--quick-guide
+  chunk_order: 5
+  section: Quick Guide
+  line_range: [37, 58]
+  tokenizer_tokens: 253
+  chunk_summary: '**Best choice for most new builds:** Raspberry Pi 5 with a 128GB+ SSD via USB3, or a used Intel N100 mini-PC from Amazon. Both support HA OS natively.'
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--step-2-choose-your-installation-method
+  chunk_order: 6
+  section: 'Step 2: Choose Your Installation Method'
+  line_range: [59, 75]
+  tokenizer_tokens: 235
+  chunk_summary: Home Assistant comes in four flavors. The differences are significant.
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--step-3-plan-your-network
+  chunk_order: 7
+  section: 'Step 3: Plan Your Network'
+  line_range: [76, 79]
+  tokenizer_tokens: 40
+  chunk_summary: A smart home adds dozens of devices to your network. Doing this thoughtlessly causes security risks and troubleshooting nightmares.
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--ip-address-reservations
+  chunk_order: 8
+  section: IP Address Reservations
+  line_range: [80, 85]
+  tokenizer_tokens: 90
+  chunk_summary: Your HA server should have a **static IP** (either assigned via DHCP reservation or configured statically). You'll be accessing it constantly — a changing IP...
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--vlan-segmentation-optional-but-recommended
+  chunk_order: 9
+  section: VLAN Segmentation (Optional but Recommended)
+  line_range: [86, 95]
+  tokenizer_tokens: 143
+  chunk_summary: 'For security-conscious setups, consider putting IoT devices on a separate VLAN:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--where-to-place-the-ha-server
+  chunk_order: 10
+  section: Where to Place the HA Server
+  line_range: [96, 103]
+  tokenizer_tokens: 92
+  chunk_summary: 'The Zigbee/Z-Wave coordinator (a USB dongle) needs to be physically near the HA server. Place the server:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--ports-to-know
+  chunk_order: 11
+  section: Ports to Know
+  line_range: [104, 114]
+  tokenizer_tokens: 71
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--step-4-protocol-selection
+  chunk_order: 12
+  section: 'Step 4: Protocol Selection'
+  line_range: [115, 124]
+  tokenizer_tokens: 106
+  chunk_summary: While planning, decide which smart home protocol you'll lead with. This determines which coordinator USB dongle you need before you can buy devices.
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--checklist
+  chunk_order: 13
+  section: Checklist
+  line_range: [125, 134]
+  tokenizer_tokens: 103
+  chunk_summary: '- [ ] Hardware selected (or existing hardware identified)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 01-planning--what-s-next
+  chunk_order: 14
+  section: What's Next
+  line_range: [135, 137]
+  tokenizer_tokens: 29
+  chunk_summary: '→ [[02-initial-setup.md|Phase 2: Initial Setup]] — Install HA OS and configure your first integrations'
+  embedding_version: gemini-embedding-001

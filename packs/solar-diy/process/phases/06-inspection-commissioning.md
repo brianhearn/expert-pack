@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:c150a578b02587abb2ed8a51ca95c04405bcc0a66f586939ff1f39c06e2fc249
 ---
 
 # Phase 6: Inspection & Commissioning

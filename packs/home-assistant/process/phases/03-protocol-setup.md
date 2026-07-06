@@ -10,6 +10,7 @@ id: home-assistant/process/phases/03-protocol-setup
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:305761546d9808f63aa5210c172870176135388ac0f5a5125f6d31261a7f9efb
 ---
 # Phase 3: Protocol Setup
 

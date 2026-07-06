@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:0a111569778d08757a3830dfdc4d28e650375229047f08b35405b1ae25977f20
 ---
 
 ---

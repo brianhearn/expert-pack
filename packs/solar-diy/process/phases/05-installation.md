@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:fac4a3fd4b5f41e0e24dc2cb14572533d8bd263c0514426d9984ce2f7e540a08
 ---
 
 # Phase 5: Installation

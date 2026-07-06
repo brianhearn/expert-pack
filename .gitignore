@@ -1,3 +1,11 @@
 skills/expertpack/scripts/__pycache__/
 __pycache__/
 exports/
+
+# Ingest-gate / deploy-prep build artifacts
+build/
+
+# Python packaging (expertpack CLI)
+dist/
+*.egg-info/
+.eggs/

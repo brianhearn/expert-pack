@@ -1,0 +1,14 @@
+# ExpertPack pre-commit gate. Install once with:
+#   pip install pre-commit && pre-commit install
+# Then every commit that touches Markdown or YAML runs the --strict validator
+# across the template and all packs before the commit is allowed through.
+
+repos:
+  - repo: local
+    hooks:
+      - id: ep-validate-strict
+        name: ExpertPack strict validation
+        entry: python tools/validate-all.py --ignore W-V41-01
+        language: system
+        pass_filenames: false
+        files: '\.(md|ya?ml)$'

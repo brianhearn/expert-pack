@@ -10,6 +10,7 @@ id: blender-3d/workflows/motion-graphics
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:13b6c09de2ea36e896daaa03ddcd2f83f7ec502f0c5dd2f679bc353094e7832f
 ---
 
 <!-- context: blender-3d/workflows/motion-graphics -->

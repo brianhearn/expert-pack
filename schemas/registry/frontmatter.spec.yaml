@@ -1,0 +1,117 @@
+# ExpertPack Content-File Frontmatter Contract
+# Version: 1.0
+# Date: 2026-07-06
+#
+# Descriptive spec for the YAML frontmatter that `ep-validate --strict` enforces
+# on every content file. Markdown remains canonical; this spec (and its
+# companion frontmatter.schema.json) exists so external tools can validate the
+# same contract the CLI gate enforces.
+
+schema: expertpack.frontmatter.v1
+version: "1.0"
+applies_to: content files under a pack (excludes root docs and _index.md)
+enforced_by: tools/validator/ep-validate.py --strict
+
+# Fields promoted to hard errors under --strict.
+required:
+  - title
+  - type
+  - tags
+  - pack
+  - id
+  - schema_version
+  - retrieval_strategy
+  - verified_at
+  - content_hash
+
+fields:
+  title:
+    type: string
+    description: Human-readable title. Should match the H1 heading.
+
+  type:
+    type: string
+    description: >-
+      Content role. Common values: concept, workflow, troubleshooting, faq,
+      gotcha, decision, reference, fact, relationship, pattern, index. Must be
+      consistent with the file's directory (see DIR_TYPE_MAP in ep-validate).
+
+  tags:
+    type: array
+    items: string
+    description: Kebab-case topic taxonomy tags.
+
+  pack:
+    type: string
+    description: Slug of the pack that owns this file.
+
+  id:
+    type: string
+    description: Stable, pack-scoped citation ID.
+    pattern: ^[a-z0-9][a-z0-9-]*/.+$
+    example: blender-3d/concepts/modeling-topology
+
+  schema_version:
+    type: string
+    description: Per-file schema contract version (e.g. "4.1").
+    pattern: ^\d+(\.\d+)*$
+
+  retrieval_strategy:
+    type: string
+    enum: [standard, atomic, navigation]
+    description: >-
+      standard = 500-800 token atom; atomic = retrieve whole file even if
+      oversized (exempt from the concept size ceiling); navigation = exclude
+      from the RAG index.
+
+  verified_at:
+    type: string
+    format: date
+    description: ISO date the file was last verified accurate.
+
+  content_hash:
+    type: string
+    pattern: ^sha256:[a-f0-9]{64}$
+    description: SHA-256 of the frontmatter-stripped body. Regenerate with `ep-doctor --fix hash`.
+
+optional:
+  verified_by:
+    type: string
+    description: Who/what verified the file.
+
+  confidence:
+    type: string
+    enum: [expert-verified, crawled, inferred]
+
+  concept_scope:
+    type: string
+    enum: [single, reference, multi, navigation]
+
+  valid_from:
+    type: string
+    format: date
+    description: Date the described knowledge became true in the world. Must not postdate verified_at.
+
+  recorded_at:
+    type: string
+    format: date
+
+  related:
+    type: array
+    items: string
+    description: Bare filenames of softly associated atoms.
+
+  requires:
+    type: array
+    items: string
+    description: Directional dependencies expanded by EP MCP at retrieval time.
+
+  supersedes:
+    type: array
+    items: string
+    description: Files replaced by this one; delete the target to complete migration.
+
+notes:
+  - Root docs (README.md, overview.md, glossary.md, ...) and _index.md files are exempt.
+  - Files with type index/source/proposition/summary/training are exempt from the provenance fields.
+  - retrieval_strategy atomic/navigation exempts a concept file from the v4.1 token ceiling (W-V41-01).

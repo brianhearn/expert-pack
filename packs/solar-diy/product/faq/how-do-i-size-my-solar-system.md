@@ -15,6 +15,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:5bb2e6e67cea12829f588549183d817ca90831819e32e6c8435067159e0b8852
 ---
 <!-- context: section=product, topic=faq-system-sizing, related=system-design-fundamentals,solar-panels-2026,system-design-phase,pvwatts -->
 

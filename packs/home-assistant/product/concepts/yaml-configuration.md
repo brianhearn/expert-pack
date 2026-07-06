@@ -13,6 +13,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:141b66d975fb053172cd38ed94df3691b7f2edf730d2eeab6bd9908f3357db4b
 ---
 <!-- context: section=concepts, topic=yaml-configuration, related=core-architecture,automation-fundamentals -->
 ---

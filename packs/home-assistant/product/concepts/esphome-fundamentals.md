@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:8e9bc1e1acad76288be888878a1488104db7b7cb245284c2e72488520eb6f87b
 ---
 <!-- context: section=concepts, topic=esphome-fundamentals, related=protocols,integrations-guide,presence-detection -->
 ---

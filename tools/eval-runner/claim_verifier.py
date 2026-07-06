@@ -47,12 +47,6 @@ except ImportError:
     print("Error: pyyaml required. pip install pyyaml")
     sys.exit(1)
 
-try:
-    import requests
-except ImportError:
-    print("Error: requests required. pip install requests")
-    sys.exit(1)
-
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 DEFAULT_VERIFIER_MODEL = "openai/gpt-4o-mini"
 
@@ -82,6 +76,10 @@ def load_api_key() -> str:
 
 
 def call_llm(prompt: str, model: str, api_key: str) -> str:
+    try:
+        import requests
+    except ImportError:
+        return "[ERROR] requests required. pip install requests"
     headers = {
         "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json",
@@ -264,6 +262,81 @@ def verify_question(
 
 
 # ---------------------------------------------------------------------------
+# Typed Answer Contract (TAC) scoring
+# ---------------------------------------------------------------------------
+
+def _load_tac_validator():
+    """Import validate() from tools/tac/validate_tac.py without a package."""
+    tac_dir = Path(__file__).resolve().parent.parent / "tac"
+    if str(tac_dir) not in sys.path:
+        sys.path.insert(0, str(tac_dir))
+    import validate_tac  # type: ignore
+    return validate_tac.validate
+
+
+def run_tac_scorer(args):
+    """Score a Typed Answer Contract envelope.
+
+    Structural validity is checked against the TAC schema. claim_coverage is the
+    fraction of claims the envelope itself grades as supported. When --pack and
+    an API key are available, each claim is independently re-verified against the
+    pack spans (an external check on the agent's self-declared grades).
+    """
+    tac_path = Path(args.tac)
+    if not tac_path.exists():
+        print(f"Error: TAC file not found: {tac_path}")
+        return 1
+
+    tac = json.loads(tac_path.read_text(encoding="utf-8"))
+    errors = _load_tac_validator()(tac)
+    structural_valid = not errors
+
+    claims = tac.get("claims", []) if isinstance(tac, dict) else []
+    n_claims = len(claims)
+
+    def is_supported(claim):
+        return any(s.get("support") == "supported" for s in claim.get("sources", []))
+
+    declared_supported = [c for c in claims if is_supported(c)]
+    declared_coverage = len(declared_supported) / n_claims if n_claims else None
+
+    print("=== TYPED ANSWER CONTRACT SCORECARD ===")
+    print(f"File:              {tac_path}")
+    print(f"Structural valid:  {'yes' if structural_valid else 'NO'}")
+    if not structural_valid:
+        for e in errors:
+            print(f"  - {e}")
+    if declared_coverage is not None:
+        print(f"Declared coverage: {declared_coverage:.1%}  ({len(declared_supported)}/{n_claims} claims self-graded supported)")
+
+    # Optional external grounding: re-verify each claim against pack spans.
+    if args.pack:
+        pack_path = Path(args.pack)
+        api_key = load_api_key()
+        if not pack_path.exists():
+            print(f"(skip grounding: pack not found: {pack_path})")
+        elif not api_key:
+            print("(skip grounding: OPENROUTER_API_KEY not set)")
+        else:
+            model = args.model or DEFAULT_VERIFIER_MODEL
+            spans = load_pack_spans(pack_path)
+            verified = 0
+            for c in claims:
+                time.sleep(args.delay)
+                verdict = call_llm(
+                    VERIFY_CLAIM_PROMPT.format(claim=c.get("text", ""), spans=spans[:MAX_SPAN_CHARS]),
+                    model, api_key,
+                ).lower().strip()
+                if "supported" in verdict and "unsupported" not in verdict:
+                    verified += 1
+            actual_coverage = verified / n_claims if n_claims else None
+            if actual_coverage is not None:
+                print(f"Verified coverage: {actual_coverage:.1%}  ({verified}/{n_claims} claims grounded in pack, model={model})")
+
+    return 0 if structural_valid else 1
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -362,13 +435,19 @@ def run_verifier(args):
 
 
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (AttributeError, ValueError):
+        pass
     parser = argparse.ArgumentParser(
-        description="ExpertPack claim-to-span verifier — add claim_coverage and citation_f1 to eval results"
+        description="ExpertPack claim-to-span verifier — add claim_coverage and citation_f1 to eval results, or score a Typed Answer Contract (--tac)"
     )
-    parser.add_argument("--result", required=True,
+    parser.add_argument("--result", default=None,
                         help="Path to completed eval result YAML (from run_eval.py)")
-    parser.add_argument("--pack", required=True,
-                        help="Path to the pack used in the eval run")
+    parser.add_argument("--tac", default=None,
+                        help="Path to a Typed Answer Contract JSON to score instead of an eval result")
+    parser.add_argument("--pack", default=None,
+                        help="Path to the pack used in the eval run (required for --result; optional grounding check for --tac)")
     parser.add_argument("--model", default=None,
                         help=f"Verifier model (default: {DEFAULT_VERIFIER_MODEL})")
     parser.add_argument("--output", default=None,
@@ -378,6 +457,12 @@ def main():
     parser.add_argument("--delay", type=float, default=0.5,
                         help="Seconds between claim verification calls (default: 0.5)")
     args = parser.parse_args()
+
+    if args.tac:
+        sys.exit(run_tac_scorer(args))
+
+    if not args.result or not args.pack:
+        parser.error("--result and --pack are required (or use --tac to score a Typed Answer Contract)")
     run_verifier(args)
 
 

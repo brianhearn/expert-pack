@@ -121,6 +121,24 @@ optional:
     items: string
     description: Older record IDs or paths replaced by this record.
 
+  # Fragment provenance (RFC-003). Optional; present when a record projects a
+  # sub-file span rather than a whole-file atom. See schemas/core.md
+  # § "Fragment Provenance and Reconstruct Mode".
+  fragment_id:
+    type: string
+    description: Content-addressed span ID, format {id}#{section-slug}:{sha256-prefix}.
+    example: blender-3d/concepts/modeling-topology#why-topology-matters:a3f1c0d29e4b
+
+  line_range:
+    type: array
+    items: integer
+    description: "[start, end] 1-indexed inclusive line span within canonical_path."
+
+  span_hash:
+    type: string
+    pattern: ^sha256:[a-f0-9]{64}$
+    description: SHA-256 of the matched span text (narrower sibling of content_hash).
+
 notes:
   - AKS is intentionally small. It is not a replacement for full ExpertPack Markdown or full JSON-LD micro-records.
   - source_checksum duplicates content_hash by design for compatibility with checksum-oriented systems.

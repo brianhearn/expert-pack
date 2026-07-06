@@ -91,6 +91,10 @@ def process_pack(src: Path, out: Path, dry_run: bool = False) -> dict:
 
 
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (AttributeError, ValueError):
+        pass
     parser = argparse.ArgumentParser(
         description="Strip YAML frontmatter from ExpertPack .md files for deploy."
     )

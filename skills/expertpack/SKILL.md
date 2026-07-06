@@ -67,9 +67,8 @@ Install the companion skill `expertpack-eval` via clawhub — it handles all LLM
 
 The ExpertPack repo (`tools/validator/` at github.com/brianhearn/expert-pack) includes local Python scripts for validation and auto-fix. They operate on local pack files only — no network calls, no external dependencies beyond Python stdlib.
 
-- **ep-validate.py** — 16-check compliance validator (manifest, frontmatter, wikilinks, cross-links, file prefixes, orphans, file size). Must pass with 0 errors before committing.
-- **ep-doctor.py** — auto-fixes common issues. Always run in dry-run mode first (default behavior); only add the apply flag after reviewing proposed changes. Fix categories: links, fm, prefix.
-- **ep-fix-broken-wikilinks.py** — removes broken wikilinks; safe for composites with cross-sub-pack references. Always preview before applying.
+- **ep-validate.py** — compliance validator (manifest, frontmatter, wikilinks, cross-links, file prefixes, orphans, file size, provenance, chunk sidecars). Add `--strict` to turn the frontmatter contract into a hard gate; must pass with 0 errors before committing.
+- **ep-doctor.py** — auto-fixes common issues. Always run in dry-run mode first (default behavior); only add the apply flag after reviewing proposed changes. Fix categories: links (includes broken-wikilink removal, composite-safe), fm, hash (provenance backfill), prefix.
 
 Recommended workflow: ep-doctor dry-run → ep-doctor apply → ep-validate → commit.
 
@@ -78,3 +77,13 @@ See `{skill_dir}/references/cli-commands.md` for exact command syntax.
 ### 6. Export an OpenClaw Agent as an ExpertPack
 
 Install the companion skill `expertpack-export` via clawhub — it handles workspace scanning, distillation, and packaging.
+
+### 7. Emit Typed Answers (TAC)
+
+When retrieval runs in Reconstruct Mode (`retrieval_mode: reconstruct`, see RFC-003), agents MUST return a Typed Answer Contract (TAC) envelope instead of free prose. TAC forces every claim in an answer to map to a retrieved source fragment, so answers can be machine-verified rather than trusted blindly.
+
+- Copy the prompt contract from `templates/TAC-PROMPT.md` into the agent's system prompt.
+- The envelope schema lives in `schemas/registry/typed-answer.schema.json` (spec: `schemas/registry/typed-answer.spec.yaml`).
+- Validate output structurally with `python tools/tac/validate_tac.py answer.json`; the eval `claim_verifier.py --tac` scores TAC envelopes against the pack.
+
+In `standard` retrieval mode file-level citations suffice and TAC is optional; in `reconstruct` mode each source must carry a `fragment_id`.

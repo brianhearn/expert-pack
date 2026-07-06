@@ -632,6 +632,10 @@ def run(args):
 
 
 def main():
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except (AttributeError, ValueError):
+        pass
     parser = argparse.ArgumentParser(
         description="ExpertPack Micro-Record Exporter — generate canonical micro-records from pack files"
     )

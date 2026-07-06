@@ -15,6 +15,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:1d243c683dd80c1e7d2c269d25c3c89d3f3ccbaeb60df5dc485761cd1fc037e7
 ---
 # Inverter Types — Microinverters vs String Inverters vs Optimizers
 

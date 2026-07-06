@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://expertpack.dev/schemas/frontmatter.schema.json",
+  "title": "ExpertPack Content-File Frontmatter",
+  "description": "Standards-based JSON Schema for the frontmatter contract enforced by ep-validate --strict. Parse a file's YAML frontmatter to an object and validate it against this schema.",
+  "type": "object",
+  "required": [
+    "title",
+    "type",
+    "tags",
+    "pack",
+    "id",
+    "schema_version",
+    "retrieval_strategy",
+    "verified_at",
+    "content_hash"
+  ],
+  "properties": {
+    "title": { "type": "string", "minLength": 1 },
+    "type": { "type": "string", "minLength": 1 },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "pack": { "type": "string", "minLength": 1 },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*/.+$"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^[0-9]+(\\.[0-9]+)*$"
+    },
+    "retrieval_strategy": {
+      "type": "string",
+      "enum": ["standard", "atomic", "navigation"]
+    },
+    "verified_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "verified_by": { "type": "string" },
+    "confidence": {
+      "type": "string",
+      "enum": ["expert-verified", "crawled", "inferred"]
+    },
+    "concept_scope": {
+      "type": "string",
+      "enum": ["single", "reference", "multi", "navigation"]
+    },
+    "valid_from": { "type": "string", "format": "date" },
+    "recorded_at": { "type": "string", "format": "date" },
+    "related": {
+      "type": ["array", "null"],
+      "items": { "type": "string" }
+    },
+    "requires": {
+      "type": ["array", "null"],
+      "items": { "type": "string" }
+    },
+    "supersedes": {
+      "type": ["array", "null"],
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": true
+}

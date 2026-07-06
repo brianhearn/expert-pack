@@ -13,6 +13,7 @@ id: blender-3d/faq/how-do-i-loop-an-animation
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:ada6c6f5f3ae5581daf1c03eddf72e4e4c3000c7eb1870439e23f1fe76d9cf11
 ---
 <!-- context: section=faq, topic=animation-looping, related=animation-rigging,character-animation,motion-graphics -->
 

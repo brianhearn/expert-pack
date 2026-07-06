@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:23d8b729efd9ddf2229bc985c6e5a14a2d8ead589496062481d97e684877dc50
 ---
 <!-- context: section=faq, topic=common-questions, related=core-architecture,protocols,backup-migration -->
 ---

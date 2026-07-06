@@ -61,14 +61,11 @@ For detailed handling of Obsidian-specific patterns (nested tags, daily notes, t
 ## Step 3: Validate & Fix
 
 ```bash
-# Fix common issues first
+# Fix common issues first (links includes broken-wikilink cleanup of cross-vault references)
 python3 /path/to/ExpertPack/tools/validator/ep-doctor.py ~/expertpacks/my-pack-slug --apply
 
 # Must reach 0 errors
 python3 /path/to/ExpertPack/tools/validator/ep-validate.py ~/expertpacks/my-pack-slug --verbose
-
-# Fix any broken wikilinks (cross-vault references)
-python3 /path/to/ExpertPack/tools/validator/ep-fix-broken-wikilinks.py ~/expertpacks/my-pack-slug --apply
 ```
 
 Do not proceed until `ep-validate` reports **0 errors**.

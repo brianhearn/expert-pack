@@ -67,17 +67,11 @@ Notes with no incoming wikilinks are flagged as orphans by `ep-validate`. Common
 Run in this order:
 
 ```bash
-# 1. Auto-fix common issues
+# 1. Auto-fix common issues (links includes broken-wikilink cleanup from Obsidian cross-references)
 python3 /path/to/ExpertPack/tools/validator/ep-doctor.py /path/to/output --apply
 
 # 2. Validate (must reach 0 errors)
 python3 /path/to/ExpertPack/tools/validator/ep-validate.py /path/to/output --verbose
-
-# 3. Fix broken wikilinks from Obsidian cross-references
-python3 /path/to/ExpertPack/tools/validator/ep-fix-broken-wikilinks.py /path/to/output --apply
-
-# 4. Re-validate
-python3 /path/to/ExpertPack/tools/validator/ep-validate.py /path/to/output
 ```
 
 Then (agent-assisted):

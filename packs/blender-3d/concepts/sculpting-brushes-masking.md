@@ -17,6 +17,7 @@ supersedes:
   - concepts/sculpting.md
 related:
   - sculpting-paradigms.md
+content_hash: sha256:6952afb32782da033645d71b32788463d00b06b3b499bf49b836c4cc84e26368
 ---
 
 # Sculpting — Brushes, Face Sets, and Masking

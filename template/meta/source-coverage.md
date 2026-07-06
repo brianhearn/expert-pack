@@ -4,6 +4,10 @@ type: meta
 tags: [source, coverage, pack-name]
 pack: your-pack-slug
 retrieval_strategy: navigation
+id: your-pack-slug/meta/source-coverage
+schema_version: "4.1"
+verified_at: "2026-07-06"
+content_hash: sha256:9598c519d4eb90d687b4a4d772ab1c9d0363aa83f2206c496ee89cb4b133e82a
 ---
 
 # Source Coverage

@@ -13,6 +13,7 @@ id: home-assistant/product/troubleshooting/diagnostic-guide
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:b9a82edb54784f78d43a81f77dff54c1398d1131eae5b50a96cbaf774dfbc1eb
 ---
 <!-- context: section=troubleshooting, topic=diagnostic-guide, related=core-architecture,yaml-configuration,integrations-guide -->
 ---

@@ -18,6 +18,7 @@ supersedes:
 related:
   - sculpting-brushes-masking.md
   - modeling-topology.md
+content_hash: sha256:cf4d8d599b2af6b576e8adf1e97781649fccc4fae85341422ad35ce98f63783b
 ---
 
 # Sculpting — Three Paradigms: Dyntopo, Multires, and Remesh

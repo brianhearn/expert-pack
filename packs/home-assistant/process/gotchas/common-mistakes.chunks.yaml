@@ -1,0 +1,159 @@
+schema_version: '1.0'
+source_id: home-assistant/process/gotchas/common-mistakes
+content_hash: sha256:e37d64db0a6246a6a7a0694979b3d3a177c29f4378ff24f52ce06e58652ba9f3
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: common-mistakes--opening
+  chunk_order: 0
+  section: null
+  line_range: [15, 20]
+  tokenizer_tokens: 35
+  chunk_summary: These are the mistakes that cost people the most time and frustration. Learn them before you start.
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-1-sd-card-storage
+  chunk_order: 1
+  section: 'Mistake 1: SD Card Storage'
+  line_range: [21, 35]
+  tokenizer_tokens: 181
+  chunk_summary: '**What happens:** Your HA installation corrupts after a power blip or fails silently after 6-12 months. You lose your configuration, automations, and device ...'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-2-using-wi-fi-for-everything
+  chunk_order: 2
+  section: 'Mistake 2: Using Wi-Fi for Everything'
+  line_range: [36, 47]
+  tokenizer_tokens: 170
+  chunk_summary: '**What happens:** Router degrades under 30+ IoT devices. Devices randomly go offline. Automations become unreliable. Most cloud-dependent Wi-Fi devices stop ...'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-3-zigbee-coordinator-too-close-to-usb-3-0-ports
+  chunk_order: 3
+  section: 'Mistake 3: Zigbee Coordinator Too Close to USB 3.0 Ports'
+  line_range: [48, 57]
+  tokenizer_tokens: 156
+  chunk_summary: '**What happens:** Zigbee devices pair fine but randomly drop offline. LQI values are low. Devices that should be in range aren''t reaching the coordinator.'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-4-wrong-automation-mode-for-motion-lights
+  chunk_order: 4
+  section: 'Mistake 4: Wrong Automation Mode for Motion Lights'
+  line_range: [58, 84]
+  tokenizer_tokens: 199
+  chunk_summary: '**What happens:** Motion-activated lights turn off while you''re still in the room. Moving again doesn''t reset the timer.'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-5-not-setting-up-backups-on-day-one
+  chunk_order: 5
+  section: 'Mistake 5: Not Setting Up Backups on Day One'
+  line_range: [85, 96]
+  tokenizer_tokens: 122
+  chunk_summary: '**What happens:** HA crashes or hardware fails six months in. You lose your entire configuration.'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-6-editing-configuration-yaml-without-validating
+  chunk_order: 6
+  section: 'Mistake 6: Editing `configuration.yaml` Without Validating'
+  line_range: [97, 109]
+  tokenizer_tokens: 158
+  chunk_summary: '**What happens:** HA fails to restart after a YAML edit. You''re left with an inaccessible HA instance and no obvious error message.'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-7-using-unavailable-entities-in-automations
+  chunk_order: 7
+  section: 'Mistake 7: Using Unavailable Entities in Automations'
+  line_range: [110, 139]
+  tokenizer_tokens: 209
+  chunk_summary: '**What happens:** Automations fire on `unavailable` states as if they were valid state changes. Lights turn on/off randomly. Presence automations trigger whe...'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-8-presence-detection-based-only-on-phone-gps
+  chunk_order: 8
+  section: 'Mistake 8: Presence Detection Based Only on Phone GPS'
+  line_range: [140, 156]
+  tokenizer_tokens: 196
+  chunk_summary: '**What happens:** "Welcome home" automations fire late (phone GPS takes 30-90 seconds to update after you arrive). "Goodbye" automations misfire when your ph...'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-9-exposing-ha-directly-to-the-internet
+  chunk_order: 9
+  section: 'Mistake 9: Exposing HA Directly to the Internet'
+  line_range: [157, 172]
+  tokenizer_tokens: 175
+  chunk_summary: '**What happens:** Your HA instance gets hit by brute-force login attempts. If using a weak password, it gets compromised.'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-10-buying-cheap-z-wave-devices-when-zigbee-was-sufficient
+  chunk_order: 10
+  section: 'Mistake 10: Buying Cheap Z-Wave Devices When Zigbee Was Sufficient'
+  line_range: [173, 184]
+  tokenizer_tokens: 154
+  chunk_summary: '**What happens:** You spend 2-3x more on Z-Wave devices when Zigbee devices would have worked fine and been equally reliable.'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-11-naming-entities-poorly-from-the-start
+  chunk_order: 11
+  section: 'Mistake 11: Naming Entities Poorly From the Start'
+  line_range: [185, 205]
+  tokenizer_tokens: 192
+  chunk_summary: '**What happens:** After 50 devices, your automation list looks like: `binary_sensor.0x00158d0003498a7d`, `light.tradfri_bulb_e27_ws_806lm_6` — impossible to ...'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--mistake-12-not-using-helpers-for-shared-configuration
+  chunk_order: 12
+  section: 'Mistake 12: Not Using Helpers for Shared Configuration'
+  line_range: [206, 235]
+  tokenizer_tokens: 205
+  chunk_summary: '**What happens:** You have the motion-off delay hardcoded to 5 minutes in 15 different automations. You want to change it to 3 minutes and have to edit all 1...'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--community-sourced-process-pitfalls
+  chunk_order: 13
+  section: Community-Sourced Process Pitfalls
+  line_range: [236, 240]
+  tokenizer_tokens: 38
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--never-update-ha-without-a-snapshot
+  chunk_order: 14
+  section: Never Update HA Without a Snapshot
+  line_range: [241, 246]
+  tokenizer_tokens: 133
+  chunk_summary: '**The pattern:** Users update HA → HACS integration breaks → they have no rollback path → spend 4+ hours debugging.'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--read-the-breaking-changes-list-before-every-update
+  chunk_order: 15
+  section: Read the Breaking Changes List Before Every Update
+  line_range: [247, 255]
+  tokenizer_tokens: 116
+  chunk_summary: 'HA publishes a "Breaking Changes" section in every monthly release blog post at `home-assistant.io/blog`. Before updating, scan the list for:'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--don-t-update-z2m-and-ha-at-the-same-time
+  chunk_order: 16
+  section: Don't Update Z2M and HA at the Same Time
+  line_range: [256, 259]
+  tokenizer_tokens: 92
+  chunk_summary: Updating Zigbee2MQTT and Home Assistant Core in the same maintenance window doubles the number of potential breaking changes and makes it impossible to isola...
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--put-your-config-in-git
+  chunk_order: 17
+  section: Put Your Config in Git
+  line_range: [260, 268]
+  tokenizer_tokens: 135
+  chunk_summary: 'The most consistently recommended advanced practice across r/homeassistant, community.home-assistant.io, and HN. With git:'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--don-t-buy-cloud-only-devices-for-critical-functions
+  chunk_order: 18
+  section: Don't Buy Cloud-Only Devices for Critical Functions
+  line_range: [269, 277]
+  tokenizer_tokens: 182
+  chunk_summary: 'Vendors can revoke API access at any time. Known cases:'
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--don-t-start-with-zha-if-you-have-aqara-or-picky-zigbee-devices
+  chunk_order: 19
+  section: Don't Start With ZHA if You Have Aqara or "Picky" Zigbee Devices
+  line_range: [278, 281]
+  tokenizer_tokens: 163
+  chunk_summary: ZHA is the built-in Zigbee integration but has worse device compatibility than Zigbee2MQTT for certain brands (Aqara in particular). The community first-line...
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--template-sensors-need-unique-id-for-stability
+  chunk_order: 20
+  section: Template Sensors Need `unique_id` for Stability
+  line_range: [282, 285]
+  tokenizer_tokens: 108
+  chunk_summary: Template sensors in `configuration.yaml` without `unique_id:` will have unstable entity IDs — if a naming conflict occurs, HA appends `_2`, `_3`, etc., silen...
+  embedding_version: gemini-embedding-001
+- chunk_id: common-mistakes--zigbee2mqtt-2-0-migration-checklist
+  chunk_order: 21
+  section: Zigbee2MQTT 2.0 Migration Checklist
+  line_range: [286, 300]
+  tokenizer_tokens: 151
+  chunk_summary: 'Before upgrading from Z2M 1.x to 2.0, add these to your `configuration.yaml` to minimize breaking changes:'
+  embedding_version: gemini-embedding-001

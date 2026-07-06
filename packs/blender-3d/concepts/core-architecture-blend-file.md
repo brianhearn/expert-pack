@@ -16,6 +16,7 @@ supersedes:
   - concepts/core-architecture.md
 related:
   - core-architecture-data-blocks.md
+content_hash: sha256:192de03c1069a369c6fd8c8d87f838385c944f7e09af1efef438f211f9297ee0
 ---
 
 # Core Architecture — The .blend File Format

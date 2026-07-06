@@ -18,6 +18,7 @@ supersedes:
 related:
   - compositing-core.md
   - compositing-effects.md
+content_hash: sha256:11ba539b7cee320c487046395a7dfe938023ca6842ab718916b8ede468720362
 ---
 
 # Compositing — Color Management and Color Grading

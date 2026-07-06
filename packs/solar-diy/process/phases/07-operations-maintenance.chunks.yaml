@@ -1,0 +1,222 @@
+schema_version: '1.0'
+source_id: solar-diy/process/phases/07-operations-maintenance
+content_hash: sha256:9b42d29749023adb37a4fb12d27fa966372123b2a11acb0d8b95708390f09ff1
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: 07-operations-maintenance--opening
+  chunk_order: 0
+  section: null
+  line_range: [14, 20]
+  tokenizer_tokens: 154
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--what-to-expect-from-your-system
+  chunk_order: 1
+  section: What to Expect from Your System
+  line_range: [21, 22]
+  tokenizer_tokens: 8
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--normal-production-patterns
+  chunk_order: 2
+  section: Normal Production Patterns
+  line_range: [23, 28]
+  tokenizer_tokens: 150
+  chunk_summary: '- **Seasonal variation**: Winter production will be 40–70% of summer production in most US locations (shorter days, lower sun angle, more cloudy weather)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--realistic-year-one-performance
+  chunk_order: 3
+  section: Realistic Year-One Performance
+  line_range: [29, 39]
+  tokenizer_tokens: 144
+  chunk_summary: Your PVWatts estimate is a 30-year weather average. Year one actual production will likely be within ±15% of the estimate. A significant shortfall (>15% belo...
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--monitoring
+  chunk_order: 4
+  section: Monitoring
+  line_range: [40, 41]
+  tokenizer_tokens: 3
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--set-up-alerts
+  chunk_order: 5
+  section: Set Up Alerts
+  line_range: [42, 47]
+  tokenizer_tokens: 97
+  chunk_summary: 'Most inverter monitoring platforms support production alerts. Configure at minimum:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--monthly-check
+  chunk_order: 6
+  section: Monthly Check
+  line_range: [48, 53]
+  tokenizer_tokens: 55
+  chunk_summary: '- Log in to your monitoring platform'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--annual-review
+  chunk_order: 7
+  section: Annual Review
+  line_range: [54, 60]
+  tokenizer_tokens: 76
+  chunk_summary: '- Download full-year production data'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--monitoring-platform-specifics
+  chunk_order: 8
+  section: Monitoring Platform Specifics
+  line_range: [61, 66]
+  tokenizer_tokens: 113
+  chunk_summary: '- **Enphase Enlighten**: Per-panel production data; excellent fault detection. App shows each microinverter.'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--cleaning
+  chunk_order: 9
+  section: Cleaning
+  line_range: [67, 68]
+  tokenizer_tokens: 3
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--when-to-clean
+  chunk_order: 10
+  section: When to Clean
+  line_range: [69, 74]
+  tokenizer_tokens: 89
+  chunk_summary: '- **Most climates**: Once or twice per year, typically before peak summer production season'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--how-to-clean
+  chunk_order: 11
+  section: How to Clean
+  line_range: [75, 82]
+  tokenizer_tokens: 126
+  chunk_summary: '- **Best time**: Early morning before panels heat up (thermal shock risk if cold water on hot panels)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--soiling-loss
+  chunk_order: 12
+  section: Soiling Loss
+  line_range: [83, 85]
+  tokenizer_tokens: 57
+  chunk_summary: Research suggests typical soiling loss is 1–5% in most US climates. In desert areas without regular cleaning, losses can exceed 10%. Clean panels simply and ...
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--visual-inspections
+  chunk_order: 13
+  section: Visual Inspections
+  line_range: [86, 87]
+  tokenizer_tokens: 5
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--annual-roof-inspection
+  chunk_order: 14
+  section: Annual Roof Inspection
+  line_range: [88, 96]
+  tokenizer_tokens: 129
+  chunk_summary: 'Coincide with cleaning. From the ground (binoculars) or roof (with fall protection):'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--panel-condition
+  chunk_order: 15
+  section: Panel Condition
+  line_range: [97, 102]
+  tokenizer_tokens: 125
+  chunk_summary: '- **Hotspots**: Darkened areas on panel cells visible in strong light — caused by cracked cells or delamination. Report to manufacturer under product warranty.'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--inverter-and-battery
+  chunk_order: 16
+  section: Inverter and Battery
+  line_range: [103, 108]
+  tokenizer_tokens: 75
+  chunk_summary: '- [ ] No error codes or warning lights'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--degradation-tracking
+  chunk_order: 17
+  section: Degradation Tracking
+  line_range: [109, 112]
+  tokenizer_tokens: 39
+  chunk_summary: Quality solar panels degrade slowly over time. Tracking actual degradation helps you know if your system is performing as warranted.
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--how-to-calculate-degradation
+  chunk_order: 18
+  section: How to Calculate Degradation
+  line_range: [113, 118]
+  tokenizer_tokens: 60
+  chunk_summary: Degradation rate (%/year) = (Year 1 production - Year N production) ÷ (Year 1 production × (N-1))
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--what-s-normal
+  chunk_order: 19
+  section: What's Normal
+  line_range: [119, 124]
+  tokenizer_tokens: 58
+  chunk_summary: '- Year 1 (LID): 0–2% loss'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--panel-warranty-claims
+  chunk_order: 20
+  section: Panel Warranty Claims
+  line_range: [125, 131]
+  tokenizer_tokens: 98
+  chunk_summary: 'Warranty claims require documentation:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--battery-health
+  chunk_order: 21
+  section: Battery Health
+  line_range: [132, 133]
+  tokenizer_tokens: 4
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--monitoring-battery-degradation
+  chunk_order: 22
+  section: Monitoring Battery Degradation
+  line_range: [134, 139]
+  tokenizer_tokens: 92
+  chunk_summary: '- Most battery systems report state of health (SOH) in their monitoring apps'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--battery-warranty-claims
+  chunk_order: 23
+  section: Battery Warranty Claims
+  line_range: [140, 145]
+  tokenizer_tokens: 60
+  chunk_summary: 'Battery warranties are typically:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--inverter-maintenance-and-lifespan
+  chunk_order: 24
+  section: Inverter Maintenance and Lifespan
+  line_range: [146, 153]
+  tokenizer_tokens: 105
+  chunk_summary: '- String inverters: 10–15 year lifespan typical; plan for replacement around year 15'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--seasonal-considerations
+  chunk_order: 25
+  section: Seasonal Considerations
+  line_range: [154, 155]
+  tokenizer_tokens: 6
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--winter
+  chunk_order: 26
+  section: Winter
+  line_range: [156, 160]
+  tokenizer_tokens: 98
+  chunk_summary: '- Snow on panels: most systems shed snow quickly due to panel heat and slick glass surface. Don''t attempt to remove snow from the roof — not worth the injury...'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--summer
+  chunk_order: 27
+  section: Summer
+  line_range: [161, 165]
+  tokenizer_tokens: 60
+  chunk_summary: '- Hot days produce less power per panel than spring/fall (temperature coefficient)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--severe-weather-preparation
+  chunk_order: 28
+  section: Severe Weather Preparation
+  line_range: [166, 170]
+  tokenizer_tokens: 88
+  chunk_summary: '- Hail: panels are rated for 1" hail at 50 mph (some for larger). After severe hail, inspect panels for cracks and file insurance claim if damaged.'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--10-year-milestone-review
+  chunk_order: 29
+  section: 10-Year Milestone Review
+  line_range: [171, 181]
+  tokenizer_tokens: 154
+  chunk_summary: 'Around year 10, do a comprehensive system review:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 07-operations-maintenance--related
+  chunk_order: 30
+  section: Related
+  line_range: [182, 185]
+  tokenizer_tokens: 39
+  chunk_summary: '- Performance troubleshooting: `../../product/troubleshooting/`'
+  embedding_version: gemini-embedding-001

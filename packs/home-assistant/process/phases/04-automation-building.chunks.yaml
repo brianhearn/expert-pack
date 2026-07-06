@@ -1,0 +1,110 @@
+schema_version: '1.0'
+source_id: home-assistant/process/phases/04-automation-building
+content_hash: sha256:affdff85bca074b0279d013c3d510f338bfe73abfb74bdcebfa242708531f917
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: 04-automation-building--opening
+  chunk_order: 0
+  section: null
+  line_range: [15, 16]
+  tokenizer_tokens: 7
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--goal
+  chunk_order: 1
+  section: Goal
+  line_range: [17, 20]
+  tokenizer_tokens: 55
+  chunk_summary: Build your first real automations — starting simple, then layering in conditions and templates to make them contextually intelligent. Develop a testing and d...
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--prerequisites
+  chunk_order: 2
+  section: Prerequisites
+  line_range: [21, 28]
+  tokenizer_tokens: 52
+  chunk_summary: '- Phase 3 complete (devices stable, Areas configured)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--understanding-ha-s-automation-model
+  chunk_order: 3
+  section: Understanding HA's Automation Model
+  line_range: [29, 46]
+  tokenizer_tokens: 128
+  chunk_summary: 'Every HA automation has three parts:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--step-1-your-first-automation-ui-method
+  chunk_order: 4
+  section: 'Step 1: Your First Automation (UI Method)'
+  line_range: [47, 62]
+  tokenizer_tokens: 183
+  chunk_summary: Start in the UI, not YAML. The automation editor catches syntax errors and is faster for simple cases.
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--step-2-add-a-turn-off-automation
+  chunk_order: 5
+  section: 'Step 2: Add a Turn-Off Automation'
+  line_range: [63, 89]
+  tokenizer_tokens: 168
+  chunk_summary: Most people forget the turn-off automation. Lights that turn on automatically should also turn off automatically.
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--step-3-understand-yaml-automations
+  chunk_order: 6
+  section: 'Step 3: Understand YAML Automations'
+  line_range: [90, 124]
+  tokenizer_tokens: 277
+  chunk_summary: The UI automation editor generates YAML behind the scenes. Switch to YAML mode by clicking the three-dot menu → "Edit in YAML." This is where you'll spend mo...
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--step-4-jinja2-templates
+  chunk_order: 7
+  section: 'Step 4: Jinja2 Templates'
+  line_range: [125, 171]
+  tokenizer_tokens: 272
+  chunk_summary: Templates make automations dynamic — the action changes based on current state. They use Jinja2 syntax inside `{{ }}`.
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--step-5-helpers-the-glue-layer
+  chunk_order: 8
+  section: 'Step 5: Helpers — The Glue Layer'
+  line_range: [172, 207]
+  tokenizer_tokens: 281
+  chunk_summary: '**Helpers** are virtual entities you create to hold state used across automations. They''re essential for non-trivial logic.'
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--step-6-testing-workflow
+  chunk_order: 9
+  section: 'Step 6: Testing Workflow'
+  line_range: [208, 211]
+  tokenizer_tokens: 24
+  chunk_summary: '**Always test automations before leaving them running overnight.**'
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--quick-testing-tools
+  chunk_order: 10
+  section: Quick Testing Tools
+  line_range: [212, 218]
+  tokenizer_tokens: 114
+  chunk_summary: 1. **Developer Tools → Services:** Manually call any service — trigger fake state changes, test actions
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--before-committing-an-automation
+  chunk_order: 11
+  section: Before Committing an Automation
+  line_range: [219, 227]
+  tokenizer_tokens: 76
+  chunk_summary: '- [ ] Trigger the automation manually at least twice'
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--step-7-config-validation
+  chunk_order: 12
+  section: 'Step 7: Config Validation'
+  line_range: [228, 243]
+  tokenizer_tokens: 101
+  chunk_summary: 'Always validate your configuration after manual YAML edits:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--checklist
+  chunk_order: 13
+  section: Checklist
+  line_range: [244, 254]
+  tokenizer_tokens: 115
+  chunk_summary: '- [ ] First motion-triggered automation built and tested'
+  embedding_version: gemini-embedding-001
+- chunk_id: 04-automation-building--what-s-next
+  chunk_order: 14
+  section: What's Next
+  line_range: [255, 257]
+  tokenizer_tokens: 29
+  chunk_summary: '→ [[05-dashboard-design.md|Phase 5: Dashboard Design]] — Build dashboards for daily at-a-glance control'
+  embedding_version: gemini-embedding-001

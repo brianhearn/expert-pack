@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:e46992dc83b69db71ecfd664836297ce6fb45731dc5502daeb548712d46b5b17
 ---
 
 # Decision: Inverter Topology (String vs Optimizer vs Microinverter)

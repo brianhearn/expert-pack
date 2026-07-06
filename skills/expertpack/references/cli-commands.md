@@ -44,19 +44,23 @@ Must pass with 0 errors before committing. Warnings are advisory.
 - Apply all: `python3 ep-doctor.py /path/to/pack --apply`
 - Apply specific category: `python3 ep-doctor.py /path/to/pack --fix links --apply`
 
-Fix categories: `links` | `fm` | `prefix`
+Fix categories: `links` | `fm` | `hash` | `prefix`
 
-- **links** — convert path-based `related:` to bare filenames, markdown links → wikilinks, bidirectional `related:` enforcement
+- **links** — convert path-based `related:` to bare filenames, markdown links → wikilinks, remove broken wikilinks (unlink to plain text; composite-safe), bidirectional `related:` enforcement
 - **fm** — add missing frontmatter fields (title, type, tags, pack), fix `canonical_verbatim` paths
+- **hash** — backfill provenance contract fields for `--strict` (id, schema_version, retrieval_strategy, verified_at, content_hash)
 - **prefix** — rename files to content-type prefixes (`sum-`, `vbt-`, `facts-`, `meta-`, `mind-`, `prop-`, `rel-`, `pres-`)
 
 Recommended workflow: ep-doctor dry-run → ep-doctor --apply → ep-validate → commit.
 
-## Broken Wikilink Fixer (ep-fix-broken-wikilinks.py)
+## Broken Wikilinks
 
-Removes broken wikilinks pointing to non-existent files. Safe for composites with cross-sub-pack references.
+Broken-wikilink cleanup is part of `ep-doctor --fix links` (there is no separate script): it unlinks wikilinks whose target file does not exist, leaving the readable text in place, and is safe for composites with cross-sub-pack references. Preview with a dry-run, then add `--apply`.
 
-Run without `--apply` first to preview, then add `--apply` to execute.
+```bash
+python3 ep-doctor.py /path/to/pack --fix links          # preview
+python3 ep-doctor.py /path/to/pack --fix links --apply  # execute
+```
 
 All tools are in `ExpertPack/tools/validator/` in the public repo.
 

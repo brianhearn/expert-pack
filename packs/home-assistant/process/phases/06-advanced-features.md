@@ -10,6 +10,7 @@ id: home-assistant/process/phases/06-advanced-features
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:979eb1ccfddf7a5db4923cfed777074556fe0fe40266894e148d216a4ecb24d4
 ---
 # Phase 6: Advanced Features
 

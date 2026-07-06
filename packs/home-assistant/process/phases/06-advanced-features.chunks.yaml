@@ -1,0 +1,145 @@
+schema_version: '1.0'
+source_id: home-assistant/process/phases/06-advanced-features
+content_hash: sha256:979eb1ccfddf7a5db4923cfed777074556fe0fe40266894e148d216a4ecb24d4
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: 06-advanced-features--opening
+  chunk_order: 0
+  section: null
+  line_range: [15, 16]
+  tokenizer_tokens: 7
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--goal
+  chunk_order: 1
+  section: Goal
+  line_range: [17, 20]
+  tokenizer_tokens: 78
+  chunk_summary: 'Add the three features that transform a basic smart home into something genuinely impressive: **voice control** (local, no cloud required), **energy monitori...'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--prerequisites
+  chunk_order: 2
+  section: Prerequisites
+  line_range: [21, 28]
+  tokenizer_tokens: 42
+  chunk_summary: '- Phase 5 complete (stable automations, dashboards built)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--feature-1-voice-assistant-local-assist
+  chunk_order: 3
+  section: 'Feature 1: Voice Assistant (Local Assist)'
+  line_range: [29, 32]
+  tokenizer_tokens: 63
+  chunk_summary: Home Assistant's built-in voice pipeline (**Assist**) runs entirely locally — no data leaves your home. It can trigger automations, control devices, set time...
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--architecture
+  chunk_order: 4
+  section: Architecture
+  line_range: [33, 40]
+  tokenizer_tokens: 59
+  chunk_summary: Wake word → Speech-to-Text (STT) → Natural Language Processing (NLP) → Action → Text-to-Speech (TTS) → Response
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--option-a-local-wake-word-local-stt-recommended
+  chunk_order: 5
+  section: 'Option A: Local Wake Word + Local STT (Recommended)'
+  line_range: [41, 59]
+  tokenizer_tokens: 248
+  chunk_summary: '**What you need:**'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--option-b-cloud-assist-easiest
+  chunk_order: 6
+  section: 'Option B: Cloud Assist (Easiest)'
+  line_range: [60, 65]
+  tokenizer_tokens: 71
+  chunk_summary: 'With a **Nabu Casa** subscription ($7/month), you get cloud-based STT/TTS with better accuracy and faster response:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--testing-voice-commands
+  chunk_order: 7
+  section: Testing Voice Commands
+  line_range: [66, 78]
+  tokenizer_tokens: 94
+  chunk_summary: 'Open the Assist dialog (click the microphone icon in HA header) and try:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--custom-sentences-local-nlp
+  chunk_order: 8
+  section: Custom Sentences (Local NLP)
+  line_range: [79, 97]
+  tokenizer_tokens: 87
+  chunk_summary: 'Add custom commands for things Assist doesn''t know by default:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--feature-2-energy-monitoring
+  chunk_order: 9
+  section: 'Feature 2: Energy Monitoring'
+  line_range: [98, 101]
+  tokenizer_tokens: 43
+  chunk_summary: HA's Energy Dashboard tracks electricity consumption, solar production, battery storage, and gas/water usage in real time and historically.
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--what-you-need
+  chunk_order: 10
+  section: What You Need
+  line_range: [102, 116]
+  tokenizer_tokens: 194
+  chunk_summary: 'To see energy data, you need **energy monitoring at some level**:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--setting-up-the-energy-dashboard
+  chunk_order: 11
+  section: Setting Up the Energy Dashboard
+  line_range: [117, 124]
+  tokenizer_tokens: 71
+  chunk_summary: 1. Settings → Energy → Configure
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--template-sensor-for-cost-calculation
+  chunk_order: 12
+  section: Template Sensor for Cost Calculation
+  line_range: [125, 144]
+  tokenizer_tokens: 91
+  chunk_summary: 'If your utility uses time-of-use pricing:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--feature-3-presence-detection
+  chunk_order: 13
+  section: 'Feature 3: Presence Detection'
+  line_range: [145, 148]
+  tokenizer_tokens: 61
+  chunk_summary: Automations that say "when you come home" are only reliable if presence detection is reliable. The companion app's GPS is a good start but has gaps. The best...
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--detection-methods-by-reliability
+  chunk_order: 14
+  section: Detection Methods by Reliability
+  line_range: [149, 159]
+  tokenizer_tokens: 136
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--strategy-1-companion-app-ble-proxies-best-mobile-presence
+  chunk_order: 15
+  section: 'Strategy 1: Companion App + BLE Proxies (Best Mobile Presence)'
+  line_range: [160, 179]
+  tokenizer_tokens: 145
+  chunk_summary: ESP32 devices flashed with ESPHome's Bluetooth Proxy firmware detect your phone's Bluetooth LE signal. Multiple proxies placed around the house create a cove...
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--strategy-2-bayesian-presence-sensor-most-accurate
+  chunk_order: 16
+  section: 'Strategy 2: Bayesian Presence Sensor (Most Accurate)'
+  line_range: [180, 207]
+  tokenizer_tokens: 201
+  chunk_summary: Combines multiple signals into a probabilistic presence estimate. More setup, but far fewer false "away" states when your phone's GPS lags.
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--zones
+  chunk_order: 17
+  section: Zones
+  line_range: [208, 227]
+  tokenizer_tokens: 131
+  chunk_summary: HA's **Zones** feature creates geographic areas (home, work, school, gym) that device trackers use for presence context.
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--checklist
+  chunk_order: 18
+  section: Checklist
+  line_range: [228, 238]
+  tokenizer_tokens: 132
+  chunk_summary: '- [ ] Voice assistant configured (local or Nabu Casa)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 06-advanced-features--what-s-next
+  chunk_order: 19
+  section: What's Next
+  line_range: [239, 241]
+  tokenizer_tokens: 29
+  chunk_summary: '→ [[07-hardening.md|Phase 7: Hardening]] — Backups, security, remote access, and long-term monitoring'
+  embedding_version: gemini-embedding-001

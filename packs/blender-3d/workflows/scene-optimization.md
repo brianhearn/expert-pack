@@ -10,6 +10,7 @@ id: blender-3d/workflows/scene-optimization
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:28f89a44874642131024a35d356b7b0f1a58cd3cf0bff851857ba2c09c7b49fc
 ---
 
 <!-- context: blender-3d/workflows/scene-optimization -->

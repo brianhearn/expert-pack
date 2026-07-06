@@ -12,6 +12,7 @@ id: blender-3d/faq/why-does-my-physics-sim-explode
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:6548caefb348a54da396db58d243c5c36c78286200b40e7cd4a33e9f14d66b28
 ---
 <!-- context: section=faq, topic=physics-troubleshooting, related=physics-simulation,common-mistakes -->
 

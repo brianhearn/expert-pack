@@ -44,6 +44,12 @@ export type PluginConfig = {
   includeLocalFiles?: string[];
   /** HTTP timeout in ms. Default: 15000. */
   timeoutMs?: number;
+  /**
+   * Request span-level provenance (RFC-003 Reconstruct Mode) on every search.
+   * Costs tokens (returns original markdown) but makes results auditable.
+   * Default: false.
+   */
+  reconstruct?: boolean;
 };
 
 export type ResolvedEmbeddingConfig = {
@@ -62,6 +68,7 @@ export type ResolvedPluginConfig = {
   minScore: number;
   includeLocalFiles: string[];
   timeoutMs: number;
+  reconstruct: boolean;
 };
 
 const ENV_REF = /^\$\{([A-Z0-9_]+)\}$/;
@@ -89,5 +96,6 @@ export function resolvePluginConfig(raw: PluginConfig): ResolvedPluginConfig {
     minScore: raw.minScore ?? 0.2,
     includeLocalFiles: raw.includeLocalFiles ?? [],
     timeoutMs: raw.timeoutMs ?? 15_000,
+    reconstruct: raw.reconstruct ?? false,
   };
 }

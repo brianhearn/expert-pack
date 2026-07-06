@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:9b42d29749023adb37a4fb12d27fa966372123b2a11acb0d8b95708390f09ff1
 ---
 
 # Phase 7: Operations & Maintenance

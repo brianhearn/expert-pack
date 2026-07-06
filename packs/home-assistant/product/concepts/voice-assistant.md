@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:494313a509c41df0086197185ccfe2816c4b47c6c0df21b61ad486d9a5ad2123
 ---
 <!-- context: section=concepts, topic=voice-assistant, related=esphome-fundamentals,integrations-guide,automation-fundamentals -->
 ---

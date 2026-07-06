@@ -13,6 +13,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:a59b608b279753f11531e248b20b7bb98ffc553bf2cf04db2cce716989e08813
 ---
 <!-- context: section=concepts, topic=dashboard-design, related=core-architecture,integrations-guide -->
 ---

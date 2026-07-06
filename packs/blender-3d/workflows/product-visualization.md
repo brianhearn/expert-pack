@@ -10,6 +10,7 @@ id: blender-3d/workflows/product-visualization
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:2fd9999fba0a82d24a63e020a4f11d2a02560f0a2a38d1d6cce3277e2f216723
 ---
 
 <!-- context: blender-3d/workflows/product-visualization -->

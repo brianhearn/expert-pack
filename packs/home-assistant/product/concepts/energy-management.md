@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:4208c64dfa0323cf857dd725181a71e73a0b955e770b734289057c7543f83fba
 ---
 <!-- context: section=concepts, topic=energy-management, related=core-architecture,integrations-guide,yaml-configuration -->
 ---

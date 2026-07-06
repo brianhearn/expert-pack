@@ -19,6 +19,7 @@ id: home-assistant/product/troubleshooting/common-mistakes/community-gotchas
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:9b39b4ca07033e12efbb08bb626343c51ff5a48305a7c8854f8cad442d0f5485
 ---
 # Community-Sourced Gotchas and Practitioner Knowledge
 

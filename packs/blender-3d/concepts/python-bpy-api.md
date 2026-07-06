@@ -18,6 +18,7 @@ supersedes:
 related:
   - python-addons.md
   - python-batch-scripting.md
+content_hash: sha256:de5bbe34682e4d249a2a08eadd1b91fc73462fab74b2553fd8445fbe6c1bbfa9
 ---
 
 # Python Scripting — bpy Module, Data API, and Operators

@@ -1,0 +1,187 @@
+schema_version: '1.0'
+source_id: blender-3d/workflows/motion-graphics
+content_hash: sha256:13b6c09de2ea36e896daaa03ddcd2f83f7ec502f0c5dd2f679bc353094e7832f
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: motion-graphics--opening
+  chunk_order: 0
+  section: null
+  line_range: [15, 23]
+  tokenizer_tokens: 167
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--geometry-nodes-for-procedural-motion
+  chunk_order: 1
+  section: Geometry Nodes for Procedural Motion
+  line_range: [24, 25]
+  tokenizer_tokens: 10
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--the-core-pattern-animate-a-node-input
+  chunk_order: 2
+  section: 'The Core Pattern: Animate a Node Input'
+  line_range: [26, 40]
+  tokenizer_tokens: 155
+  chunk_summary: 'Any Geometry Nodes input socket can be driven by an animated value. The simplest form:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--time-based-expressions
+  chunk_order: 3
+  section: Time-Based Expressions
+  line_range: [41, 61]
+  tokenizer_tokens: 163
+  chunk_summary: 'The `Scene Time` node is the MoGraph workhorse — it exposes the current frame and elapsed time in seconds as node outputs:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--instance-array-with-staggered-timing
+  chunk_order: 4
+  section: Instance Array with Staggered Timing
+  line_range: [62, 80]
+  tokenizer_tokens: 157
+  chunk_summary: 'A core MoGraph pattern — N objects, each animating on a delay based on their index:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--staggered-animation-formula
+  chunk_order: 5
+  section: Staggered Animation Formula
+  line_range: [81, 98]
+  tokenizer_tokens: 131
+  chunk_summary: 'The `Smoothstep` node (or Math → Smooth Min) provides S-curve easing without keyframes:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--geometry-nodes-wave-ripple-effect
+  chunk_order: 6
+  section: Geometry Nodes Wave/Ripple Effect
+  line_range: [99, 115]
+  tokenizer_tokens: 148
+  chunk_summary: 'Nodes setup for a vertex wave:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--procedural-text-animation-blender-4-x
+  chunk_order: 7
+  section: Procedural Text Animation (Blender 4.x)
+  line_range: [116, 132]
+  tokenizer_tokens: 94
+  chunk_summary: 'Geometry Nodes can operate on text strings in Blender 4.x:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--shader-driven-animation
+  chunk_order: 8
+  section: Shader-Driven Animation
+  line_range: [133, 134]
+  tokenizer_tokens: 6
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--animating-shader-properties-directly
+  chunk_order: 9
+  section: Animating Shader Properties Directly
+  line_range: [135, 148]
+  tokenizer_tokens: 119
+  chunk_summary: 'Any shader node value can be keyframed:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--using-drivers-in-shaders
+  chunk_order: 10
+  section: Using Drivers in Shaders
+  line_range: [149, 170]
+  tokenizer_tokens: 173
+  chunk_summary: 'Connect a custom object property to a shader value:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--animated-noise-for-organic-motion
+  chunk_order: 11
+  section: Animated Noise for Organic Motion
+  line_range: [171, 192]
+  tokenizer_tokens: 163
+  chunk_summary: 'Noise Texture with time input creates organic-looking procedural motion:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--camera-animation
+  chunk_order: 12
+  section: Camera Animation
+  line_range: [193, 194]
+  tokenizer_tokens: 5
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--camera-setup-for-mograph
+  chunk_order: 13
+  section: Camera Setup for MoGraph
+  line_range: [195, 209]
+  tokenizer_tokens: 98
+  chunk_summary: 'For motion graphics work, set up the camera before animating:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--smooth-camera-moves
+  chunk_order: 14
+  section: Smooth Camera Moves
+  line_range: [210, 235]
+  tokenizer_tokens: 265
+  chunk_summary: '**The wrong way:** Keyframe camera position at A and B, play it back → linear movement, mechanical feel.'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--easing-and-timing
+  chunk_order: 15
+  section: Easing and Timing
+  line_range: [236, 253]
+  tokenizer_tokens: 182
+  chunk_summary: '**Graph Editor easing types (`T` key):**'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--camera-shake
+  chunk_order: 16
+  section: Camera Shake
+  line_range: [254, 271]
+  tokenizer_tokens: 147
+  chunk_summary: 'Procedural camera shake without keyframes using a Noise modifier on F-curves:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--lighting-for-motion-graphics
+  chunk_order: 17
+  section: Lighting for Motion Graphics
+  line_range: [272, 273]
+  tokenizer_tokens: 8
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--flat-stylized-lighting
+  chunk_order: 18
+  section: Flat, Stylized Lighting
+  line_range: [274, 286]
+  tokenizer_tokens: 97
+  chunk_summary: 'Motion graphics often prefers flat, controlled lighting rather than photorealistic studio setups:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--rim-heavy-lighting-for-dark-backgrounds
+  chunk_order: 19
+  section: Rim-Heavy Lighting for Dark Backgrounds
+  line_range: [287, 297]
+  tokenizer_tokens: 90
+  chunk_summary: 'Popular MoGraph look: dark background, strong rim lights defining object edges:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--eevee-bloom-for-neon-glow-effects
+  chunk_order: 20
+  section: EEVEE Bloom for Neon/Glow Effects
+  line_range: [298, 314]
+  tokenizer_tokens: 92
+  chunk_summary: 'Render Properties → EEVEE → Bloom:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--loop-ready-animations
+  chunk_order: 21
+  section: Loop-Ready Animations
+  line_range: [315, 318]
+  tokenizer_tokens: 19
+  chunk_summary: 'For seamless loops (social media, broadcast holds):'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--the-loop-setup
+  chunk_order: 22
+  section: The Loop Setup
+  line_range: [319, 332]
+  tokenizer_tokens: 97
+  chunk_summary: 'Frame range: 1–120 (5 seconds at 24fps, or 4 seconds at 30fps)'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--geometry-nodes-loop
+  chunk_order: 23
+  section: Geometry Nodes Loop
+  line_range: [333, 344]
+  tokenizer_tokens: 95
+  chunk_summary: 'For Geometry Nodes animations, use Scene Time (Seconds) with a modulo operation:'
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--checking-loop-integrity
+  chunk_order: 24
+  section: Checking Loop Integrity
+  line_range: [345, 352]
+  tokenizer_tokens: 56
+  chunk_summary: 1. Render frame 1 and the frame *after* the last frame
+  embedding_version: gemini-embedding-001
+- chunk_id: motion-graphics--mograph-efficiency-tips
+  chunk_order: 25
+  section: MoGraph Efficiency Tips
+  line_range: [353, 363]
+  tokenizer_tokens: 279
+  chunk_summary: '**Use Group Nodes:** Encapsulate repeated Geometry Nodes logic into Group nodes (`Ctrl+G` to group selected nodes). This makes the node graph readable and al...'
+  embedding_version: gemini-embedding-001

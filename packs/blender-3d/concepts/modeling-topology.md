@@ -18,6 +18,7 @@ supersedes:
 related:
   - modeling-modifiers.md
   - sculpting-paradigms.md
+content_hash: sha256:c28c27fdfd0d721f78005911031a65863580521e5fe0dfbf86688c4e470250ec
 ---
 
 # Modeling — Topology Principles and Edit Mode Operations

@@ -10,6 +10,7 @@ id: home-assistant/process/phases/04-automation-building
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:affdff85bca074b0279d013c3d510f338bfe73abfb74bdcebfa242708531f917
 ---
 # Phase 4: Automation Building
 

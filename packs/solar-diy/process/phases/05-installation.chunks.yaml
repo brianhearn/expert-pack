@@ -1,0 +1,215 @@
+schema_version: '1.0'
+source_id: solar-diy/process/phases/05-installation
+content_hash: sha256:fac4a3fd4b5f41e0e24dc2cb14572533d8bd263c0514426d9984ce2f7e540a08
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: 05-installation--opening
+  chunk_order: 0
+  section: null
+  line_range: [14, 20]
+  tokenizer_tokens: 161
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--pre-installation-checklist
+  chunk_order: 1
+  section: Pre-Installation Checklist
+  line_range: [21, 31]
+  tokenizer_tokens: 153
+  chunk_summary: 'Before anyone climbs on the roof:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--safety-fundamentals
+  chunk_order: 2
+  section: Safety Fundamentals
+  line_range: [32, 33]
+  tokenizer_tokens: 5
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--roof-work
+  chunk_order: 3
+  section: Roof Work
+  line_range: [34, 39]
+  tokenizer_tokens: 114
+  chunk_summary: '- **Fall protection is not optional** — a residential fall is fatal or life-altering. OSHA requires fall protection at 6 feet. Use a properly rated roof anch...'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--electrical-safety
+  chunk_order: 4
+  section: Electrical Safety
+  line_range: [40, 46]
+  tokenizer_tokens: 145
+  chunk_summary: '- **High-voltage DC is more dangerous than AC** — solar strings can produce 300–600+ VDC. DC arcs sustain themselves unlike AC arcs that extinguish at zero c...'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--step-1-layout-and-racking
+  chunk_order: 5
+  section: 'Step 1: Layout and Racking'
+  line_range: [47, 48]
+  tokenizer_tokens: 7
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--mark-rafter-locations
+  chunk_order: 6
+  section: Mark Rafter Locations
+  line_range: [49, 53]
+  tokenizer_tokens: 53
+  chunk_summary: '- Use a stud finder from the attic side or find rafter tails at the eave'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--snap-layout-lines
+  chunk_order: 7
+  section: Snap Layout Lines
+  line_range: [54, 58]
+  tokenizer_tokens: 69
+  chunk_summary: '- Measure and snap chalk lines for the bottom rail and top rail positions'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--install-roof-mounts
+  chunk_order: 8
+  section: Install Roof Mounts
+  line_range: [59, 64]
+  tokenizer_tokens: 146
+  chunk_summary: '- Flash each mount penetration correctly — this is the most common source of roof leaks from solar installs'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--attach-rails
+  chunk_order: 9
+  section: Attach Rails
+  line_range: [65, 71]
+  tokenizer_tokens: 76
+  chunk_summary: '- Slide rails onto L-foot standoffs'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--step-2-panel-mounting
+  chunk_order: 10
+  section: 'Step 2: Panel Mounting'
+  line_range: [72, 73]
+  tokenizer_tokens: 6
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--grounding
+  chunk_order: 11
+  section: Grounding
+  line_range: [74, 78]
+  tokenizer_tokens: 65
+  chunk_summary: '- Install ground wire through the rail system before panels'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--hang-panels
+  chunk_order: 12
+  section: Hang Panels
+  line_range: [79, 85]
+  tokenizer_tokens: 95
+  chunk_summary: '- Work from top of array downward to avoid stepping on mounted panels'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--panel-orientation
+  chunk_order: 13
+  section: Panel Orientation
+  line_range: [86, 90]
+  tokenizer_tokens: 69
+  chunk_summary: '- Most panels are installed in portrait orientation (long side vertical) — reduces racking costs'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--step-3-dc-wiring
+  chunk_order: 14
+  section: 'Step 3: DC Wiring'
+  line_range: [91, 92]
+  tokenizer_tokens: 5
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--microinverter-systems
+  chunk_order: 15
+  section: Microinverter Systems
+  line_range: [93, 99]
+  tokenizer_tokens: 82
+  chunk_summary: '- Attach microinverters to rails before or during panel mounting'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--string-systems-string-inverter-or-optimizer
+  chunk_order: 16
+  section: String Systems (String Inverter or Optimizer)
+  line_range: [100, 107]
+  tokenizer_tokens: 133
+  chunk_summary: '- Route PV wire from panels along rails using UV-resistant clips or wire clips'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--combiner-box-if-applicable
+  chunk_order: 17
+  section: Combiner Box (if applicable)
+  line_range: [108, 113]
+  tokenizer_tokens: 65
+  chunk_summary: '- Install where accessible (not buried in insulation, accessible without moving panels)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--step-4-inverter-and-battery-installation
+  chunk_order: 18
+  section: 'Step 4: Inverter and Battery Installation'
+  line_range: [114, 115]
+  tokenizer_tokens: 11
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--string-inverter
+  chunk_order: 19
+  section: String Inverter
+  line_range: [116, 122]
+  tokenizer_tokens: 93
+  chunk_summary: '- Mount inverter on a solid wall — inverters are heavy (30–100 lbs)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--microinverter-combiner
+  chunk_order: 20
+  section: Microinverter Combiner
+  line_range: [123, 127]
+  tokenizer_tokens: 55
+  chunk_summary: '- Mount IQ combiner or equivalent junction box at accessible point'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--battery-system
+  chunk_order: 21
+  section: Battery System
+  line_range: [128, 134]
+  tokenizer_tokens: 151
+  chunk_summary: '- Mount battery per manufacturer requirements — typically within specified temperature range (not in unconditioned space if too cold/hot)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--step-5-ac-wiring-and-service-panel
+  chunk_order: 22
+  section: 'Step 5: AC Wiring and Service Panel'
+  line_range: [135, 136]
+  tokenizer_tokens: 9
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--service-panel-connection
+  chunk_order: 23
+  section: Service Panel Connection
+  line_range: [137, 146]
+  tokenizer_tokens: 143
+  chunk_summary: This is the work that most often requires a licensed electrician — even for DIY solar, local codes may require licensed electrical work at the service panel.
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--ac-disconnect
+  chunk_order: 24
+  section: AC Disconnect
+  line_range: [147, 150]
+  tokenizer_tokens: 43
+  chunk_summary: '- Install externally visible, lockable AC disconnect at utility meter (required by most utilities)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--step-6-grounding-and-labeling
+  chunk_order: 25
+  section: 'Step 6: Grounding and Labeling'
+  line_range: [151, 152]
+  tokenizer_tokens: 8
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--equipment-grounding
+  chunk_order: 26
+  section: Equipment Grounding
+  line_range: [153, 157]
+  tokenizer_tokens: 76
+  chunk_summary: '- All metallic equipment housings, racking, panels frames, conduit → connected to equipment grounding conductor (EGC)'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--required-nec-labels
+  chunk_order: 27
+  section: Required NEC Labels
+  line_range: [158, 171]
+  tokenizer_tokens: 204
+  chunk_summary: 'Solar installations require extensive labeling. A label checklist:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--post-installation-checklist
+  chunk_order: 28
+  section: Post-Installation Checklist
+  line_range: [172, 183]
+  tokenizer_tokens: 114
+  chunk_summary: 'Before calling for inspection:'
+  embedding_version: gemini-embedding-001
+- chunk_id: 05-installation--related
+  chunk_order: 29
+  section: Related
+  line_range: [184, 188]
+  tokenizer_tokens: 48
+  chunk_summary: '- Rapid shutdown compliance: `../../product/concepts/nec-rapid-shutdown.md`'
+  embedding_version: gemini-embedding-001

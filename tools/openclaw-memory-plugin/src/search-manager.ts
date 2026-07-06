@@ -152,6 +152,7 @@ export class EpMemorySearchManager implements HostMemorySearchManager {
         pack: this.cfg.pack,
         n: maxResults,
         vector: vector.length > 0 ? vector : null,
+        reconstruct: this.cfg.reconstruct,
       });
     } catch (err) {
       this.log?.error?.(
@@ -169,15 +170,19 @@ export class EpMemorySearchManager implements HostMemorySearchManager {
     ReturnType<HostMemorySearchManager["search"]>
   >[number] {
     const snippet = this.formatSnippet(r);
-    const lineCount = Math.max(1, r.text.split("\n").length);
+    // Prefer the server-supplied span range (Reconstruct Mode); fall back to
+    // the snippet line count for compact results.
+    const [startLine, endLine] = r.line_range ?? [1, Math.max(1, r.text.split("\n").length)];
     return {
       path: r.source_file,
-      startLine: 1,
-      endLine: lineCount,
+      startLine,
+      endLine,
       score: r.score,
       snippet,
       source: "memory",
-      citation: r.source_file,
+      // A fragment_id is a content-addressed, verifiable citation; fall back to
+      // the source file path when reconstruct mode is off.
+      citation: r.fragment_id ?? r.source_file,
     };
   }
 
@@ -186,8 +191,24 @@ export class EpMemorySearchManager implements HostMemorySearchManager {
     if (r.requires_expanded) flags.push("requires-expanded");
     if (r.graph_expanded) flags.push("graph-expanded");
     const flagLine = flags.length > 0 ? `\n<!-- ${flags.join(", ")} -->` : "";
+    const provenance = this.formatProvenance(r);
     // EP MCP already strips frontmatter; preserve the body verbatim.
-    return `${r.text}${flagLine}`;
+    return `${r.text}${flagLine}${provenance}`;
+  }
+
+  /**
+   * Render a compact, verifiable provenance block when the server returned a
+   * fragment envelope (RFC-003). Kept as an HTML comment so it travels with the
+   * snippet without polluting the visible answer.
+   */
+  private formatProvenance(r: EpSearchResult): string {
+    if (!r.fragment_id) return "";
+    const parts = [`fragment=${r.fragment_id}`];
+    if (r.line_range) parts.push(`lines=${r.line_range[0]}-${r.line_range[1]}`);
+    if (r.content_hash) parts.push(`hash=${r.content_hash}`);
+    if (r.verified_at) parts.push(`verified_at=${r.verified_at}`);
+    if (r.stale) parts.push("stale=true");
+    return `\n<!-- provenance: ${parts.join(" ")} -->`;
   }
 
   async readFile(params: {

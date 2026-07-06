@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:f682adfd745959aa909b89836b8af310d8c4d8995ca38b5698deaa8e8ec9fcfb
 ---
 # Phase 7: Hardening
 

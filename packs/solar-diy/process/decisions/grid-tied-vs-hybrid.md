@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:b907156c51d28aa70f4b38b44cb7ca898a14c1b9d16e6c8846025fd39aa2cfd8
 ---
 
 # Decision: Grid-Tied vs Hybrid vs Off-Grid

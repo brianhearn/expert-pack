@@ -18,6 +18,7 @@ supersedes:
 related:
   - shading-materials.md
   - compositing-core.md
+content_hash: sha256:6ab0c6e52ba9c069192b7c1e60fbfae17ac036af4f5a4760788f7f02b39f05bf
 ---
 
 # Rendering — EEVEE vs Cycles and Render Settings

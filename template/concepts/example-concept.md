@@ -6,12 +6,13 @@ tags: [example-concept, your-domain]
 pack: your-pack-slug
 retrieval_strategy: standard
 schema_version: "4.1"
-verified_at: "YYYY-MM-DD"
+verified_at: "2026-07-06"
 verified_by: agent
 requires:
   # - prerequisite-concept.md   # declare only when this atom is unintelligible without another
 related:
   - example-workflow.md
+content_hash: sha256:d16c439165dcb9e44b3aa9a577cad68bb58ab18ec019b497b6fb9e742a80a47c
 ---
 
 # Example Concept

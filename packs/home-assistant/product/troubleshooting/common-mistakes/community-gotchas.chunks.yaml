@@ -1,0 +1,89 @@
+schema_version: '1.0'
+source_id: home-assistant/product/troubleshooting/common-mistakes/community-gotchas
+content_hash: sha256:9b39b4ca07033e12efbb08bb626343c51ff5a48305a7c8854f8cad442d0f5485
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: community-gotchas--opening
+  chunk_order: 0
+  section: null
+  line_range: [24, 29]
+  tokenizer_tokens: 34
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--zigbee-zigbee2mqtt
+  chunk_order: 1
+  section: Zigbee / Zigbee2MQTT
+  line_range: [30, 51]
+  tokenizer_tokens: 1002
+  chunk_summary: '- **Zigbee2MQTT 2.0 (Jan 2025): `sensor.*_action` entities disabled by default.** After upgrading from Z2M 1.x to 2.0, all your button/remote automations tha...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--hacs-home-assistant-community-store
+  chunk_order: 2
+  section: HACS (Home Assistant Community Store)
+  line_range: [52, 65]
+  tokenizer_tokens: 496
+  chunk_summary: '- **HACS broke on HA 2025.1.0 due to deprecated `config_flow` API.** After upgrading to 2025.1, HACS fails to start with: `custom integration ''hacs'' sets opt...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--recorder-database
+  chunk_order: 3
+  section: Recorder / Database
+  line_range: [66, 77]
+  tokenizer_tokens: 459
+  chunk_summary: '- **HA 2024.7 recorder bug: after purge, recorder stops writing to DB until HA restarts.** Affects installations with old legacy foreign keys in the `states`...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--z-wave-js
+  chunk_order: 4
+  section: Z-Wave JS
+  line_range: [78, 85]
+  tokenizer_tokens: 249
+  chunk_summary: '- **Z-Wave devices go "unavailable" after updating Z-Wave JS add-on.** Confirmed bug pattern across multiple Z-Wave JS versions (13.3.1, 2025.3.4, UI 4.7.0)....'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--yaml-automation-breaking-changes
+  chunk_order: 5
+  section: YAML / Automation Breaking Changes
+  line_range: [86, 95]
+  tokenizer_tokens: 317
+  chunk_summary: '- **HA 2024.8: `service:` renamed to `action:` in YAML automations.** Old `service:` key still works (backward compatible) but causes automations to show as ...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--companion-app-notifications
+  chunk_order: 6
+  section: Companion App / Notifications
+  line_range: [96, 114]
+  tokenizer_tokens: 331
+  chunk_summary: '- **iOS standard notifications delayed ~10 seconds; critical notifications are instant.** Confirmed bug in HA 2024.11.1 with iOS 18.1. Affects WiFi and cellu...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--tuya-localtuya
+  chunk_order: 7
+  section: Tuya / LocalTuya
+  line_range: [115, 124]
+  tokenizer_tokens: 338
+  chunk_summary: '- **LocalTuya breaks on HA 2024.12.5 with traceback in `config_entries.py`.** All Tuya WiFi sockets become unreachable. Caused by API changes in HA core that...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--matter-thread
+  chunk_order: 8
+  section: Matter / Thread
+  line_range: [125, 132]
+  tokenizer_tokens: 221
+  chunk_summary: '- **Matter device pairing via HA Companion App fails if Thread credentials aren''t synced.** Fix: Settings → Companion App → Troubleshooting → tap "Sync Threa...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--installation-installation-method-gotchas
+  chunk_order: 9
+  section: Installation / Installation Method Gotchas
+  line_range: [133, 142]
+  tokenizer_tokens: 338
+  chunk_summary: '- **HA Container (Docker) cannot use official add-ons.** Official add-ons (ESPHome, Zigbee2MQTT, MQTT Broker, Whisper, Piper, etc.) require the Supervisor (H...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--template-entity-gotchas
+  chunk_order: 10
+  section: Template / Entity Gotchas
+  line_range: [143, 150]
+  tokenizer_tokens: 215
+  chunk_summary: '- **Template sensors defined in YAML cannot be assigned to a device** (the `device_id:` property is not available in `configuration.yaml` template sensors as...'
+  embedding_version: gemini-embedding-001
+- chunk_id: community-gotchas--general-practitioner-tips-from-power-users
+  chunk_order: 11
+  section: General Practitioner Tips (from power users)
+  line_range: [151, 161]
+  tokenizer_tokens: 510
+  chunk_summary: '- **Add automations.yaml to git.** This is the most-recommended advanced practice on Reddit and HN. Every breaking HA update is more manageable when you can ...'
+  embedding_version: gemini-embedding-001

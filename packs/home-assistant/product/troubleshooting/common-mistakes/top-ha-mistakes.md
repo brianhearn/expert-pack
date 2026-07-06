@@ -13,6 +13,7 @@ id: home-assistant/product/troubleshooting/common-mistakes/top-ha-mistakes
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:e0a5b8129558ab0a9c370c6c427f3dd3fbe2d968d61ae9f64bc709ac22a979fb
 ---
 <!-- context: section=troubleshooting, topic=top-ha-mistakes, related=protocols,automation-fundamentals,backup-migration -->
 # Top Home Assistant Mistakes

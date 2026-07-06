@@ -1,0 +1,107 @@
+# ExpertPack Typed Answer Contract (TAC)
+# Version: 1.0
+# Date: 2026-07-06
+#
+# A machine-verifiable response envelope for agents answering from an
+# ExpertPack. TAC is the RESPONSE layer; the Citation/Fragment Provenance spec
+# (schemas/core.md, RFC-003) is the RETRIEVAL layer. TAC forces every claim in
+# an answer to map to one or more retrieved source fragments, so answers can be
+# audited and automatically fact-checked instead of trusted blindly.
+
+schema: expertpack.typed_answer.v1
+version: "1.0"
+format: json
+extends: Citation Response Contract (schemas/core.md)
+
+required:
+  - schema
+  - answer_id
+  - pack
+  - retrieval_mode
+  - claims
+
+fields:
+  schema:
+    type: string
+    const: expertpack.typed_answer.v1
+
+  answer_id:
+    type: string
+    description: Stable ID for this answer (uuid or hash), for logging and audit.
+
+  pack:
+    type: string
+    description: Pack slug the answer was grounded against.
+
+  retrieval_mode:
+    type: string
+    enum: [standard, reconstruct]
+    description: >-
+      standard = file-level citations; reconstruct = span-level fragment
+      provenance (RFC-003). reconstruct requires source.fragment_id.
+
+  answer_text:
+    type: string
+    description: The human-readable answer. Optional but recommended.
+
+  claims:
+    type: array
+    description: Every assertable claim in the answer, each mapped to sources.
+    items:
+      type: object
+      required: [claim_id, text, sources]
+      fields:
+        claim_id:
+          type: string
+          description: Stable within this answer (e.g. c1, c2).
+        text:
+          type: string
+          description: A single assertable statement of fact.
+        confidence:
+          type: string
+          enum: [expert-verified, crawled, inferred]
+          description: Author/agent confidence grade (mirrors frontmatter confidence).
+        sources:
+          type: array
+          description: One or more source references supporting the claim.
+          items:
+            type: object
+            required: [support]
+            fields:
+              fragment_id:
+                type: string
+                description: RFC-003 fragment ID (required when retrieval_mode = reconstruct).
+              id:
+                type: string
+                description: Source atom frontmatter id (file-level citation).
+              source_file:
+                type: string
+                description: Pack-relative source path.
+              excerpt:
+                type: string
+                description: The supporting passage copied from the source.
+              content_hash:
+                type: string
+                pattern: ^sha256:[a-f0-9]{64}$
+                description: Hash of the cited span/file at answer time.
+              support:
+                type: string
+                enum: [supported, partial, unsupported]
+                description: How strongly this source backs the claim.
+
+optional:
+  generated_at:
+    type: string
+    format: date-time
+  model:
+    type: string
+    description: Model that produced the answer.
+  unsupported_note:
+    type: string
+    description: Free text if the agent had to answer beyond pack coverage.
+
+notes:
+  - A claim with no source whose support is "supported" is a contract violation.
+  - retrieval_mode reconstruct requires each source to carry a fragment_id.
+  - TAC is validated structurally by tools/tac/validate_tac.py and scored by the eval claim_verifier.
+  - TAC does not replace the answer prose; answer_text carries the readable answer, claims carry the audit trail.

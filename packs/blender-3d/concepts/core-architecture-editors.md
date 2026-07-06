@@ -18,6 +18,7 @@ supersedes:
 related:
   - core-architecture-data-blocks.md
   - core-architecture-blend-file.md
+content_hash: sha256:f3c90651cf339f6d0897ede1215f8d6c6dbaf695f16d3df8532890a54fcde4f9
 ---
 
 # Core Architecture — Mode System and Editors

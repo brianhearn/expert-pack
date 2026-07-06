@@ -10,6 +10,7 @@ id: home-assistant/process/phases/01-planning
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:4c98072f458c3a40a7ddd5b01567d6c0a964d23b40dc802d78065327d49739b4
 ---
 # Phase 1: Planning
 

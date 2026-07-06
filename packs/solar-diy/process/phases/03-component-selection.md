@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:c0448a1cc76c914e2887af162d94b3b050feb316a123aa5f73b4a8a30a2993f2
 ---
 
 # Phase 3: Component Selection

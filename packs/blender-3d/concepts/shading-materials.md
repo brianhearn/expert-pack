@@ -18,6 +18,7 @@ supersedes:
   - concepts/shading-rendering.md
 related:
   - shading-engines.md
+content_hash: sha256:c619978fc995c2fff3f08d77484d4c8ee2c0a2b3723dc521cb51d8ef09bfb0ee
 ---
 
 # Shading — Principled BSDF, Procedural Textures, and UV Mapping

@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:7188a58c584f7b9d9b1109ec2f0c0e33d95a28ba50ba929c54814fb98b51ba0a
 ---
 
 # Phase 1: Site Assessment

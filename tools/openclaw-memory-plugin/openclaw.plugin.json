@@ -53,6 +53,11 @@
       "label": "Request Timeout (ms)",
       "placeholder": "15000",
       "advanced": true
+    },
+    "reconstruct": {
+      "label": "Reconstruct Mode",
+      "help": "Request span-level provenance (fragment IDs, line ranges, checksums) on every search. Auditable but uses more tokens.",
+      "advanced": true
     }
   },
   "configSchema": {
@@ -116,6 +121,10 @@
         "type": "number",
         "minimum": 1000,
         "maximum": 120000
+      },
+      "reconstruct": {
+        "type": "boolean",
+        "description": "Request span-level provenance envelopes (RFC-003 Reconstruct Mode) on every search. Default: false."
       }
     },
     "required": ["endpoint", "pack", "embedding"]

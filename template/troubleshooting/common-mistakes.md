@@ -4,6 +4,10 @@ type: gotcha
 tags: [gotcha, common-mistakes, troubleshooting, pack-name]
 pack: your-pack-slug
 retrieval_strategy: atomic
+id: your-pack-slug/troubleshooting/common-mistakes
+schema_version: "4.1"
+verified_at: "2026-07-06"
+content_hash: sha256:440497e904d7092df5928a6e1f91665e347d4648ea84c75c54782740b69731ef
 ---
 
 # Common Mistakes

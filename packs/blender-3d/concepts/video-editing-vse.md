@@ -16,6 +16,7 @@ supersedes:
   - concepts/video-editing.md
 related:
   - video-editing-render.md
+content_hash: sha256:8bd7edcf2bc0ddc8eb51a09e205659875276ca3795af7374d650a769a611646b
 ---
 
 # Video Editing — VSE Interface, Strips, and Workflow

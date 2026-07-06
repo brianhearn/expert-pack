@@ -13,6 +13,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:931c4ebc73ac36cd5b080a787479cdd385ec78ac9e0e4e6b0047055972e09f43
 ---
 <!-- context: section=concepts, topic=backup-migration, related=core-architecture,network-architecture -->
 ---

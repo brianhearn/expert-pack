@@ -11,6 +11,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:791627dfbc2e2f8170f0b397a60ccfdd06a8d74795934b62b7231edffa2ab146
 ---
 # Decision: Installation Method
 

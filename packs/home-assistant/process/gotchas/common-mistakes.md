@@ -10,6 +10,7 @@ id: home-assistant/process/gotchas/common-mistakes
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:e37d64db0a6246a6a7a0694979b3d3a177c29f4378ff24f52ce06e58652ba9f3
 ---
 # Common Mistakes in Home Assistant
 

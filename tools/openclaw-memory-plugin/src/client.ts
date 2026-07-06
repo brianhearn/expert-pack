@@ -19,6 +19,16 @@ export type EpSearchResult = {
   tags?: string[];
   graph_expanded?: boolean;
   requires_expanded?: boolean;
+  // Fragment provenance (RFC-003 Reconstruct Mode). Present when the request
+  // sets reconstruct=true and the server supports it.
+  fragment_id?: string | null;
+  id?: string | null;
+  line_range?: [number, number] | null;
+  byte_offset?: [number, number] | null;
+  content_hash?: string | null;
+  verified_at?: string | null;
+  original_markdown?: string | null;
+  stale?: boolean;
 };
 
 export type EpSearchResponse = {
@@ -35,6 +45,8 @@ export type EpSearchRequest = {
   type?: string | null;
   tags?: string[] | null;
   vector?: number[] | null;
+  /** Ask the server for span-level provenance envelopes (RFC-003). */
+  reconstruct?: boolean;
 };
 
 export type EpClientOptions = {
@@ -93,6 +105,7 @@ export class EpMcpClient {
           type: req.type ?? null,
           tags: req.tags ?? null,
           vector: req.vector ?? null,
+          reconstruct: req.reconstruct ?? false,
         }),
         signal: controller.signal,
       });

@@ -13,6 +13,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:98fec7b4b38718c4856dd538e63cc053e12f094c0f165288a0daf72b0b324e53
 ---
 <!-- context: section=faq, topic=hardware-selection, related=backup-migration,network-architecture -->
 

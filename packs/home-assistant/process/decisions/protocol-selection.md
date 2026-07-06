@@ -11,6 +11,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:470551c9b4298b082a98976255591c622e8f2dd706e240b0a4cd9c85ba8445a0
 ---
 # Decision: Smart Home Protocol Selection
 

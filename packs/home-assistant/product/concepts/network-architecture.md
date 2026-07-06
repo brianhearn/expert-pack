@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:048da8a9a1fd53aa13f3048c174314817451564853b46d81d4594ea7fdccb556
 ---
 <!-- context: section=concepts, topic=network-architecture, related=protocols,integrations-guide,backup-migration -->
 ---

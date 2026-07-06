@@ -18,6 +18,7 @@ supersedes:
 related:
   - core-architecture-editors.md
   - core-architecture-blend-file.md
+content_hash: sha256:99099e854fbe7ccacf49c715b807ffd7d74d1a4ba07c3595cef1f2596c5a08b8
 ---
 
 # Core Architecture — Data-Blocks, Objects, and Collections

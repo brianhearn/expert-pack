@@ -11,6 +11,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:12d34a9352b9ae2d358760bfcbd4e908e2a409766929f76b3da93189e0d7848d
 ---
 # Decision: Hardware Selection
 

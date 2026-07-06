@@ -21,6 +21,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:164401c13813859b4a5bfd4506fa23f3491501a1046ff11c6b3ba2c2d87053e5
 ---
 # Why Does My Integration Break Every Update?
 

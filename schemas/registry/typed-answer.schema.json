@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://expertpack.dev/schemas/typed-answer.schema.json",
+  "title": "ExpertPack Typed Answer Contract (TAC) v1",
+  "description": "Machine-verifiable response envelope: every claim in an answer maps to one or more retrieved source fragments. Validate an agent's JSON answer against this schema.",
+  "type": "object",
+  "required": ["schema", "answer_id", "pack", "retrieval_mode", "claims"],
+  "properties": {
+    "schema": { "const": "expertpack.typed_answer.v1" },
+    "answer_id": { "type": "string", "minLength": 1 },
+    "pack": { "type": "string", "minLength": 1 },
+    "retrieval_mode": { "type": "string", "enum": ["standard", "reconstruct"] },
+    "answer_text": { "type": "string" },
+    "generated_at": { "type": "string" },
+    "model": { "type": "string" },
+    "unsupported_note": { "type": "string" },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "text", "sources"],
+        "properties": {
+          "claim_id": { "type": "string", "minLength": 1 },
+          "text": { "type": "string", "minLength": 1 },
+          "confidence": {
+            "type": "string",
+            "enum": ["expert-verified", "crawled", "inferred"]
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["support"],
+              "properties": {
+                "fragment_id": { "type": "string" },
+                "id": { "type": "string" },
+                "source_file": { "type": "string" },
+                "excerpt": { "type": "string" },
+                "content_hash": {
+                  "type": "string",
+                  "pattern": "^sha256:[a-f0-9]{64}$"
+                },
+                "support": {
+                  "type": "string",
+                  "enum": ["supported", "partial", "unsupported"]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

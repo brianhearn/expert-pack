@@ -10,6 +10,7 @@ id: home-assistant/process/phases/02-initial-setup
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:0f098ce5b2af7e8c07b423bd7d775e091557239d4568bc178b4be37eec490a46
 ---
 # Phase 2: Initial Setup
 

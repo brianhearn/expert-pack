@@ -245,7 +245,99 @@ def build_index(dir_name, files):
     return '\n'.join(lines) + '\n'
 
 
-def convert_file(src_path, dest_path, pack_slug, content_type, stats, warnings):
+def estimate_tokens(text):
+    """Rough token estimate (~4 chars/token), matching the validator's heuristic."""
+    return max(1, len(text) // 4)
+
+
+def count_sections(body):
+    return len(re.findall(r'^##\s+', body, re.MULTILINE))
+
+
+def build_migration_report(rows, stats, pack_name):
+    """Surface the decisions a human should review after an Obsidian conversion.
+
+    rows: list of per-file dicts with keys path, type, type_ambiguous, tokens,
+          sections, has_id, has_verified.
+    """
+    ambiguous = [r for r in rows if r['type_ambiguous']]
+    oversized = [r for r in rows if r['tokens'] > 1000]
+    no_prov = [r for r in rows if not (r['has_id'] and r['has_verified'])]
+
+    lines = [
+        f'# Migration Report — {pack_name}',
+        '',
+        f'> Generated on {utcnow().strftime("%Y-%m-%d")}. This file is for the migrator; '
+        'delete it once the pack is cleaned up.',
+        '',
+        '## Summary',
+        '',
+        f'- Files converted: {stats["converted"]}',
+        f'- Directories: {stats["dirs"]}',
+        f'- Ambiguous type assignments: {len(ambiguous)}',
+        f'- Oversized files (>1,000 tokens): {len(oversized)}',
+        f'- Files needing provenance backfill: {len(no_prov)}',
+        '',
+        '## Provenance',
+        '',
+        'Converted files carry no `id`, `verified_at`, `content_hash`, `schema_version`, '
+        'or `retrieval_strategy`. Backfill them before validating under `--strict`:',
+        '',
+        '```bash',
+        'expertpack checksum <pack> --apply    # or: ep-doctor <pack> --fix hash --apply',
+        '```',
+        '',
+    ]
+
+    lines += ['## Ambiguous type assignments', '']
+    if ambiguous:
+        lines += [
+            'These files were placed in a directory the converter did not recognize, so they '
+            'defaulted to a generic type. Confirm each `type` and move to the right directory '
+            '(`concepts/`, `workflows/`, `troubleshooting/`, `faq/`).',
+            '',
+            '| File | Assigned type |',
+            '|------|---------------|',
+        ]
+        for r in sorted(ambiguous, key=lambda x: x['path']):
+            lines.append(f'| `{r["path"]}` | {r["type"]} |')
+        lines.append('')
+    else:
+        lines += ['None — every file landed in a recognized content directory.', '']
+
+    lines += ['## Oversized files & recommended splits', '']
+    if oversized:
+        lines += [
+            'Files over the v4.1 1,000-token ceiling. Split `standard` concept files at their '
+            '`##` boundaries into independent atoms; leave genuinely-atomic files whole and give '
+            'them `retrieval_strategy: atomic` plus a `.chunks.yaml` sidecar '
+            '(`expertpack chunk-annotate --apply`).',
+            '',
+            '| File | ~Tokens | ## sections | Suggestion |',
+            '|------|--------:|------------:|------------|',
+        ]
+        for r in sorted(oversized, key=lambda x: -x['tokens']):
+            hint = f'split into {r["sections"]} atoms' if r['sections'] >= 2 else 'mark atomic + add sidecar'
+            lines.append(f'| `{r["path"]}` | {r["tokens"]:,} | {r["sections"]} | {hint} |')
+        lines.append('')
+    else:
+        lines += ['None — all files are within the token ceiling.', '']
+
+    lines += [
+        '## Next steps',
+        '',
+        '1. Resolve ambiguous types and oversized files above.',
+        '2. `expertpack checksum <pack> --apply` to backfill provenance.',
+        '3. `expertpack validate <pack> --strict` and fix remaining errors.',
+        '4. `expertpack chunk-annotate <pack> --apply` for any atomic/reference files kept whole.',
+        '5. Install `expertpack-eval` and measure the EK ratio.',
+        '',
+    ]
+    return '\n'.join(lines) + '\n'
+
+
+def convert_file(src_path, dest_path, rel, pack_slug, content_type, type_ambiguous,
+                 stats, warnings, report):
     try:
         raw = src_path.read_text(encoding='utf-8', errors='replace')
     except Exception as e:
@@ -295,12 +387,26 @@ def convert_file(src_path, dest_path, pack_slug, content_type, stats, warnings):
     dest_path.write_text(dump_yaml_front(fm, body), encoding='utf-8')
     stats['converted'] += 1
 
+    report.append({
+        'path': str(rel).replace(os.sep, '/'),
+        'type': fm['type'],
+        'type_ambiguous': type_ambiguous,
+        'tokens': estimate_tokens(body),
+        'sections': count_sections(body),
+        'has_id': bool(fm.get('id')),
+        'has_verified': bool(fm.get('verified_at')),
+    })
+
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
 def main():
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except (AttributeError, ValueError):
+        pass
     parser = argparse.ArgumentParser(description='Convert an Obsidian Vault to an ExpertPack.')
     parser.add_argument('vault', help='Path to source Obsidian Vault')
     parser.add_argument('--output', required=True, help='Output directory for the ExpertPack')
@@ -340,6 +446,7 @@ def main():
 
     stats = {'converted': 0, 'dirs': 0, 'tags': 0, 'dataview': 0, 'wikilinks': 0}
     warnings = []
+    report = []
     all_tags_global = set()
     dir_files_map = {}  # dir_name -> [Path]
 
@@ -350,6 +457,7 @@ def main():
 
         rel_root = Path(root).relative_to(vault_path)
         dir_name = rel_root.parts[0] if rel_root.parts else '_root'
+        type_ambiguous = dir_name.lower() not in CONTENT_TYPE_MAP
         content_type = CONTENT_TYPE_MAP.get(dir_name.lower(), 'note')
 
         md_files = [f for f in files if f.endswith('.md') and f not in IGNORED_FILES]
@@ -366,7 +474,8 @@ def main():
             dir_files_map.setdefault(dest_dir_key, []).append(dest)
 
             if not args.dry_run:
-                convert_file(src, dest, pack_slug, content_type, stats, warnings)
+                convert_file(src, dest, rel, pack_slug, content_type, type_ambiguous,
+                             stats, warnings, report)
             else:
                 stats['converted'] += 1
                 print(f'  [dry] {rel}')
@@ -391,6 +500,10 @@ def main():
         # overview.md
         overview_path = output_path / 'overview.md'
         overview_path.write_text(build_overview(pack_name, pack_type, stats, warnings), encoding='utf-8')
+
+        # _migration-report.md — decisions the migrator should review
+        report_path = output_path / '_migration-report.md'
+        report_path.write_text(build_migration_report(report, stats, pack_name), encoding='utf-8')
 
         # glossary.md stub
         glossary_path = output_path / 'glossary.md'
@@ -421,10 +534,11 @@ def main():
             print(f'  ⚠ {w}')
     if not args.dry_run:
         print(f'\nOutput: {output_path}')
+        print(f'Migration report: {output_path / "_migration-report.md"}')
         print('\nNext steps:')
-        print('  1. Review manifest.yaml and overview.md')
-        print('  2. Run ep-validate to check for errors')
-        print('  3. Run ep-doctor --apply to fix common issues')
+        print('  1. Review _migration-report.md (ambiguous types, oversized files, provenance)')
+        print('  2. Run expertpack checksum --apply to backfill provenance')
+        print('  3. Run expertpack validate --strict to check for errors')
         print('  4. Install expertpack-eval and measure EK ratio')
 
 if __name__ == '__main__':

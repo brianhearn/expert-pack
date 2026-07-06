@@ -13,6 +13,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:fd7cee3ca96cca750bacd6d3e23688ae446470517b6f6141cc79f9342aec06ec
 ---
 <!-- context: section=faq, topic=remote-access, related=network-architecture,backup-migration -->
 

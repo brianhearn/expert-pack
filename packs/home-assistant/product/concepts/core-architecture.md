@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:36fd783b6f1be008537e19b42c05ee81496e4c5bd9e24fe778fb440746be3750
 ---
 <!-- context: section=concepts, topic=core-architecture, related=automation-fundamentals,protocols,integrations-guide -->
 ---

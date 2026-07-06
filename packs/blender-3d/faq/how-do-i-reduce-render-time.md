@@ -13,6 +13,7 @@ id: blender-3d/faq/how-do-i-reduce-render-time
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:4b4d65f45a049ed4b682256f44843944263d712d7fac0ce95efe55ff098dd65e
 ---
 <!-- context: section=faq, topic=render-performance, related=shading-rendering,scene-optimization,compositing -->
 

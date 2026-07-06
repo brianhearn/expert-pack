@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """ExpertPack Validator v2 - comprehensive pack compliance checker.
 
-Usage: python3 ep-validate-v2.py /path/to/pack [--verbose] [--json] [--provenance] [--aks]
+Usage: python3 ep-validate.py /path/to/pack [--verbose] [--json]
+                                            [--provenance] [--aks]
+                                            [--strict] [--fail-on-warn]
 
 Checks (21):
   1. manifest.yaml exists and has required fields
@@ -23,12 +25,25 @@ Checks (21):
  17. W-PROV-01: content file missing verified_at (provenance) [--provenance]
  18. W-PROV-02: content_hash present but doesn't match actual file body [--provenance]
  19. W-PROV-04: content file missing id field (provenance) [--provenance]
- 19a. W-PROV-06: confidence present but not a valid grade (provenance) [--provenance]
+ 19a. W-PROV-05: valid_from is later than verified_at (provenance) [--provenance]
+ 19b. W-PROV-06: confidence present but not a valid grade (provenance) [--provenance]
  20. W-HUB-01: concept-dense hub file detected (high topic count, standard retrieval_strategy)
  21. W-AKS-01..04: compact Agent Knowledge Schema export readiness [--aks]
+ 22. W-CHUNK-01..03: chunk sidecar presence/consistency (RFC-004)
 
 Provenance checks (17-19) are opt-in via --provenance flag.
 AKS readiness checks are opt-in via --aks and imply provenance checks.
+
+--strict turns the frontmatter contract into a hard gate. It implies
+--provenance and promotes the enforceable schema rules from WARN to ERROR so
+that non-conforming files fail the run before they can enter an index:
+  - missing frontmatter or any required field (title, type, tags, pack)
+  - missing id / verified_at / content_hash (W-PROV-04/01, strict-missing-field)
+  - content_hash drift (W-PROV-02) and valid_from > verified_at (W-PROV-05)
+  - missing per-file schema_version / retrieval_strategy (strict-missing-field)
+  - concept files over the v4.1 token ceiling (W-V41-01)
+  - manifest missing schema_version
+--fail-on-warn additionally makes any remaining warning fail the run (exit 1).
 """
 
 import os, re, sys, yaml, json, hashlib
@@ -56,6 +71,18 @@ MANIFEST_REQUIRED = {'name', 'slug', 'type', 'version', 'description', 'entry_po
 VALID_PACK_TYPES = {'person', 'product', 'process', 'composite'}
 FM_REQUIRED = {'title', 'type', 'tags', 'pack'}
 CHAR_CEILING = 6000
+
+# --strict: WARN categories promoted to ERROR so non-conforming files fail the
+# run. These are the enforceable parts of the frontmatter/provenance contract.
+STRICT_PROMOTE = {
+    'no-frontmatter', 'missing-fm-field',
+    'W-PROV-01', 'W-PROV-02', 'W-PROV-04', 'W-PROV-05',
+    'W-V41-01',
+}
+
+# --strict: contract fields with no standalone rule (id/verified_at are already
+# covered by the promoted W-PROV-04/01 checks).
+STRICT_EXTRA_REQUIRED = ('content_hash', 'schema_version', 'retrieval_strategy')
 
 DIR_TYPE_MAP = {
     'concepts': 'concept', 'workflows': 'workflow',
@@ -95,7 +122,9 @@ def get_wikilinks(body):
     return RE_WIKI.findall(body)
 
 def get_md_links(body):
-    return RE_MDLINK.findall(body)
+    # Exclude external URLs that merely end in .md (e.g. https://obsidian.md);
+    # those are real links, not Obsidian wikilink candidates.
+    return [(t, target) for t, target in RE_MDLINK.findall(body) if '://' not in target]
 
 
 def _has_canonical_statement_surface(body):
@@ -129,12 +158,18 @@ def _has_canonical_statement_surface(body):
 
 
 class Validator:
-    def __init__(self, pack_path, verbose=False, check_provenance=False, check_aks=False):
+    def __init__(self, pack_path, verbose=False, check_provenance=False,
+                 check_aks=False, strict=False, fail_on_warn=False, ignore=None):
         self.pack_path = os.path.abspath(pack_path)
         self.pack_name = os.path.basename(self.pack_path)
         self.verbose = verbose
         self.check_aks = check_aks
-        self.check_provenance = check_provenance or check_aks
+        self.strict = strict
+        self.fail_on_warn = fail_on_warn
+        # Category codes demoted from ERROR to WARN (e.g. a tracked backlog).
+        self.ignore = set(ignore or ())
+        # strict gates the full contract, so it needs the provenance checks too
+        self.check_provenance = check_provenance or check_aks or strict
         self.manifest = {}
         self.pack_type = 'unknown'
         self.pack_slug = ''
@@ -148,6 +183,10 @@ class Validator:
         self.issues = []          # (severity, category, file, message)
 
     def _add(self, sev, cat, f, msg):
+        if cat in self.ignore:
+            sev = 'WARN'  # tracked/allowlisted: never fail the run on this code
+        elif self.strict and sev == 'WARN' and cat in STRICT_PROMOTE:
+            sev = 'ERROR'
         self.issues.append((sev, cat, f, msg))
 
     def load_manifest(self):
@@ -157,7 +196,7 @@ class Validator:
                        'manifest.yaml not found at pack root')
             return
         try:
-            with open(mp) as fh:
+            with open(mp, encoding='utf-8') as fh:
                 self.manifest = yaml.safe_load(fh.read()) or {}
         except yaml.YAMLError as e:
             self._add('ERROR', 'manifest-parse', 'manifest.yaml', f'YAML parse error: {e}')
@@ -179,7 +218,7 @@ class Validator:
                     continue
                 if f in SKIP_BASENAMES or not f.endswith('.md'):
                     continue
-                content = open(full).read()
+                content = open(full, encoding='utf-8').read()
                 self.files[rel] = content
                 self.fm[rel] = parse_fm(content)
                 self.bodies[rel] = strip_fm(content)
@@ -215,6 +254,9 @@ class Validator:
             if not os.path.exists(ep_full):
                 self._add('ERROR', 'manifest-entry', 'manifest.yaml',
                            f"entry_point '{ep}' does not exist")
+        if self.strict and not self.manifest.get('schema_version'):
+            self._add('ERROR', 'manifest-schema-version', 'manifest.yaml',
+                       "Missing schema_version -- required in --strict mode")
 
     # ── Check 3: duplicate basenames ─────────────────────────────────────
     def check_duplicate_basenames(self):
@@ -759,8 +801,10 @@ class Validator:
                                       f"concept_scope: composite (found: "
                                       f"'{parent_scope or 'unset'}').")
 
-            # Concept size ceiling: v4.1 = 1,000 tokens, v4.0 = 1,500 tokens
-            if fm.get('type') == 'concept':
+            # Concept size ceiling: v4.1 = 1,000 tokens, v4.0 = 1,500 tokens.
+            # atomic/navigation strategies are intentional whole-file units and
+            # are exempt (consistent with check_file_size).
+            if fm.get('type') == 'concept' and fm.get('retrieval_strategy') not in ('atomic', 'navigation'):
                 full = os.path.join(self.pack_path, rel)
                 try:
                     size_chars = os.path.getsize(full)
@@ -847,6 +891,21 @@ class Validator:
                                f'content_hash mismatch -- body changed since last hash '
                                f'(stored: {stored_hash[:26]}... actual: {actual[:26]}...)')
 
+            # W-PROV-05: valid_from later than verified_at (world truth can't
+            # postdate verification). Both fields optional; only checked together.
+            valid_from = fm.get('valid_from')
+            if valid_from and verified_at:
+                try:
+                    vf_date = date.fromisoformat(str(valid_from))
+                    va_date = date.fromisoformat(str(verified_at))
+                    if vf_date > va_date:
+                        self._add('WARN', 'W-PROV-05', rel,
+                                   f'valid_from {valid_from} is later than verified_at '
+                                   f'{verified_at} -- world-truth date cannot postdate '
+                                   f'verification')
+                except (ValueError, TypeError):
+                    pass
+
             # W-PROV-06: invalid confidence value (optional field; only checked when present)
             confidence = fm.get('confidence')
             if confidence is not None and confidence not in VALID_CONFIDENCE:
@@ -887,6 +946,78 @@ class Validator:
                 self._add('WARN', 'W-AKS-04', rel,
                           'AKS canonical_statement fallback is weak: add a retriever-anchored opening prose paragraph.')
 
+    # -- Checks: chunk sidecars (RFC-004) ----------------------------------
+    def check_chunk_sidecars(self):
+        """W-CHUNK-01: oversized atomic/reference file lacks a chunk sidecar;
+        W-CHUNK-02: sidecar content_hash does not match the file body;
+        W-CHUNK-03: chunk_order gaps/duplicates or duplicate chunk_id.
+
+        Standard oversized concepts are steered toward splitting by W-V41-01, so
+        W-CHUNK-01 targets the files RFC-004 is for: files that intentionally
+        stay whole (retrieval_strategy: atomic) or reference-scoped files.
+        """
+        for rel, fm in self.fm.items():
+            content = self.files.get(rel, '')
+            body = self.bodies.get(rel, '')
+            est_tokens = int(len(body) / 4)
+            sidecar_rel = os.path.splitext(rel)[0] + '.chunks.yaml'
+            sidecar_full = os.path.join(self.pack_path, sidecar_rel)
+            has_sidecar = os.path.exists(sidecar_full)
+
+            is_reference = (fm.get('concept_scope') == 'reference'
+                            or fm.get('retrieval_strategy') == 'atomic')
+            if est_tokens > 1000 and is_reference and not has_sidecar:
+                self._add('WARN', 'W-CHUNK-01', rel,
+                           f"~{est_tokens}-token {fm.get('retrieval_strategy', 'standard')} "
+                           f"file has no chunk sidecar — run ep-chunk-annotate "
+                           f"(RFC-004) so the indexer splits it deterministically.")
+
+            if not has_sidecar:
+                continue
+            try:
+                with open(sidecar_full, encoding='utf-8') as fh:
+                    sidecar = yaml.safe_load(fh.read()) or {}
+            except (OSError, yaml.YAMLError) as e:
+                self._add('WARN', 'W-CHUNK-02', sidecar_rel,
+                           f"sidecar could not be parsed: {e}")
+                continue
+
+            actual = 'sha256:' + hashlib.sha256(body.encode()).hexdigest()
+            if sidecar.get('content_hash') and sidecar['content_hash'] != actual:
+                self._add('WARN', 'W-CHUNK-02', sidecar_rel,
+                           "sidecar content_hash does not match the file body — "
+                           "regenerate with ep-chunk-annotate --apply.")
+
+            chunks = sidecar.get('chunks') or []
+            orders = [c.get('chunk_order') for c in chunks if isinstance(c, dict)]
+            ids = [c.get('chunk_id') for c in chunks if isinstance(c, dict)]
+            if orders and sorted(orders) != list(range(len(orders))):
+                self._add('WARN', 'W-CHUNK-03', sidecar_rel,
+                           f"chunk_order is not a contiguous 0..{len(orders)-1} sequence.")
+            dupes = {i for i in ids if ids.count(i) > 1}
+            if dupes:
+                self._add('WARN', 'W-CHUNK-03', sidecar_rel,
+                           f"duplicate chunk_id: {', '.join(sorted(dupes))}")
+
+    # -- Strict contract: extra required fields (opt-in via --strict) -------
+    def check_strict_required(self):
+        """--strict: require the remaining contract fields as ERROR.
+
+        id and verified_at are already covered by the promoted W-PROV-04/01
+        checks; this adds the fields with no standalone rule (content_hash,
+        schema_version, retrieval_strategy). Files without any frontmatter are
+        already flagged (and promoted) by check_frontmatter_required.
+        """
+        if not self.strict:
+            return
+        for rel, fm in self.fm.items():
+            if not fm or self._is_provenance_exempt(rel, fm):
+                continue
+            for field in STRICT_EXTRA_REQUIRED:
+                if not fm.get(field):
+                    self._add('ERROR', 'strict-missing-field', rel,
+                               f"Missing required field in --strict mode: '{field}'")
+
     # ── Run all checks ───────────────────────────────────────────────────
     def validate(self):
         self.load_manifest()
@@ -910,15 +1041,19 @@ class Validator:
         self.check_hub_files()
         self.check_retrieval_antipatterns()
         self.check_v40_atomic_conceptual()
+        self.check_chunk_sidecars()
         if self.check_provenance:
             self.check_provenance_fields()
         if self.check_aks:
             self.check_aks_readiness()
+        if self.strict:
+            self.check_strict_required()
         return self.issues
 
     def report(self, as_json=False):
         errors = [i for i in self.issues if i[0] == 'ERROR']
         warns = [i for i in self.issues if i[0] == 'WARN']
+        fail = bool(errors) or (self.fail_on_warn and bool(warns))
 
         if as_json:
             out = {
@@ -926,16 +1061,20 @@ class Validator:
                 'files': len(self.files),
                 'errors': len(errors),
                 'warnings': len(warns),
+                'strict': self.strict,
+                'fail_on_warn': self.fail_on_warn,
+                'passed': not fail,
                 'issues': [
                     {'severity': s, 'category': c, 'file': f, 'message': m}
                     for s, c, f, m in self.issues
                 ]
             }
             print(json.dumps(out, indent=2))
-            return 1 if errors else 0
+            return 1 if fail else 0
 
         if not self.issues:
-            print(f"  {self.pack_name}: {len(self.files)} files, 0 errors, 0 warnings")
+            mode = ' [strict]' if self.strict else ''
+            print(f"  {self.pack_name}{mode}: {len(self.files)} files, 0 errors, 0 warnings")
             return 0
 
         print(f"\n{'='*60}")
@@ -957,8 +1096,10 @@ class Validator:
                 print(f"  ... and {len(items)-5} more (use --verbose)")
         print(f"\n{'='*60}")
         print(f"Total: {len(errors)} errors, {len(warns)} warnings")
+        if self.fail_on_warn and warns and not errors:
+            print("FAIL: --fail-on-warn is set and warnings remain")
         print(f"{'='*60}")
-        return 1 if errors else 0
+        return 1 if fail else 0
 
 
 def find_sub_packs(pack_path):
@@ -982,6 +1123,11 @@ def find_sub_packs(pack_path):
 
 def main():
     import argparse
+    # Keep box-drawing/em-dash output intact in CI logs on Windows consoles.
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except (AttributeError, ValueError):
+        pass
     parser = argparse.ArgumentParser(description='ExpertPack Validator v2')
     parser.add_argument('pack', help='Path to pack directory')
     parser.add_argument('--verbose', '-v', action='store_true',
@@ -994,6 +1140,16 @@ def main():
     parser.add_argument('--aks', action='store_true',
                         help='Enable Agent Knowledge Schema export-readiness checks '
                              '(implies --provenance)')
+    parser.add_argument('--strict', action='store_true',
+                        help='Enforce the frontmatter contract as a hard gate: '
+                             'implies --provenance and promotes required-field, '
+                             'hash, and size rules from WARN to ERROR')
+    parser.add_argument('--fail-on-warn', action='store_true',
+                        help='Exit nonzero if any warning remains (in addition to errors)')
+    parser.add_argument('--ignore', action='append', metavar='CODE', default=[],
+                        help='Demote a check code from ERROR to WARN so it does not '
+                             'fail the run (repeatable). Use for a tracked backlog, '
+                             'e.g. --ignore W-V41-01')
     args = parser.parse_args()
 
     if not os.path.isdir(args.pack):
@@ -1007,9 +1163,9 @@ def main():
     is_composite = False
     if os.path.exists(manifest_path):
         try:
-            m = yaml.safe_load(open(manifest_path).read()) or {}
+            m = yaml.safe_load(open(manifest_path, encoding='utf-8').read()) or {}
             is_composite = m.get('type') == 'composite'
-        except:
+        except Exception:
             pass
 
     exit_code = 0
@@ -1022,13 +1178,17 @@ def main():
             print("  WARNING: No sub-packs found with manifest.yaml")
             sys.exit(1)
         for sub in subs:
-            v = Validator(sub, verbose=args.verbose, check_provenance=args.provenance, check_aks=args.aks)
+            v = Validator(sub, verbose=args.verbose, check_provenance=args.provenance,
+                          check_aks=args.aks, strict=args.strict,
+                          fail_on_warn=args.fail_on_warn, ignore=args.ignore)
             v.validate()
             rc = v.report(as_json=args.json)
             if rc > exit_code:
                 exit_code = rc
     else:
-        v = Validator(pack_path, verbose=args.verbose, check_provenance=args.provenance, check_aks=args.aks)
+        v = Validator(pack_path, verbose=args.verbose, check_provenance=args.provenance,
+                      check_aks=args.aks, strict=args.strict,
+                      fail_on_warn=args.fail_on_warn, ignore=args.ignore)
         v.validate()
         exit_code = v.report(as_json=args.json)
 

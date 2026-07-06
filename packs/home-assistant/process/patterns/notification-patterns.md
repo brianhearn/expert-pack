@@ -1,4 +1,6 @@
 ---
+title: "Smart Notification Patterns — Beyond \"Send Me a Message\""
+type: pattern
 pack: home-assistant
 tags:
 - process
@@ -7,6 +9,8 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+retrieval_strategy: standard
+content_hash: sha256:8e77136c3fb4fcc12678a2af57c938a07a9b5c09028772fe8eaf90a43471cb71
 ---
 ---
 sources:

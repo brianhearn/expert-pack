@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:61434f251acc6ad616c18492919ea101ceb2114e79b3ddf0a0b5f636b232a2a6
 ---
 <!-- context: section=concepts, topic=protocols, related=core-architecture,esphome-fundamentals,network-architecture -->
 ---

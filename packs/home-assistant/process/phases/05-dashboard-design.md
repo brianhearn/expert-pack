@@ -10,6 +10,7 @@ id: home-assistant/process/phases/05-dashboard-design
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+content_hash: sha256:c5a6549c8f87bd416e428150d08806e989c4840770dc369deb0cfe5c84f131b0
 ---
 # Phase 5: Dashboard Design
 

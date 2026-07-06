@@ -1,0 +1,45 @@
+name: validate
+
+# Hard gate: no pack enters the index unless it passes the --strict frontmatter
+# contract (0 errors). Advisory warnings (orphaned scaffolding files, demo
+# cross-links, oversized examples) do not block. The demo packs additionally
+# tolerate the tracked oversized-concept backlog (W-V41-01) until the
+# atomic-split sprint lands.
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  template:
+    name: template (strict)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - name: Validate template
+        run: python tools/validator/ep-validate.py template --strict
+
+  packs:
+    name: pack (strict)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        pack: [blender-3d, home-assistant, solar-diy]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - name: Validate pack
+        # W-V41-01 (oversized concept) is a tracked backlog; every other error
+        # still fails the build.
+        run: python tools/validator/ep-validate.py packs/${{ matrix.pack }} --strict --ignore W-V41-01
+      - name: Check chunk sidecars are up to date
+        run: python tools/chunker/ep-chunk-annotate.py packs/${{ matrix.pack }} --check --embedding-version gemini-embedding-001

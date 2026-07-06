@@ -18,6 +18,7 @@ supersedes:
 related:
   - python-bpy-api.md
   - python-addons.md
+content_hash: sha256:770e5e2eb28a85acfa885a9e90acf95403a80f6a77548cf4a98ff62f3c295414
 ---
 
 # Python Scripting — Batch Scripting and Command-Line Rendering

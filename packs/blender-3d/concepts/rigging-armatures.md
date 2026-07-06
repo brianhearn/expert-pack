@@ -18,6 +18,7 @@ supersedes:
 related:
   - animation-data-model.md
   - animation-shape-keys.md
+content_hash: sha256:615351781c909df9cb04ec60d55ec559675e998d55a0e137ba604235c33c321a
 ---
 
 # Rigging — Armatures, Constraints, IK/FK, and Weight Painting

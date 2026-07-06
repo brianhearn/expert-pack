@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:76ba142b37488c773e5d6e4d4fc59f0f83d6817be75b1e4380804b2419ead7a9
 ---
 <!-- context: section=product, topic=faq-battery-decision, related=battery-systems-2026,grid-tied-vs-hybrid,system-design-fundamentals -->
 

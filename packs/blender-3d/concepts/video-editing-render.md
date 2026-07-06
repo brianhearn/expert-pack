@@ -17,6 +17,7 @@ supersedes:
   - concepts/video-editing.md
 related:
   - video-editing-vse.md
+content_hash: sha256:3ba60ec466c31a66463ac5d36585c93e3741f91376fc16e7420a3e875d933d31
 ---
 
 # Video Editing — Rendering, Audio, and VSE Limitations

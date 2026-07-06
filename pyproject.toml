@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "expertpack-cli"
+version = "0.1.0"
+description = "Unified CLI for authoring, validating, and migrating ExpertPacks."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "Apache-2.0" }
+dependencies = ["pyyaml"]
+
+[project.optional-dependencies]
+# Needed only for eval scoring (claim_verifier) and full JSON Schema checks.
+eval = ["requests", "jsonschema"]
+
+[project.scripts]
+expertpack = "expertpack:main"
+
+# The CLI shells out to sibling tools by repo-relative path, so install it in
+# editable mode from the repo root: `pip install -e .`
+[tool.setuptools]
+py-modules = ["expertpack"]
+
+[tool.setuptools.package-dir]
+"" = "tools/cli"

@@ -1,0 +1,180 @@
+schema_version: '1.0'
+source_id: blender-3d/workflows/product-visualization
+content_hash: sha256:2fd9999fba0a82d24a63e020a4f11d2a02560f0a2a38d1d6cce3277e2f216723
+generated_by: ep-chunk-annotate
+chunks:
+- chunk_id: product-visualization--opening
+  chunk_order: 0
+  section: null
+  line_range: [15, 23]
+  tokenizer_tokens: 186
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--studio-lighting-setup
+  chunk_order: 1
+  section: Studio Lighting Setup
+  line_range: [24, 25]
+  tokenizer_tokens: 6
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--the-three-point-foundation
+  chunk_order: 2
+  section: The Three-Point Foundation
+  line_range: [26, 55]
+  tokenizer_tokens: 255
+  chunk_summary: 'Product photography uses a three-point setup adapted from still photography:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--hdri-as-base-environment
+  chunk_order: 3
+  section: HDRI as Base Environment
+  line_range: [56, 72]
+  tokenizer_tokens: 190
+  chunk_summary: 'For product work, combine HDRI (ambient/fill) with area lights (controlled highlights):'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--background-sweep-cyc-wall
+  chunk_order: 4
+  section: Background — Sweep (Cyc Wall)
+  line_range: [73, 84]
+  tokenizer_tokens: 173
+  chunk_summary: 'A curved background plane that eliminates the corner between floor and wall:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--hdri-lighting-control
+  chunk_order: 5
+  section: HDRI Lighting Control
+  line_range: [85, 86]
+  tokenizer_tokens: 6
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--rotating-without-affecting-background
+  chunk_order: 6
+  section: Rotating Without Affecting Background
+  line_range: [87, 107]
+  tokenizer_tokens: 143
+  chunk_summary: 'To rotate the HDRI environment without rotating the background image visible in the render:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--isolating-highlights
+  chunk_order: 7
+  section: Isolating Highlights
+  line_range: [108, 118]
+  tokenizer_tokens: 116
+  chunk_summary: 'To control exactly where a specular highlight falls on a reflective product:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--material-setup-for-photorealism
+  chunk_order: 8
+  section: Material Setup for Photorealism
+  line_range: [119, 120]
+  tokenizer_tokens: 8
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--principled-bsdf-parameter-reference
+  chunk_order: 9
+  section: Principled BSDF Parameter Reference
+  line_range: [121, 176]
+  tokenizer_tokens: 235
+  chunk_summary: 'For common product materials:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--surface-imperfection-textures
+  chunk_order: 10
+  section: Surface Imperfection Textures
+  line_range: [177, 198]
+  tokenizer_tokens: 203
+  chunk_summary: 'Perfect materials look fake. Add imperfection layers:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--node-setup-for-a-multi-layer-product-material
+  chunk_order: 11
+  section: Node Setup for a Multi-Layer Product Material
+  line_range: [199, 220]
+  tokenizer_tokens: 162
+  chunk_summary: 'Node setup (plastic with label):'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--camera-setup
+  chunk_order: 12
+  section: Camera Setup
+  line_range: [221, 222]
+  tokenizer_tokens: 4
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--focal-length-for-products
+  chunk_order: 13
+  section: Focal Length for Products
+  line_range: [223, 237]
+  tokenizer_tokens: 195
+  chunk_summary: 'Focal length dramatically affects product photography feel:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--depth-of-field
+  chunk_order: 14
+  section: Depth of Field
+  line_range: [238, 249]
+  tokenizer_tokens: 117
+  chunk_summary: 'Camera properties → Depth of Field:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--lens-distortion
+  chunk_order: 15
+  section: Lens Distortion
+  line_range: [250, 260]
+  tokenizer_tokens: 56
+  chunk_summary: 'Real camera lenses have slight barrel distortion. To add:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--turntable-animation
+  chunk_order: 16
+  section: Turntable Animation
+  line_range: [261, 262]
+  tokenizer_tokens: 5
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--clean-turntable-setup
+  chunk_order: 17
+  section: Clean Turntable Setup
+  line_range: [263, 286]
+  tokenizer_tokens: 215
+  chunk_summary: '**Method 1 — Rotate the product:**'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--turntable-render-settings
+  chunk_order: 18
+  section: Turntable Render Settings
+  line_range: [287, 301]
+  tokenizer_tokens: 166
+  chunk_summary: For a 10-second turntable at 24fps = 240 frames. At 30fps = 300 frames.
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--render-settings-for-product-shots
+  chunk_order: 19
+  section: Render Settings for Product Shots
+  line_range: [302, 303]
+  tokenizer_tokens: 9
+  chunk_summary: ''
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--cycles-settings-still-images
+  chunk_order: 20
+  section: Cycles Settings (Still Images)
+  line_range: [304, 323]
+  tokenizer_tokens: 155
+  chunk_summary: 'Samples: 512–2048 (still images; higher for glass/metallic products with complex caustics)'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--eevee-settings-quick-previews-or-npr-stylization
+  chunk_order: 21
+  section: EEVEE Settings (Quick Previews or NPR Stylization)
+  line_range: [324, 338]
+  tokenizer_tokens: 87
+  chunk_summary: 'Render:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--render-passes-for-compositing
+  chunk_order: 22
+  section: Render Passes for Compositing
+  line_range: [339, 354]
+  tokenizer_tokens: 116
+  chunk_summary: 'Render to multilayer EXR for maximum post-processing flexibility:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--post-processing-in-compositor
+  chunk_order: 23
+  section: Post-Processing in Compositor
+  line_range: [355, 371]
+  tokenizer_tokens: 96
+  chunk_summary: 'Minimal but effective product render compositing:'
+  embedding_version: gemini-embedding-001
+- chunk_id: product-visualization--common-product-visualization-pitfalls
+  chunk_order: 24
+  section: Common Product Visualization Pitfalls
+  line_range: [372, 384]
+  tokenizer_tokens: 337
+  chunk_summary: '**Uniform roughness:** Every surface in real life has roughness variation — fingerprints, wear, dust. Add a Noise Texture mixed into the Roughness input at l...'
+  embedding_version: gemini-embedding-001

@@ -5,8 +5,10 @@ tags: [workflow, example-workflow, pack-name]
 pack: your-pack-slug
 retrieval_strategy: atomic
 id: "your-pack-slug/workflows/example-workflow"
-verified_at: "YYYY-MM-DD"
+verified_at: "2026-07-06"
 verified_by: "agent"
+schema_version: "4.1"
+content_hash: sha256:066062acdd3cceeb5e02d847025ae0a3e0caa85e9d916e45804d035701937b3c
 ---
 
 <!-- context: section=workflows, topic=example-workflow, related=example-concept -->

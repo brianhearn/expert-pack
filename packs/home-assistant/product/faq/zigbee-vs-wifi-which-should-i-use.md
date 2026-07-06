@@ -13,6 +13,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:3de5a680afb2b5f4a4b73ab3634e021f2a657164c100b108d3be98334362cb5a
 ---
 <!-- context: section=faq, topic=protocol-selection, related=protocols,integrations-guide -->
 

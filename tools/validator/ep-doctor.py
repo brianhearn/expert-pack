@@ -11,10 +11,13 @@ Usage:
 Fix operations:
   links  — convert path-based related: to bare filenames
          — convert markdown links to wikilinks in body
+         — remove broken wikilinks (unlink to plain text; composite-safe)
          — add missing legacy verbatim<->summary cross-links
          — add reverse related: links (bidirectional enforcement)
   fm     — add missing frontmatter fields (title, type, tags, pack)
          — fix legacy canonical_verbatim paths to bare filenames
+  hash   — backfill provenance contract fields for --strict:
+             id, schema_version, retrieval_strategy, verified_at, content_hash
   size   — (report only) flag files over the char ceiling
   prefix — suggest prefix map for packs without file_prefixes
          — rename files with prefixes (--apply required, transactional)
@@ -22,7 +25,8 @@ Fix operations:
 Always runs ep-validate before and after, showing the diff.
 """
 
-import os, re, sys, yaml, copy, shutil
+import os, re, sys, yaml, copy, shutil, hashlib
+from datetime import date
 from collections import defaultdict
 
 SKIP_DIRS = {'.obsidian', '.git', 'node_modules', 'eval', '__pycache__', '.venv'}
@@ -103,25 +107,28 @@ class Doctor:
         self.manifest = {}
         self.pack_type = 'unknown'
         self.pack_slug = ''
+        self.schema_version = ''
         self.files = {}        # rel_path -> content
         self.fm = {}           # rel_path -> frontmatter dict
         self.bodies = {}       # rel_path -> body text
         self.basenames = defaultdict(list)
         self.all_basenames = set()
-        self.changes = []      # (rel_path, description)
-        self.modified = set()  # rel_paths that were changed
+        self.changes = []       # (rel_path, description)
+        self.modified = set()   # rel_paths rewritten via yaml rebuild
+        self.text_modified = set()  # rel_paths edited textually (minimal diff)
 
     def load_manifest(self):
         mp = os.path.join(self.pack_path, 'manifest.yaml')
         if not os.path.exists(mp):
             return
         try:
-            with open(mp) as f:
+            with open(mp, encoding='utf-8') as f:
                 self.manifest = yaml.safe_load(f.read()) or {}
-        except:
+        except Exception:
             pass
         self.pack_type = self.manifest.get('type', 'unknown')
         self.pack_slug = self.manifest.get('slug', '')
+        self.schema_version = str(self.manifest.get('schema_version', '')).strip()
 
     def scan(self):
         self.load_manifest()
@@ -134,7 +141,7 @@ class Doctor:
                     continue
                 full = os.path.join(root, f)
                 rel = os.path.relpath(full, self.pack_path)
-                content = open(full).read()
+                content = open(full, encoding='utf-8').read()
                 self.files[rel] = content
                 self.fm[rel] = parse_fm(content)[0]
                 self.bodies[rel] = strip_fm_body(content)
@@ -153,7 +160,7 @@ class Doctor:
         fm_dict = self.fm[rel]
         body = self.bodies[rel]
         content = rebuild_content(fm_dict, body, self.files[rel])
-        with open(full, 'w') as f:
+        with open(full, 'w', encoding='utf-8', newline='\n') as f:
             f.write(content)
 
     # ── Fix: path-based related -> bare filenames ────────────────────────
@@ -190,6 +197,8 @@ class Doctor:
                 continue
             count = 0
             for text, target in md_links:
+                if '://' in target:
+                    continue  # external URL that merely ends in .md (e.g. obsidian.md)
                 target_bn = os.path.basename(target)
                 # Build the wikilink
                 stem = target_bn.replace('.md', '')
@@ -204,6 +213,46 @@ class Doctor:
             if count:
                 self.bodies[rel] = body
                 self._log(rel, f"Converted {count} markdown link(s) to wikilinks")
+
+    # ── Fix: remove broken wikilinks in body ─────────────────────────────
+    def fix_broken_wikilinks(self):
+        """Unlink wikilinks whose target file does not exist in the pack.
+
+        Broken links become plain text (their alias, or the target stem) so the
+        prose stays readable. Composite-safe: run on a composite root and
+        cross-sub-pack targets resolve against the full file set. Same-file
+        anchors ([[#section]]) and embeds (![[...]]) are left untouched.
+        """
+        if self.fix_scope not in ('all', 'links'):
+            return
+        known = set()
+        for rel in self.files:
+            bn = os.path.basename(rel)
+            known.add(bn)
+            known.add(bn[:-3] if bn.endswith('.md') else bn)
+        wl_re = re.compile(r'(?<!!)\[\[([^\]|#]+?)(?:#[^\]|]+)?(?:\|([^\]]+?))?\]\]')
+
+        for rel in list(self.files):
+            body = self.bodies[rel]
+            removed = 0
+
+            def repl(m):
+                nonlocal removed
+                target = m.group(1).strip()
+                alias = (m.group(2) or '').strip()
+                if '://' in target:
+                    return m.group(0)  # external URL, not a pack file reference
+                target_bn = os.path.basename(target)
+                stem = target_bn[:-3] if target_bn.endswith('.md') else target_bn
+                if stem in known or target_bn in known or f'{stem}.md' in known:
+                    return m.group(0)
+                removed += 1
+                return alias or stem
+
+            new_body = wl_re.sub(repl, body)
+            if removed:
+                self.bodies[rel] = new_body
+                self._log(rel, f"Removed {removed} broken wikilink(s)")
 
     # ── Fix: add missing vbt<->sum cross-links ───────────────────────────
     def fix_vbt_sum_links(self):
@@ -312,6 +361,87 @@ class Doctor:
                 self.fm[rel] = fm
                 self._log(rel, f"Added frontmatter: {', '.join(added)}")
 
+    # Types that ep-validate exempts from the provenance contract.
+    PROV_SKIP_TYPES = {'index', 'source', 'proposition', 'summary', 'training'}
+
+    def _prov_exempt(self, rel, fm):
+        rel_dir = os.path.dirname(rel)
+        if not rel_dir:
+            return True  # root-level structural files exempt
+        if os.path.basename(rel) in ROOT_EXEMPT:
+            return True
+        return fm.get('type', '') in self.PROV_SKIP_TYPES
+
+    @staticmethod
+    def _fm_scalar(value):
+        """Quote dates/version-like scalars to match the demo pack style."""
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', value) or re.fullmatch(r'\d+(\.\d+)+', value):
+            return f'"{value}"'
+        return value
+
+    def _insert_fm_lines(self, content, new_lines):
+        """Insert 'key: value' lines before the closing --- of the frontmatter,
+        preserving the body (and its leading blank line) exactly."""
+        m = RE_FM.match(content)
+        if not m:
+            return content, False
+        fm_block = m.group(1)
+        rest = content[m.end():]  # begins right after the closing '---'
+        new_block = fm_block + '\n' + '\n'.join(new_lines)
+        return f"---\n{new_block}\n---{rest}", True
+
+    # ── Fix: backfill --strict provenance contract fields ────────────────
+    def fix_provenance(self):
+        """Backfill id, schema_version, retrieval_strategy, verified_at, and
+        content_hash so files satisfy `ep-validate --strict`.
+
+        Uses textual insertion (not a yaml rebuild) so the diff is limited to
+        the added lines. content_hash is computed over the body that will be
+        written, staying consistent with any earlier body edits.
+        """
+        if self.fix_scope not in ('all', 'hash'):
+            return
+        today = date.today().isoformat()
+        for rel in list(self.files):
+            fm = self.fm[rel]
+            if not fm or self._prov_exempt(rel, fm):
+                continue
+            new_lines = []
+            added = []
+            if not fm.get('id') and self.pack_slug:
+                rel_no_ext = os.path.splitext(rel)[0].replace(os.sep, '/')
+                new_lines.append(f"id: {self.pack_slug}/{rel_no_ext}")
+                added.append('id')
+            if not fm.get('schema_version') and self.schema_version:
+                new_lines.append(f"schema_version: {self._fm_scalar(self.schema_version)}")
+                added.append('schema_version')
+            if not fm.get('retrieval_strategy'):
+                new_lines.append("retrieval_strategy: standard")
+                added.append('retrieval_strategy')
+            if not fm.get('verified_at'):
+                new_lines.append(f"verified_at: {self._fm_scalar(today)}")
+                added.append('verified_at')
+            body = self.bodies[rel]
+            new_hash = 'sha256:' + hashlib.sha256(body.encode('utf-8')).hexdigest()
+            if fm.get('content_hash') != new_hash:
+                new_lines.append(f"content_hash: {new_hash}")
+                added.append('content_hash')
+            if not new_lines:
+                continue
+            # If another fix already rewrote this file via the yaml path, fold
+            # the fields into the fm dict so that rebuild includes them.
+            if rel in self.modified:
+                for line in new_lines:
+                    key, _, val = line.partition(': ')
+                    fm[key] = val.strip('"') if key != 'content_hash' else val
+                self._log(rel, f"Backfilled provenance: {', '.join(added)}")
+                continue
+            updated, ok = self._insert_fm_lines(self.files[rel], new_lines)
+            if ok:
+                self.files[rel] = updated
+                self.changes.append((rel, f"Backfilled provenance: {', '.join(added)}"))
+                self.text_modified.add(rel)
+
     # ── Fix: canonical_verbatim paths -> bare filenames ──────────────────
     def fix_canonical_verbatim(self):
         if self.fix_scope not in ('all', 'fm'):
@@ -330,16 +460,26 @@ class Doctor:
     def write_all(self):
         for rel in self.modified:
             self._write_file(rel)
+        if not self.apply:
+            return
+        for rel in self.text_modified:
+            if rel in self.modified:
+                continue  # already written via yaml rebuild
+            full = os.path.join(self.pack_path, rel)
+            with open(full, 'w', encoding='utf-8', newline='\n') as f:
+                f.write(self.files[rel])
 
     # ── Main run ─────────────────────────────────────────────────────────
     def run(self):
         self.scan()
         self.fix_path_related()
         self.fix_md_links()
+        self.fix_broken_wikilinks()
         self.fix_vbt_sum_links()
         self.fix_bidirectional()
         self.fix_frontmatter()
         self.fix_canonical_verbatim()
+        self.fix_provenance()
         self.write_all()
         return self.changes
 
@@ -359,19 +499,33 @@ class Doctor:
             for desc in by_file[rel]:
                 print(f"    -> {desc}")
         print(f"\n{'='*60}")
-        print(f"Total: {len(self.changes)} fixes across {len(self.modified)} files")
+        touched = len(self.modified | self.text_modified)
+        print(f"Total: {len(self.changes)} fixes across {touched} files")
         if not self.apply:
             print("  (dry run — use --apply to write changes)")
         print(f"{'='*60}")
 
 
+def _run_validator(pack_path):
+    """Run the sibling ep-validate.py with the current interpreter."""
+    validator = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ep-validate.py')
+    if not os.path.exists(validator):
+        print("  (ep-validate.py not found next to ep-doctor.py — skipping)")
+        return
+    os.system(f'"{sys.executable}" "{validator}" "{pack_path}" --provenance')
+
+
 def main():
     import argparse
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except (AttributeError, ValueError):
+        pass
     parser = argparse.ArgumentParser(description='ExpertPack Doctor')
     parser.add_argument('pack', help='Path to pack directory')
     parser.add_argument('--apply', action='store_true',
                         help='Write changes (default is dry-run)')
-    parser.add_argument('--fix', choices=['all', 'links', 'fm', 'prefix'],
+    parser.add_argument('--fix', choices=['all', 'links', 'fm', 'hash', 'prefix'],
                         default='all', help='Which fixes to apply')
     args = parser.parse_args()
 
@@ -381,7 +535,7 @@ def main():
 
     # Run validator before
     print("\n--- BEFORE ---")
-    os.system(f'python3 /root/.openclaw/workspace/scripts/ep-validate.py "{args.pack}" 2>&1 | tail -4')
+    _run_validator(args.pack)
 
     # Run doctor
     doc = Doctor(args.pack, apply=args.apply, fix_scope=args.fix)
@@ -391,7 +545,7 @@ def main():
     # Run validator after (only if we applied changes)
     if args.apply and doc.changes:
         print("\n--- AFTER ---")
-        os.system(f'python3 /root/.openclaw/workspace/scripts/ep-validate.py "{args.pack}" 2>&1 | tail -4')
+        _run_validator(args.pack)
 
 
 if __name__ == '__main__':

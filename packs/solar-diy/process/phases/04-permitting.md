@@ -9,6 +9,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:530a2af103da161af8e311a6824755c556431968926a31c8289a7b9aba7c7971
 ---
 
 # Phase 4: Permitting & Utility Interconnection
