@@ -10,7 +10,8 @@ INDEX = ROOT / "schemas" / "schema-index.yaml"
 README = ROOT / "README.md"
 ORDER = [
     "core", "product", "person", "agent", "process", "composite", "eval",
-    "registry_agent_knowledge", "registry_ontology",
+    "registry_agent_knowledge", "registry_frontmatter", "registry_chunk_sidecar",
+    "registry_typed_answer", "registry_ontology",
 ]
 
 
@@ -22,7 +23,7 @@ def label_for(key: str, file_path: str) -> str:
 
 
 def main() -> int:
-    index = yaml.safe_load(INDEX.read_text())
+    index = yaml.safe_load(INDEX.read_text(encoding="utf-8"))
     schemas = index["schemas"]
     rows = []
     for key in ORDER:
@@ -39,7 +40,7 @@ def main() -> int:
         *rows,
     ])
 
-    text = README.read_text()
+    text = README.read_text(encoding="utf-8")
     pattern = re.compile(r"(## Schemas\n\n).*?(\n\n---\n\n## Axioms)", re.S)
     new_text, count = pattern.subn(r"\1" + table + r"\2", text)
     if count != 1:
@@ -51,7 +52,7 @@ def main() -> int:
             raise SystemExit("README schema table is out of sync; run tools/update-schema-readme.py")
         return 0
 
-    README.write_text(new_text)
+    README.write_text(new_text, encoding="utf-8")
     return 0
 
 

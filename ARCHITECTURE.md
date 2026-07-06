@@ -46,7 +46,8 @@ These apply to every ExpertPack. See [schemas/core.md](schemas/core.md) for the 
 | **Cross-Referenced** | Relative markdown links between related files |
 | **Obsidian-Native** | Per-file YAML frontmatter on all content files; valid Obsidian vault out of the box |
 | **Schema-Versioned** | Type schemas carry semantic versions; packs declare their target |
-| **Eval-Driven** | Measurable quality with standardized eval sets and automated scoring |
+| **Eval-Driven** | Measurable quality with standardized eval sets, automated scoring, and Typed Answer Contract (TAC) verification |
+| **Enforceable Schema** | `ep-validate --strict` + CI/pre-commit gate the frontmatter contract before indexing |
 | **Git-Native** | Version controlled, diffable, collaborative |
 | **Never Overwrite** | Contradictions are flagged for human resolution |
 
@@ -68,6 +69,9 @@ Shared principles and conventions that apply to every ExpertPack:
 - `requires:` frontmatter for directional dependency expansion
 - Volatile data isolation (`volatile/` directory + frontmatter TTL for time-bound EK)
 - Source provenance tracking
+- Fragment provenance and Reconstruct Mode (RFC-003); Typed Answer Contract (RFC/registry)
+- Chunk metadata sidecars for oversized atomic/reference files (RFC-004)
+- Structural validation gate (`ep-validate --strict`, ingest pipeline)
 - Schema versioning system
 - Conflict resolution
 - Agent consumption patterns
@@ -79,7 +83,19 @@ Each pack type has its own schema that extends core with domain-specific structu
 - **[schemas/product.md](schemas/product.md)** (v4.1) — Concepts, workflows, troubleshooting (errors, diagnostics, common mistakes), screens/interface specs, FAQ, commercial info, entity cross-references, timeline, decisions, customers, limitations, competitive landscape, mental model
 - **[schemas/process.md](schemas/process.md)** (v4.1) — Phases with enhanced structure, decisions, checklists, roles, resources, examples, gotchas, exceptions, variants
 - **[schemas/composite.md](schemas/composite.md)** (v1.1) — Multi-pack deployments with role assignments, context tier overrides, cross-pack conflict resolution
-- **[schemas/eval.md](schemas/eval.md)** (v1.3) — Evaluation framework for measuring pack quality (response quality, retrieval quality, efficiency, pack health)
+- **[schemas/eval.md](schemas/eval.md)** (v1.3) — Evaluation framework for measuring pack quality (response quality, retrieval quality, efficiency, pack health, TAC scoring)
+
+### Registry Specs (`schemas/registry/`)
+
+Machine-readable projections and response contracts that extend core without replacing Markdown as canonical:
+
+- **frontmatter** — per-file YAML contract + JSON Schema (`--strict` gate)
+- **agent-knowledge (AKS)** — compact provenance-first JSONL export
+- **chunk-sidecar** — header-aware chunk boundaries for oversized atomic/reference files
+- **typed-answer (TAC)** — machine-verifiable agent answer envelopes
+- **ontology** — accepted entity/category registry for graph export
+
+See [schemas/registry/README.md](schemas/registry/README.md).
 
 A pack declares its type in `manifest.yaml`, which determines which type-specific schema applies.
 
@@ -93,19 +109,32 @@ A pack is an instantiation of a schema — a concrete knowledge base about a spe
 ExpertPack/
 ├── schemas/               ← The blueprints
 │   ├── core.md            ← Shared principles (v4.1)
+│   ├── registry/          ← Machine-readable specs (frontmatter, AKS, sidecars, TAC)
+│   ├── rfcs/              ← Cross-repo contracts (Reconstruct Mode, chunk sidecars)
 │   ├── person.md          ← Person-pack schema (v4.1)
 │   ├── product.md         ← Product-pack schema (v4.1)
 │   ├── process.md         ← Process-pack schema (v4.1)
 │   ├── composite.md       ← Composite schema (v1.1)
 │   └── eval.md            ← Eval framework (v1.3)
 │
+├── template/              ← Vault scaffold (DESIGN.md, TOOLS.md, Obsidian config)
+│
 ├── guides/                ← Practical how-to guides for pack builders
 │   ├── hydration.md           ← Complete hydration lifecycle
 │   └── consumption.md         ← How to deploy and consume packs with AI agents
 │
 ├── tools/                 ← Tooling for pack development
-│   ├── eval-ek.py         ← EK ratio measurement via blind probing
-│   └── eval-runner/       ← Automated eval execution and scoring
+│   ├── cli/expertpack.py      ← Unified CLI (init, validate, doctor, migrate, …)
+│   ├── validator/             ← ep-validate.py, ep-doctor.py
+│   ├── chunker/               ← ep-chunk-annotate.py (RFC-004 sidecars)
+│   ├── tac/                   ← validate_tac.py (Typed Answer Contract)
+│   ├── ingest-gate.py         ← validate → strip → export pipeline
+│   ├── validate-all.py        ← CI/pre-commit runner
+│   ├── eval-runner/           ← Eval execution, claim_verifier (--tac)
+│   ├── micro-record-exporter/ ← AKS / full micro-record JSONL
+│   ├── graph-export/          ← ep-graph-export.py
+│   ├── deploy-prep/           ← ep-strip-frontmatter.py
+│   └── eval-ek.py             ← EK ratio measurement via blind probing
 │
 ├── skills/                ← Agent skills for pack creation and export
 │
@@ -116,11 +145,12 @@ ExpertPack/
 ```
 
 Creating a new pack means:
-1. Choose the type (person, product, or process)
-2. Create a directory under `packs/`
-3. Add `manifest.yaml` and `overview.md` (required)
-4. Populate directories per the type-specific schema
-5. Follow core principles for all content
+1. Run `python tools/cli/expertpack.py init <slug> --type product|person|process` (or copy `template/`)
+2. Edit `manifest.yaml`, `overview.md`, `DESIGN.md`, and `TOOLS.md`
+3. Populate directories per the type-specific schema
+4. Backfill provenance: `expertpack checksum --apply`
+5. Validate: `expertpack validate --strict` (must pass before indexing)
+6. Commit
 
 ---
 
@@ -139,8 +169,20 @@ Basic RAG — embed documents, retrieve top-k chunks — works, but it leaves pr
 
 This is the current retrieval model as of schema v4.1. See [`schemas/core.md`](schemas/core.md) for the full specification and [`schemas/rfcs/RFC-001-atomic-conceptual-chunks.md`](schemas/rfcs/RFC-001-atomic-conceptual-chunks.md) for the empirical findings that drove the design.
 
----
+#### Oversized atomic/reference files (RFC-004)
 
+Workflows and reference files that legitimately exceed the token ceiling carry a **`.chunks.yaml` sidecar** (`ep-chunk-annotate.py`) so runtime chunkers split at the same `##`/`###` boundaries the author intended. EP MCP consumes the sidecar for deterministic re-assembly when present.
+
+#### Auditable retrieval and answers
+
+| Layer | Contract | Where |
+|-------|----------|-------|
+| **Retrieval** | Fragment provenance + Reconstruct Mode (`fragment_id`, `line_range`, span hash) | `schemas/core.md`, [RFC-003](schemas/rfcs/RFC-003-fragment-provenance-reconstruct-mode.md), EP MCP |
+| **Response** | Typed Answer Contract — every claim maps to source fragments | `schemas/registry/typed-answer.spec.yaml`, `templates/TAC-PROMPT.md` |
+
+Reconstruct Mode is opt-in at query time (`reconstruct=true`). TAC is opt-in at the agent prompt level but required when auditable answers are a domain requirement.
+
+---
 
 ### Provenance-First Micro-Records
 
@@ -149,9 +191,11 @@ For machine pipelines, ExpertPack can export each Markdown atom as a canonical m
 Two export shapes are supported:
 
 - **Full JSON-LD record** — preserves the registry-style envelope, nested `provenance`, lifecycle metadata, tags, `requires`, and graph-derived `related` edges.
-- **Compact record (`--compact`)** — keeps only the fields needed for token-efficient grounded retrieval: `id`, `canonical_statement`, `type`, `pack`, `source_span_uri`, `content_hash`, `verified_at`, `requires`, and `related`.
+- **Compact record (`--compact`)** — keeps only the fields needed for token-efficient grounded retrieval: `id`, `canonical_statement`, `type`, `pack`, `source_span_uri`, `content_hash`, `verified_at`, `requires`, `related`, and optional fragment fields (`fragment_id`, `line_range`, `span_hash`) for Reconstruct Mode pipelines.
 
-This gives ExpertPack a clean bridge between human-readable Markdown and hybrid KG/vector systems: Markdown for authorship, compact JSONL for deterministic retrieval infrastructure.
+**Ingest gate:** No pack enters the index without passing `ep-validate --strict`. `tools/ingest-gate.py` chains validate → `ep-strip-frontmatter` → `ep-micro-record-export --strict`.
+
+This gives ExpertPack a clean bridge between human-readable Markdown and hybrid KG/vector systems: Markdown for authorship, compact JSONL for deterministic retrieval infrastructure, fragment provenance for span-level audit.
 
 ## How Agents Consume Packs
 
@@ -167,6 +211,7 @@ For a specific question, agents use the atomic-conceptual model:
 - **Topic queries** → navigate via `_index.md` or RAG search across content files
 - **Vocabulary mismatches** → `## Related Terms` co-locates glossary definitions with the parent concept
 - **Dependency chains** → `requires:` frontmatter causes retrieval to auto-include prerequisite atoms (depth 2, up to 3 additional files)
+- **Auditable answers** → enable Reconstruct Mode for span-level citations; require TAC JSON when claims must map to retrieved fragments
 
 ### Update
 When adding or changing content:
@@ -197,9 +242,9 @@ ExpertPacks are intended to be created and maintained by AI agents. The creation
 1. Schema read-in
    - The agent loads type-specific and core schemas and uses them as the filing guide.
 2. Skeleton initialization
-   - The agent creates the pack skeleton (manifest.yaml, overview.md, starter directories) and commits it.
+   - Run `expertpack init <slug> --type …` (or copy `template/`). Review `DESIGN.md` and `TOOLS.md`.
 3. Crawl & ingest
-   - The agent ingests authorized docs, transcribes media, and chunks text with `##` headers for RAG.
+   - The agent ingests authorized docs, transcribes media, and structures content with `##` headers. Obsidian vaults: `expertpack migrate obsidian <vault> --output …` produces `_migration-report.md`.
 4. Expert interviews
    - The agent conducts structured interviews with the pack owner to capture tribal knowledge, edge cases, and decisions. Capture verbatim and distilled forms.
 5. Structure & cross-reference
@@ -209,7 +254,7 @@ ExpertPacks are intended to be created and maintained by AI agents. The creation
 7. Gap analysis
    - The agent compares actual content to schema expectations and produces a prioritized gap report for the pack owner.
 8. Validation & provenance
-   - The agent requests confirmation for ambiguous facts, records provenance, and flags contradictions for human adjudication.
+   - Run `expertpack doctor --fix hash --apply` then `expertpack validate --strict`. Sidecars for oversized atomic/reference files: `expertpack chunk-annotate --apply`. Flag contradictions for human adjudication.
 9. Commit & reporting
    - The agent commits changes with descriptive messages and produces status summaries of new content and remaining gaps.
 10. Ongoing maintenance
@@ -236,8 +281,9 @@ See [schemas/eval.md](schemas/eval.md) for the full specification, including:
 - Standard eval set format (questions + expected answers + anti-hallucination checks)
 - Response quality metrics (correctness, groundedness, hallucination rate)
 - Retrieval quality metrics (hit rate, precision)
+- **TAC scoring** — structural validity and claim coverage via `claim_verifier.py --tac`
 - Efficiency metrics (tokens, latency, cost)
-- Pack health metrics (structural conformance)
+- Pack health metrics (structural conformance via `ep-validate --strict`)
 - Eval workflow for pack builders and framework developers
 
 The eval system answers the question: "Is this pack getting better or worse?"
@@ -254,6 +300,7 @@ The eval system answers the question: "Is this pack getting better or worse?"
 | 2026-04-14 | — | Schema v4.0: atomic-conceptual content model (RFC-001); aggregator directories retired |
 | 2026-04-19 | — | Schema v4.1: strict one-concept-per-file, `requires:` dependencies, 1,000-token ceiling |
 | 2026-04-23 | — | ARCHITECTURE.md rewritten to reflect v4.1 as current model |
+| 2026-07-06 | — | Enforcement gate, RFC-003/004, TAC, expertpack CLI, updated tools tree and onboarding flow |
 
 ---
 

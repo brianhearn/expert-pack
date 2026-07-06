@@ -9,8 +9,20 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Unreleased]
 
 ### Added
+- **Strict validation gate** — `ep-validate --strict` promotes frontmatter and provenance checks to errors; `--ignore` for tracked backlog; `tools/validate-all.py`, `.github/workflows/validate.yml`, `.pre-commit-config.yaml`, and `tools/ingest-gate.py` (validate → strip → export).
+- **Frontmatter registry** — `schemas/registry/frontmatter.spec.yaml` + `frontmatter.schema.json` (JSON Schema 2020-12) for the `--strict` contract.
+- **Fragment provenance / Reconstruct Mode (RFC-003)** — span-level citation envelope in `schemas/core.md`; OpenClaw plugin `reconstruct` flag; AKS optional `fragment_id` / `line_range` / `span_hash`.
+- **Chunk metadata sidecars (RFC-004)** — `tools/chunker/ep-chunk-annotate.py`, `schemas/registry/chunk-sidecar.spec.yaml`, validator `W-CHUNK-01..03`; sidecars for oversized atomic/reference demo-pack files.
+- **Typed Answer Contract (TAC v1)** — `schemas/registry/typed-answer.*`, `tools/tac/validate_tac.py`, `templates/TAC-PROMPT.md`, `claim_verifier.py --tac`, OpenClaw `tac-types.ts`.
+- **Unified CLI** — `tools/cli/expertpack.py` (init, validate, doctor, checksum, chunk-annotate, migrate); optional `pip install -e .`.
+- **Onboarding templates** — `template/DESIGN.md`, `template/TOOLS.md`; Obsidian converter `_migration-report.md`.
+- **Doctor: broken wikilink removal** — consolidated into `ep-doctor --fix links` (replaces never-shipped `ep-fix-broken-wikilinks.py`).
 - **Content confidence grade** — optional `confidence` provenance frontmatter field documented in `schemas/core.md`, with three grades: `expert-verified`, `crawled`, `inferred`. It records *how* knowledge was sourced (orthogonal to `verified_at`/`verified_by`, which record *when/by whom* it was reviewed), letting consuming agents down-weight or caveat lower-grade content at retrieval time. The field is optional and makes no assertion when omitted.
 - **Validator `W-PROV-06`** — `ep-validate.py --provenance` now warns when a `confidence` value is present but is not one of the three valid grades. Only checked when the field is present, so the rule is non-breaking for existing packs. Validator and `tools/validator/README.md` updated.
+
+### Changed
+- **Documentation sync (2026-07-06)** — `ARCHITECTURE.md`, `AXIOMS.md`, `README.md`, `schemas/core.md`, and `schemas/schema-index.yaml` updated for enforcement gate, RFC-003/004, and TAC (schema family remains **4.1** — additive extensions only).
+- **`tools/update-schema-readme.py`** — UTF-8 read/write; registry table includes frontmatter, chunk-sidecar, and typed-answer specs.
 
 ### Fixed
 - Bumped `schemas/schema-index.yaml` `updated:` date to reflect the confidence-grade addition.

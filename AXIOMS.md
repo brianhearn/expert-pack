@@ -36,3 +36,18 @@ These axioms guide all ExpertPack development decisions.
 12. **No standalone summary files.** A file whose sole purpose is to summarize other files adds zero EK and actively harms retrieval quality in a retrieval-first pack. Such files score broadly across queries (because they mention everything) and displace specific, high-EK files from the result set. Summaries belong as the lead sentence of the file they describe — not as separate artifacts. This applies equally to proposition files, source digest files, and any cross-cutting aggregate that restates content already present in atomic files.
 
 13. **Pack content strategy must match the intended retrieval model.** A pack built for *LLM-reads-all* (full context injection) can afford cross-cutting summaries and aggregate digests — the model reads everything. A pack built for *retrieval-first* (EP MCP, RAG) requires atomic, non-overlapping files with strong lead sentences — the model reads only what retrieval selects. Mixing strategies degrades retrieval quality. Choose one and hydrate accordingly.
+
+---
+
+## Operational contracts (implements axioms 6 and 13)
+
+These are not new axioms — they are the **2026-07-06 enforcement and verification layer** that makes retrieval-first packs auditable in practice:
+
+| Contract | Implements | Spec / tool |
+|----------|------------|-------------|
+| **Strict frontmatter gate** | Axiom 6 (quality, minimal decay) — packs cannot drift into unverifiable metadata | `ep-validate --strict`, `schemas/registry/frontmatter.schema.json`, CI |
+| **Fragment provenance / Reconstruct Mode** | Axiom 6c (retrieval quality) — prove *which span* was retrieved | RFC-003, `schemas/core.md` |
+| **Chunk metadata sidecars** | Axioms 11–13 — oversized atomic/reference files stay whole without arbitrary token splits | RFC-004, `ep-chunk-annotate.py` |
+| **Typed Answer Contract (TAC)** | Axiom 6c — every agent claim maps to a retrieved fragment | `typed-answer.spec.yaml`, `validate_tac.py` |
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for how these fit the framework; see [ROADMAP.md](ROADMAP.md) (2026-07-06) for implementation status.

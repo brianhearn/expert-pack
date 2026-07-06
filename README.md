@@ -177,10 +177,14 @@ ExpertPack is an actively evolving framework. The table below shows which featur
 | Graph export | ✅ Full | `ep-graph-export.py`; `_graph.yaml` output incl. accepted ontology/entity edges |
 | Agent Knowledge Schema (AKS) export | ✅ Full | `ep-micro-record-export.py --compact`; compact provenance-first JSONL for agent pipelines |
 | Ontology suggestion CLI | ✅ Initial | `ep-ontology-suggest.py`; review-first entity/category suggestions plus accepted ontology.yaml registry |
-| Pack validation CLI | ✅ Full | `ep-validate`; structural + schema/provenance/AKS-readiness checks |
+| Pack validation CLI | ✅ Full | `ep-validate --strict` (22+ checks), `ep-doctor`, W-CHUNK sidecar rules; CI + pre-commit |
+| Strict ingest gate | ✅ Full | `tools/ingest-gate.py` — validate → strip → export; no index without `--strict` |
+| Fragment provenance / Reconstruct Mode | ✅ Spec + consumer | RFC-003 in core; OpenClaw plugin sends `reconstruct`; EP MCP runtime external |
+| Chunk metadata sidecars | ✅ Full | RFC-004, `ep-chunk-annotate.py`, W-CHUNK-01..03; EP MCP consumption external |
+| Typed Answer Contract (TAC) | ✅ Full | Spec + `validate_tac.py` + `claim_verifier --tac` + agent prompt template |
 | MCP server (EP MCP) | ✅ Full | BM25 + vector hybrid retrieval; multi-pack routing |
-| Provenance display in agent responses | ✅ Runtime-supported | EP MCP supports opt-in reconstruct mode with original spans and provenance blocks; final rendering is host-dependent |
-| Scaffolding CLI / guided creation | 🚧 Roadmap | Planned; current creation requires agent-operated workflow |
+| Provenance display in agent responses | ✅ Runtime-supported | EP MCP opt-in reconstruct mode; host renders fragment provenance |
+| Scaffolding CLI / guided creation | ✅ Full | `tools/cli/expertpack.py` — init, validate, doctor, migrate, chunk-annotate |
 | Process schema (v4.1) | ✅ Full | Migrated to atomic conceptual/procedural files, `requires:` phase dependencies, and core v4.1 size rules |
 
 ---
@@ -191,21 +195,24 @@ The canonical compatibility matrix lives in [`schemas/schema-index.yaml`](schema
 
 | Schema | Version | What It Covers |
 |--------|---------|---------------|
-| [core.md](schemas/core.md) | 4.1 | MD-canonical packs, atomic-conceptual model, `requires:`, provenance, graph export, retrieval strategy |
+| [core.md](schemas/core.md) | 4.1 | Shared principles: MD-canonical, atomic-conceptual model, `requires:`, provenance, Reconstruct Mode, chunk sidecars, TAC, `--strict` gate, graph export, registry projections |
 | [product.md](schemas/product.md) | 4.1 | Product packs: concepts, workflows, interfaces, troubleshooting, commercial, customers |
-| [person.md](schemas/person.md) | 4.1 | Person packs: stories, reflections, opinions, conversations, facts, relationships, mind, presentation |
-| [agent.md](schemas/agent.md) | 1.7 | Agent subtype: operational knowledge, tool access, behavior, migration, safety contracts |
+| [person.md](schemas/person.md) | 4.1 | Person packs: stories, reflections, opinions, conversations, mind taxonomy, relationships, presentation |
+| [agent.md](schemas/agent.md) | 1.7 | Agent extension: persona, capabilities, tool access, behavioral rules |
 | [process.md](schemas/process.md) | 4.1 | Process packs: phases, decisions, checklists, exceptions, scheduling, regulations |
 | [composite.md](schemas/composite.md) | 1.1 | Composites: multi-pack deployment, role assignments, auto-discovery & export |
-| [eval.md](schemas/eval.md) | 1.3 | Evaluation: EK ratio, correctness, hallucination, retrieval quality, structural health |
-| [registry/agent-knowledge.spec.yaml](schemas/registry/agent-knowledge.spec.yaml) | 1.0 | Compact Agent Knowledge Schema JSONL for grounded agent retrieval |
+| [eval.md](schemas/eval.md) | 1.3 | Evaluation: EK ratio, correctness, hallucination, retrieval quality, structural health, TAC scoring |
+| [registry/agent-knowledge.spec.yaml](schemas/registry/agent-knowledge.spec.yaml) | 1.0 | Compact Agent Knowledge Schema (AKS) JSONL — includes optional fragment provenance fields |
+| [registry/frontmatter.spec.yaml](schemas/registry/frontmatter.spec.yaml) | 1.0 | Content-file frontmatter contract enforced by `ep-validate --strict` (companion JSON Schema) |
+| [registry/chunk-sidecar.spec.yaml](schemas/registry/chunk-sidecar.spec.yaml) | 1.0 | Chunk metadata sidecar format for oversized atomic/reference files (RFC-004) |
+| [registry/typed-answer.spec.yaml](schemas/registry/typed-answer.spec.yaml) | 1.0 | Typed Answer Contract v1 — machine-verifiable claim-to-source agent responses |
 | [registry/ontology.spec.yaml](schemas/registry/ontology.spec.yaml) | 1.0 | Accepted ontology registry descriptive spec for graph/entity interop |
 
 ---
 
 ## Axioms
 
-ExpertPack development is guided by [10 axioms](AXIOMS.md):
+ExpertPack development is guided by [13 axioms](AXIOMS.md) (1–10: EK and hydration; 11–13: retrieval-first authoring):
 
 1. **Esoteric knowledge (EK)** is knowledge outside the weights of frontier LLMs
 2. EPs have a **subject matter** — person, product, or process
@@ -217,6 +224,11 @@ ExpertPack development is guided by [10 axioms](AXIOMS.md):
 8. **Cost** increases with human exchange needed + compute tokens
 9. **EK ratio** is empirically measurable via blind probing
 10. **Hydration should prioritize EK** — minimize general knowledge, maximize what only the pack can provide
+11. **One topic = one file** — the retrieval unit is the file
+12. **No standalone summary files** — summaries belong in the lead sentence of the atom they describe
+13. **Content strategy must match the retrieval model** — retrieval-first vs LLM-reads-all
+
+Operational contracts (strict gate, Reconstruct Mode, sidecars, TAC) implement axioms 6 and 13 — see [AXIOMS.md § Operational contracts](AXIOMS.md#operational-contracts-implements-axioms-6-and-13).
 
 ---
 
@@ -224,7 +236,8 @@ ExpertPack development is guided by [10 axioms](AXIOMS.md):
 
 ```
 ExpertPack/
-├── AXIOMS.md                ← 10 guiding axioms for EP development
+├── ARCHITECTURE.md          ← Framework overview (how packs work)
+├── AXIOMS.md                ← 13 guiding axioms for EP development
 ├── CHANGELOG.md             ← Framework changelog
 ├── ROADMAP.md               ← Development roadmap
 ├── README.md                ← This file
@@ -232,6 +245,9 @@ ExpertPack/
 │
 ├── schemas/                 ← Pack blueprints (the framework)
 │   ├── core.md              ← Shared principles (v4.1)
+│   ├── schema-index.yaml    ← Compatibility matrix (source for README table)
+│   ├── registry/            ← frontmatter, AKS, chunk-sidecar, TAC specs
+│   ├── rfcs/                ← RFC-003 Reconstruct Mode, RFC-004 sidecars, …
 │   ├── person.md            ← Person-pack schema (v4.1)
 │   ├── agent.md             ← Agent subtype schema (v1.7)
 │   ├── product.md           ← Product-pack schema (v4.1)
@@ -245,22 +261,27 @@ ExpertPack/
 │   └── consumption.md       ← Deploying and consuming packs with AI agents (incl. deploy-prep and eval discipline)
 │
 ├── tools/                   ← Tooling
-│   ├── validator/           ← ep-validate.py — structural + provenance validation (19 checks)
+│   ├── cli/expertpack.py    ← Unified CLI (init, validate, doctor, migrate, …)
+│   ├── validator/           ← ep-validate.py, ep-doctor.py
+│   ├── chunker/             ← ep-chunk-annotate.py (RFC-004 sidecars)
+│   ├── tac/                 ← validate_tac.py (Typed Answer Contract)
+│   ├── ingest-gate.py       ← validate → strip → export pipeline
+│   ├── validate-all.py      ← CI/pre-commit runner
 │   ├── graph-export/        ← ep-graph-export.py — generate _graph.yaml adjacency files
 │   ├── deploy-prep/         ← ep-strip-frontmatter.py — strip provenance metadata before RAG deploy
 │   ├── micro-record-exporter/ ← ep-micro-record-export.py — full/compact provenance-first JSONL export
 │   ├── ontology-suggest/    ← ep-ontology-suggest.py — review-first ontology/entity suggestions
+│   ├── eval-runner/         ← Eval execution + claim_verifier (--tac)
 │   └── eval-ek.py           ← EK ratio measurement via blind probing
 │
 ├── skills/                  ← OpenClaw agent skills (also on ClawHub)
 │   └── expertpack-export/   ← Auto-discover & export agent → EP
 │
+├── template/                ← Obsidian vault template (DESIGN.md, TOOLS.md, …)
 ├── packs/                   ← Community pack instances
 │   ├── home-assistant/      ← Home automation (composite, EK 54%)
 │   ├── blender-3d/          ← 3D software (product, EK 42%)
 │   └── solar-diy/           ← Solar & battery DIY (composite, EK 52%)
-│
-├── template/                ← Obsidian vault template for new packs
 └── site/                    ← expertpack.ai website source
 ```
 

@@ -2,7 +2,7 @@
 
 *Shared principles and conventions that apply to every ExpertPack, regardless of type. Type-specific schemas (person, product, process) extend these rules — they don't replace them.*
 
-**Schema version:** 4.1 (2026-04-19)
+**Schema version:** 4.1 (2026-04-19; additive extensions 2026-07-06)
 
 ---
 
@@ -428,6 +428,19 @@ The `part X of Y` tells the agent this is one piece of a larger topic. The `sequ
 - **Pack author commits:** Concept files ≤ 1,000 tokens (v4.1). Atomic files (workflows, troubleshooting) may exceed the ceiling but must be retrieved whole.
 - **Consumer configures:** Set `chunking.tokens` ≥ 1,000 (the recommended minimum). The invariant: `chunking.tokens` > pack's hard ceiling for non-atomic files.
 
+#### Chunk Metadata Sidecars (oversized atomic/reference files)
+
+When an **atomic** or **reference** file legitimately exceeds the token ceiling, the default authoring fix is still to split into independent atoms. When the file must stay whole (procedures, multi-section references), attach a git-tracked **chunk metadata sidecar** instead of bloating frontmatter or embedding chunk boundaries in the body:
+
+```
+concepts/large-reference.md
+concepts/large-reference.chunks.yaml   # generated; header-aware boundaries
+```
+
+Sidecars record `chunk_id`, `chunk_order`, `line_range`, `tokenizer_tokens`, and `chunk_summary` at `##`/`###` boundaries — the same rules EP MCP uses at runtime. Generate with `tools/chunker/ep-chunk-annotate.py`; validate with `W-CHUNK-01..03` in `ep-validate`. See [RFC-004](rfcs/RFC-004-chunk-metadata-sidecars.md) and `schemas/registry/chunk-sidecar.spec.yaml`.
+
+**Default path unchanged:** files within the 1,000-token ceiling use `retrieval_strategy: standard` and need no sidecar. Sidecars are the exception for oversized atomic/reference content, not a replacement for right-sized authoring.
+
 See [guides/consumption.md](../guides/consumption.md) for the recommended RAG configuration.
 
 ---
@@ -678,22 +691,36 @@ A fragment ID is stable across re-indexes as long as the span text is unchanged.
 
 Reconstruct Mode is opt-in: a retriever exposes it behind a flag (e.g. `reconstruct=true`) because returning `original_markdown` costs tokens. Discovery uses vectors; verification uses `source_file` + `line_range` + span hash.
 
+### Typed Answer Contract (TAC)
+
+The Citation Response Contract and Fragment Provenance spec define what **retrieval** returns. The **Typed Answer Contract (TAC)** defines what an **agent answer** must look like when auditable responses are required: every assertable claim maps to one or more retrieved source fragments, each graded `supported`, `partial`, or `unsupported`.
+
+TAC is the response layer; fragment provenance is the retrieval layer. In `retrieval_mode: reconstruct`, each claim source must carry a `fragment_id` from Reconstruct Mode. Validate envelopes with `tools/tac/validate_tac.py`; score them in eval with `tools/eval-runner/claim_verifier.py --tac`. Agent prompt contract: `templates/TAC-PROMPT.md`. Spec: `schemas/registry/typed-answer.spec.yaml` + `typed-answer.schema.json`.
+
+### Structural Validation Gate (`--strict`)
+
+`tools/validator/ep-validate.py --strict` turns the frontmatter contract into a **hard gate** before content enters an index or export pipeline. It implies `--provenance` and promotes missing-field, hash-drift, and size rules from warnings to errors. Required under `--strict`: `title`, `type`, `tags`, `pack`, `id`, `schema_version`, `retrieval_strategy`, `verified_at`, `content_hash`, plus manifest `schema_version`.
+
+CI (`.github/workflows/validate.yml`), pre-commit (`.pre-commit-config.yaml`), and `tools/ingest-gate.py` (validate → strip → export) enforce this gate. Use `--ignore CODE` only for tracked backlog categories (demo packs currently ignore `W-V41-01` oversized-concept debt). Machine-readable contract: `schemas/registry/frontmatter.schema.json`.
+
 ### Pack-Level Freshness (manifest.yaml)
 
 Maintain a `freshness` block in `manifest.yaml` (see manifest spec above). Update `verified_file_count`, `total_file_count`, and `coverage_pct` after each review pass. This is a manually maintained summary — it gives consuming agents a single-glance freshness signal without scanning every file.
 
 ### Validator Warnings for Provenance
 
-| Code | Condition | Severity |
-|------|-----------|----------|
-| `W-PROV-01` | Content file missing `verified_at` | Warning |
-| `W-PROV-02` | `content_hash` present but doesn't match actual file hash | Warning |
-| `W-PROV-03` | `verified_at` older than `manifest.yaml freshness.refresh_cycle` | Warning |
-| `W-PROV-04` | Content file missing `id` field | Info |
-| `W-PROV-05` | `valid_from` is later than `verified_at` (world truth can't postdate verification) | Warning |
-| `W-PROV-06` | `confidence` present but not one of `expert-verified` / `crawled` / `inferred` | Warning |
+| Code | Condition | Severity (default) | Under `--strict` |
+|------|-----------|-------------------|------------------|
+| `W-PROV-01` | Content file missing `verified_at` | Warning | Error |
+| `W-PROV-02` | `content_hash` present but doesn't match actual file hash | Warning | Error |
+| `W-PROV-03` | `verified_at` older than `manifest.yaml freshness.refresh_cycle` | Warning | Warning |
+| `W-PROV-04` | Content file missing `id` field | Warning | Error |
+| `W-PROV-05` | `valid_from` is later than `verified_at` (world truth can't postdate verification) | Warning | Error |
+| `W-PROV-06` | `confidence` present but not one of `expert-verified` / `crawled` / `inferred` | Warning | Warning |
 
-Provenance warnings do not break the zero-error requirement — they are surfaced separately as quality indicators.
+**Chunk sidecar checks** (RFC-004): `W-CHUNK-01` (oversized atomic/reference file missing sidecar), `W-CHUNK-02` (sidecar `content_hash` mismatch), `W-CHUNK-03` (chunk order/id consistency).
+
+Without `--strict`, provenance and chunk warnings do not break the zero-error requirement — they surface as quality indicators. With `--strict`, promoted codes block merge and ingest.
 
 ---
 
@@ -1694,6 +1721,7 @@ AKS is the compact export shape for runtime agent retrieval. It keeps the fields
 - `content_hash`
 - `source_checksum`
 - optional `verified_at`, `verified_by`, `recorded_at`, `valid_from`
+- optional fragment fields (Reconstruct Mode): `fragment_id`, `line_range`, `span_hash`
 - optional `tags`, `requires`, `related`, `supersedes`
 
 Use AKS when token efficiency and deterministic citations matter more than archival interchange. Use full micro-records when a graph registry wants the richer envelope.
@@ -1703,6 +1731,9 @@ Use AKS when token efficiency and deterministic citations matter more than archi
 | File | Purpose |
 |---|---|
 | `schemas/registry/agent-knowledge.spec.yaml` | Compact AKS v1 descriptive field definitions and constraints |
+| `schemas/registry/frontmatter.spec.yaml` | Content-file frontmatter contract (companion: `frontmatter.schema.json`) |
+| `schemas/registry/chunk-sidecar.spec.yaml` | Chunk metadata sidecar format (RFC-004) |
+| `schemas/registry/typed-answer.spec.yaml` | Typed Answer Contract v1 (companion: `typed-answer.schema.json`) |
 | `schemas/registry/ontology.spec.yaml` | Accepted ontology registry descriptive field definitions and constraints |
 | `schemas/registry/README.md` | Registry usage guide and `.spec.yaml` format note |
 | `schemas/registry/examples/` | Concrete example records |
@@ -1735,7 +1766,9 @@ python tools/micro-record-exporter/ep-micro-record-export.py \
   --output exports/pack.aks.jsonl
 
 # CI/export-readiness gate
-python tools/validator/ep-validate.py path/to/pack --aks
+python tools/validate-all.py --ignore W-V41-01   # local parity with CI
+python tools/ingest-gate.py path/to/pack         # validate → strip → export
+python tools/validator/ep-validate.py path/to/pack --strict
 python tools/micro-record-exporter/ep-micro-record-export.py \
   --pack path/to/pack \
   --compact \
@@ -1749,5 +1782,6 @@ The `canonical_statement` is the one field that may require human or LLM authori
 ---
 
 *Schema version: 4.1*
-*Last updated: 2026-04-15*
+*Last updated: 2026-07-06*
+*Changes in 2026-07-06 (additive, still 4.1): Fragment Provenance / Reconstruct Mode; chunk metadata sidecars (RFC-004); Typed Answer Contract; `--strict` validation gate and registry JSON Schemas.*
 *Changes in 3.4: bi-temporal provenance fields (`valid_from`, `recorded_at`) added to frontmatter spec; W-PROV-05 validator rule added.*

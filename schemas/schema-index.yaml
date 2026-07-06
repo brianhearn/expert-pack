@@ -2,12 +2,12 @@
 # Generated/maintained as the single source for README schema tables.
 
 expertpack_schema_family: "4.1"
-updated: "2026-05-30"
+updated: "2026-07-06"
 schemas:
   core:
     file: schemas/core.md
     version: "4.1"
-    description: "Shared principles: MD-canonical, atomic-conceptual model, `requires:` dependencies, EK ratio, context tiers, provenance, graph export, registry projections"
+    description: "Shared principles: MD-canonical, atomic-conceptual model, `requires:`, provenance, Reconstruct Mode, chunk sidecars, TAC, `--strict` gate, graph export, registry projections"
   product:
     file: schemas/product.md
     version: "4.1"
@@ -36,11 +36,23 @@ schemas:
   eval:
     file: schemas/eval.md
     version: "1.3"
-    description: "Evaluation: EK ratio, correctness, hallucination, retrieval quality, structural health"
+    description: "Evaluation: EK ratio, correctness, hallucination, retrieval quality, structural health, TAC scoring"
   registry_agent_knowledge:
     file: schemas/registry/agent-knowledge.spec.yaml
     version: "1.0"
-    description: "Compact Agent Knowledge Schema (AKS) JSONL descriptive spec for grounded agent retrieval pipelines"
+    description: "Compact Agent Knowledge Schema (AKS) JSONL — includes optional fragment provenance fields"
+  registry_frontmatter:
+    file: schemas/registry/frontmatter.spec.yaml
+    version: "1.0"
+    description: "Content-file frontmatter contract enforced by `ep-validate --strict` (companion JSON Schema)"
+  registry_chunk_sidecar:
+    file: schemas/registry/chunk-sidecar.spec.yaml
+    version: "1.0"
+    description: "Chunk metadata sidecar format for oversized atomic/reference files (RFC-004)"
+  registry_typed_answer:
+    file: schemas/registry/typed-answer.spec.yaml
+    version: "1.0"
+    description: "Typed Answer Contract v1 — machine-verifiable claim-to-source agent responses"
   registry_ontology:
     file: schemas/registry/ontology.spec.yaml
     version: "1.0"
