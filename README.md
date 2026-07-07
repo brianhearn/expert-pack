@@ -179,8 +179,8 @@ ExpertPack is an actively evolving framework. The table below shows which featur
 | Ontology suggestion CLI | ✅ Initial | `ep-ontology-suggest.py`; review-first entity/category suggestions plus accepted ontology.yaml registry |
 | Pack validation CLI | ✅ Full | `ep-validate --strict` (22+ checks), `ep-doctor`, W-CHUNK sidecar rules; CI + pre-commit |
 | Strict ingest gate | ✅ Full | `tools/ingest-gate.py` — validate → strip → export; no index without `--strict` |
-| Fragment provenance / Reconstruct Mode | ✅ Spec + consumer | RFC-003 in core; OpenClaw plugin sends `reconstruct`; EP MCP runtime external |
-| Chunk metadata sidecars | ✅ Full | RFC-004, `ep-chunk-annotate.py`, W-CHUNK-01..03; EP MCP consumption external |
+| Fragment provenance / Reconstruct Mode | ✅ Full | RFC-003 in core; OpenClaw plugin sends `reconstruct`; EP MCP returns `fragment_id` / `line_range` / `stale` envelope |
+| Chunk metadata sidecars | ✅ Full | RFC-004, `ep-chunk-annotate.py`, W-CHUNK-01..03; EP MCP consumes sidecars at index time |
 | Typed Answer Contract (TAC) | ✅ Full | Spec + `validate_tac.py` + `claim_verifier --tac` + agent prompt template |
 | MCP server (EP MCP) | ✅ Full | BM25 + vector hybrid retrieval; multi-pack routing |
 | Provenance display in agent responses | ✅ Runtime-supported | EP MCP opt-in reconstruct mode; host renders fragment provenance |

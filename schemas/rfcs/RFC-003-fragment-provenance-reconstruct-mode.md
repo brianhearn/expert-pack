@@ -1,6 +1,6 @@
 # RFC-003: Fragment Provenance and Reconstruct Mode
 
-- **Status:** Accepted (spec + in-repo consumer contract; EP MCP runtime milestone tracked separately)
+- **Status:** Accepted (spec + in-repo consumer contract; EP MCP runtime shipped 2026-07-06)
 - **Author:** Brian Hearn (with EasyBot)
 - **Created:** 2026-07-06
 - **Target:** Schema 4.1 (additive — no breaking changes)
@@ -137,8 +137,9 @@ loop, the EP MCP server needs to:
    compact result shape unchanged.
 
 The in-repo consumer (`tools/openclaw-memory-plugin`) already sends the flag and
-renders the returned fields, so this is the only remaining work to make
-Reconstruct Mode land end to end.
+renders the returned fields. EP MCP shipped this runtime on 2026-07-06
+(`ep-mcp` commit `a9d1639`). Remaining operational step: reindex packs that
+gained `.chunks.yaml` sidecars so `line_range` / `span_hash` are populated.
 
 ## Open questions
 

@@ -1,6 +1,6 @@
 # RFC-004: Chunk Metadata Sidecars
 
-- **Status:** Accepted (authoring format + tool + validator rules; EP MCP consumption tracked separately)
+- **Status:** Accepted (authoring format + tool + validator rules; EP MCP consumption shipped 2026-07-06)
 - **Author:** Brian Hearn (with EasyBot)
 - **Created:** 2026-07-06
 - **Target:** Schema 4.1 (additive)

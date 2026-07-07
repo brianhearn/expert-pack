@@ -22,6 +22,7 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ### Changed
 - **Documentation sync (2026-07-06)** — `ARCHITECTURE.md`, `AXIOMS.md`, `README.md`, `schemas/core.md`, and `schemas/schema-index.yaml` updated for enforcement gate, RFC-003/004, and TAC (schema family remains **4.1** — additive extensions only).
+- **EP MCP runtime alignment (2026-07-06)** — [ep-mcp](https://github.com/brianhearn/ep-mcp) commit `a9d1639` implements RFC-003 reconstruct envelope and RFC-004 sidecar consumption. `README.md`, `ROADMAP.md`, and RFC status headers updated to reflect shipped runtime; production packs require reindex after deploy.
 - **`tools/update-schema-readme.py`** — UTF-8 read/write; registry table includes frontmatter, chunk-sidecar, and typed-answer specs.
 
 ### Fixed
