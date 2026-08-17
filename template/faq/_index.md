@@ -3,7 +3,7 @@ title: "FAQ"
 type: index
 tags: [index, faq, pack-name]
 pack: your-pack-slug
-retrieval_strategy: standard
+retrieval_strategy: navigation
 ---
 
 # FAQ

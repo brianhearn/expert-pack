@@ -12,3 +12,21 @@ repos:
         language: system
         pass_filenames: false
         files: '\.(md|ya?ml)$'
+      - id: ep-schema-projections
+        name: ExpertPack schema projection guard
+        entry: python tools/check-schema-projections.py
+        language: system
+        pass_filenames: false
+        files: 'skills/.*/references/schemas.*\.md$'
+      - id: ep-readme-schema-table
+        name: ExpertPack README schema table
+        entry: python tools/update-schema-readme.py --check
+        language: system
+        pass_filenames: false
+        files: '(README\.md|schemas/schema-index\.yaml)$'
+      - id: ep-composite-conflict
+        name: ExpertPack composite conflict tests
+        entry: python tools/composite/test_conflict.py
+        language: system
+        pass_filenames: false
+        files: '(tools/composite/|schemas/composite\.md)$'

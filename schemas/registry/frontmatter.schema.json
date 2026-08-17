@@ -66,6 +66,16 @@
     "supersedes": {
       "type": ["array", "null"],
       "items": { "type": "string" }
+    },
+    "activation": {
+      "type": "object",
+      "description": "Knowledge Activation block for operational atoms (workflow, decision, gotcha, phase).",
+      "properties": {
+        "tools": { "type": "array", "items": { "type": "string" } },
+        "constraints": { "type": "array", "items": { "type": "string" } },
+        "next": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
     }
   },
   "additionalProperties": true

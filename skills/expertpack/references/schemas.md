@@ -1,179 +1,81 @@
-# ExpertPack Schemas Reference
+# ExpertPack Schemas — filing rules
 
-Condensed from the full schemas in the ExpertPack repo. Use this when creating or validating packs.
+Projection of `schemas/core.md` (family 4.1). Canonical text wins if this file disagrees.
 
-## Pack Types
+When the pack type is known, also read the matching file in this folder: `schemas-product.md`, `schemas-person.md`, `schemas-process.md`, `schemas-agent.md`, or `schemas-composite.md`. Full depth: repo `schemas/{type}.md`.
 
-**person** - Human knowledge (stories, mind, relationships)
-**person:agent** - AI agent operational identity, prescriptive mind, tools
-**product** - Product concepts, workflows, troubleshooting
-**process** - Sequential phases, decisions, checklists
-**composite** - Orchestrates multiple packs with roles and conflict rules
+## Pack types
 
-## Core Files (all packs)
-- `manifest.yaml` - Required. Declares type, version, tiers, EK ratio.
-- `overview.md` - Required. Entry point with retriever-anchored opening paragraph.
+| Type | Use |
+|------|-----|
+| person | Human: stories, mind, relationships, voice |
+| person + subtype agent | AI agent: operational identity, prescriptive mind |
+| product | Concepts, workflows, interfaces, troubleshooting |
+| process | Phases, decisions, checklists, gotchas |
+| composite | Wires packs together with roles and conflict rules |
 
-## Context Tier System
-Declared in manifest.yaml:
-- **Tier 1 (always)**: Loaded in every session (manifest, overview, glossary). Keep total <5KB.
-- **Tier 2 (searchable)**: Indexed for RAG retrieval.
-- **Tier 3 (on-demand)**: Loaded only on explicit request (verbatim, raw data).
+## Required root files
 
-## EK Ratio in Manifest
-```yaml
-ek_ratio:
-  value: 0.78
-  measured_at: "2026-03-01"
-  sample_size: 240
-  models: ["gpt-4.1", "claude-3.7"]
-```
+- `manifest.yaml` — type, version, `schema_version`, context tiers, recommended `authority_boundary` (`in_scope` / `out_of_scope` / `refuse_when`), optional `ek_ratio` / `mcp`
+- `overview.md` — entry point; retriever-anchored opening paragraph
 
-## File Size & Naming Rules
-- Concept atoms target 400–800 tokens with a 1,000-token ceiling; one dominant topic per file
-- kebab-case for filenames and slugs
-- Markdown canonical: all knowledge in .md
-- One topic per file
-- ## headers for chunk boundaries
+## Context tiers (`manifest.yaml`)
 
-## Product Pack Structure
-```
-manifest.yaml
-overview.md
-concepts/
-workflows/
-interfaces/
-troubleshooting/
-faq/
-glossary.md
-```
+- **always** — every session. Keep total **<5KB** (identity, voice, navigation).
+- **searchable** — RAG / `_index.md` (default for unlisted files).
+- **on_demand** — verbatim, training, archives; explicit request only.
 
-## Process Pack Structure
-```
-manifest.yaml
-overview.md
-phases/
-decisions/
-checklists/
-gotchas/
-```
+## File rules (retrieval-critical)
 
-## Person Pack Structure
-```
-manifest.yaml
-overview.md
-facts/
-mind/
-relationships/
-stories/
-reflections/
-opinions/
-conversations/
-presentation/
-meta/privacy.md
-```
+- **One topic = one file.** The retrieval unit is the file.
+- Concept atoms: **400–800 tokens** target, **1,000-token hard ceiling**.
+- Procedural files (workflows, phases) may be longer; retrieve them whole (`atomic`) or add a `.chunks.yaml` sidecar (RFC-004).
+- kebab-case filenames; unique basenames vault-wide.
+- Markdown is canonical. `_graph.yaml` + `ontology.yaml` are graph projections — not a second source of truth.
+- Opening paragraph (1–3 sentences) **is** the summary and the embed anchor. No “this document describes.”
+- `##` headers at natural breaks. Optional `## Frequently Asked` (each Q as `###`), `## Related Terms`, `## Related Concepts`.
+- **Do not compact prose** to save tokens. Examples are reasoning scaffolding.
+- **Do not create aggregator directories.** Per-concept FAQs live inside the atom. Optional `faq/` is cross-cutting questions only.
 
-## Agent Pack (person:agent)
-Adds operational/, mind/ with values, skills, tensions, etc.
+## Frontmatter (strict)
 
-## Composite Manifest
-```yaml
-type: composite
-packs:
-  - path: "../packs/some-pack"
-    role: knowledge
-conflicts:
-  priority: [...]
-```
-
-## Entity Relation Graph (optional)
-`relations.yaml` at pack root — typed, directional relationships between entities.
-Use for packs with 20+ cross-referencing entities, especially product packs and composites.
-
-```yaml
-entities:
-  - id: territory
-    type: concept
-    label: "Territory"
-    file: concepts/territories.md
-relations:
-  - from: territory
-    rel: contains
-    to: account
-    properties:
-      cardinality: one_to_many
-```
-
-Navigation aid, not content. Markdown files always win on conflicts. Aim for 15–30 key relationships, not exhaustive graphs.
-
-## Chunking Strategy (schema 4.1)
-Content files declare how they should be chunked for RAG via directory defaults or frontmatter override.
-
-**Strategies:** `atomic` (never split) or `sectioned` (split on ## headers, default).
-
-**Directory defaults:**
-- `workflows/` → atomic (procedures are indivisible)
-- `troubleshooting/errors/`, `troubleshooting/diagnostics/`, `troubleshooting/common-mistakes/` → atomic
-- `interfaces/`, `concepts/`, `faq/`, `commercial/` → sectioned
-- Person-pack `stories/`, `reflections/`, `opinions/`, `conversations/` → sectioned; verbatim material lives inside the atom
-- `propositions/` / `summaries/` → DEPRECATED for v4.1 retrieval-first packs; content moved into atoms
-- All others → sectioned
-
-**Per-file override:**
-```yaml
----
-retrieval:
-  strategy: atomic
----
-```
-
-Precedence: frontmatter > directory default > sectioned fallback.
-
-When splitting (sectioned), chunks carry sequence metadata: `part X of Y | sequence: {glob}`.
-
-## Volatile Data & Refresh Intervals
-
-For time-bound EK (pricing, API specs, current metrics, leaderboards), isolate in a `volatile/` subdirectory.
-Declare a refresh interval in the file's frontmatter:
+Required under `ep-validate --strict`: `title`, `type`, `tags`, `pack`, `id`, `schema_version`, `retrieval_strategy`, `verified_at`, `content_hash`.
 
 ```yaml
 ---
-volatile:
-  refresh: P30D          # ISO 8601 duration — how often to refresh
-  source: https://example.com/pricing
-  fetched_at: "2026-04-01"
-  expires_at: "2026-05-01"   # computed: fetched_at + refresh
+id: {pack-slug}/concepts/{slug}
+title: "Concept Name"
+type: concept
+tags: [slug]
+pack: {pack-slug}
+retrieval_strategy: standard   # standard | atomic | navigation
+schema_version: "4.1"
+verified_at: "YYYY-MM-DD"
+content_hash: ""
+requires:                      # optional — auto-expanded at retrieval (depth 2, count 3)
+  - prerequisite.md
+related:                       # optional — soft; not auto-retrieved
+  - sibling.md
 ---
 ```
 
-**Rules:**
-- `volatile/` files are always Tier 2 (Searchable) — never Tier 1
-- Static and volatile content never coexist in the same file
-- Volatile files are **excluded from EK ratio measurement** — declare `volatile_excluded: true` in the manifest's `ek_ratio` block
-- Staleness check is passive: at session start the agent checks `expires_at` across `volatile/*.md`; if stale, the agent alerts the user — refresh is always user-initiated (agent fetches from `source` URL only when the user explicitly requests it, or alerts the user to update manually if no URL is set)
-- The existing `<!-- refresh -->` inline block in core.md remains the standard for *individual volatile facts within static files*; frontmatter TTL is for *fully volatile files* in `volatile/`
+`retrieval_strategy`:
 
-**Manifest addition:**
-```yaml
-ek_ratio:
-  value: 0.78
-  measured_at: "2026-04-01"
-  sample_size: 240
-  models: ["gpt-5", "claude-opus-4"]
-  volatile_excluded: true   # volatile/ files excluded from measurement
-```
+| Value | Behavior |
+|-------|----------|
+| `standard` | Default. File is an indexable atom (concept-sized). |
+| `atomic` | Retrieve the whole file. Workflows, phases, troubleshooting. |
+| `navigation` | Excluded from the RAG pool (`_index.md`, coverage maps, hubs). |
 
-**Directory default:** `volatile/` → `atomic` chunking strategy (volatile files are retrieved whole).
+## Volatile data
 
-## Key Rules
-- NO secrets ever
-- Distill knowledge, do not copy raw state
-- Provenance in frontmatter
-- Opening definitions, body prose, `requires:` dependencies, related terms, and `_index.md` navigation for retrieval
-- Respect privacy and EK focus
+Time-bound EK lives in `volatile/` with frontmatter `refresh` / `source` / `fetched_at` / `expires_at`. Always searchable, never always-tier. Excluded from EK ratio (`ek_ratio.volatile_excluded: true`). Refresh is user-initiated.
 
-Full details: https://github.com/brianhearn/expert-pack/schemas
-See also: https://expertpack.ai
-```
+## Key rules
 
-The schemas.md is approximately 3.2KB.
+- No secrets.
+- Distill knowledge; do not copy raw state.
+- Humans adjudicate contradictions (never overwrite).
+- Reconstruct Mode (RFC-003) + TAC when `retrieval_mode: reconstruct`.
+
+Full schemas: repo `schemas/` · https://github.com/brianhearn/expert-pack/tree/main/schemas

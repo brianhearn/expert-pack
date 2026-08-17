@@ -9,6 +9,7 @@ chunks:
   line_range: [14, 20]
   tokenizer_tokens: 158
   chunk_summary: ''
+  context_prefix: 'From Phase 6: Inspection & Commissioning, opening.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--the-two-gate-model
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [21, 31]
   tokenizer_tokens: 183
   chunk_summary: 'You need two green lights before operating:'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section The Two-Gate Model.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--part-1-building-electrical-inspection
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [32, 33]
   tokenizer_tokens: 10
   chunk_summary: ''
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Part 1: Building/Electrical Inspection.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--scheduling
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [34, 38]
   tokenizer_tokens: 82
   chunk_summary: '- Call your building department to schedule — don''t wait until you''re 100% done; schedule as soon as you can confirm a completion date'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Scheduling.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--what-the-inspector-will-check
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [39, 64]
   tokenizer_tokens: 209
   chunk_summary: '**On the roof:**'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section What the Inspector Will Check.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--common-inspection-failures
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [65, 71]
   tokenizer_tokens: 86
   chunk_summary: '- Missing labels (the #1 cause of failures — see Phase 5 labeling checklist)'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Common Inspection Failures.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--if-you-fail
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [72, 77]
   tokenizer_tokens: 69
   chunk_summary: '- Get a detailed list of corrections from the inspector'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section If You Fail.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--part-2-utility-interconnection-inspection
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [78, 79]
   tokenizer_tokens: 11
   chunk_summary: ''
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Part 2: Utility Interconnection Inspection.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--process-varies-by-utility
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [80, 85]
   tokenizer_tokens: 75
   chunk_summary: '- Some utilities require a field inspection by their technician'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Process Varies by Utility.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--if-the-utility-sends-an-inspector
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [86, 92]
   tokenizer_tokens: 68
   chunk_summary: 'They typically verify:'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section If the Utility Sends an Inspector.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--meter-swap
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [93, 100]
   tokenizer_tokens: 118
   chunk_summary: 'After PTO is issued, the utility will:'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Meter Swap.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--part-3-system-commissioning
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [101, 104]
   tokenizer_tokens: 31
   chunk_summary: Commissioning is the step-by-step startup of your system after both inspections are complete.
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Part 3: System Commissioning.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--pre-commissioning-verification
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [105, 114]
   tokenizer_tokens: 83
   chunk_summary: 'Before energizing, verify:'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Pre-Commissioning Verification.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--string-inverter-commissioning-sequence
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [115, 130]
   tokenizer_tokens: 193
   chunk_summary: 1. **Measure open-circuit voltage at the inverter DC input** before connecting
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section String Inverter Commissioning Sequence.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--microinverter-commissioning
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [131, 137]
   tokenizer_tokens: 78
   chunk_summary: 1. Connect trunk cable to service panel (through AC disconnect)
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Microinverter Commissioning.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--battery-commissioning
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [138, 147]
   tokenizer_tokens: 122
   chunk_summary: 'Battery systems have their own commissioning sequence — follow the manufacturer''s specific procedure exactly. Generally:'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Battery Commissioning.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--monitoring-setup
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [148, 157]
   tokenizer_tokens: 177
   chunk_summary: 'Set up monitoring before or during commissioning:'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Monitoring Setup.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--post-commissioning-actions
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [158, 159]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Post-Commissioning Actions.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--tax-credits-and-incentives
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [160, 165]
   tokenizer_tokens: 141
   chunk_summary: '- **Federal Investment Tax Credit (ITC)**: 30% of total system cost as of 2024–2026. Includes equipment, labor, permitting, and battery (if storage meets thr...'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Tax Credits and Incentives.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--document-and-store
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [166, 174]
   tokenizer_tokens: 90
   chunk_summary: '- Permit (keep the final approved permit package)'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Document and Store.'
   embedding_version: gemini-embedding-001
 - chunk_id: 06-inspection-commissioning--related
   chunk_order: 20
@@ -149,4 +169,5 @@ chunks:
   line_range: [175, 178]
   tokenizer_tokens: 42
   chunk_summary: '- Operations & Maintenance (ongoing): `07-operations-maintenance.md`'
+  context_prefix: 'From Phase 6: Inspection & Commissioning, section Related.'
   embedding_version: gemini-embedding-001

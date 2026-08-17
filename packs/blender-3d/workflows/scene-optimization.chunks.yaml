@@ -9,6 +9,7 @@ chunks:
   line_range: [15, 23]
   tokenizer_tokens: 161
   chunk_summary: ''
+  context_prefix: From Scene Optimization Workflow, opening.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--understanding-where-time-goes
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [24, 27]
   tokenizer_tokens: 21
   chunk_summary: 'Before optimizing, identify the actual bottleneck:'
+  context_prefix: From Scene Optimization Workflow, section Understanding Where Time Goes.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--viewport-slowness
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [28, 40]
   tokenizer_tokens: 115
   chunk_summary: 'Check: Statistics overlay (Viewport Overlay → Statistics)'
+  context_prefix: From Scene Optimization Workflow, section Viewport Slowness.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--render-slowness-cycles
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [41, 53]
   tokenizer_tokens: 110
   chunk_summary: 'Enable: Render Statistics in Render Output panel'
+  context_prefix: From Scene Optimization Workflow, section Render Slowness (Cycles).
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--scene-file-size
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [54, 64]
   tokenizer_tokens: 69
   chunk_summary: 'Check: File → External Data → Find Missing Files'
+  context_prefix: From Scene Optimization Workflow, section Scene File Size.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--instances-vs-copies
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [65, 68]
   tokenizer_tokens: 37
   chunk_summary: This is the single highest-leverage optimization. Every unique object has its own draw call. Instances share one draw call.
+  context_prefix: From Scene Optimization Workflow, section Instances vs Copies.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--types-of-instancing
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [69, 87]
   tokenizer_tokens: 255
   chunk_summary: '**Linked Duplicate (`Alt+D`):**'
+  context_prefix: From Scene Optimization Workflow, section Types of Instancing.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--when-not-to-instance
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [88, 93]
   tokenizer_tokens: 67
   chunk_summary: '- When objects need unique UVs or unique materials (instances share mesh data including UV)'
+  context_prefix: From Scene Optimization Workflow, section When NOT to Instance.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--converting-instances-to-real-geometry
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [94, 103]
   tokenizer_tokens: 77
   chunk_summary: 'When you actually need unique copies (for sculpting, baking, destruction):'
+  context_prefix: From Scene Optimization Workflow, section Converting Instances to Real Geometry.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--viewport-performance-settings
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [104, 105]
   tokenizer_tokens: 8
   chunk_summary: ''
+  context_prefix: From Scene Optimization Workflow, section Viewport Performance Settings.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--per-object-viewport-optimization
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [106, 120]
   tokenizer_tokens: 194
   chunk_summary: 'Properties → Object Properties → Viewport Display:'
+  context_prefix: From Scene Optimization Workflow, section Per-Object Viewport Optimization.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--subdivision-surface-viewport-levels
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [121, 142]
   tokenizer_tokens: 244
   chunk_summary: 'The most common cause of viewport slowness. Set **viewport subdivision level** low, **render level** high:'
+  context_prefix: From Scene Optimization Workflow, section Subdivision Surface Viewport Levels.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--particle-system-display
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [143, 153]
   tokenizer_tokens: 71
   chunk_summary: 'Modifier/Particle System → Viewport Display:'
+  context_prefix: From Scene Optimization Workflow, section Particle System Display.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--render-settings-optimization
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [154, 155]
   tokenizer_tokens: 8
   chunk_summary: ''
+  context_prefix: From Scene Optimization Workflow, section Render Settings Optimization.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--cycles-sample-count-strategy
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [156, 177]
   tokenizer_tokens: 221
   chunk_summary: 'Samples are not equal — the relationship between samples and noise is roughly `sqrt(n)`:'
+  context_prefix: From Scene Optimization Workflow, section Cycles Sample Count Strategy.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--light-path-bounces
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [178, 197]
   tokenizer_tokens: 167
   chunk_summary: 'Bounces dramatically affect render time. Set them appropriately:'
+  context_prefix: From Scene Optimization Workflow, section Light Path Bounces.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--gpu-rendering
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [198, 214]
   tokenizer_tokens: 153
   chunk_summary: 'Edit → Preferences → System → Cycles Render Devices:'
+  context_prefix: From Scene Optimization Workflow, section GPU Rendering.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--memory-management
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [215, 216]
   tokenizer_tokens: 5
   chunk_summary: ''
+  context_prefix: From Scene Optimization Workflow, section Memory Management.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--vram-budget
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [217, 246]
   tokenizer_tokens: 272
   chunk_summary: 'GPU rendering loads textures into VRAM. When VRAM is exceeded, Blender either:'
+  context_prefix: From Scene Optimization Workflow, section VRAM Budget.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--out-of-core-rendering
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [247, 260]
   tokenizer_tokens: 97
   chunk_summary: 'For scenes exceeding VRAM, Cycles supports out-of-core textures (stores textures in RAM, uploads as needed):'
+  context_prefix: From Scene Optimization Workflow, section Out-of-Core Rendering.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--render-farm-preparation
   chunk_order: 20
@@ -149,6 +169,7 @@ chunks:
   line_range: [261, 262]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Scene Optimization Workflow, section Render Farm Preparation.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--path-management
   chunk_order: 21
@@ -156,6 +177,7 @@ chunks:
   line_range: [263, 292]
   tokenizer_tokens: 188
   chunk_summary: 'Render farms run on different machines — absolute paths break. Check:'
+  context_prefix: From Scene Optimization Workflow, section Path Management.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--baking-simulations
   chunk_order: 22
@@ -163,6 +185,7 @@ chunks:
   line_range: [293, 310]
   tokenizer_tokens: 151
   chunk_summary: 'Physics simulations (fluid, smoke, cloth, particles) must be baked to disk before farm rendering — each render node can''t simulate independently:'
+  context_prefix: From Scene Optimization Workflow, section Baking Simulations.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--render-output-configuration
   chunk_order: 23
@@ -170,6 +193,7 @@ chunks:
   line_range: [311, 323]
   tokenizer_tokens: 121
   chunk_summary: 'Output Properties:'
+  context_prefix: From Scene Optimization Workflow, section Render Output Configuration.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--frame-distribution
   chunk_order: 24
@@ -177,6 +201,7 @@ chunks:
   line_range: [324, 331]
   tokenizer_tokens: 83
   chunk_summary: 'For distributed rendering across multiple nodes:'
+  context_prefix: From Scene Optimization Workflow, section Frame Distribution.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--version-lock
   chunk_order: 25
@@ -184,6 +209,7 @@ chunks:
   line_range: [332, 345]
   tokenizer_tokens: 116
   chunk_summary: Ensure all render nodes use the **exact same Blender version**. Different Blender versions can produce different results (shader changes, noise patterns, ada...
+  context_prefix: From Scene Optimization Workflow, section Version Lock.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--profiling-and-diagnostics
   chunk_order: 26
@@ -191,6 +217,7 @@ chunks:
   line_range: [346, 347]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: From Scene Optimization Workflow, section Profiling and Diagnostics.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--render-statistics
   chunk_order: 27
@@ -198,6 +225,7 @@ chunks:
   line_range: [348, 356]
   tokenizer_tokens: 57
   chunk_summary: 'Properties → Render → Metadata → Stamp:'
+  context_prefix: From Scene Optimization Workflow, section Render Statistics.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--cycles-denoising-preview
   chunk_order: 28
@@ -205,6 +233,7 @@ chunks:
   line_range: [357, 369]
   tokenizer_tokens: 156
   chunk_summary: 'Before committing to high sample counts, evaluate noise at different sample counts:'
+  context_prefix: From Scene Optimization Workflow, section Cycles Denoising Preview.
   embedding_version: gemini-embedding-001
 - chunk_id: scene-optimization--viewport-profiling
   chunk_order: 29
@@ -212,4 +241,5 @@ chunks:
   line_range: [370, 379]
   tokenizer_tokens: 87
   chunk_summary: Help → Save System Info — outputs system info including GPU/driver details
+  context_prefix: From Scene Optimization Workflow, section Viewport Profiling.
   embedding_version: gemini-embedding-001

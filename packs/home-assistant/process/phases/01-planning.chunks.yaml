@@ -9,6 +9,7 @@ chunks:
   line_range: [15, 16]
   tokenizer_tokens: 5
   chunk_summary: ''
+  context_prefix: 'From Phase 1: Planning, opening.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--goal
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [17, 20]
   tokenizer_tokens: 52
   chunk_summary: 'Make three key decisions before spending money: **what hardware to run HA on**, **which installation method to use**, and **how to structure your network**. ...'
+  context_prefix: 'From Phase 1: Planning, section Goal.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--prerequisites
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [21, 24]
   tokenizer_tokens: 13
   chunk_summary: None — this is the starting point.
+  context_prefix: 'From Phase 1: Planning, section Prerequisites.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--outputs
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [25, 32]
   tokenizer_tokens: 42
   chunk_summary: '- Hardware selected and ordered (or repurposed)'
+  context_prefix: 'From Phase 1: Planning, section Outputs.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--step-1-choose-your-hardware
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [33, 36]
   tokenizer_tokens: 54
   chunk_summary: Your HA server needs to run 24/7. It needs enough CPU and RAM to handle integrations, automations, and add-ons without lag. It also needs reliable storage — ...
+  context_prefix: 'From Phase 1: Planning, section Step 1: Choose Your Hardware.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--quick-guide
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [37, 58]
   tokenizer_tokens: 253
   chunk_summary: '**Best choice for most new builds:** Raspberry Pi 5 with a 128GB+ SSD via USB3, or a used Intel N100 mini-PC from Amazon. Both support HA OS natively.'
+  context_prefix: 'From Phase 1: Planning, section Quick Guide.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--step-2-choose-your-installation-method
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [59, 75]
   tokenizer_tokens: 235
   chunk_summary: Home Assistant comes in four flavors. The differences are significant.
+  context_prefix: 'From Phase 1: Planning, section Step 2: Choose Your Installation Method.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--step-3-plan-your-network
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [76, 79]
   tokenizer_tokens: 40
   chunk_summary: A smart home adds dozens of devices to your network. Doing this thoughtlessly causes security risks and troubleshooting nightmares.
+  context_prefix: 'From Phase 1: Planning, section Step 3: Plan Your Network.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--ip-address-reservations
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [80, 85]
   tokenizer_tokens: 90
   chunk_summary: Your HA server should have a **static IP** (either assigned via DHCP reservation or configured statically). You'll be accessing it constantly — a changing IP...
+  context_prefix: 'From Phase 1: Planning, section IP Address Reservations.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--vlan-segmentation-optional-but-recommended
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [86, 95]
   tokenizer_tokens: 143
   chunk_summary: 'For security-conscious setups, consider putting IoT devices on a separate VLAN:'
+  context_prefix: 'From Phase 1: Planning, section VLAN Segmentation (Optional but Recommended).'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--where-to-place-the-ha-server
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [96, 103]
   tokenizer_tokens: 92
   chunk_summary: 'The Zigbee/Z-Wave coordinator (a USB dongle) needs to be physically near the HA server. Place the server:'
+  context_prefix: 'From Phase 1: Planning, section Where to Place the HA Server.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--ports-to-know
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [104, 114]
   tokenizer_tokens: 71
   chunk_summary: ''
+  context_prefix: 'From Phase 1: Planning, section Ports to Know.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--step-4-protocol-selection
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [115, 124]
   tokenizer_tokens: 106
   chunk_summary: While planning, decide which smart home protocol you'll lead with. This determines which coordinator USB dongle you need before you can buy devices.
+  context_prefix: 'From Phase 1: Planning, section Step 4: Protocol Selection.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--checklist
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [125, 134]
   tokenizer_tokens: 103
   chunk_summary: '- [ ] Hardware selected (or existing hardware identified)'
+  context_prefix: 'From Phase 1: Planning, section Checklist.'
   embedding_version: gemini-embedding-001
 - chunk_id: 01-planning--what-s-next
   chunk_order: 14
@@ -107,4 +121,5 @@ chunks:
   line_range: [135, 137]
   tokenizer_tokens: 29
   chunk_summary: '→ [[02-initial-setup.md|Phase 2: Initial Setup]] — Install HA OS and configure your first integrations'
+  context_prefix: 'From Phase 1: Planning, section What''s Next.'
   embedding_version: gemini-embedding-001

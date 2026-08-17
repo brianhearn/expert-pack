@@ -9,6 +9,7 @@ chunks:
   line_range: [15, 16]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: 'From Phase 2: Initial Setup, opening.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--goal
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [17, 20]
   tokenizer_tokens: 60
   chunk_summary: Get Home Assistant running, connected to your network, and handling its first integrations. By the end of this phase you'll have a working HA instance, the c...
+  context_prefix: 'From Phase 2: Initial Setup, section Goal.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--prerequisites
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [21, 29]
   tokenizer_tokens: 47
   chunk_summary: '- Hardware ready (from Phase 1)'
+  context_prefix: 'From Phase 2: Initial Setup, section Prerequisites.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--step-1-flash-and-boot-ha-os
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [30, 31]
   tokenizer_tokens: 8
   chunk_summary: ''
+  context_prefix: 'From Phase 2: Initial Setup, section Step 1: Flash and Boot HA OS.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--for-raspberry-pi-or-mini-pc-with-ha-os
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [32, 43]
   tokenizer_tokens: 190
   chunk_summary: 1. Download the HA OS image from [home-assistant.io/installation](https://www.home-assistant.io/installation/)
+  context_prefix: 'From Phase 2: Initial Setup, section For Raspberry Pi or Mini-PC with HA OS.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--for-proxmox-vm
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [44, 52]
   tokenizer_tokens: 50
   chunk_summary: 1. Download the HAOS `.vmdk` or `.qcow2` image
+  context_prefix: 'From Phase 2: Initial Setup, section For Proxmox/VM.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--step-2-onboarding-wizard
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [53, 67]
   tokenizer_tokens: 168
   chunk_summary: 'The first-run wizard takes about 5 minutes:'
+  context_prefix: 'From Phase 2: Initial Setup, section Step 2: Onboarding Wizard.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--step-3-configure-your-first-integrations
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [68, 71]
   tokenizer_tokens: 30
   chunk_summary: After onboarding, go to **Settings → Devices & Services → Add Integration**.
+  context_prefix: 'From Phase 2: Initial Setup, section Step 3: Configure Your First Integrations.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--recommended-first-integrations
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [72, 84]
   tokenizer_tokens: 156
   chunk_summary: '**Start with what you already have on the network:**'
+  context_prefix: 'From Phase 2: Initial Setup, section Recommended First Integrations.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--installing-hacs
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [85, 102]
   tokenizer_tokens: 170
   chunk_summary: HACS (Home Assistant Community Store) unlocks hundreds of custom integrations and Lovelace cards not in the official store. Install it early.
+  context_prefix: 'From Phase 2: Initial Setup, section Installing HACS.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--step-4-install-the-companion-app
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [103, 119]
   tokenizer_tokens: 188
   chunk_summary: The HA Companion App turns your phone into a smart home sensor. Install it early — it's your primary control interface.
+  context_prefix: 'From Phase 2: Initial Setup, section Step 4: Install the Companion App.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--step-5-first-configuration-check
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [120, 130]
   tokenizer_tokens: 119
   chunk_summary: 'Before adding more devices, verify the basics work:'
+  context_prefix: 'From Phase 2: Initial Setup, section Step 5: First Configuration Check.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--step-6-enable-advanced-mode-recommended
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [131, 141]
   tokenizer_tokens: 80
   chunk_summary: 'HA hides some advanced settings by default. Enable them now:'
+  context_prefix: 'From Phase 2: Initial Setup, section Step 6: Enable Advanced Mode (Recommended).'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--checklist
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [142, 152]
   tokenizer_tokens: 95
   chunk_summary: '- [ ] HA OS installed and accessible at a static IP'
+  context_prefix: 'From Phase 2: Initial Setup, section Checklist.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-initial-setup--what-s-next
   chunk_order: 14
@@ -107,4 +121,5 @@ chunks:
   line_range: [153, 155]
   tokenizer_tokens: 33
   chunk_summary: '→ [[03-protocol-setup.md|Phase 3: Protocol Setup]] — Add your Zigbee/Z-Wave coordinator and start pairing smart devices'
+  context_prefix: 'From Phase 2: Initial Setup, section What''s Next.'
   embedding_version: gemini-embedding-001

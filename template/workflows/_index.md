@@ -3,7 +3,7 @@ title: "Workflows"
 type: index
 tags: [index, workflows, pack-name]
 pack: your-pack-slug
-retrieval_strategy: standard
+retrieval_strategy: navigation
 ---
 
 # Workflows

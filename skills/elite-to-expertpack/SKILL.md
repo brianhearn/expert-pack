@@ -40,9 +40,9 @@ A complete ExpertPack conforming to schema 4.1:
 
 - `manifest.yaml` (with context tiers, EK stub)
 - `overview.md` summarizing conversion (layer counts, warnings)
-- Structured directories: `mind/`, `facts/`, `summaries/`, `operational/`, `relationships/`, etc.
-- `_index.md` files, lead summaries, `glossary.md` (if terms found)
-- `relations.yaml` (if relationships detected)
+- Structured directories: `mind/`, `facts/`, `lessons/`, `operational/`, `relationships/`, etc.
+- `_index.md` files, opening paragraphs, `glossary.md` (if terms found)
+- After convert: `ep-graph-export` for `_graph.yaml` (do not emit `relations.yaml`)
 - Clean deduplication preferring curated > structured > raw sources
 
 **Secrets are automatically stripped** (sk-*, ghp_*, tokens, passwords). Warnings emitted for any found.

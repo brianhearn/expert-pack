@@ -28,6 +28,59 @@ from pathlib import Path
 __version__ = "0.1.0"
 
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+AUTH_BLOCK_RE = re.compile(
+    r"^authority_boundary:.*?^  no_source_no_claim: .+$",
+    re.M | re.S,
+)
+AUTH_SCOPE = {
+    "product": (
+        "This product's documented concepts, workflows, interfaces, and troubleshooting.",
+        [
+            "Legal, medical, or financial advice",
+            "Other products or vendors not covered by this pack",
+        ],
+    ),
+    "person": (
+        "This person's documented stories, opinions, relationships, and voice.",
+        [
+            "Medical, legal, or financial advice on their behalf",
+            "Private facts not present in the pack",
+            "Other people not covered by this pack",
+        ],
+    ),
+    "process": (
+        "This process's documented phases, decisions, checklists, and exceptions.",
+        [
+            "Legal or regulatory advice beyond the pack's regulations/",
+            "Other processes not covered by this pack",
+        ],
+    ),
+    "composite": (
+        "Topics covered by the constituent packs listed in this composite.",
+        [
+            "Topics outside every constituent pack's authority_boundary",
+            "Private or role-isolated facts the composite must not leak",
+        ],
+    ),
+}
+
+
+def render_authority_boundary(pack_type: str) -> str:
+    in_scope, out_of_scope = AUTH_SCOPE[pack_type]
+    lines = [
+        "authority_boundary:",
+        f'  in_scope: "{in_scope}"',
+        "  out_of_scope:",
+    ]
+    for item in out_of_scope:
+        lines.append(f'    - "{item}"')
+    lines += [
+        "  refuse_when:",
+        '    - "No supporting atom in the pack"',
+        '    - "Question is outside in_scope"',
+        "  no_source_no_claim: false",
+    ]
+    return "\n".join(lines)
 
 
 def find_repo_root(start: Path) -> Path:
@@ -89,6 +142,7 @@ def cmd_init(args) -> int:
             new = new.replace('name: "Your Pack Name"', f'name: "{name}"')
             new = new.replace('type: "product"', f'type: "{args.type}"')
             new = new.replace("YYYY-MM-DD", today)
+            new = AUTH_BLOCK_RE.sub(render_authority_boundary(args.type), new, count=1)
         if new != text:
             with open(fp, "w", encoding="utf-8", newline="\n") as f:
                 f.write(new)

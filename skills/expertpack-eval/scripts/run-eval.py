@@ -187,7 +187,7 @@ REQUIRED FACTS (each must be present for full correctness):
 ANTI-HALLUCINATION CHECKS (the response must NOT contain these):
 {chr(10).join(f"- {f}" for f in anti_hallucination)}
 
-{"This is an OUT-OF-SCOPE question. The agent should have declined to answer or clearly stated this is outside its expertise." if category == "out-of-scope" else ""}
+{"This is an OUT-OF-SCOPE question. The agent should have declined to answer or clearly stated this is outside its expertise." if category in ("out-of-scope", "refusal", "out_of_scope") else ""}
 
 Score the response. Return ONLY valid JSON (no markdown fences) with this structure:
 {{
@@ -385,7 +385,7 @@ async def run_eval(args):
     hallucination_count = sum(1 for r in results if r['hallucinations'])
     hallucination_rate = hallucination_count / n if n else 0
 
-    oos_questions = [r for r in results if r['category'] == 'out-of-scope']
+    oos_questions = [r for r in results if r['category'] in ('out-of-scope', 'refusal', 'out_of_scope')]
     refusal_correct = sum(1 for r in oos_questions if r.get('refusal_correct') is True)
     refusal_accuracy = refusal_correct / len(oos_questions) if oos_questions else 1.0
 

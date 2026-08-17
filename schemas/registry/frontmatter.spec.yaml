@@ -111,6 +111,28 @@ optional:
     items: string
     description: Files replaced by this one; delete the target to complete migration.
 
+  activation:
+    type: object
+    description: >-
+      Optional Knowledge Activation block for operational atoms
+      (workflow, decision, gotcha, phase). Tells an agent what to do,
+      which tools, constraints, and where to go next. Not a second
+      body — the Markdown remains canonical. Used by MCP prompt
+      registration and hierarchical retrieve→act loops.
+    fields:
+      tools:
+        type: array
+        items: string
+        description: Tool or MCP prompt names this atom expects.
+      constraints:
+        type: array
+        items: string
+        description: One-line constraints the agent must respect.
+      next:
+        type: array
+        items: string
+        description: Bare filenames to load after this atom (not auto-expanded like requires:).
+
 notes:
   - Root docs (README.md, overview.md, glossary.md, ...) and _index.md files are exempt.
   - Files with type index/source/proposition/summary/training are exempt from the provenance fields.

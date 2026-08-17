@@ -43,6 +43,18 @@ documentation: "https://docs.example.com"
 #   models: ["gpt-5", "claude-sonnet-4-6", "gemini-2.5-flash"]
 #   propositions_tested: 0
 
+# ── Authority boundary ────────────────────────────────────────────────────────
+# What this pack may assert. Consumers must refuse outside it.
+authority_boundary:
+  in_scope: "Replace with the subject matter this pack is allowed to assert."
+  out_of_scope:
+    - "Legal, medical, or financial advice"
+    - "Products, people, or processes not covered by this pack"
+  refuse_when:
+    - "No supporting atom in the pack"
+    - "Question is outside in_scope"
+  no_source_no_claim: false
+
 # ── Context strategy ──────────────────────────────────────────────────────────
 # Controls how AI agents load this pack.
 # Tier 1 (always): loaded every session

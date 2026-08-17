@@ -5,6 +5,16 @@ be consumed through an MCP server, custom retrieval, or a specific agent workflo
 document that contract here. This file is for integrators; it is not loaded into
 agent context by default.
 
+## Authority and grounding
+
+Read `manifest.authority_boundary` before answering. Provenance says where a claim came from; the boundary says whether this pack may assert it.
+
+- Answer only inside `in_scope`.
+- Decline anything in `out_of_scope` or matching `refuse_when`.
+- If `no_source_no_claim` is true, do not assert a fact unless a retrieved atom supports it.
+- Do not invent sources. Prefer a Typed Answer Contract (`templates/TAC-PROMPT.md`) when the consumer requires auditable claims.
+- Eval `refusal` / `out-of-scope` questions must sit outside `in_scope`.
+
 ## Retrieval
 
 How this pack is meant to be searched.

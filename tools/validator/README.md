@@ -90,6 +90,25 @@ The validator adds (WARN):
 | `W-CHUNK-02` | Sidecar `content_hash` does not match the file body |
 | `W-CHUNK-03` | `chunk_order` has gaps/duplicates, or a `chunk_id` is duplicated |
 
+### Context tiers and retired graph (WARN)
+
+| Code | Meaning |
+|------|---------|
+| `W-TIER-01` | `context.always` exceeds 5KB, or lists a directory instead of files |
+| `W-TIER-02` | A navigation-shaped file (`_index.md`, `source-coverage.md`, `concept_scope: navigation`) is `standard` or `atomic` |
+| `W-TIER-03` | A `volatile/` path is listed in `context.always` |
+| `W-GRAPH-01` | Pack root still has `relations.yaml` (use `_graph.yaml` + `ontology.yaml`) |
+
+### Authority boundary and refusal evals (WARN)
+
+Not promoted under `--strict`. Existing packs can adopt the block without breaking CI.
+
+| Code | Meaning |
+|------|---------|
+| `W-AUTH-01` | `manifest.yaml` has no `authority_boundary` |
+| `W-AUTH-02` | `authority_boundary` is present but missing `in_scope` or `out_of_scope` |
+| `W-EVAL-01` | `eval/benchmark.yaml` or `eval/questions.yaml` exists and has fewer than 3 `refusal` / `out-of-scope` questions |
+
 ## ep-doctor.py
 
 Auto-fixes mechanical issues found by the validator. Runs the sibling

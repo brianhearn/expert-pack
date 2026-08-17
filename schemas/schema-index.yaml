@@ -2,7 +2,7 @@
 # Generated/maintained as the single source for README schema tables.
 
 expertpack_schema_family: "4.1"
-updated: "2026-07-06"
+updated: "2026-08-17"
 schemas:
   core:
     file: schemas/core.md
@@ -30,13 +30,13 @@ schemas:
     description: "Process packs: phases, decisions, checklists, exceptions, scheduling, regulations"
   composite:
     file: schemas/composite.md
-    version: "1.1"
+    version: "1.2"
     extends: core
-    description: "Composites: multi-pack deployment, role assignments, auto-discovery & export"
+    description: "Composites: multi-pack deployment, roles, fail-closed conflict isolation, auto-discovery & export"
   eval:
     file: schemas/eval.md
-    version: "1.3"
-    description: "Evaluation: EK ratio, correctness, hallucination, retrieval quality, structural health, TAC scoring"
+    version: "1.4"
+    description: "Evaluation: EK ratio, correctness, hallucination, refusal/authority, composite conflict cases, TAC scoring"
   registry_agent_knowledge:
     file: schemas/registry/agent-knowledge.spec.yaml
     version: "1.0"

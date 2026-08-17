@@ -43,10 +43,10 @@ A complete ExpertPack conforming to schema 4.1:
   - `mind/` — best practices, conventions, behavioral patterns, promoted rules
   - `facts/` — knowledge gaps filled, project-specific facts
   - `operational/` — error resolutions, tool gotchas, integration fixes
-  - `summaries/` — pattern analyses, recurring issue summaries
+  - `lessons/` — pattern analyses, recurring issue summaries
   - `relationships/` — cross-references between related entries
-- `_index.md` files, lead summaries, `glossary.md` (if terms/tags found)
-- `relations.yaml` (from See Also links and shared tags)
+- `_index.md` files, opening paragraphs, `glossary.md` (if terms/tags found)
+- After convert: `ep-graph-export` for `_graph.yaml` (do not emit `relations.yaml`)
 - Clean deduplication preferring promoted > resolved > pending entries
 
 **Secrets are automatically stripped** (sk-*, ghp_*, tokens, passwords). Warnings emitted for any found.

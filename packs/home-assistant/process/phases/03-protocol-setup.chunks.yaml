@@ -9,6 +9,7 @@ chunks:
   line_range: [15, 16]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: 'From Phase 3: Protocol Setup, opening.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--goal
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [17, 20]
   tokenizer_tokens: 54
   chunk_summary: Get your Zigbee (or Z-Wave) coordinator running, pair your first batch of devices, and verify they're stable before building automations on top of them. Unst...
+  context_prefix: 'From Phase 3: Protocol Setup, section Goal.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--prerequisites
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [21, 29]
   tokenizer_tokens: 61
   chunk_summary: '- Phase 2 complete (HA running with companion app)'
+  context_prefix: 'From Phase 3: Protocol Setup, section Prerequisites.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--step-1-position-your-coordinator
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [30, 39]
   tokenizer_tokens: 177
   chunk_summary: The Zigbee/Z-Wave coordinator is a USB dongle plugged into your HA server. Where and how you plug it in matters.
+  context_prefix: 'From Phase 3: Protocol Setup, section Step 1: Position Your Coordinator.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--step-2-install-zigbee2mqtt-recommended
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [40, 47]
   tokenizer_tokens: 101
   chunk_summary: 'There are two ways to manage Zigbee in HA:'
+  context_prefix: 'From Phase 3: Protocol Setup, section Step 2: Install Zigbee2MQTT (Recommended).'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--install-mosquitto-mqtt-broker-first
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [48, 56]
   tokenizer_tokens: 91
   chunk_summary: 'Zigbee2MQTT communicates via MQTT. Install the Mosquitto broker add-on first:'
+  context_prefix: 'From Phase 3: Protocol Setup, section Install Mosquitto (MQTT Broker) First.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--install-zigbee2mqtt
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [57, 83]
   tokenizer_tokens: 193
   chunk_summary: 1. In the Add-on Store, search for **Zigbee2MQTT** (may need HACS or the third-party repository)
+  context_prefix: 'From Phase 3: Protocol Setup, section Install Zigbee2MQTT.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--step-3-pair-your-first-devices
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [84, 85]
   tokenizer_tokens: 8
   chunk_summary: ''
+  context_prefix: 'From Phase 3: Protocol Setup, section Step 3: Pair Your First Devices.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--pairing-mode-in-zigbee2mqtt
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [86, 93]
   tokenizer_tokens: 89
   chunk_summary: 1. Open the Zigbee2MQTT web UI
+  context_prefix: 'From Phase 3: Protocol Setup, section Pairing Mode in Zigbee2MQTT.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--pairing-order-matters-for-mesh
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [94, 104]
   tokenizer_tokens: 100
   chunk_summary: Add mains-powered devices (plugs, bulbs) before battery-powered sensors. Mains devices act as mesh repeaters — the more you have, the better your coverage fo...
+  context_prefix: 'From Phase 3: Protocol Setup, section Pairing Order Matters for Mesh.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--device-naming-strategy
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [105, 122]
   tokenizer_tokens: 102
   chunk_summary: Name devices systematically from the start — renaming later is painful when automations reference the old names.
+  context_prefix: 'From Phase 3: Protocol Setup, section Device Naming Strategy.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--step-4-verify-stability
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [123, 126]
   tokenizer_tokens: 29
   chunk_summary: Before building automations, let your devices run for 24-48 hours and check stability.
+  context_prefix: 'From Phase 3: Protocol Setup, section Step 4: Verify Stability.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--what-to-check
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [127, 137]
   tokenizer_tokens: 116
   chunk_summary: '**In Zigbee2MQTT Dashboard:**'
+  context_prefix: 'From Phase 3: Protocol Setup, section What to Check.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--common-stability-issues
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [138, 156]
   tokenizer_tokens: 208
   chunk_summary: '**Set a stable serial port by-id:**'
+  context_prefix: 'From Phase 3: Protocol Setup, section Common Stability Issues.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--step-5-organize-into-areas
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [157, 171]
   tokenizer_tokens: 122
   chunk_summary: HA's **Areas** feature groups devices by room, which makes dashboards and automations much cleaner.
+  context_prefix: 'From Phase 3: Protocol Setup, section Step 5: Organize into Areas.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--checklist
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [172, 182]
   tokenizer_tokens: 103
   chunk_summary: '- [ ] Coordinator dongle plugged in with USB extension cable'
+  context_prefix: 'From Phase 3: Protocol Setup, section Checklist.'
   embedding_version: gemini-embedding-001
 - chunk_id: 03-protocol-setup--what-s-next
   chunk_order: 16
@@ -121,4 +137,5 @@ chunks:
   line_range: [183, 185]
   tokenizer_tokens: 34
   chunk_summary: '→ [[04-automation-building.md|Phase 4: Automation Building]] — Build your first automations on a stable device foundation'
+  context_prefix: 'From Phase 3: Protocol Setup, section What''s Next.'
   embedding_version: gemini-embedding-001

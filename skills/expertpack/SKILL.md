@@ -14,7 +14,7 @@ Structured knowledge packs for AI agents. Maximize the knowledge your AI is miss
 
 > **💎 Obsidian compatible:** Every ExpertPack is a valid Obsidian vault. Copy the `.obsidian/` folder from the repo root into any pack directory, open it in Obsidian, and install Dataview + Templater. You get live queries by content type, EK score, and tags; graph view; and full-text search. Standard relative Markdown links — packs render correctly on GitHub and in Obsidian simultaneously.
 
-> **Companion skills:** This skill covers consumption and hydration guidance only. For EK measurement and quality evals use `expertpack-eval`. For exporting an OpenClaw agent's workspace as an ExpertPack use `expertpack-export`. For converting an existing Obsidian Vault into an agent-ready ExpertPack use `obsidian-to-expertpack`.
+> **Companion skills:** This skill covers consumption and hydration guidance only. For EK measurement and quality evals use `expertpack-eval`. For exporting an OpenClaw agent's workspace as an ExpertPack use `expertpack-export`. For converting an existing Obsidian Vault into an agent-ready ExpertPack use `obsidian-to-expertpack`. For framework intelligence refinement (research sweep / schema review) use `expertpack-intelligence`.
 
 **Full schemas:** `/path/to/ExpertPack/schemas/` in the repo (core.md, person.md, product.md, process.md, composite.md, eval.md)
 
@@ -41,7 +41,7 @@ For detailed platform integration (Cursor, Claude Code, custom APIs, direct cont
 ### 2. Create / Hydrate a Pack
 
 1. Determine pack type: person, product, process, or composite
-2. Read `{skill_dir}/references/schemas.md` for structural requirements
+2. Read `{skill_dir}/references/schemas.md` for filing rules, then the type file (`schemas-product.md`, `schemas-person.md`, `schemas-process.md`, `schemas-agent.md`, or `schemas-composite.md`) once the pack type is known. Do not load every type file.
 3. Create root directory using the pack slug (kebab-case)
 4. **Copy `.obsidian/` config into the pack root** — from the `template/` folder in the public ExpertPack repo (github.com/brianhearn/expert-pack). This makes the pack immediately usable in Obsidian with Dataview and Templater pre-configured. See `{skill_dir}/references/cli-commands.md` for the copy command.
 5. Create `manifest.yaml` and `overview.md` (both required)

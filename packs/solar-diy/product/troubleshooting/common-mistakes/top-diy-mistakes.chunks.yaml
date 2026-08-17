@@ -9,6 +9,7 @@ chunks:
   line_range: [20, 25]
   tokenizer_tokens: 138
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, opening.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--1-wrong-string-sizing
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [26, 27]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, section 1. Wrong String Sizing.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--symptom
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [28, 30]
   tokenizer_tokens: 40
   chunk_summary: Inverter displays overvoltage error on cold winter mornings, or system produces less than expected on hot summer afternoons with no apparent issue.
+  context_prefix: From Top DIY Solar Installation Mistakes, section Symptom.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-mistake
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [31, 33]
   tokenizer_tokens: 65
   chunk_summary: Not accounting for temperature effects on panel voltage. Panels produce MORE voltage in cold weather and LESS in hot weather. If you size your strings at roo...
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Mistake.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-fix
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [34, 36]
   tokenizer_tokens: 50
   chunk_summary: Run proper string sizing calculations using your site's ASHRAE temperature extremes, not average temperatures. See [[system-design-fundamentals.md|System Des...
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Fix.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--how-to-avoid
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [37, 41]
   tokenizer_tokens: 48
   chunk_summary: Always use the coldest recorded temperature (or ASHRAE 2% low) for maximum string size and the hottest temperature plus mounting adder for minimum string siz...
+  context_prefix: From Top DIY Solar Installation Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--2-ignoring-rapid-shutdown-requirements
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [42, 43]
   tokenizer_tokens: 10
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, section 2. Ignoring Rapid Shutdown Requirements.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--symptom-2
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [44, 46]
   tokenizer_tokens: 23
   chunk_summary: Inspection fails. Inspector requires rapid shutdown compliance before signing off.
+  context_prefix: From Top DIY Solar Installation Mistakes, section Symptom.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-mistake-2
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [47, 49]
   tokenizer_tokens: 39
   chunk_summary: Installing a string inverter system without MLPE or UL 3741 compliance. This was the most common NEC violation for DIY installs since 2017.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Mistake.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-fix-2
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [50, 52]
   tokenizer_tokens: 39
   chunk_summary: Add compliant rapid shutdown devices, switch to microinverters, or redesign for UL 3741 compliance. Any of these may require significant rework.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Fix.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--how-to-avoid-2
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [53, 57]
   tokenizer_tokens: 52
   chunk_summary: Check your jurisdiction's adopted NEC edition BEFORE designing the system. If NEC 2017 or later, plan for rapid shutdown from the start. See [[nec-rapid-shut...
+  context_prefix: From Top DIY Solar Installation Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--3-undersized-wiring
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [58, 59]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, section 3. Undersized Wiring.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--symptom-3
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [60, 62]
   tokenizer_tokens: 27
   chunk_summary: Voltage drop across long wire runs, wires running hot, tripped breakers, or reduced system output.
+  context_prefix: From Top DIY Solar Installation Mistakes, section Symptom.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-mistake-3
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [63, 65]
   tokenizer_tokens: 40
   chunk_summary: Using wire gauges that are too small for the current and distance. Solar panels on roofs can require long wire runs, and voltage drop accumulates.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Mistake.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-fix-3
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [66, 68]
   tokenizer_tokens: 45
   chunk_summary: Recalculate wire sizing using NEC Article 310 ampacity tables and voltage drop formulas. Replace undersized wiring. Target ≤2% voltage drop on DC runs and ≤3...
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Fix.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--how-to-avoid-3
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [69, 73]
   tokenizer_tokens: 50
   chunk_summary: 'Use a wire sizing calculator that accounts for: current (Isc × 1.56 safety factor per NEC), wire run length (round trip), ambient temperature derating, and c...'
+  context_prefix: From Top DIY Solar Installation Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--4-improper-grounding
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [74, 75]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, section 4. Improper Grounding.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--symptom-4
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [76, 78]
   tokenizer_tokens: 28
   chunk_summary: 'Failed inspection. In severe cases: equipment damage from lightning or ground faults, shock hazard.'
+  context_prefix: From Top DIY Solar Installation Mistakes, section Symptom.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-mistake-4
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [79, 81]
   tokenizer_tokens: 36
   chunk_summary: Missing or improper equipment grounding conductors, missing ground rods, or not bonding the panel frames to the grounding system.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Mistake.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-fix-4
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [82, 84]
   tokenizer_tokens: 45
   chunk_summary: Install proper equipment grounding per NEC 690.41-690.47. This includes grounding each panel frame, the racking system, inverter chassis, and a ground electr...
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Fix.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--how-to-avoid-4
   chunk_order: 20
@@ -149,6 +169,7 @@ chunks:
   line_range: [85, 89]
   tokenizer_tokens: 65
   chunk_summary: Follow NEC Article 690 Part V grounding requirements exactly. Use listed grounding lugs and WEEBs (Washer, Electrical Equipment Bond) for racking. Don't rely...
+  context_prefix: From Top DIY Solar Installation Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--5-not-pulling-permits
   chunk_order: 21
@@ -156,6 +177,7 @@ chunks:
   line_range: [90, 91]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, section 5. Not Pulling Permits.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--symptom-5
   chunk_order: 22
@@ -163,6 +185,7 @@ chunks:
   line_range: [92, 94]
   tokenizer_tokens: 41
   chunk_summary: No inspection means no interconnection agreement with the utility. Insurance may not cover damage. If you sell the house, unpermitted work is a liability.
+  context_prefix: From Top DIY Solar Installation Mistakes, section Symptom.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-mistake-5
   chunk_order: 23
@@ -170,6 +193,7 @@ chunks:
   line_range: [95, 97]
   tokenizer_tokens: 39
   chunk_summary: Skipping permits to save money or avoid hassle. Solar is an electrical installation — it requires a permit in virtually every US jurisdiction.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Mistake.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-fix-5
   chunk_order: 24
@@ -177,6 +201,7 @@ chunks:
   line_range: [98, 100]
   tokenizer_tokens: 31
   chunk_summary: Apply for permits retroactively. You may need to expose wiring for inspection, which can mean partial disassembly.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Fix.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--how-to-avoid-5
   chunk_order: 25
@@ -184,6 +209,7 @@ chunks:
   line_range: [101, 105]
   tokenizer_tokens: 47
   chunk_summary: Pull permits before you start. Many jurisdictions have streamlined solar permits. Some accept SolarAPP+ (automated permit processing). Budget $200-500 for pe...
+  context_prefix: From Top DIY Solar Installation Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--6-poor-roof-attachment-water-leaks
   chunk_order: 26
@@ -191,6 +217,7 @@ chunks:
   line_range: [106, 107]
   tokenizer_tokens: 10
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, section 6. Poor Roof Attachment / Water Leaks.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--symptom-6
   chunk_order: 27
@@ -198,6 +225,7 @@ chunks:
   line_range: [108, 110]
   tokenizer_tokens: 20
   chunk_summary: Water stains on ceiling below solar panels. Racking loosens over time.
+  context_prefix: From Top DIY Solar Installation Mistakes, section Symptom.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-mistake-6
   chunk_order: 28
@@ -205,6 +233,7 @@ chunks:
   line_range: [111, 113]
   tokenizer_tokens: 41
   chunk_summary: Improper flashing around roof penetrations, using lag bolts without proper sealant, or penetrating the roof in the wrong locations (missing rafters).
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Mistake.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-fix-6
   chunk_order: 29
@@ -212,6 +241,7 @@ chunks:
   line_range: [114, 116]
   tokenizer_tokens: 35
   chunk_summary: Remove panels from affected areas, properly flash and seal all penetrations, and re-mount. Use a stud finder to locate rafters.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Fix.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--how-to-avoid-6
   chunk_order: 30
@@ -219,6 +249,7 @@ chunks:
   line_range: [117, 121]
   tokenizer_tokens: 74
   chunk_summary: Use code-compliant flashing (not just caulk) at every roof penetration. Always lag into rafters, not just sheathing. Consider rail-less mounting systems that...
+  context_prefix: From Top DIY Solar Installation Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--7-mismatching-panel-and-inverter-specs
   chunk_order: 31
@@ -226,6 +257,7 @@ chunks:
   line_range: [122, 123]
   tokenizer_tokens: 10
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, section 7. Mismatching Panel and Inverter Specs.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--symptom-7
   chunk_order: 32
@@ -233,6 +265,7 @@ chunks:
   line_range: [124, 126]
   tokenizer_tokens: 31
   chunk_summary: Inverter clipping (producing less than panels could deliver), voided warranties, or outright equipment failure.
+  context_prefix: From Top DIY Solar Installation Mistakes, section Symptom.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-mistake-7
   chunk_order: 33
@@ -240,6 +273,7 @@ chunks:
   line_range: [127, 129]
   tokenizer_tokens: 41
   chunk_summary: Pairing panels with an incompatible inverter — wrong voltage range, insufficient input channels, or exceeding the inverter's maximum DC input power.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Mistake.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-fix-7
   chunk_order: 34
@@ -247,6 +281,7 @@ chunks:
   line_range: [130, 132]
   tokenizer_tokens: 72
   chunk_summary: 'Verify compatibility before purchasing. Check: inverter max input voltage ≥ string Voc at cold temps, inverter MPPT range covers string Vmp at hot temps, inv...'
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Fix.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--how-to-avoid-7
   chunk_order: 35
@@ -254,6 +289,7 @@ chunks:
   line_range: [133, 137]
   tokenizer_tokens: 46
   chunk_summary: Read both datasheets. Use manufacturer string sizing tools (SolarEdge Designer, Enphase Design Tool, SMA Sunny Design). These catch incompatibilities automat...
+  context_prefix: From Top DIY Solar Installation Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--8-forgetting-about-future-battery-readiness
   chunk_order: 36
@@ -261,6 +297,7 @@ chunks:
   line_range: [138, 139]
   tokenizer_tokens: 12
   chunk_summary: ''
+  context_prefix: From Top DIY Solar Installation Mistakes, section 8. Forgetting About Future Battery Readiness.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--symptom-8
   chunk_order: 37
@@ -268,6 +305,7 @@ chunks:
   line_range: [140, 142]
   tokenizer_tokens: 32
   chunk_summary: You want to add a battery later but your inverter doesn't support it, or adding one requires replacing the inverter.
+  context_prefix: From Top DIY Solar Installation Mistakes, section Symptom.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-mistake-8
   chunk_order: 38
@@ -275,6 +313,7 @@ chunks:
   line_range: [143, 145]
   tokenizer_tokens: 21
   chunk_summary: Installing a solar-only inverter with no path to add storage later.
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Mistake.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--the-fix-8
   chunk_order: 39
@@ -282,6 +321,7 @@ chunks:
   line_range: [146, 148]
   tokenizer_tokens: 39
   chunk_summary: 'Options: replace the inverter with a hybrid model, or add an AC-coupled battery (Enphase, Franklin) that works alongside any existing inverter.'
+  context_prefix: From Top DIY Solar Installation Mistakes, section The Fix.
   embedding_version: gemini-embedding-001
 - chunk_id: top-diy-mistakes--how-to-avoid-8
   chunk_order: 40
@@ -289,4 +329,5 @@ chunks:
   line_range: [149, 150]
   tokenizer_tokens: 59
   chunk_summary: If battery storage is even a possibility, either install a hybrid inverter now (Tesla, SolarEdge with battery interface) or choose an AC-coupled ecosystem (E...
+  context_prefix: From Top DIY Solar Installation Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001

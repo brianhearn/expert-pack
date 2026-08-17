@@ -30,6 +30,10 @@ Checks (21):
  20. W-HUB-01: concept-dense hub file detected (high topic count, standard retrieval_strategy)
  21. W-AKS-01..04: compact Agent Knowledge Schema export readiness [--aks]
  22. W-CHUNK-01..03: chunk sidecar presence/consistency (RFC-004)
+ 23. W-TIER-01..03: context-tier budget and navigation/volatile discipline
+ 24. W-GRAPH-01: retired relations.yaml present at pack root
+ 25. W-AUTH-01/02: authority_boundary missing or incomplete (WARN; not --strict)
+ 26. W-EVAL-01: eval set exists but has fewer than 3 refusal/out-of-scope questions
 
 Provenance checks (17-19) are opt-in via --provenance flag.
 AKS readiness checks are opt-in via --aks and imply provenance checks.
@@ -999,6 +1003,124 @@ class Validator:
                 self._add('WARN', 'W-CHUNK-03', sidecar_rel,
                            f"duplicate chunk_id: {', '.join(sorted(dupes))}")
 
+    def check_context_tiers(self):
+        """W-TIER-01: context.always exceeds the 5KB budget.
+        W-TIER-02: navigation-shaped file is indexed as standard/atomic.
+        W-TIER-03: volatile/ path listed in context.always.
+        Warnings only — not promoted under --strict.
+        """
+        ctx = self.manifest.get('context') or {}
+        always = ctx.get('always') or []
+        total = 0
+        for entry in always:
+            if not isinstance(entry, str):
+                continue
+            norm = entry.replace('\\', '/').strip().rstrip('/')
+            if norm.startswith('volatile/') or norm == 'volatile':
+                self._add('WARN', 'W-TIER-03', 'manifest.yaml',
+                           f"context.always must not include volatile path '{entry}'")
+            full = os.path.join(self.pack_path, entry)
+            if os.path.isfile(full):
+                total += os.path.getsize(full)
+            elif os.path.isdir(full):
+                self._add('WARN', 'W-TIER-01', 'manifest.yaml',
+                           f"context.always entry is a directory (list files): {entry}")
+        if total > 5120:
+            self._add('WARN', 'W-TIER-01', 'manifest.yaml',
+                       f"context.always totals {total} bytes (budget 5120 / 5KB)")
+
+        def _nav_shaped(rel, fm):
+            rel_u = rel.replace('\\', '/')
+            bn = os.path.basename(rel_u)
+            if bn == '_index.md' or rel_u.endswith('source-coverage.md'):
+                return True
+            return fm.get('concept_scope') == 'navigation'
+
+        for rel, fm in self.fm.items():
+            if not fm or not _nav_shaped(rel, fm):
+                continue
+            rs = fm.get('retrieval_strategy')
+            if rs in ('standard', 'atomic'):
+                self._add('WARN', 'W-TIER-02', rel,
+                           f"navigation-shaped file has retrieval_strategy: {rs} "
+                           f"(should be navigation so it stays out of the RAG pool)")
+
+        for rel in self.index_files:
+            full = os.path.join(self.pack_path, rel)
+            try:
+                fm = parse_fm(open(full, encoding='utf-8').read())
+            except OSError:
+                continue
+            rs = fm.get('retrieval_strategy')
+            if rs in ('standard', 'atomic'):
+                self._add('WARN', 'W-TIER-02', rel,
+                           f"_index.md has retrieval_strategy: {rs} (should be navigation)")
+
+    def check_retired_graph(self):
+        """W-GRAPH-01: relations.yaml at pack root is retired."""
+        if os.path.exists(os.path.join(self.pack_path, 'relations.yaml')):
+            self._add('WARN', 'W-GRAPH-01', 'relations.yaml',
+                       "relations.yaml is retired; generate _graph.yaml with "
+                       "ep-graph-export and accept entities in ontology.yaml")
+
+    def check_authority_boundary(self):
+        """W-AUTH-01: missing authority_boundary.
+        W-AUTH-02: block present but missing in_scope / out_of_scope.
+        WARN only — not in STRICT_PROMOTE so existing packs can adopt it.
+        """
+        if not self.manifest:
+            return
+        block = self.manifest.get('authority_boundary')
+        if not block:
+            self._add('WARN', 'W-AUTH-01', 'manifest.yaml',
+                       "Missing authority_boundary; consumers have no pack-level "
+                       "refusal contract (in_scope / out_of_scope)")
+            return
+        if not isinstance(block, dict):
+            self._add('WARN', 'W-AUTH-02', 'manifest.yaml',
+                       "authority_boundary must be a mapping with in_scope and "
+                       "out_of_scope")
+            return
+        missing = []
+        if not str(block.get('in_scope') or '').strip():
+            missing.append('in_scope')
+        oos = block.get('out_of_scope')
+        if not oos or (isinstance(oos, list) and not any(str(x).strip() for x in oos)):
+            missing.append('out_of_scope')
+        if missing:
+            self._add('WARN', 'W-AUTH-02', 'manifest.yaml',
+                       f"authority_boundary present but missing {', '.join(missing)}")
+
+    def check_eval_refusals(self):
+        """W-EVAL-01: an eval set exists but has fewer than 3 refusal questions."""
+        found = None
+        data = None
+        for rel in ('eval/benchmark.yaml', 'eval/questions.yaml'):
+            full = os.path.join(self.pack_path, rel.replace('/', os.sep))
+            if not os.path.isfile(full):
+                continue
+            found = rel
+            try:
+                with open(full, encoding='utf-8') as f:
+                    data = yaml.safe_load(f) or {}
+            except (OSError, yaml.YAMLError):
+                return
+            break
+        if not found:
+            return
+        questions = data.get('questions') or []
+        n = 0
+        for q in questions:
+            if not isinstance(q, dict):
+                continue
+            cat = str(q.get('category') or '').strip().lower()
+            if cat in {'refusal', 'out-of-scope', 'out_of_scope'} or q.get('expected_refusal') is True:
+                n += 1
+        if n < 3:
+            self._add('WARN', 'W-EVAL-01', found,
+                       f"Eval set has {n} refusal/out-of-scope question(s); "
+                       "need at least 3 that sit outside authority_boundary")
+
     # -- Strict contract: extra required fields (opt-in via --strict) -------
     def check_strict_required(self):
         """--strict: require the remaining contract fields as ERROR.
@@ -1042,6 +1164,10 @@ class Validator:
         self.check_retrieval_antipatterns()
         self.check_v40_atomic_conceptual()
         self.check_chunk_sidecars()
+        self.check_context_tiers()
+        self.check_retired_graph()
+        self.check_authority_boundary()
+        self.check_eval_refusals()
         if self.check_provenance:
             self.check_provenance_fields()
         if self.check_aks:

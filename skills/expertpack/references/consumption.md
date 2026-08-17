@@ -127,6 +127,19 @@ This works well for:
 
 For larger packs, RAG retrieval is essential — a 200-file pack won't fit in context, and even if it could, the model's attention degrades with excessive context length.
 
+### Hierarchical retrieval (search, then read the atom)
+
+Do not dump top-k fragments into the prompt and hope. For retrieval-first packs the consume loop is:
+
+1. **Search** (keyword and/or semantic) — get candidate atom ids, not answers.
+2. **Read the whole atom** (`memory_get` / file read) for the best hit. Opening-paragraph chunks are locators; the atom is the answer.
+3. **Expand `requires:`** if the runtime supports it (EP MCP: depth 2, count 3, token-budget capped).
+4. **Stop** when the atom answers the question, or after a **step budget of 3** (hard cap 7). Reformulate the query once if the first hit is wrong. Do not loop.
+
+**Adaptive effort:** skip retrieval when the question is clearly general knowledge the model already has *and* the pack's EK is not implicated. Single-shot search+read for one-hop lookups. Escalate to a second pass only for multi-hop, contradiction, or “the first atom is a navigation miss.”
+
+Indexers that consume RFC-004 sidecars should prepend each chunk's `context_prefix` before embed/BM25 (index-side only). Runtime EP MCP tool names live in the ep-mcp repo; this contract is what agents and hosts must honor.
+
 ---
 
 ## Chunking Strategy
@@ -135,14 +148,14 @@ ExpertPack files are designed to be **retrieval-ready by default**. When authore
 
 Author content files as self-contained retrieval units. RAG chunkers that see a file under their token budget leave it intact, preserving lead summaries, proposition groups, glossary tables, and `<!-- refresh -->` metadata.
 
-### Atomic vs. Sectioned Content
+### Atomic vs. standard content
 
 Not all content should be authored to the standard size target. Procedural content that depends on sequential context must be retrieved as complete units.
 
 | Strategy | Behavior | Default For |
 |----------|----------|-------------|
 | **standard** | Author within 400–800 token target. Chunker passes through whole. | All content files (default) |
-| **atomic** | May exceed size ceiling. Must be retrieved whole. Declare in frontmatter with `retrieval.strategy: atomic` | `workflows/`, `troubleshooting/errors/`, `troubleshooting/diagnostics/`, `troubleshooting/common-mistakes/` |
+| **atomic** | May exceed size ceiling. Must be retrieved whole. Declare in frontmatter with `retrieval_strategy: atomic` | `workflows/`, `troubleshooting/errors/`, `troubleshooting/diagnostics/`, `troubleshooting/common-mistakes/` |
 
 **Why workflows are atomic:** Workflows are step-by-step procedures where each step depends on the previous. Retrieving step 5 of 10 without the surrounding steps produces hallucinated instructions — the model fills gaps with fabricated UI paths and invented interactions. Workflow files must be retrieved as complete units or not at all.
 
@@ -164,49 +177,42 @@ See core schema for detailed OpenClaw config example and full guidance.
 
 The +9.4% correctness improvement came from preventing splits on oversized files. We learned that authoring files as self-contained retrieval units (400–800 tokens) at creation time eliminates the need for any preprocessing. This insight became the foundation of Schema 2.5.
 
-#### Directory Defaults for Atomic vs Sectioned Content
+#### Directory defaults (`retrieval_strategy`)
 
-| Directory | Default Strategy | Rationale |
-|-----------|-----------------|-----------|
+| Directory | Default | Rationale |
+|-----------|---------|-----------|
 | `workflows/` | atomic | Procedures are indivisible |
 | `troubleshooting/errors/` | atomic | Error + fix is one unit |
 | `troubleshooting/diagnostics/` | atomic | Decision trees are indivisible |
 | `troubleshooting/common-mistakes/` | atomic | Symptom + fix is one unit |
-| `interfaces/` | sectioned | Large files; regions are independent |
-| `concepts/` | sectioned | Self-contained atomic-conceptual files (v4.1); each `##` section is a coherent sub-chunk; use `requires:` for dependencies |
-| `faq/` | sectioned | Cross-cutting questions only; per-concept FAQs live inside concept files |
-| `stories/`, `reflections/`, `opinions/`, `conversations/` | sectioned | Person-pack narrative atoms; verbatim material lives inside the atom |
-| `commercial/` | sectioned | Topics within commercial docs are independent |
-| All others | sectioned | Safe default |
+| `phases/`, `gotchas/` | atomic | Process procedures and traps retrieve whole |
+| `concepts/`, `interfaces/`, `commercial/` | standard | Self-contained atoms; opening paragraph is the embed anchor |
+| `faq/` | standard | Cross-cutting questions only; per-concept FAQs live inside concept files |
+| `stories/`, `reflections/`, `opinions/`, `conversations/` | standard | Person-pack narrative atoms; verbatim material lives inside the atom |
+| `_index.md`, `meta/source-coverage.md` | navigation | Excluded from the RAG pool |
+| All others | standard | Safe default |
 
-#### Per-File Override
+#### Per-file override
 
-Any content file can override its directory default by declaring a `retrieval` block in its YAML frontmatter:
+Any content file can override its directory default with the flat `retrieval_strategy` key:
 
 ```yaml
 ---
-retrieval:
-  strategy: atomic
+retrieval_strategy: atomic
 ---
 ```
 
-Precedence: **frontmatter override → directory default → sectioned fallback.**
+Precedence: **frontmatter override → directory default → `standard` fallback.**
 
-Use this when a file's retrieval needs differ from its directory convention — e.g., a concept file that contains a critical decision framework that must not be fragmented.
+Use this when a file's retrieval needs differ from its directory convention — e.g., a concept file that contains a critical decision framework that must not be fragmented. Mark hubs and coverage maps `navigation` so they cannot displace atoms.
 
-#### Sequence Metadata
+#### Oversized atomic files (RFC-004)
 
-When a file IS split (sectioned strategy), the chunker embeds sequence metadata in each chunk's source comment so consuming agents know how many sibling chunks exist and how to find them:
+When an atomic/reference file legitimately exceeds the token ceiling, add a `.chunks.yaml` sidecar (`ep-chunk-annotate.py`) so runtime chunkers split at the same `##`/`###` boundaries the author intended. Do not add a companion summary file.
 
-```
-<!-- source: concepts/territories.md | section: How It Works (part 3 of 7) | sequence: concepts--territories--*.md -->
-```
+#### Atomic chunks and size limits
 
-The `part X of Y` tells the agent this is an incomplete fragment. The `sequence` glob tells it where to find the full set. An agent receiving a sequence-tagged chunk should load all sibling chunks before synthesizing an answer.
-
-#### Atomic Chunks and Size Limits
-
-Atomic files may exceed the chunker's default character budget. This is expected and acceptable — the alternative (splitting a workflow) is worse than a larger chunk. RAG systems with hard size limits should index the full atomic chunk for retrieval, and optionally generate a summary companion chunk for lightweight search matching.
+Atomic files may exceed the chunker's default character budget. This is expected and acceptable — the alternative (splitting a workflow) is worse than a larger chunk. RAG systems with hard size limits should index the full atomic file (or its sidecar slices) for retrieval. The opening paragraph is the lightweight search surface — not a separate artifact.
 
 ### Evidence: What Works and What Doesn't
 

@@ -9,6 +9,7 @@ chunks:
   line_range: [20, 30]
   tokenizer_tokens: 215
   chunk_summary: A field guide to the most common confusing behaviors, mistakes, and gotchas in Blender — organized by how often they trip up users and how hard they are to d...
+  context_prefix: From Common Blender Mistakes, opening.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--transform-issues
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [31, 32]
   tokenizer_tokens: 5
   chunk_summary: ''
+  context_prefix: From Common Blender Mistakes, section Transform Issues.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--unapplied-scale-the-1-source-of-weird-behavior
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [33, 56]
   tokenizer_tokens: 324
   chunk_summary: '**Symptoms:**'
+  context_prefix: 'From Common Blender Mistakes, section Unapplied Scale (The #1 Source of Weird Behavior).'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--object-origin-problems
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [57, 75]
   tokenizer_tokens: 242
   chunk_summary: '**Symptoms:**'
+  context_prefix: From Common Blender Mistakes, section Object Origin Problems.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--visibility-and-selection-issues
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [76, 77]
   tokenizer_tokens: 8
   chunk_summary: ''
+  context_prefix: From Common Blender Mistakes, section Visibility and Selection Issues.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--the-hidden-object-geometry-problem
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [78, 94]
   tokenizer_tokens: 223
   chunk_summary: '**Symptom:** Something that was visible is gone. Or: you can see it in the Outliner but not the viewport.'
+  context_prefix: From Common Blender Mistakes, section The Hidden Object / Geometry Problem.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--can-t-select-anything
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [95, 108]
   tokenizer_tokens: 243
   chunk_summary: '**Symptom:** Clicking in the viewport selects nothing, or the wrong things.'
+  context_prefix: From Common Blender Mistakes, section Can't Select Anything.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--the-proportional-editing-blue-circle-of-death
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [109, 120]
   tokenizer_tokens: 151
   chunk_summary: '**Symptom:** You grab one vertex and the entire mesh moves with it (or a huge area deforms unexpectedly).'
+  context_prefix: From Common Blender Mistakes, section The Proportional Editing "Blue Circle of Death".
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--render-and-material-issues
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [121, 122]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: From Common Blender Mistakes, section Render and Material Issues.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--pink-textures-missing-images
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [123, 138]
   tokenizer_tokens: 234
   chunk_summary: '**Symptom:** Objects appear bright pink/magenta in Lookdev or Material Preview mode.'
+  context_prefix: From Common Blender Mistakes, section Pink Textures / Missing Images.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--dark-or-black-render
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [139, 153]
   tokenizer_tokens: 227
   chunk_summary: '**Symptom:** Rendered output is unexpectedly dark or completely black.'
+  context_prefix: From Common Blender Mistakes, section Dark or Black Render.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--render-takes-forever
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [154, 169]
   tokenizer_tokens: 279
   chunk_summary: '**Symptom:** Cycles render estimated at hours when it should be minutes.'
+  context_prefix: From Common Blender Mistakes, section Render Takes Forever.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--eevee-and-cycles-look-completely-different
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [170, 189]
   tokenizer_tokens: 236
   chunk_summary: '**Symptom:** A material looks correct in Cycles but wrong in EEVEE (or vice versa).'
+  context_prefix: From Common Blender Mistakes, section EEVEE and Cycles Look Completely Different.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--viewport-issues
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [190, 191]
   tokenizer_tokens: 4
   chunk_summary: ''
+  context_prefix: From Common Blender Mistakes, section Viewport Issues.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--objects-disappear-at-distance-clipping-problems
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [192, 208]
   tokenizer_tokens: 244
   chunk_summary: '**Symptom:** Objects disappear when the camera gets too far away. Or: objects become invisible when zooming in very close.'
+  context_prefix: From Common Blender Mistakes, section Objects Disappear at Distance / Clipping Problems.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--viewport-empty-can-t-find-objects
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [209, 221]
   tokenizer_tokens: 161
   chunk_summary: '**Symptom:** The viewport appears empty, or you can see objects in the Outliner but not in the viewport.'
+  context_prefix: From Common Blender Mistakes, section Viewport Empty / Can't Find Objects.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--snapping-behaves-oddly
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [222, 234]
   tokenizer_tokens: 254
   chunk_summary: '**Symptom:** Snap to vertex seems to snap to the wrong vertex. Or snap doesn''t work at all.'
+  context_prefix: From Common Blender Mistakes, section Snapping Behaves Oddly.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--edit-mode-gotchas
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [235, 236]
   tokenizer_tokens: 5
   chunk_summary: ''
+  context_prefix: From Common Blender Mistakes, section Edit Mode Gotchas.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--accidentally-working-in-wrong-mesh
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [237, 246]
   tokenizer_tokens: 152
   chunk_summary: '**Symptom:** You''re editing vertices and the wrong object is being modified. Or: you select multiple objects and expect to edit all of them but only one resp...'
+  context_prefix: From Common Blender Mistakes, section Accidentally Working in Wrong Mesh.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--modifiers-not-applying-as-expected
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [247, 258]
   tokenizer_tokens: 165
   chunk_summary: '**Symptom:** Applied a modifier but the result looks different than the viewport preview showed.'
+  context_prefix: From Common Blender Mistakes, section Modifiers Not Applying As Expected.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--geometry-disappeared-after-delete
   chunk_order: 20
@@ -149,6 +169,7 @@ chunks:
   line_range: [259, 273]
   tokenizer_tokens: 172
   chunk_summary: '**Symptom:** You deleted some geometry in Edit Mode and unexpected faces/edges/vertices also disappeared.'
+  context_prefix: From Common Blender Mistakes, section Geometry Disappeared After Delete.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--phase-2-pitfalls-animation-sculpting-and-physics
   chunk_order: 21
@@ -156,6 +177,7 @@ chunks:
   line_range: [274, 275]
   tokenizer_tokens: 14
   chunk_summary: ''
+  context_prefix: From Common Blender Mistakes, section Phase 2 Pitfalls — Animation, Sculpting, and Physics.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--animation-accidental-action-proliferation
   chunk_order: 22
@@ -163,6 +185,7 @@ chunks:
   line_range: [276, 287]
   tokenizer_tokens: 232
   chunk_summary: '**Symptom:** The Action dropdown shows dozens of `Action.001`, `Action.002`, etc. Animations seem to vanish when switching objects.'
+  context_prefix: 'From Common Blender Mistakes, section Animation: Accidental Action Proliferation.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--animation-ik-pole-target-flipping
   chunk_order: 23
@@ -170,6 +193,7 @@ chunks:
   line_range: [288, 302]
   tokenizer_tokens: 263
   chunk_summary: '**Symptom:** The knee or elbow flips to the wrong side when the limb reaches certain poses. The flip is sudden and unpredictable.'
+  context_prefix: 'From Common Blender Mistakes, section Animation: IK Pole Target Flipping.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--animation-nla-strip-conflicts
   chunk_order: 24
@@ -177,6 +201,7 @@ chunks:
   line_range: [303, 316]
   tokenizer_tokens: 194
   chunk_summary: '**Symptom:** An animation looks correct in the Action Editor but plays wrong when NLA strips are active. Bones move to wrong positions or blend weirdly.'
+  context_prefix: 'From Common Blender Mistakes, section Animation: NLA Strip Conflicts.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--sculpting-dyntopo-ruining-mesh-structure
   chunk_order: 25
@@ -184,6 +209,7 @@ chunks:
   line_range: [317, 328]
   tokenizer_tokens: 227
   chunk_summary: '**Symptom:** After Dyntopo sculpting, the mesh has chaotic topology that won''t retopologize cleanly. Or: Dyntopo is very slow on a dense base mesh.'
+  context_prefix: 'From Common Blender Mistakes, section Sculpting: Dyntopo Ruining Mesh Structure.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--sculpting-losing-multiresolution-detail-when-applying-modifiers
   chunk_order: 26
@@ -191,6 +217,7 @@ chunks:
   line_range: [329, 342]
   tokenizer_tokens: 245
   chunk_summary: '**Symptom:** Sculpting at high multi-resolution levels, applied a modifier (Solidify, Mirror, etc.), and all the high-level detail vanished.'
+  context_prefix: 'From Common Blender Mistakes, section Sculpting: Losing Multiresolution Detail When Applying Modifiers.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--physics-cache-location-problems-on-render-farms
   chunk_order: 27
@@ -198,6 +225,7 @@ chunks:
   line_range: [343, 355]
   tokenizer_tokens: 162
   chunk_summary: '**Symptom:** Physics simulation plays back correctly on one machine but renders wrong (or not at all) on another.'
+  context_prefix: 'From Common Blender Mistakes, section Physics: Cache Location Problems on Render Farms.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--physics-cloth-passes-through-collider
   chunk_order: 28
@@ -205,6 +233,7 @@ chunks:
   line_range: [356, 370]
   tokenizer_tokens: 213
   chunk_summary: '**Symptom:** Cloth simulation clips through the character body or other collision objects.'
+  context_prefix: 'From Common Blender Mistakes, section Physics: Cloth Passes Through Collider.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--file-and-data-management
   chunk_order: 29
@@ -212,6 +241,7 @@ chunks:
   line_range: [371, 372]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: From Common Blender Mistakes, section File and Data Management.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--lost-work-object-disappeared
   chunk_order: 30
@@ -219,6 +249,7 @@ chunks:
   line_range: [373, 386]
   tokenizer_tokens: 190
   chunk_summary: '**Symptom:** Object was there, now it''s gone. Can''t undo back to it.'
+  context_prefix: From Common Blender Mistakes, section Lost Work — Object "Disappeared".
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--missing-data-after-opening-file
   chunk_order: 31
@@ -226,6 +257,7 @@ chunks:
   line_range: [387, 398]
   tokenizer_tokens: 141
   chunk_summary: '**Symptom:** Opened a .blend file and materials, textures, or objects are missing or broken.'
+  context_prefix: From Common Blender Mistakes, section Missing Data After Opening File.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--game-engine-export-gotchas
   chunk_order: 32
@@ -233,6 +265,7 @@ chunks:
   line_range: [399, 400]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: From Common Blender Mistakes, section Game Engine Export Gotchas.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--fbx-export-negative-scale-inverts-normals
   chunk_order: 33
@@ -240,6 +273,7 @@ chunks:
   line_range: [401, 410]
   tokenizer_tokens: 129
   chunk_summary: '**Symptom:** Model looks inside-out in Unity/Unreal. Some faces are black or invisible.'
+  context_prefix: 'From Common Blender Mistakes, section FBX Export: Negative Scale Inverts Normals.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--fbx-export-axis-conversion-and-unity-s-90-rotation
   chunk_order: 34
@@ -247,6 +281,7 @@ chunks:
   line_range: [411, 424]
   tokenizer_tokens: 165
   chunk_summary: '**Symptom:** Imported model in Unity has a root transform of (-90, 0, 0). Rotating the object in-game requires compensating for this offset.'
+  context_prefix: 'From Common Blender Mistakes, section FBX Export: Axis Conversion and Unity''s -90° Rotation.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--shade-smooth-breaks-fbx-normals
   chunk_order: 35
@@ -254,6 +289,7 @@ chunks:
   line_range: [425, 434]
   tokenizer_tokens: 175
   chunk_summary: '**Symptom:** Smooth-shaded model has broken normals or visual artifacts after import in Unity/Unreal.'
+  context_prefix: From Common Blender Mistakes, section Shade Smooth Breaks FBX Normals.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--geometry-nodes-instances-don-t-export
   chunk_order: 36
@@ -261,6 +297,7 @@ chunks:
   line_range: [435, 448]
   tokenizer_tokens: 214
   chunk_summary: '**Symptom:** FBX or glTF export produces an empty or incomplete file for objects with Geometry Nodes modifiers.'
+  context_prefix: From Common Blender Mistakes, section Geometry Nodes Instances Don't Export.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--normal-map-baking-split-normals-trap
   chunk_order: 37
@@ -268,6 +305,7 @@ chunks:
   line_range: [449, 460]
   tokenizer_tokens: 284
   chunk_summary: '**Symptom:** Baked normal map has visible seam artifacts or doubled sharpness at sharp edges.'
+  context_prefix: 'From Common Blender Mistakes, section Normal Map Baking: Split Normals Trap.'
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--texture-baking-cage-vs-ray-distance
   chunk_order: 38
@@ -275,4 +313,5 @@ chunks:
   line_range: [461, 471]
   tokenizer_tokens: 225
   chunk_summary: '**Symptom:** Normal map bake has artifacts — some areas capture the wrong surface, or rays miss the high-poly entirely.'
+  context_prefix: 'From Common Blender Mistakes, section Texture Baking: Cage vs Ray Distance.'
   embedding_version: gemini-embedding-001

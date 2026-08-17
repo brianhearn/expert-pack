@@ -98,7 +98,7 @@ Categories are pack-type flexible. Use what applies:
 | `decision` | Product, Process | "Why did we/they choose X?" — decision record retrieval |
 | `comparison` | All | "What's the difference between X and Y?" — multi-source synthesis |
 | `edge-case` | All | Unusual, ambiguous, or boundary questions |
-| `out-of-scope` | All | Questions the pack should NOT answer (tests refusal) |
+| `out-of-scope` / `refusal` | All | Questions the pack should NOT answer. Same category for `refusal_accuracy`. |
 
 ### Difficulty Levels
 
@@ -120,10 +120,17 @@ Categories are pack-type flexible. Use what applies:
 - Adversarial questions (attempts to induce hallucination)
 
 **Guidelines:**
-- Include at least 5 `out-of-scope` questions — knowing what NOT to answer is as important as knowing what to answer
+- Include at least 5 `out-of-scope` / `refusal` questions in a statistically meaningful suite — knowing what NOT to answer is as important as knowing what to answer. A stub that exists must include at least **3** (validator `W-EVAL-01`).
+- Refusal questions must sit outside `manifest.authority_boundary.in_scope` (or match `out_of_scope` / `refuse_when`). Refusal is a pack contract, not prompt flavor.
 - `anti_hallucination` entries are critical — they define specific wrong answers that indicate the model is fabricating
 - `expected_sources` enables retrieval quality measurement independent of generation quality
 - Update the eval set as the pack grows; a stale eval set gives false confidence
+
+### Authority-boundary refusal contract
+
+`authority_boundary` on the manifest (`in_scope`, `out_of_scope`, `refuse_when`, `no_source_no_claim`) is what the agent must obey. Provenance says where a claim came from; the boundary says whether the pack may assert it.
+
+Eval questions in `refusal` / `out-of-scope` should be drawn from `out_of_scope` and from topics with no supporting atom (`refuse_when`). If `no_source_no_claim` is true, a question whose answer is not in any retrieved atom must be declined, not guessed.
 
 ---
 
@@ -212,6 +219,14 @@ The standard EK measurement protocol extracts atomic factual statements (proposi
 
 **Composite packs:** Measure each sub-pack independently and report per-sub-pack EK ratios alongside the composite ratio.
 
+**Composite conflict cases:** In addition to per-sub-pack EK, a composite eval set should include at least one case for each rule in [composite.md](composite.md) § Cross-Pack Conflict Resolution. The executable contract is [`tools/composite/conflict.py`](../tools/composite/conflict.py).
+
+| Case | Expected |
+|------|----------|
+| Person pack says a feature was deprecated; product pack still documents it | `flag` or `fail_closed` — never a silent merge |
+| Two knowledge packs disagree on a shared term | `fail_closed` refuses |
+| Voice / family-tier fact in a public composite | Isolation drops the private claim; do not emit it |
+
 ### Pack Health Metrics (Structural)
 
 | Metric | What It Measures | How to Score |
@@ -234,7 +249,7 @@ Three independent variables affect pack-powered response quality. When running e
 
 | Dimension | What It Is | Examples |
 |-----------|-----------|---------|
-| **Structure** | The pack's schema, file organization, chunking, cross-references, context tiers, and content quality | Splitting oversized files, adding summary layers, improving cross-references, adding missing content |
+| **Structure** | The pack's schema, file organization, chunking, cross-references, context tiers, and content quality | Splitting oversized files into independently retrievable atoms, improving cross-references, adding missing content |
 | **Model** | The backend LLM processing queries against the pack | Gemini Flash, Claude Sonnet, GPT-5 Mini — same pack, different reasoning capabilities |
 | **Agent Training** | System prompts, agent instructions, and guidance docs that tell the agent *how* to use the pack | Feature frequency guidance, disambiguation rules, response patterns, persona instructions |
 
@@ -254,7 +269,7 @@ Every eval run must declare what changed relative to the baseline:
 dimensions:
   structure:
     version: "2.0.0"           # Pack version from manifest
-    changes: "Split 7 oversized files, added summary layers"
+    changes: "Split 7 oversized files into independently retrievable atoms"
   model:
     name: "gemini-2.0-flash"
     provider: "openrouter"
@@ -387,6 +402,6 @@ eval:
 
 ---
 
-*Schema version: 1.3*
+*Schema version: 1.4*
 *Created: 2026-03-05*
-*Last updated: 2026-03-12*
+*Last updated: 2026-08-17*

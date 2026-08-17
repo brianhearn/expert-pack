@@ -146,7 +146,7 @@ def classify_learning(entry: dict) -> str:
         "knowledge_gap": "facts",
         "convention": "mind",
         "workflow": "mind",
-        "pattern": "summaries",
+        "pattern": "lessons",
         "simplify": "mind",
         "harden": "mind",
         "security": "mind",
@@ -188,10 +188,10 @@ def classify_error(entry: dict) -> str:
     if status == "resolved":
         return "operational"
 
-    # Recurring errors → summaries (pattern analysis)
+    # Recurring errors → lessons (pattern analysis)
     sections = entry.get("sections", {})
     if "see also" in entry.get("raw_body", "").lower():
-        return "summaries"
+        return "lessons"
 
     return "operational"
 
@@ -202,7 +202,7 @@ def classify_feature(entry: dict) -> str:
     complexity = meta.get("complexity_estimate", "").lower()
 
     if complexity == "complex":
-        return "summaries"  # architectural discussion
+        return "lessons"  # architectural discussion
 
     return "facts"  # desired capabilities
 
@@ -328,7 +328,7 @@ def generate_manifest(output_dir: Path, name: str, pack_type: str, subtype: str,
 
     always_files = ["overview.md"]
     searchable_dirs = []
-    for d in ["mind", "facts", "summaries", "operational", "relationships"]:
+    for d in ["mind", "facts", "lessons", "operational", "relationships"]:
         if (output_dir / d).exists():
             searchable_dirs.append(f"{d}/")
 
@@ -390,7 +390,7 @@ def generate_overview(output_dir: Path, name: str, stats: dict,
             content += f"- `{pk}` — seen {count}x\n"
 
     if stats.get("see_also_links"):
-        content += f"\n## Cross-References\n\n{stats['see_also_links']} See Also links detected and mapped to relations.yaml.\n"
+        content += f"\n## Cross-References\n\n{stats['see_also_links']} See Also links detected. Run ep-graph-export for `_graph.yaml`.\n"
 
     content += "\n## Notes\n\n"
     content += "- Entries with status `promoted` were already elevated to workspace files (CLAUDE.md, AGENTS.md, etc.).\n"
@@ -411,7 +411,7 @@ def generate_overview(output_dir: Path, name: str, stats: dict,
 # --- Relation Graph ---
 
 def build_relations(all_entries: list[dict]) -> dict:
-    """Build relations.yaml from See Also links and shared tags."""
+    """Collect entity/relation hints from See Also links and shared tags."""
     entities = []
     relations = []
     entity_ids = set()
@@ -690,19 +690,13 @@ def convert(workspace: Path, output: Path, name: str, pack_type: str,
     for ep_dir, idx_entries in index_entries.items():
         write_index(output, ep_dir, idx_entries)
 
-    # --- Build and write relations.yaml ---
+    # Graph projection is _graph.yaml via ep-graph-export — do not emit relations.yaml.
     relations_data = build_relations(all_entries)
     stats["see_also_links"] = relations_data["see_also_count"]
-
     if relations_data["entities"]:
-        rel_output = {
-            "entities": relations_data["entities"],
-            "relations": relations_data["relations"],
-        }
-        with open(output / "relations.yaml", "w") as f:
-            yaml.dump(rel_output, f, default_flow_style=False, sort_keys=False, width=120)
-        print(f"  📄 relations.yaml ({len(relations_data['entities'])} entities, "
-              f"{len(relations_data['relations'])} relations)")
+        print(f"  ℹ {len(relations_data['entities'])} entities / "
+              f"{len(relations_data['relations'])} relations detected — "
+              f"run ep-graph-export for _graph.yaml (relations.yaml is retired)")
 
     # --- Build glossary from tags and categories ---
     all_tags = set()

@@ -120,29 +120,22 @@ See [core.md § Atomic-Conceptual Content Files](core.md#atomic-conceptual-conte
 
 | Content type | Default granularity | When to split |
 |---|---|---|
-| **Story** | One atom per story | If a story exceeds 1,000 tokens, split into `story-overview.md` (summary + key moments) + `story-detail.md` (full narrative), linked via `requires:` |
+| **Story** | One atom per story (`atomic`) | Split only if each part is an independently retrievable episode. If it is one episode and oversized, keep one file and add a RFC-004 sidecar. |
 | **Reflection/Opinion** | One atom per reflection/opinion | Split if it bundles multiple distinct arguments (each becomes its own atom) |
 | **Fact cluster** | One atom per life-facet (`personal.md`, `career.md`, etc.) | Split when a facet grows beyond 1,000 tokens (e.g., `career-early.md` + `career-recent.md`) |
 | **Relationship** | One atom per significant person | Minor relationships can group into `relationships/acquaintances.md` until they warrant their own atom |
 | **Mind category** | One atom per category (`ontology.md`, `values.md`, etc.) | Split when a category grows past 1,000 tokens (e.g., `values-political.md` + `values-personal.md`) |
 
-### Oversized stories — split pattern
+### Oversized stories — sidecar, do not summarize
 
-When a story is too long to fit in 1,000 tokens:
+When a story is too long to embed as one chunk, **do not** create an overview file that exists only to summarize the verbatim atom (axiom 12). See [RFC-002](rfcs/RFC-002-person-pack-atomic-conceptual.md).
 
 ```
-stories/panama-city-summers.md              (overview atom, ~600 tokens)
-  ├─ story card frontmatter
-  ├─ narrative summary + key beats
-  └─ requires: [panama-city-summers-full]
-
-stories/panama-city-summers-full.md         (detail atom, ~900 tokens)
-  ├─ provenance frontmatter
-  ├─ full verbatim prose
-  └─ (no outbound requires — leaf atom)
+stories/panama-city-summers.md              (one episode, atomic)
+stories/panama-city-summers.chunks.yaml     (RFC-004; only if oversized)
 ```
 
-Retrieving the overview auto-expands to include the full detail (directional `requires:`). Retrieving the detail alone does NOT pull the overview — asymmetric, as intended.
+Split into a second file only when the second file answers a different question (a later episode, a different stake). Link those with `related:` unless one is unintelligible without the other (`requires:`).
 
 ---
 

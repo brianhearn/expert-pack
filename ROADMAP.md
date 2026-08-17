@@ -31,8 +31,8 @@ Define how any pack measures quality. Without this, everything else is guessing.
 Reduce latency and token consumption for pack-powered interactions.
 - [ ] **Split oversized files** — enforce 1-3KB guideline across all packs
 - [ ] **Query routing** — classify questions and scope retrieval to relevant directories
-- [ ] **Summary layers** — lightweight summary files for dense reference content
-- [ ] **Context tier enforcement** — runtime should respect always/searchable/on-demand tiers
+- [x] **Summary layers** — *rejected (axiom 12).* Standalone summary files harm retrieval; the opening paragraph of the atom is the summary. Do not revive.
+- [ ] **Context tier enforcement** — runtime should respect always/searchable/on-demand tiers. *Validator W-TIER-01..03 shipped 2026-08-16; EP MCP index filter still lives in ep-mcp.*
 - [ ] **Semantic caching** — cache frequent query patterns to avoid redundant RAG + LLM
 - [ ] **Conversation-aware retrieval** — don't re-retrieve files already in context
 
@@ -40,7 +40,9 @@ Reduce latency and token consumption for pack-powered interactions.
 Reduce hallucinations and improve answer completeness.
 - [x] **Grounding citations** — Citation Response Contract (schema v3.0); provenance `id` + `verified_at` fields enable auditable citations
 - [ ] **Confidence tagging** — content-level confidence (expert-verified, crawled, inferred)
-- [ ] **Contradiction detection** — surface conflicting chunks at runtime instead of guessing
+- [x] **Authority boundary + refusal evals** — `authority_boundary` on the manifest; template ships 3 refusal questions; `W-AUTH-01/02`, `W-EVAL-01` (WARN, not `--strict`). Eval schema 1.4.
+- [x] **Composite conflict rules** — schema 1.2 + `tools/composite/conflict.py` (fail_closed, privacy/role isolation, authority, confidence/`verified_at` tie-break). Pack + consumer contract; does not require EP MCP.
+- [ ] **Contradiction detection** — surface conflicting *chunks* at retrieval time instead of guessing (EP MCP / host). Composite-level fail-closed shipped above.
 - [x] **Hallucination measurement** — automated detection via LLM-as-judge against pack content
 - [x] **Claim-to-span verification** *(shipped 2026-04-15)* — `tools/eval-runner/claim_verifier.py`: post-processor that extracts claims from any completed eval result, verifies each against pack spans, and appends `claim_coverage` + `citation_f1` to both per-question details and aggregate scores. Run after `run_eval.py` to get grounding metrics on any result file.
 - [x] **Schema registry** *(shipped 2026-04-15)* — `schemas/registry/`: descriptive registry specs for compact AKS export and accepted ontology (`agent-knowledge.spec.yaml`, `ontology.spec.yaml`) plus usage guide. Markdown remains canonical; `.spec.yaml` files are ExpertPack-native specs rather than JSON Schema/OpenAPI.
@@ -57,11 +59,13 @@ Keep the framework current as LLMs advance.
 - [x] **Atomic-conceptual chunks** *(shipped Core 4.0, 2026-04-18; refined Core 4.1, 2026-04-19)* — RFC-001: concept files are self-contained retrieval units carrying definition, body, FAQs, related terms in one file. Deprecated `summaries/`, `propositions/`, per-domain `glossary-{domain}.md`, standalone `faq/` directory, and lead-summary blockquote pattern for product/process packs.
   - **v4.1 refinement (2026-04-19):** Retired the composite parent-child pattern (`concept_scope: composite` + `parent_concept:`) in favor of strict single-file atoms linked by directional `requires:` dependencies. Tightened size ceiling from 1,500 to 1,000 tokens. Deprecated `## Key Propositions` section (body prose already carries them). Validator checks added: W-V41-01..05. EP MCP retrieval expansion (depth 2, count 3, token-budget capped) to be implemented as the next milestone. Person-pack consequences deferred to RFC-002.
 - [x] **EP MCP `requires:` expansion** — implemented in EP MCP 0.4. Top-K atoms expand their directional `requires:` chain after slicing (depth 2, count 3, token-budget capped), so v4.1 atomic semantics land end-to-end.
-- [ ] **RFC-002: person-pack atomic-conceptual adaptation** — verbatim↔summary mirroring in person packs interacts non-trivially with the RFC-001 model. Needs dedicated RFC after product-pack migration proves out.
+- [x] **RFC-002: person-pack atomic-conceptual adaptation** *(accepted 2026-08-16)* — one narrative = one `atomic` file; oversized → RFC-004 sidecar; no overview/detail summary pair. Person-pack eval fixture still pending.
 - [ ] **Context-tier compaction** — ruthlessly compress Tier 1 to identity+voice+navigation only (<5KB); push everything else to Tier 2/3. Audit current packs for tier discipline.
 - [ ] **Structured fact tables** — replace narrative repetition with key/value facts, decision tables, canonicalized terms/glossaries for deduplication and retrieval precision
 - [ ] **Entity cross-reference indexes** — use entities.json as canonical registry with aliases for term normalization (evaluate whether current RAG actually benefits)
 - [ ] **File size flexibility** — revisit 1-3KB for large-context models; maybe a "dense mode"
+- [x] **Sidecar context prefixes** *(2026-08-16)* — `context_prefix` on RFC-004 rows (deterministic title + section). Indexers prepend before embed/BM25. EP MCP consume still in ep-mcp.
+- [x] **Knowledge Activation frontmatter** *(2026-08-16)* — optional `activation.tools|constraints|next` on workflow/decision/gotcha/phase atoms. Not for concept files.
 - [x] **Chunking strategy review** — We built and validated a schema-aware chunker that respected structural elements like headers, lead summaries, proposition groups, and glossary tables. This produced +9.4% correctness and -52% tokens on EZT Designer eval (2026-03-13). The core insight led directly to Schema 2.5: files authored as self-contained 400–800 token retrieval units require no preprocessing — the schema itself became the chunking strategy.
 - [x] **Volatile data isolation** — Schema 2.7 (2026-04-01): `volatile/` subdirectory with TTL frontmatter fields (`refresh`, `source`, `fetched_at`, `expires_at`); excluded from EK ratio measurement.
 - [x] **Obsidian compatibility** — Schema 2.8 (2026-04-06): per-file YAML frontmatter standard, 25-type taxonomy, `.obsidian/` vault config, Dataview + Templater templates. Every pack is a valid Obsidian vault.
@@ -74,19 +78,30 @@ Keep the framework current as LLMs advance.
 - [x] **Hybrid KG + vector micro-records export** *(shipped 2026-04-15; AKS compact provenance-first mode 2026-05-05)* — `tools/micro-record-exporter/ep-micro-record-export.py`: generates JSONL of micro-records from any pack. Reads frontmatter + `_graph.yaml`; prefers lead summary blockquote for `canonical_statement`, falls back to first prose paragraph, optionally uses LLM via `--generate-statements`. `--compact` emits a formal Agent Knowledge Schema (AKS v1) row with first-class provenance fields for token-efficient pipelines. Pilot run: EZT Designer 295 records, 153 edges, 226KB. Optional next step: load JSONL into SQLite/FalkorDB triple store for deterministic ID lookups alongside vector search.
 - [x] **EP MCP: graph traversal queries** *(verified 2026-04-15)* — `ep_graph_traverse_tool` already fully implemented and deployed. BFS up to depth 3, all edge kinds (wikilink, related, context), returns connected nodes with title/type/depth/edge_kind. Smoke tested: `wf-capacity-planning-overview` depth-2 traversal surfaces 7 connected nodes (scheduling algorithms, workload partitioning concepts, 2 related workflows) via 8 edge traversals. No code work needed — this item was already done.
 - [x] **Ontology suggestion assist** *(initial shipped 2026-05-05)* — `tools/ontology-suggest/ep-ontology-suggest.py` proposes review-first category/entity suggestions from AKS records and existing graph edges. Maintainers accept/reject suggestions; accepted entries live in `ontology.yaml`; no automatic ontology mutation.
-- [ ] **Agentic RAG patterns** — multi-step retrieval, query refinement *(two-pass retrieve→focus flow from intelligence sweep #3, 2026-04-15)*
+- [x] **Agentic RAG consume contract** *(2026-08-16)* — search → read whole atom → `requires:` expand → stop (budget 3 / cap 7). Documented in `guides/consumption.md`. EP MCP tool wiring remains in ep-mcp.
+- [ ] **Agentic RAG runtime** — implement the consume contract as EP MCP / host tools (query rewrite, adaptive skip)
 - [ ] **Minimum capability declarations** — manifest field for required model capabilities
-- [ ] **Regular schema review cadence** — triggered by major model releases
+- [x] **Regular schema review cadence** — implemented as Intelligence Refinement `refine` (monthly or after a major frontier model release). See [guides/intelligence-refinement.md](guides/intelligence-refinement.md).
 
 ### 6. Continuous Intelligence
 Stay current with developments that could improve the framework.
-- [x] **X daily scan** — Already running (captures design learnings)
-- [x] **Weekly web intelligence sweep** — Wednesdays 14:00 UTC, GPT-5 Mini, logs to logs/expertpack-intelligence.md
-- [ ] **Schema review triggers** — flag when new model capabilities make assumptions revisitable
+- [x] **X daily scan** — Retired 2026-08-16 (campaign ended). Learnings now land via Intelligence Refinement, not a standing X scan.
+- [x] **Intelligence Refinement cycle** — operator-triggered via [`skills/expertpack-intelligence/`](skills/expertpack-intelligence/SKILL.md); human playbook in [`guides/intelligence-refinement.md`](guides/intelligence-refinement.md). Modes: `sweep` (30-min research) and `refine` (research + schema review + context-schema standing work + SDLC sync + human gate). Run logs: [`logs/intelligence/`](logs/intelligence/). Replaces the old Wednesday GPT-5 Mini cron (`logs/expertpack-intelligence.md`) as the source of truth.
+- [x] **Schema review triggers** — every `refine` cycle, and after major frontier model releases (same skill).
 
 ---
 
 ## Status Log
+
+### 2026-08-17 — Authority boundary + composite conflict contract
+- Pack-level `authority_boundary` on the core manifest; `expertpack init` writes type-specific defaults; template eval stub has three refusal questions; validator `W-AUTH-01/02` and `W-EVAL-01` (WARN, not `--strict`).
+- Composite schema 1.2: isolation → authority → `fail_closed` / `flag` / `priority` + tie-break. Executable tests in `tools/composite/test_conflict.py` (wired in docs CI).
+- Eval schema 1.4 documents the refusal contract and the three composite conflict cases.
+
+### 2026-08-16 — Intelligence Refinement cycle 1
+- Shipped the repeatable cycle: [`guides/intelligence-refinement.md`](guides/intelligence-refinement.md), [`skills/expertpack-intelligence/`](skills/expertpack-intelligence/SKILL.md), run log [`logs/intelligence/2026-08-16.md`](logs/intelligence/2026-08-16.md).
+- Standing work: rebuilt context-loaded schema projections (progressive disclosure); added `tools/check-schema-projections.py` + CI/pre-commit; synced ROADMAP / eval / ARCHITECTURE / README / composite examples with axioms and schema 4.1.
+- Human gate applied all six top-3 items: sidecar `context_prefix` (R1), consume-loop contract (R2), `activation:` frontmatter (R3), RFC-002 (S1), W-TIER validator + template indexes (S2), converters drop `relations.yaml` (S3). EP MCP runtime pieces remain in ep-mcp.
 
 ### 2026-07-06 — Top-5 improvements: enforcement, provenance, chunking, typed answers, onboarding
 - **Strict validator (`ep-validate --strict`):** turns the frontmatter contract into a hard gate. Implies `--provenance` and promotes required-field, hash, size, and provenance rules from WARN to ERROR (`title`/`type`/`tags`/`pack`/`id`/`schema_version`/`retrieval_strategy`/`verified_at`/`content_hash`, W-PROV-02/05, W-V41-01, manifest `schema_version`). Added `--fail-on-warn` and `--ignore CODE` (demote a tracked backlog). Implemented the previously-documented W-PROV-05. Fixed cross-platform UTF-8 file/stdout handling so the tools run on Windows.
@@ -104,7 +119,7 @@ Stay current with developments that could improve the framework.
 - **Granularity guide:** `schemas/references/granularity-guide.md` — 8 worked examples from ezt-designer validation refactor, 5-test decision procedure, boundary tables for the three hardest authoring decisions (concept-vs-workflow, concept-vs-term, concept-vs-FAQ).
 - **Migration tool:** `tools/migrate/ep-migrate-3-to-4.py` (plan mode). Tested against ezt-designer: 60 rename candidates, 33 glossary term decisions, 42 FAQ Q/A relocations, 2 oversized files flagged.
 - **First production migration:** `ezt-designer/concepts/territory.md` live on `ExpertPacks/main`. Supersedes 5 legacy files (territories-overview, territories-geometry, territory-overlaps FAQ, stuck-zip-codes FAQ, glossary-territory-markup). Pack 296 → 292 files. Eval pipeline will measure retrieval impact on next scheduled run.
-- **Deferred:** person-pack adaptation (RFC-002), example-pack migrations under `packs/` (blender-3d, home-assistant, solar-diy remain v3.x demos), `--scaffold`/`--apply` modes in the migration tool.
+- **Deferred at the time:** person-pack adaptation (RFC-002); `--scaffold`/`--apply` modes in the migration tool. Demo packs under `packs/` (blender-3d, home-assistant, solar-diy) later migrated to `schema_version: "4.1"` (oversized-concept backlog still tracked as `W-V41-01`).
 
 ### 2026-03-05 — Project Kickoff + Baseline Captured
 - Defined the six improvement vectors

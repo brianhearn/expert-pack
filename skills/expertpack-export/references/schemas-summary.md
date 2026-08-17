@@ -1,126 +1,84 @@
 # ExpertPack Schema Summary for Export
 
-Condensed reference for the export scripts. Full schemas at `schemas/` in the ExpertPack repo.
+Projection of repo `schemas/` (family 4.1). Canonical text wins if this file disagrees. Filing rules match `skills/expertpack/references/schemas.md`.
 
-## Pack Types
+## Pack types
 
 | Type | Subtype | Purpose |
 |------|---------|---------|
 | person | (none) | Human knowledge — stories, mind, relationships, presentation |
-| person | agent | AI agent identity — operational config, prescriptive mind, tools, safety |
-| product | — | Product knowledge — concepts, workflows, interfaces, troubleshooting |
-| process | — | Process knowledge — phases, decisions, checklists, gotchas |
-| composite | — | Orchestration layer — wires packs together with roles and conflict rules |
+| person | agent | AI agent — operational config, prescriptive mind, tools, safety |
+| product | — | Concepts, workflows, interfaces, troubleshooting |
+| process | — | Phases, decisions, checklists, gotchas |
+| composite | — | Wires packs with roles and conflict rules |
 
-## Agent Pack Structure (person, subtype: agent)
+## Agent pack (person, subtype: agent)
 
 ```
 packs/{agent-slug}/
-├── manifest.yaml          # type: person, subtype: agent
-├── overview.md            # Identity, personality, vibe
-├── MIGRATION.md           # How to hydrate a new instance
-├── operational/
-│   ├── tools.md           # Tool inventory (shape, not secrets)
-│   ├── infrastructure.md  # Hosts, services, topology
-│   ├── integrations.md    # Messaging channels, APIs, accounts
-│   ├── routines.md        # Heartbeats, backups, cron schedules
-│   └── safety.md          # Behavioral contracts, guardrails
-├── mind/
-│   ├── values.md          # Prescriptive operational principles
-│   ├── skills.md          # Capabilities list
-│   ├── relational.md      # Interaction rules
-│   ├── preferences.md     # Learned formatting/behavior preferences
-│   ├── reasoning.md       # Decision patterns
-│   └── tensions.md        # Known limitations, failure modes
-├── relationships/
-│   └── people.md          # Primary user, contacts, peer agents
-├── facts/
-│   ├── personal.md        # Agent identity facts
-│   └── timeline.md        # Significant events
-├── presentation/
-│   ├── speech-patterns.md # Communication style
-│   └── modes.md           # Context-dependent voices
-├── summaries/
-│   └── lessons.md         # Patterns learned, failure post-mortems
-├── meta/
-│   └── privacy.md         # Export access tier rules
-└── verbatim/              # Optional: significant decisions/conversations
-```
-
-## Person Pack Structure (standard)
-
-```
-packs/{person-slug}/
-├── manifest.yaml          # type: person
+├── manifest.yaml          # type: person, subtype: agent, schema_version: "1.7"
 ├── overview.md
-├── facts/                 # personal.md, career.md, education.md, timeline.md
+├── MIGRATION.md
+├── operational/           # tools, infrastructure, integrations, routines, safety
+├── mind/                  # prescriptive: values, skills, relational, preferences, reasoning, tensions
 ├── relationships/people.md
-├── mind/                  # 9 core files + optional reasoning, influences
-├── preferences/           # (captured in mind/preferences.md)
-├── presentation/          # speech-patterns.md, modes.md
-└── meta/privacy.md
+├── facts/                 # personal, timeline, career
+├── presentation/          # speech-patterns, modes
+├── decisions/             # optional atoms
+├── lessons/               # distilled experience atoms
+├── meta/privacy.md
+└── training/              # optional, on_demand
 ```
 
-## Product Pack Structure (Schema v4.1)
+## Person pack
 
 ```
-packs/{product-slug}/
-├── manifest.yaml          # type: product, schema_version: "4.1"
-├── overview.md
-├── concepts/              # Atomic-conceptual files: each carries its definition,
-│                          # body, FAQs, related terms, and dependencies in one file
-├── workflows/             # Step-by-step procedures (atomic retrieval)
-├── interfaces/            # UI/API documentation
-├── commercial/            # Pricing, deployment, security
-├── troubleshooting/       # Errors, diagnostics, common mistakes
-├── faq/                   # Cross-cutting questions only; per-concept FAQs live in concepts/
-└── glossary.md            # (Optional) lean cross-cutting terms only
+facts/   relationships/   mind/   stories/   reflections/   opinions/
+conversations/   presentation/   meta/privacy.md
 ```
 
-*Schema v4.1 (RFC-001) deprecated the `summaries/`, `propositions/`, and `sources/` directories and per-domain `glossary-{domain}.md` files for product packs — concept files are now self-contained retrieval units.*
-
-## Process Pack Structure
+## Product pack (v4.1)
 
 ```
-packs/{process-slug}/
-├── manifest.yaml          # type: process
-├── overview.md
-├── phases/                # Sequential steps
-├── decisions/             # Decision points, criteria
-├── checklists/            # Verification steps
-└── gotchas/               # Common mistakes, edge cases
+concepts/   workflows/   interfaces/   troubleshooting/
+commercial/   faq/   # faq/ is optional and cross-cutting only
 ```
 
-## Composite Manifest
+Concept files are self-contained retrieval units (opening paragraph, body, optional FAQs and related terms, `requires:`).
+
+## Process pack (v4.1)
+
+```
+fundamentals/   phases/   decisions/   checklists/   gotchas/   exceptions/
+```
+
+## Composite manifest
 
 ```yaml
-name: "Composite Name"
-slug: "composite-slug"
-type: "composite"
-version: "1.0.0"
-schema_version: "1.0"
+type: composite
+schema_version: "1.2"
 entry_point: "overview.md"
-
 packs:
   - path: "../packs/agent-slug"
-    role: voice              # At most one voice pack
-  - path: "../packs/person-slug"
-    role: knowledge          # Multiple knowledge packs OK
-  - path: "../packs/product-slug"
+    role: voice
+  - path: "../packs/knowledge-slug"
     role: knowledge
-
 conflicts:
-  priority: [agent-slug, person-slug, product-slug]
-  strategy: "flag"
+  priority: [agent-slug, knowledge-slug]
+  strategy: "flag"           # fail_closed | flag | priority
+  isolation:
+    voice_must_not_assert_knowledge: true
+    knowledge_must_not_override_voice: true
+    respect_access_tiers: true
 ```
 
-## Key Rules
+## Key rules
 
-1. **Markdown canonical** — all knowledge in .md files
-2. **Atomic file sizing** — concept atoms target 400–800 tokens with a 1,000-token ceiling; one dominant topic per file
-3. **## headers** at natural breaks for RAG chunking
-4. **kebab-case** filenames and slugs
-5. **No secrets** — never include API keys, tokens, passwords
-6. **manifest.yaml required** for every pack
-7. **overview.md required** for every pack
-8. **Distill, don't copy** — compress raw state into structured knowledge
+1. Markdown canonical — all knowledge in `.md` files
+2. Concept atoms: 400–800 tokens, 1,000-token ceiling; one dominant topic per file
+3. `retrieval_strategy`: `standard` | `atomic` | `navigation`
+4. kebab-case filenames and slugs
+5. No secrets
+6. `manifest.yaml` and `overview.md` required
+7. Distill, don't copy raw workspace state
+8. Graph projection is `_graph.yaml` + `ontology.yaml`

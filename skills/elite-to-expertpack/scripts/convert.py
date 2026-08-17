@@ -201,11 +201,11 @@ def classify_git_note(entry: dict) -> str:
 
     type_map = {
         "decision": "mind",
-        "learning": "summaries",
+        "learning": "lessons",
         "context": "facts",
         "fact": "facts",
         "preference": "mind",
-        "observation": "summaries",
+        "observation": "lessons",
     }
 
     return type_map.get(note_type, "facts")
@@ -216,7 +216,7 @@ def classify_journal_section(name: str) -> str:
     name_lower = name.lower()
 
     if any(w in name_lower for w in ["lesson", "learned", "insight", "reflection"]):
-        return "summaries"
+        return "lessons"
     if any(w in name_lower for w in ["decision", "chose", "decided"]):
         return "mind"
     if any(w in name_lower for w in ["project", "work", "progress", "update"]):
@@ -224,7 +224,7 @@ def classify_journal_section(name: str) -> str:
     if any(w in name_lower for w in ["issue", "bug", "fix", "error", "troubleshoot"]):
         return "operational"
 
-    return "summaries"
+    return "lessons"
 
 
 # --- EP Generation ---
@@ -252,7 +252,7 @@ def generate_manifest(output_dir: Path, name: str, pack_type: str, subtype: str,
     always_files = ["overview.md"]
     searchable_dirs = []
 
-    for d in ["mind", "facts", "summaries", "operational", "relationships"]:
+    for d in ["mind", "facts", "lessons", "operational", "relationships"]:
         if (output_dir / d).exists():
             searchable_dirs.append(f"{d}/")
 
@@ -461,7 +461,7 @@ def convert(workspace: Path, output: Path, name: str, pack_type: str,
 
             filename = f"journal-{ep_dir}.md"
             write_content_file(
-                output, ep_dir if ep_dir != "summaries" else "summaries", filename,
+                output, ep_dir if ep_dir != "lessons" else "lessons", filename,
                 f"Journal {ep_dir.title()}",
                 f"Distilled from {len(journals)} daily journal entries.",
                 "\n\n".join(body_parts)
@@ -620,41 +620,10 @@ def convert(workspace: Path, output: Path, name: str, pack_type: str,
     for ep_dir, entries in index_entries.items():
         write_index(output, ep_dir, entries)
 
-    # --- Generate relations.yaml if we have cross-references ---
-    entities = []
-    relations = []
-
-    # Scan generated files for entity references
-    for ep_dir in ["mind", "facts", "summaries", "operational", "relationships"]:
-        dir_path = output / ep_dir
-        if not dir_path.exists():
-            continue
-        for f in dir_path.glob("*.md"):
-            if f.name == "_index.md":
-                continue
-            entity_id = f.stem
-            entity_type = {
-                "mind": "concept",
-                "facts": "concept",
-                "summaries": "concept",
-                "operational": "tool",
-                "relationships": "person",
-            }.get(ep_dir, "concept")
-
-            entities.append({
-                "id": entity_id,
-                "type": entity_type,
-                "label": f.stem.replace("-", " ").title(),
-                "file": f"{ep_dir}/{f.name}",
-            })
-
-    if len(entities) > 1:
-        relations_data = {"entities": entities, "relations": relations}
-        with open(output / "relations.yaml", "w") as f:
-            yaml.dump(relations_data, f, default_flow_style=False, sort_keys=False, width=120)
+    # Graph projection is _graph.yaml via ep-graph-export — do not emit relations.yaml.
 
     # --- Collect all warnings ---
-    for ep_dir in ["mind", "facts", "summaries", "operational", "relationships"]:
+    for ep_dir in ["mind", "facts", "lessons", "operational", "relationships"]:
         dir_path = output / ep_dir
         if not dir_path.exists():
             continue

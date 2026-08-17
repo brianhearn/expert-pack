@@ -88,10 +88,28 @@ def first_summary_line(lines):
     return ''
 
 
-def compute_chunks(content, stem):
+def context_prefix(title, section):
+    """Deterministic index-side situating string (Anthropic contextual retrieval).
+
+    Built from already-known title + heading — no LLM — so prefixes cannot
+    invent parent context. Indexers prepend this before embed/BM25; it must
+    not be written into the Markdown body.
+    """
+    title = (title or '').strip() or 'Untitled'
+    if section:
+        text = f"From {title}, section {section}."
+    else:
+        text = f"From {title}, opening."
+    if len(text) > 400:
+        return text[:397] + '...'
+    return text
+
+
+def compute_chunks(content, stem, title=None):
     """Split the body at ##/### headings (ignoring fenced code). Returns a list
     of chunk dicts. Chunk 0 is the opening (H1 + lead paragraph)."""
     fm, body_start = parse_fm(content)
+    title = title if title is not None else fm.get('title')
     lines = content.split('\n')
 
     # Collect heading boundaries in the body region, skipping code fences.
@@ -140,6 +158,7 @@ def compute_chunks(content, stem):
             'line_range': FlowList([start, end]),
             'tokenizer_tokens': estimate_tokens(text),
             'chunk_summary': first_summary_line(seg_lines),
+            'context_prefix': context_prefix(title, section),
         }
         chunks.append(chunk)
     return chunks

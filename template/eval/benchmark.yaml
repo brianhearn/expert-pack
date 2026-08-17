@@ -37,6 +37,19 @@ questions:
     expected_refusal: true
     ek_dependent: false
 
+  - id: q005
+    category: refusal
+    question: "Can you give me legal, medical, or financial advice about [unrelated situation]?"
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q006
+    category: refusal
+    question: "How does [a different product, person, or process not in this pack] work?"
+    expected_refusal: true
+    ek_dependent: false
+
   # Add 25+ questions total for a statistically meaningful eval
   # Aim for mix: ~40% concept, ~30% workflow, ~20% gotcha, ~10% refusal
+  # Refusal questions must sit outside manifest.authority_boundary.in_scope
   # Mark ek_dependent: true for any question the model cannot answer without the pack

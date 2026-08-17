@@ -9,6 +9,14 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 ## [Unreleased]
 
 ### Added
+- **Authority boundary + refusal evals** — optional `authority_boundary` on `manifest.yaml` (`in_scope`, `out_of_scope`, `refuse_when`, `no_source_no_claim`). Template ships the block plus three `refusal` questions; `expertpack init` substitutes type-specific defaults. Validator `W-AUTH-01` / `W-AUTH-02` / `W-EVAL-01` are WARN only (not `--strict`). Eval schema **1.4**.
+- **Composite conflict resolver (schema 1.2)** — `fail_closed` / isolation / authority / `tie_break` contract in `schemas/composite.md`; executable in `tools/composite/conflict.py` with fail-closed unit tests. Isolation and authority run before strategy.
+- **Intelligence Refinement cycle** — `guides/intelligence-refinement.md` + `skills/expertpack-intelligence/` (`sweep` / `refine`). Bounded research, schema-vs-objectives review, context-schema standing work, SDLC sync, human gate. Run logs in `logs/intelligence/`. Replaces the weekly GPT-5 Mini sweep as the framework intelligence source of truth.
+- **Schema projection guard** — `tools/check-schema-projections.py` fails CI/pre-commit if context-loaded skill schema copies teach retired patterns (`relations.yaml`, nested `retrieval.strategy`, `summaries/` / `propositions/`, `sectioned`). README schema-table `--check` now runs in the same docs CI job.
+- **RFC-002** — person-pack atomic-conceptual contract: one narrative = one `atomic` file; oversized → sidecar; no overview/detail summary pair.
+- **Sidecar `context_prefix`** — deterministic title+section string for index-side contextual retrieval (RFC-004 / `ep-chunk-annotate`).
+- **`activation:` frontmatter** — optional tools/constraints/next on operational atoms.
+- **Validator W-TIER-01..03 and W-GRAPH-01** — context-tier budget/navigation/volatile discipline; warn if `relations.yaml` is present.
 - **Strict validation gate** — `ep-validate --strict` promotes frontmatter and provenance checks to errors; `--ignore` for tracked backlog; `tools/validate-all.py`, `.github/workflows/validate.yml`, `.pre-commit-config.yaml`, and `tools/ingest-gate.py` (validate → strip → export).
 - **Frontmatter registry** — `schemas/registry/frontmatter.spec.yaml` + `frontmatter.schema.json` (JSON Schema 2020-12) for the `--strict` contract.
 - **Fragment provenance / Reconstruct Mode (RFC-003)** — span-level citation envelope in `schemas/core.md`; OpenClaw plugin `reconstruct` flag; AKS optional `fragment_id` / `line_range` / `span_hash`.
@@ -21,6 +29,8 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 - **Validator `W-PROV-06`** — `ep-validate.py --provenance` now warns when a `confidence` value is present but is not one of the three valid grades. Only checked when the field is present, so the rule is non-breaking for existing packs. Validator and `tools/validator/README.md` updated.
 
 ### Changed
+- **Context-loaded schema projections (2026-08-16)** — `skills/expertpack/references/schemas.md` is now filing-rules only; type trees live in `schemas-*.md` and load when the pack type is known. Export `schemas-summary.md` brought to v4.1 (`retrieval_strategy` enum, `_graph.yaml`, no retired aggregator dirs).
+- **SDLC sync (2026-08-16)** — ROADMAP Vector 2 “Summary layers” rejected (axiom 12); Vector 6 points at Intelligence Refinement + `logs/intelligence/`; eval.md no longer cites summary layers as a structural improvement; composite examples use `schema_version: "1.1"`; demo-pack “remain v3.x” note corrected to 4.1; consumption guide chunking contract aligned to `retrieval_strategy: standard|atomic|navigation`.
 - **Documentation sync (2026-07-06)** — `ARCHITECTURE.md`, `AXIOMS.md`, `README.md`, `schemas/core.md`, and `schemas/schema-index.yaml` updated for enforcement gate, RFC-003/004, and TAC (schema family remains **4.1** — additive extensions only).
 - **EP MCP runtime alignment (2026-07-06)** — [ep-mcp](https://github.com/brianhearn/ep-mcp) commit `a9d1639` implements RFC-003 reconstruct envelope and RFC-004 sidecar consumption. `README.md`, `ROADMAP.md`, and RFC status headers updated to reflect shipped runtime; production packs require reindex after deploy.
 - **`tools/update-schema-readme.py`** — UTF-8 read/write; registry table includes frontmatter, chunk-sidecar, and typed-answer specs.

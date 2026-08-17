@@ -9,6 +9,7 @@ chunks:
   line_range: [15, 23]
   tokenizer_tokens: 163
   chunk_summary: ''
+  context_prefix: From Character Animation Workflow, opening.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--phase-1-rigging-the-character
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [24, 25]
   tokenizer_tokens: 8
   chunk_summary: ''
+  context_prefix: From Character Animation Workflow, section Phase 1 — Rigging the Character.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--armature-setup
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [26, 38]
   tokenizer_tokens: 202
   chunk_summary: 'Start in Object Mode. `Shift+A → Armature` to create the first bone. The workflow:'
+  context_prefix: From Character Animation Workflow, section Armature Setup.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--rigify-vs-manual-rigging
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [39, 52]
   tokenizer_tokens: 185
   chunk_summary: '**Rigify** (included add-on) generates a production-ready control rig from a meta-rig:'
+  context_prefix: From Character Animation Workflow, section Rigify vs Manual Rigging.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--inverse-kinematics-setup
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [53, 71]
   tokenizer_tokens: 223
   chunk_summary: IK chains solve bone rotations automatically — you move the foot, the leg bends to reach it.
+  context_prefix: From Character Animation Workflow, section Inverse Kinematics Setup.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--fk-ik-switching
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [72, 84]
   tokenizer_tokens: 141
   chunk_summary: 'The cleanest approach uses a custom property on a control bone to blend between FK and IK:'
+  context_prefix: From Character Animation Workflow, section FK/IK Switching.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--binding-the-mesh-armature-modifier
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [85, 101]
   tokenizer_tokens: 237
   chunk_summary: 1. Select the **mesh** first, then `Shift+click` the **armature** (armature is active)
+  context_prefix: From Character Animation Workflow, section Binding the Mesh — Armature Modifier.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--advanced-weight-painting-techniques
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [102, 121]
   tokenizer_tokens: 436
   chunk_summary: '**The Gradient Tool (massively underused):**'
+  context_prefix: From Character Animation Workflow, section Advanced Weight Painting Techniques.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--retopology-edge-loop-placement-for-animation
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [122, 136]
   tokenizer_tokens: 267
   chunk_summary: 'The deformation quality of a character mesh is determined at the retopology stage, not the weight painting stage. Critical loop placements:'
+  context_prefix: From Character Animation Workflow, section Retopology Edge Loop Placement for Animation.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--phase-2-walk-cycle
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [137, 140]
   tokenizer_tokens: 38
   chunk_summary: 'A walk cycle is an 8–16 frame looping animation of a full stride. The standard approach for a 24fps cycle at normal walking pace:'
+  context_prefix: From Character Animation Workflow, section Phase 2 — Walk Cycle.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--frame-layout-8-frame-cycle-24fps
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [141, 150]
   tokenizer_tokens: 100
   chunk_summary: ''
+  context_prefix: From Character Animation Workflow, section Frame Layout (8-frame cycle, 24fps).
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--walk-cycle-construction
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [151, 182]
   tokenizer_tokens: 309
   chunk_summary: '**Step 1 — Block the contacts first:**'
+  context_prefix: From Character Animation Workflow, section Walk Cycle Construction.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--making-it-loop
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [183, 194]
   tokenizer_tokens: 112
   chunk_summary: 1. Copy keyframe at frame 1 → paste at frame 9 (for 8-frame cycle)
+  context_prefix: From Character Animation Workflow, section Making It Loop.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--in-place-vs-root-motion
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [195, 204]
   tokenizer_tokens: 113
   chunk_summary: '**In-place cycle:** The character walks in place, the world moves (or the camera moves). Easiest to set up, compatible with game engines.'
+  context_prefix: From Character Animation Workflow, section In-Place vs Root Motion.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--phase-3-lip-sync
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [205, 208]
   tokenizer_tokens: 23
   chunk_summary: Lip sync uses **Shape Keys** (blend shapes) driven by phoneme timing.
+  context_prefix: From Character Animation Workflow, section Phase 3 — Lip Sync.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--setting-up-phoneme-shape-keys
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [209, 225]
   tokenizer_tokens: 172
   chunk_summary: 'In **Edit Mode** on the head mesh, create shape keys for each phoneme group:'
+  context_prefix: From Character Animation Workflow, section Setting Up Phoneme Shape Keys.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--animating-shape-keys
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [226, 243]
   tokenizer_tokens: 206
   chunk_summary: 'Shape keys are animated directly in the timeline:'
+  context_prefix: From Character Animation Workflow, section Animating Shape Keys.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--audio-track-setup
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [244, 249]
   tokenizer_tokens: 68
   chunk_summary: 1. **VSE (Video Sequence Editor):** Add audio strip → position under dialogue
+  context_prefix: From Character Animation Workflow, section Audio Track Setup.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--auto-lip-sync-options
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [250, 259]
   tokenizer_tokens: 123
   chunk_summary: 'For production lip sync, dedicated tools integrate better:'
+  context_prefix: From Character Animation Workflow, section Auto Lip Sync Options.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--phase-4-nla-workflow
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [260, 263]
   tokenizer_tokens: 40
   chunk_summary: 'The NLA (Non-Linear Animation) Editor layers multiple Actions together. This enables mixing animations that were created independently:'
+  context_prefix: From Character Animation Workflow, section Phase 4 — NLA Workflow.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--pushing-actions-to-the-nla
   chunk_order: 20
@@ -149,6 +169,7 @@ chunks:
   line_range: [264, 270]
   tokenizer_tokens: 88
   chunk_summary: '1. Animate the character using the Action Editor — create individual clips: `walk`, `wave`, `idle`, `jump`'
+  context_prefix: From Character Animation Workflow, section Pushing Actions to the NLA.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--nla-strip-controls
   chunk_order: 21
@@ -156,6 +177,7 @@ chunks:
   line_range: [271, 288]
   tokenizer_tokens: 157
   chunk_summary: 'In the NLA Editor, strips can be:'
+  context_prefix: From Character Animation Workflow, section NLA Strip Controls.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--additive-layers-for-secondary-animation
   chunk_order: 22
@@ -163,6 +185,7 @@ chunks:
   line_range: [289, 297]
   tokenizer_tokens: 126
   chunk_summary: 'The NLA shine: a `breathing` action can be created with just the chest bones expanding, then layered as an additive track on top of the main animation:'
+  context_prefix: From Character Animation Workflow, section Additive Layers for Secondary Animation.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--nla-for-complex-sequences
   chunk_order: 23
@@ -170,6 +193,7 @@ chunks:
   line_range: [298, 311]
   tokenizer_tokens: 104
   chunk_summary: 'For a cutscene where a character walks to a door and opens it:'
+  context_prefix: From Character Animation Workflow, section NLA for Complex Sequences.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--baking-nla-to-final-action
   chunk_order: 24
@@ -177,6 +201,7 @@ chunks:
   line_range: [312, 322]
   tokenizer_tokens: 101
   chunk_summary: 'Before export (especially for game engines), bake NLA down to a single Action:'
+  context_prefix: From Character Animation Workflow, section Baking NLA to Final Action.
   embedding_version: gemini-embedding-001
 - chunk_id: character-animation--quality-checklist
   chunk_order: 25
@@ -184,4 +209,5 @@ chunks:
   line_range: [323, 334]
   tokenizer_tokens: 251
   chunk_summary: 'Before calling a character animation done:'
+  context_prefix: From Character Animation Workflow, section Quality Checklist.
   embedding_version: gemini-embedding-001

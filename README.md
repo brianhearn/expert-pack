@@ -200,8 +200,8 @@ The canonical compatibility matrix lives in [`schemas/schema-index.yaml`](schema
 | [person.md](schemas/person.md) | 4.1 | Person packs: stories, reflections, opinions, conversations, mind taxonomy, relationships, presentation |
 | [agent.md](schemas/agent.md) | 1.7 | Agent extension: persona, capabilities, tool access, behavioral rules |
 | [process.md](schemas/process.md) | 4.1 | Process packs: phases, decisions, checklists, exceptions, scheduling, regulations |
-| [composite.md](schemas/composite.md) | 1.1 | Composites: multi-pack deployment, role assignments, auto-discovery & export |
-| [eval.md](schemas/eval.md) | 1.3 | Evaluation: EK ratio, correctness, hallucination, retrieval quality, structural health, TAC scoring |
+| [composite.md](schemas/composite.md) | 1.2 | Composites: multi-pack deployment, roles, fail-closed conflict isolation, auto-discovery & export |
+| [eval.md](schemas/eval.md) | 1.4 | Evaluation: EK ratio, correctness, hallucination, refusal/authority, composite conflict cases, TAC scoring |
 | [registry/agent-knowledge.spec.yaml](schemas/registry/agent-knowledge.spec.yaml) | 1.0 | Compact Agent Knowledge Schema (AKS) JSONL — includes optional fragment provenance fields |
 | [registry/frontmatter.spec.yaml](schemas/registry/frontmatter.spec.yaml) | 1.0 | Content-file frontmatter contract enforced by `ep-validate --strict` (companion JSON Schema) |
 | [registry/chunk-sidecar.spec.yaml](schemas/registry/chunk-sidecar.spec.yaml) | 1.0 | Chunk metadata sidecar format for oversized atomic/reference files (RFC-004) |
@@ -252,13 +252,14 @@ ExpertPack/
 │   ├── agent.md             ← Agent subtype schema (v1.7)
 │   ├── product.md           ← Product-pack schema (v4.1)
 │   ├── process.md           ← Process-pack schema (v4.1)
-│   ├── composite.md         ← Composite schema (v1.1)
-│   ├── eval.md              ← Evaluation framework (v1.3)
+│   ├── composite.md         ← Composite schema (v1.2)
+│   ├── eval.md              ← Evaluation framework (v1.4)
 │   └── references/          ← Extracted reference material
 │
 ├── guides/                  ← Practical guides
 │   ├── hydration.md         ← Hydration lifecycle: planning → population → retrieval optimization → validation
-│   └── consumption.md       ← Deploying and consuming packs with AI agents (incl. deploy-prep and eval discipline)
+│   ├── consumption.md       ← Deploying and consuming packs with AI agents (incl. deploy-prep and eval discipline)
+│   └── intelligence-refinement.md ← Periodic framework research + schema review cycle
 │
 ├── tools/                   ← Tooling
 │   ├── cli/expertpack.py    ← Unified CLI (init, validate, doctor, migrate, …)
@@ -267,6 +268,8 @@ ExpertPack/
 │   ├── tac/                 ← validate_tac.py (Typed Answer Contract)
 │   ├── ingest-gate.py       ← validate → strip → export pipeline
 │   ├── validate-all.py      ← CI/pre-commit runner
+│   ├── check-schema-projections.py ← skill schema projection guard
+│   ├── update-schema-readme.py ← README schema table from schema-index.yaml
 │   ├── graph-export/        ← ep-graph-export.py — generate _graph.yaml adjacency files
 │   ├── deploy-prep/         ← ep-strip-frontmatter.py — strip provenance metadata before RAG deploy
 │   ├── micro-record-exporter/ ← ep-micro-record-export.py — full/compact provenance-first JSONL export
@@ -275,7 +278,12 @@ ExpertPack/
 │   └── eval-ek.py           ← EK ratio measurement via blind probing
 │
 ├── skills/                  ← OpenClaw agent skills (also on ClawHub)
-│   └── expertpack-export/   ← Auto-discover & export agent → EP
+│   ├── expertpack/          ← Consume / hydrate / validate
+│   ├── expertpack-eval/     ← EK ratio + quality evals
+│   ├── expertpack-export/   ← Auto-discover & export agent → EP
+│   └── expertpack-intelligence/ ← Framework research + schema review cycle
+│
+├── logs/intelligence/       ← Dated Intelligence Refinement run logs
 │
 ├── template/                ← Obsidian vault template (DESIGN.md, TOOLS.md, …)
 ├── packs/                   ← Community pack instances

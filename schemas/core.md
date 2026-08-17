@@ -78,10 +78,34 @@ mcp:
     include_always_tier: true   # Expose context.always files as MCP Resources (default: true)
     additional: []              # Extra files to expose beyond the always tier
 
+# Authority boundary (recommended; W-AUTH-01 if missing)
+# What this pack is allowed to assert. Consumers refuse outside it.
+authority_boundary:
+  in_scope: "The subject matter this pack may assert."
+  out_of_scope:
+    - "Topics this pack must refuse"
+  refuse_when:
+    - "No supporting atom in the pack"
+    - "Question is outside in_scope"
+  no_source_no_claim: false   # true = do not assert without a retrieved atom
+
 # Type-specific fields are defined in each type schema
 ```
 
 The `type` field determines which type-specific schema applies. See [person.md](person.md), [product.md](product.md), or [process.md](process.md).
+
+### Authority boundary
+
+`authority_boundary` is the pack-level refusal contract. Provenance says *where a claim came from*; the boundary says *whether the pack is allowed to assert it*. Help-bot refusal failures are a missing boundary, not missing prompt text.
+
+| Field | Required | Meaning |
+|-------|----------|---------|
+| `in_scope` | yes, when the block is present | What the pack may assert |
+| `out_of_scope` | yes, when the block is present | Topics the agent must decline |
+| `refuse_when` | recommended | Extra refuse triggers (no atom, stale volatile, …) |
+| `no_source_no_claim` | optional, default `false` | If true, do not emit a claim unless a retrieved atom supports it |
+
+Consumers (OpenClaw, Cursor, any future MCP) read the same block. Eval suites must include `refusal` / `out-of-scope` questions that sit outside `in_scope` — see [eval.md](eval.md). Validator: `W-AUTH-01` (missing), `W-AUTH-02` (block present but incomplete). Not promoted under `--strict` so existing packs can adopt it without breaking CI.
 
 ### Subtypes
 
@@ -1151,6 +1175,8 @@ Named MCP Prompts that EP MCP exposes to connecting agents. Each prompt bundles 
 
 **Why prompts matter:** A general agent connecting to EZT MCP doesn't know that building territories requires: understanding the data model, choosing a partitioning method, importing accounts, running the optimizer, and reviewing balance. A prompt named `build_territories` delivers all of that context proactively — the agent doesn't need to discover it through search.
 
+**Knowledge Activation (optional `activation:` frontmatter):** Workflow, decision, gotcha, and phase atoms may declare tools, constraints, and `next` filenames. MCP prompt registration and hierarchical retrieve→act loops read this block; the Markdown body stays canonical. Do not put `activation:` on concept files — that turns every atom into a skill and blows Tier 1. See Intelligence Refinement cycle 1 (R3).
+
 ```yaml
 mcp:
   prompts:
@@ -1415,7 +1441,7 @@ meta:
   generated_at: "2026-04-10T15:55:00Z"
   node_count: 288
   edge_count: 152
-  schema_version: "1.0"
+  schema_version: "1.0"          # graph-export format version (not the EP schema family)
 
 nodes:
   - id: "pack-slug/concepts/topic"     # stable frontmatter id
@@ -1512,10 +1538,10 @@ The `concept_scope` field signals how many distinct topics a file covers. It is 
 | `concepts/` | `concept` | `standard` |
 | `workflows/` | `workflow` | `atomic` |
 | `troubleshooting/` | `troubleshooting` | `atomic` |
-| `stories/` | `story` | `standard` |
-| `reflections/` | `reflection` | `standard` |
-| `opinions/` | `opinion` | `standard` |
-| `conversations/` | `conversation` | `standard` |
+| `stories/` | `story` | `atomic` |
+| `reflections/` | `reflection` | `atomic` |
+| `opinions/` | `opinion` | `atomic` |
+| `conversations/` | `conversation` | `atomic` |
 | `overview.md` | `overview` | `standard` |
 | `_index.md` | `index` | `standard` |
 | `decisions/` | `decision` | `standard` |
@@ -1782,6 +1808,6 @@ The `canonical_statement` is the one field that may require human or LLM authori
 ---
 
 *Schema version: 4.1*
-*Last updated: 2026-07-06*
+*Last updated: 2026-08-17*
 *Changes in 2026-07-06 (additive, still 4.1): Fragment Provenance / Reconstruct Mode; chunk metadata sidecars (RFC-004); Typed Answer Contract; `--strict` validation gate and registry JSON Schemas.*
 *Changes in 3.4: bi-temporal provenance fields (`valid_from`, `recorded_at`) added to frontmatter spec; W-PROV-05 validator rule added.*

@@ -43,3 +43,19 @@ jobs:
         run: python tools/validator/ep-validate.py packs/${{ matrix.pack }} --strict --ignore W-V41-01
       - name: Check chunk sidecars are up to date
         run: python tools/chunker/ep-chunk-annotate.py packs/${{ matrix.pack }} --check --embedding-version gemini-embedding-001
+
+  docs:
+    name: schema projections + README index
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - name: Check context-loaded schema projections
+        run: python tools/check-schema-projections.py
+      - name: Check README schema table
+        run: python tools/update-schema-readme.py --check
+      - name: Composite conflict tests
+        run: python tools/composite/test_conflict.py

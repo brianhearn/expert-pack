@@ -9,6 +9,7 @@ chunks:
   line_range: [14, 20]
   tokenizer_tokens: 181
   chunk_summary: ''
+  context_prefix: 'From Phase 2: System Design, opening.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--step-1-load-analysis-how-much-power-do-you-need
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [21, 22]
   tokenizer_tokens: 13
   chunk_summary: ''
+  context_prefix: 'From Phase 2: System Design, section Step 1: Load Analysis — How Much Power Do You Need?.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--read-your-electric-bills
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [23, 28]
   tokenizer_tokens: 72
   chunk_summary: '- Collect 12 months of bills; note the kWh used each month'
+  context_prefix: 'From Phase 2: System Design, section Read Your Electric Bills.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--decide-your-offset-goal
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [29, 33]
   tokenizer_tokens: 105
   chunk_summary: '- **100% offset**: Size the array to produce your full annual consumption. Maximizes long-term savings but maximizes upfront cost.'
+  context_prefix: 'From Phase 2: System Design, section Decide Your Offset Goal.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--adjust-for-future-load-changes
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [34, 38]
   tokenizer_tokens: 66
   chunk_summary: '- Electric vehicle: add 2,000–4,500 kWh/year per EV (home charging)'
+  context_prefix: 'From Phase 2: System Design, section Adjust for Future Load Changes.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--step-2-array-sizing-how-many-panels
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [39, 40]
   tokenizer_tokens: 10
   chunk_summary: ''
+  context_prefix: 'From Phase 2: System Design, section Step 2: Array Sizing — How Many Panels.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--basic-sizing-formula
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [41, 59]
   tokenizer_tokens: 175
   chunk_summary: System size (kW DC) = Annual kWh target ÷ (Peak sun hours/day × 365 × System efficiency)
+  context_prefix: 'From Phase 2: System Design, section Basic Sizing Formula.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--sanity-check-with-pvwatts
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [60, 62]
   tokenizer_tokens: 69
   chunk_summary: NREL's PVWatts Calculator (pvwatts.nrel.gov) is the industry standard for production estimates. Enter your location, array size, tilt, azimuth, and losses — ...
+  context_prefix: 'From Phase 2: System Design, section Sanity-Check with PVWatts.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--match-array-size-to-available-roof-area
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [63, 66]
   tokenizer_tokens: 63
   chunk_summary: '- If available roof area limits panel count below your target system size, revisit offset goal or consider ground mount'
+  context_prefix: 'From Phase 2: System Design, section Match Array Size to Available Roof Area.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--step-3-inverter-architecture-selection
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [67, 77]
   tokenizer_tokens: 189
   chunk_summary: At this stage you need to commit to your inverter topology. This decision shapes everything about the wiring design.
+  context_prefix: 'From Phase 2: System Design, section Step 3: Inverter Architecture Selection.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--step-4-string-sizing-string-and-optimizer-systems
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [78, 83]
   tokenizer_tokens: 85
   chunk_summary: '**Skip this section if using microinverters** — each panel is independent, no string sizing needed.'
+  context_prefix: 'From Phase 2: System Design, section Step 4: String Sizing (String and Optimizer Systems).'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--why-temperature-matters
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [84, 88]
   tokenizer_tokens: 81
   chunk_summary: 'Panel voltage rises in cold weather and falls in hot weather. You must calculate both limits:'
+  context_prefix: 'From Phase 2: System Design, section Why Temperature Matters.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--required-data
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [89, 103]
   tokenizer_tokens: 141
   chunk_summary: 'From the panel datasheet:'
+  context_prefix: 'From Phase 2: System Design, section Required Data.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--maximum-string-length-cold-limit
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [104, 110]
   tokenizer_tokens: 62
   chunk_summary: Voc_adj = Voc × [1 + ((T_min - 25°C) × TempCoef_Voc / 100)]
+  context_prefix: 'From Phase 2: System Design, section Maximum String Length (Cold Limit).'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--minimum-string-length-hot-limit
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [111, 118]
   tokenizer_tokens: 66
   chunk_summary: T_panel = T_max_ambient + mounting_adder
+  context_prefix: 'From Phase 2: System Design, section Minimum String Length (Hot Limit).'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--practical-example
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [119, 134]
   tokenizer_tokens: 148
   chunk_summary: 'Panel: 450W (Voc=49.2V, Vmp=41.3V, TempCoef_Voc=-0.27%/°C, TempCoef_Vmp=-0.34%/°C)'
+  context_prefix: 'From Phase 2: System Design, section Practical Example.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--number-of-strings
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [135, 141]
   tokenizer_tokens: 77
   chunk_summary: Number of strings = Total panel count ÷ Panels per string (round appropriately)
+  context_prefix: 'From Phase 2: System Design, section Number of Strings.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--step-5-battery-sizing
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [142, 145]
   tokenizer_tokens: 29
   chunk_summary: Batteries add backup capability and, in some rate structures, significant economic value.
+  context_prefix: 'From Phase 2: System Design, section Step 5: Battery Sizing.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--define-your-backup-goal-first
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [146, 150]
   tokenizer_tokens: 107
   chunk_summary: '- **Essential loads backup (common)**: Refrigerator, lights, phone charging, internet router, medical equipment — roughly 1.5–3 kW of continuous draw, 10–20 ...'
+  context_prefix: 'From Phase 2: System Design, section Define Your Backup Goal First.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--battery-selection-math
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [151, 159]
   tokenizer_tokens: 100
   chunk_summary: Required capacity (kWh) = Daily energy need × Backup days target ÷ DoD limit
+  context_prefix: 'From Phase 2: System Design, section Battery Selection Math.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--motor-start-surge-critical-check
   chunk_order: 20
@@ -149,6 +169,7 @@ chunks:
   line_range: [160, 167]
   tokenizer_tokens: 152
   chunk_summary: Air conditioners, well pumps, and refrigerators draw 3–7× their running current for the first few seconds on startup (called Locked Rotor Amperage, LRA). Man...
+  context_prefix: 'From Phase 2: System Design, section Motor Start Surge — Critical Check.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--battery-sizing-for-economics-rate-arbitrage
   chunk_order: 21
@@ -156,6 +177,7 @@ chunks:
   line_range: [168, 175]
   tokenizer_tokens: 108
   chunk_summary: 'Some utilities have time-of-use (TOU) rates with high peak-hour prices (typically 4–9pm). Sizing for daily charge/discharge cycles requires:'
+  context_prefix: 'From Phase 2: System Design, section Battery Sizing for Economics (Rate Arbitrage).'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--phase-2-outputs
   chunk_order: 22
@@ -163,6 +185,7 @@ chunks:
   line_range: [176, 186]
   tokenizer_tokens: 116
   chunk_summary: 'Before moving to Phase 3 (Component Selection), document:'
+  context_prefix: 'From Phase 2: System Design, section Phase 2 Outputs.'
   embedding_version: gemini-embedding-001
 - chunk_id: 02-system-design--related
   chunk_order: 23
@@ -170,4 +193,5 @@ chunks:
   line_range: [187, 192]
   tokenizer_tokens: 70
   chunk_summary: '- Full string sizing worked examples: `../../product/concepts/system-design-fundamentals.md`'
+  context_prefix: 'From Phase 2: System Design, section Related.'
   embedding_version: gemini-embedding-001

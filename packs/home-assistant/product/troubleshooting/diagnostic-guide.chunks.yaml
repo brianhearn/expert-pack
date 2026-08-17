@@ -9,6 +9,7 @@ chunks:
   line_range: [18, 41]
   tokenizer_tokens: 329
   chunk_summary: 'sources:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, opening.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--the-diagnostic-toolkit
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [42, 43]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section The Diagnostic Toolkit.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--developer-tools-your-first-stop
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [44, 57]
   tokenizer_tokens: 286
   chunk_summary: 'Developer Tools (the wrench icon, or `/developer-tools`) is where diagnosis starts:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Developer Tools — Your First Stop.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--log-viewer
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [58, 79]
   tokenizer_tokens: 240
   chunk_summary: Settings → System → Logs. This is where integration errors, startup failures, and automation errors appear.
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Log Viewer.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--system-information
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [80, 85]
   tokenizer_tokens: 92
   chunk_summary: Settings → System → Hardware (or System) — shows HA version, Python version, host information, memory, disk usage. Check this first when performance is degra...
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section System Information.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--reading-logs-effectively
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [86, 87]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Reading Logs Effectively.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--setting-per-integration-log-levels
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [88, 107]
   tokenizer_tokens: 176
   chunk_summary: 'Enable debug logging for a specific integration without drowning in all-system debug output:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Setting Per-Integration Log Levels.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--integration-identifier-reference
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [108, 119]
   tokenizer_tokens: 131
   chunk_summary: ''
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Integration Identifier Reference.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--safe-mode-when-ha-won-t-start
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [120, 150]
   tokenizer_tokens: 282
   chunk_summary: Safe mode boots HA with no custom integrations (HACS), no custom frontend resources (custom cards), and no automations running. It's your recovery tool when ...
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Safe Mode — When HA Won't Start.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--database-issues
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [151, 154]
   tokenizer_tokens: 36
   chunk_summary: HA stores entity history and statistics in an SQLite database (`home-assistant_v2.db`). Over time this can become problematic.
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Database Issues.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--database-corruption
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [155, 180]
   tokenizer_tokens: 196
   chunk_summary: 'Symptoms: HA starts slowly, errors like `SQLITE_CORRUPT`, database-related errors in logs, history not loading.'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Database Corruption.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--moving-to-external-database-postgresql-mariadb
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [181, 203]
   tokenizer_tokens: 188
   chunk_summary: 'For large installs (1000+ entities, 30+ day history), SQLite becomes a performance bottleneck. Moving to PostgreSQL or MariaDB improves:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Moving to External Database (PostgreSQL/MariaDB).
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--recorder-configuration-optimization
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [204, 227]
   tokenizer_tokens: 181
   chunk_summary: 'Before moving to external DB, optimize the recorder config to reduce write load:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Recorder Configuration Optimization.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--network-diagnostics
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [228, 229]
   tokenizer_tokens: 5
   chunk_summary: ''
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Network Diagnostics.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--mdns-issues
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [230, 242]
   tokenizer_tokens: 143
   chunk_summary: 'HA discovers many devices via mDNS (`.local` hostnames). Problems arise in:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section mDNS Issues.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--dhcp-reservations-for-iot-devices
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [243, 251]
   tokenizer_tokens: 113
   chunk_summary: '**Every IoT device should have a DHCP reservation** (fixed IP via MAC address). Reasons:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section DHCP Reservations for IoT Devices.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--vlan-considerations-for-ha
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [252, 263]
   tokenizer_tokens: 152
   chunk_summary: 'A common advanced setup: IoT devices on an isolated VLAN (no internet access) with HA either on the main network or a dedicated HA VLAN.'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section VLAN Considerations for HA.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--zigbee-troubleshooting
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [264, 265]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Zigbee Troubleshooting.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--understanding-zigbee-mesh-health
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [266, 275]
   tokenizer_tokens: 115
   chunk_summary: 'A healthy Zigbee mesh has:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Understanding Zigbee Mesh Health.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--coordinator-firmware-updates
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [276, 290]
   tokenizer_tokens: 141
   chunk_summary: 'The Zigbee coordinator dongle has firmware that occasionally needs updating. Outdated coordinator firmware causes:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Coordinator Firmware Updates.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--wifi-channel-conflicts
   chunk_order: 20
@@ -149,6 +169,7 @@ chunks:
   line_range: [291, 300]
   tokenizer_tokens: 140
   chunk_summary: Zigbee runs on 2.4 GHz and shares spectrum with WiFi. Zigbee channels 11-24 overlap with WiFi channels 1-11. This is a major source of intermittent Zigbee pr...
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section WiFi Channel Conflicts.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--device-won-t-pair
   chunk_order: 21
@@ -156,6 +177,7 @@ chunks:
   line_range: [301, 308]
   tokenizer_tokens: 105
   chunk_summary: 1. **Distance:** Pair the device within 2 meters of the coordinator, then move it
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Device Won't Pair.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--z-wave-troubleshooting
   chunk_order: 22
@@ -163,6 +185,7 @@ chunks:
   line_range: [309, 310]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Z-Wave Troubleshooting.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--ghost-nodes
   chunk_order: 23
@@ -170,6 +193,7 @@ chunks:
   line_range: [311, 321]
   tokenizer_tokens: 141
   chunk_summary: Z-Wave ghost nodes are entries in the node list that refer to devices that no longer exist or can no longer be reached. They consume network resources and ca...
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Ghost Nodes.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--network-heal
   chunk_order: 24
@@ -177,6 +201,7 @@ chunks:
   line_range: [322, 332]
   tokenizer_tokens: 99
   chunk_summary: 'The Z-Wave network heal rebuilds routing tables — all devices recalculate optimal paths. Run this after:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Network Heal.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--s2-security-pairing-issues
   chunk_order: 25
@@ -184,6 +209,7 @@ chunks:
   line_range: [333, 341]
   tokenizer_tokens: 106
   chunk_summary: 'Z-Wave devices with S2 (Secure Mode 2) security require a DSK (Device Specific Key) or QR code for secure inclusion. If pairing fails:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section S2 Security Pairing Issues.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--automation-debugging-the-trace-view
   chunk_order: 26
@@ -191,6 +217,7 @@ chunks:
   line_range: [342, 367]
   tokenizer_tokens: 304
   chunk_summary: When an automation doesn't behave as expected, the **trace view** is the most powerful debugging tool.
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Automation Debugging — The Trace View.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--performance-optimization
   chunk_order: 27
@@ -198,6 +225,7 @@ chunks:
   line_range: [368, 369]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Performance Optimization.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--entity-count-impact
   chunk_order: 28
@@ -205,6 +233,7 @@ chunks:
   line_range: [370, 378]
   tokenizer_tokens: 115
   chunk_summary: HA runs well up to approximately 2,000 entities. After that, startup time and memory usage grow noticeably. At 5,000+ entities, performance degradation is si...
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Entity Count Impact.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--recorder-pressure
   chunk_order: 29
@@ -212,6 +241,7 @@ chunks:
   line_range: [379, 390]
   tokenizer_tokens: 93
   chunk_summary: The database recorder writes every state change. High-frequency sensors (time, sun angle, signal strength) write thousands of times per day.
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Recorder Pressure.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--the-nuclear-option-when-to-start-fresh
   chunk_order: 30
@@ -219,6 +249,7 @@ chunks:
   line_range: [391, 410]
   tokenizer_tokens: 272
   chunk_summary: 'Sometimes the correct answer is a clean install. Triggers:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section The Nuclear Option — When to Start Fresh.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--related
   chunk_order: 31
@@ -226,6 +257,7 @@ chunks:
   line_range: [411, 419]
   tokenizer_tokens: 85
   chunk_summary: '- [[core-architecture.md|Core Architecture]] — Understanding what you''re troubleshooting'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Related.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--community-sourced-diagnostic-tips
   chunk_order: 32
@@ -233,6 +265,7 @@ chunks:
   line_range: [420, 424]
   tokenizer_tokens: 42
   chunk_summary: ''
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Community-Sourced Diagnostic Tips.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--finding-what-s-bloating-your-recorder-database
   chunk_order: 33
@@ -240,6 +273,7 @@ chunks:
   line_range: [425, 439]
   tokenizer_tokens: 203
   chunk_summary: 'Install the **SQLite Web add-on** (HAOS only) and run this query to find the top 20 entities filling your database. This is the #1 community-recommended firs...'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Finding What's Bloating Your Recorder Database.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--diagnosing-z-wave-unavailable-after-add-on-update
   chunk_order: 34
@@ -247,6 +281,7 @@ chunks:
   line_range: [440, 449]
   tokenizer_tokens: 159
   chunk_summary: 'After every Z-Wave JS add-on update, devices may appear "unavailable" even after restart. Standard workaround:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Diagnosing Z-Wave "Unavailable" After Add-on Update.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--diagnosing-zigbee2mqtt-action-sensor-breakage
   chunk_order: 35
@@ -254,6 +289,7 @@ chunks:
   line_range: [450, 460]
   tokenizer_tokens: 195
   chunk_summary: 'If button/remote automations stopped working after Z2M update to 2.0+:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Diagnosing Zigbee2MQTT Action Sensor Breakage.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--automation-trace-most-underused-debug-tool
   chunk_order: 36
@@ -261,6 +297,7 @@ chunks:
   line_range: [461, 470]
   tokenizer_tokens: 142
   chunk_summary: 'The **Traces** button (top-right corner of the automation editor) is the fastest way to debug automation failures. It shows:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Automation Trace — Most Underused Debug Tool.
   embedding_version: gemini-embedding-001
 - chunk_id: diagnostic-guide--diagnosing-hacs-after-ha-updates
   chunk_order: 37
@@ -268,4 +305,5 @@ chunks:
   line_range: [471, 478]
   tokenizer_tokens: 175
   chunk_summary: 'If HACS disappears from sidebar or shows all integrations as broken after an HA update:'
+  context_prefix: From Diagnostic Guide — Systematic Home Assistant Troubleshooting, section Diagnosing HACS After HA Updates.
   embedding_version: gemini-embedding-001

@@ -60,7 +60,7 @@ python3 {skill_dir}/scripts/run-eval.py \
   --label "baseline"
 ```
 
-- Build eval set: 30+ questions (basic, intermediate, advanced, out-of-scope)
+- Build eval set: 30+ questions (basic, intermediate, advanced, out-of-scope/refusal). Refusal questions must sit outside `manifest.authority_boundary`. A stub needs at least 3 (`W-EVAL-01`); a real suite aims for 5+.
 - Fix one dimension at a time: structure → agent training → model
 - Re-run after each change to verify improvement
 

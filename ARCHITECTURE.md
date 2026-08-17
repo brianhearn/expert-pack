@@ -82,8 +82,8 @@ Each pack type has its own schema that extends core with domain-specific structu
 - **[schemas/person.md](schemas/person.md)** (v4.1) — Stories, reflections, opinions, conversations, mind taxonomy, biographical facts, timeline, relationships, privacy modes, presentation (voice, appearance), reasoning and conflict handling
 - **[schemas/product.md](schemas/product.md)** (v4.1) — Concepts, workflows, troubleshooting (errors, diagnostics, common mistakes), screens/interface specs, FAQ, commercial info, entity cross-references, timeline, decisions, customers, limitations, competitive landscape, mental model
 - **[schemas/process.md](schemas/process.md)** (v4.1) — Phases with enhanced structure, decisions, checklists, roles, resources, examples, gotchas, exceptions, variants
-- **[schemas/composite.md](schemas/composite.md)** (v1.1) — Multi-pack deployments with role assignments, context tier overrides, cross-pack conflict resolution
-- **[schemas/eval.md](schemas/eval.md)** (v1.3) — Evaluation framework for measuring pack quality (response quality, retrieval quality, efficiency, pack health, TAC scoring)
+- **[schemas/composite.md](schemas/composite.md)** (v1.2) — Multi-pack deployments with role assignments, context tier overrides, fail-closed conflict isolation
+- **[schemas/eval.md](schemas/eval.md)** (v1.4) — Evaluation framework for measuring pack quality (response quality, retrieval quality, efficiency, pack health, refusal/authority, TAC scoring)
 
 ### Registry Specs (`schemas/registry/`)
 
@@ -114,14 +114,15 @@ ExpertPack/
 │   ├── person.md          ← Person-pack schema (v4.1)
 │   ├── product.md         ← Product-pack schema (v4.1)
 │   ├── process.md         ← Process-pack schema (v4.1)
-│   ├── composite.md       ← Composite schema (v1.1)
-│   └── eval.md            ← Eval framework (v1.3)
+│   ├── composite.md       ← Composite schema (v1.2)
+│   └── eval.md            ← Eval framework (v1.4)
 │
 ├── template/              ← Vault scaffold (DESIGN.md, TOOLS.md, Obsidian config)
 │
 ├── guides/                ← Practical how-to guides for pack builders
 │   ├── hydration.md           ← Complete hydration lifecycle
-│   └── consumption.md         ← How to deploy and consume packs with AI agents
+│   ├── consumption.md         ← How to deploy and consume packs with AI agents
+│   └── intelligence-refinement.md ← Periodic framework research + schema review
 │
 ├── tools/                 ← Tooling for pack development
 │   ├── cli/expertpack.py      ← Unified CLI (init, validate, doctor, migrate, …)
@@ -130,13 +131,15 @@ ExpertPack/
 │   ├── tac/                   ← validate_tac.py (Typed Answer Contract)
 │   ├── ingest-gate.py         ← validate → strip → export pipeline
 │   ├── validate-all.py        ← CI/pre-commit runner
+│   ├── check-schema-projections.py ← fail if skill schema copies teach retired patterns
+│   ├── update-schema-readme.py ← README schema table from schema-index.yaml
 │   ├── eval-runner/           ← Eval execution, claim_verifier (--tac)
 │   ├── micro-record-exporter/ ← AKS / full micro-record JSONL
 │   ├── graph-export/          ← ep-graph-export.py
 │   ├── deploy-prep/           ← ep-strip-frontmatter.py
 │   └── eval-ek.py             ← EK ratio measurement via blind probing
 │
-├── skills/                ← Agent skills for pack creation and export
+├── skills/                ← Agent skills (expertpack, eval, export, intelligence, converters)
 │
 └── packs/                 ← The instances
     ├── home-assistant/    ← Composite pack: Home Assistant (EK 54%)

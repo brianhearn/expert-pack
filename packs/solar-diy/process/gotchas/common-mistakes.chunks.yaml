@@ -9,6 +9,7 @@ chunks:
   line_range: [14, 20]
   tokenizer_tokens: 131
   chunk_summary: ''
+  context_prefix: From Common Mistakes in Residential Solar Projects, opening.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--design-mistakes
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [21, 22]
   tokenizer_tokens: 4
   chunk_summary: ''
+  context_prefix: From Common Mistakes in Residential Solar Projects, section Design Mistakes.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--1-installing-on-a-roof-that-needs-replacing
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [23, 27]
   tokenizer_tokens: 90
   chunk_summary: '**Mistake:** Mounting solar on a 15-year-old roof without assessing remaining life.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 1. Installing on a Roof That Needs Replacing.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--2-underestimating-shading
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [28, 32]
   tokenizer_tokens: 98
   chunk_summary: '**Mistake:** Designing for an "mostly clear" roof without doing a shading analysis.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 2. Underestimating Shading.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--3-sizing-to-current-consumption-not-future
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [33, 37]
   tokenizer_tokens: 98
   chunk_summary: '**Mistake:** Sizing the array for today''s electricity bill, forgetting about the EV you''re buying next year.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 3. Sizing to Current Consumption, Not Future.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--4-string-sizing-math-errors
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [38, 42]
   tokenizer_tokens: 116
   chunk_summary: '**Mistake:** Using nominal voltage instead of temperature-corrected voltage for string sizing.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 4. String Sizing Math Errors.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--5-ignoring-the-120-rule
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [43, 47]
   tokenizer_tokens: 88
   chunk_summary: '**Mistake:** Designing a system that requires a solar breaker larger than 20% of your panel bus bar rating.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 5. Ignoring the 120% Rule.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--permit-utility-gotchas
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [48, 49]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: From Common Mistakes in Residential Solar Projects, section Permit & Utility Gotchas.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--6-waiting-to-start-the-interconnection-application
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [50, 54]
   tokenizer_tokens: 103
   chunk_summary: '**Mistake:** Submitting the interconnection application after the building permit is approved.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 6. Waiting to Start the Interconnection Application.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--7-net-metering-enrollment-mixup
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [55, 59]
   tokenizer_tokens: 97
   chunk_summary: '**Mistake:** Assuming you''re automatically enrolled in net metering when you interconnect.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 7. Net Metering Enrollment Mixup.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--8-layout-doesn-t-match-permit-drawings
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [60, 64]
   tokenizer_tokens: 109
   chunk_summary: '**Mistake:** Minor field adjustments (shifting a row a foot north, removing one panel for a vent) not reflected in permit drawings.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 8. Layout Doesn't Match Permit Drawings.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--9-assuming-your-ahj-is-on-the-latest-nec
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [65, 69]
   tokenizer_tokens: 124
   chunk_summary: '**Mistake:** Designing rapid shutdown to NEC 2023 requirements when your jurisdiction adopted NEC 2017.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 9. Assuming Your AHJ Is on the Latest NEC.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--10-hoa-surprise
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [70, 74]
   tokenizer_tokens: 84
   chunk_summary: '**Mistake:** Not checking HOA requirements before ordering equipment.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 10. HOA Surprise.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--installation-mistakes
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [75, 76]
   tokenizer_tokens: 6
   chunk_summary: ''
+  context_prefix: From Common Mistakes in Residential Solar Projects, section Installation Mistakes.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--11-missing-or-wrong-labels
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [77, 81]
   tokenizer_tokens: 80
   chunk_summary: '**Mistake:** Skipping NEC-required labels or using incorrect wording.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 11. Missing or Wrong Labels.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--12-mc4-connector-brand-mixing
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [82, 86]
   tokenizer_tokens: 100
   chunk_summary: '**Mistake:** Using MC4 connectors from different manufacturers in the same connection.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 12. MC4 Connector Brand Mixing.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--13-crossing-dc-conductors
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [87, 91]
   tokenizer_tokens: 112
   chunk_summary: '**Mistake:** Allowing the positive and negative DC conductors from the same string to contact each other or run in the same conduit without separation.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 13. Crossing DC Conductors.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--14-roof-mount-not-on-rafter
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [92, 96]
   tokenizer_tokens: 91
   chunk_summary: '**Mistake:** Installing an L-foot mount between rafters, into sheathing only.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 14. Roof Mount Not on Rafter.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--15-incorrect-flashing
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [97, 101]
   tokenizer_tokens: 112
   chunk_summary: '**Mistake:** Using non-approved flashing methods or improper shingle integration.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 15. Incorrect Flashing.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--16-working-alone-on-the-roof
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [102, 106]
   tokenizer_tokens: 68
   chunk_summary: '**Mistake:** Solo roof work to save time.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 16. Working Alone on the Roof.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--electrical-gotchas
   chunk_order: 20
@@ -149,6 +169,7 @@ chunks:
   line_range: [107, 108]
   tokenizer_tokens: 5
   chunk_summary: ''
+  context_prefix: From Common Mistakes in Residential Solar Projects, section Electrical Gotchas.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--17-forgetting-torque-requirements
   chunk_order: 21
@@ -156,6 +177,7 @@ chunks:
   line_range: [109, 113]
   tokenizer_tokens: 84
   chunk_summary: '**Mistake:** Not torquing wire terminations to manufacturer specifications.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 17. Forgetting Torque Requirements.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--18-battery-in-unconditioned-space
   chunk_order: 22
@@ -163,6 +185,7 @@ chunks:
   line_range: [114, 118]
   tokenizer_tokens: 133
   chunk_summary: '**Mistake:** Installing an LFP battery in a garage or storage space where temperatures exceed manufacturer limits.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 18. Battery in Unconditioned Space.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--19-ac-coupling-incompatibility
   chunk_order: 23
@@ -170,6 +193,7 @@ chunks:
   line_range: [119, 123]
   tokenizer_tokens: 135
   chunk_summary: '**Mistake:** Buying a battery system without verifying it''s compatible with your inverter.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 19. AC Coupling Incompatibility.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--post-commissioning-mistakes
   chunk_order: 24
@@ -177,6 +201,7 @@ chunks:
   line_range: [124, 125]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: From Common Mistakes in Residential Solar Projects, section Post-Commissioning Mistakes.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--20-not-setting-up-monitoring-alerts
   chunk_order: 25
@@ -184,6 +209,7 @@ chunks:
   line_range: [126, 130]
   tokenizer_tokens: 97
   chunk_summary: '**Mistake:** Commissioning the system and then just assuming it works.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 20. Not Setting Up Monitoring Alerts.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--21-ignoring-the-first-year-warranty-window
   chunk_order: 26
@@ -191,6 +217,7 @@ chunks:
   line_range: [131, 135]
   tokenizer_tokens: 112
   chunk_summary: '**Mistake:** Noticing a panel hotspot or microinverter failure but not reporting it promptly.'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section 21. Ignoring the First-Year Warranty Window.
   embedding_version: gemini-embedding-001
 - chunk_id: common-mistakes--related
   chunk_order: 27
@@ -198,4 +225,5 @@ chunks:
   line_range: [136, 141]
   tokenizer_tokens: 66
   chunk_summary: '- Phase 5 installation detail: `../phases/05-installation.md`'
+  context_prefix: From Common Mistakes in Residential Solar Projects, section Related.
   embedding_version: gemini-embedding-001

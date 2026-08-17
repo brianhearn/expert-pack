@@ -71,6 +71,7 @@ chunks:
     tokenizer_tokens: 401
     embedding_version: text-embedding-004
     chunk_summary: "Topology determines deformation, shading, and boolean quality."
+    context_prefix: "From Modeling Topology, section Why Topology Matters."
 ```
 
 - `chunk_id` = `{file-stem}--{section-slug}` (`opening` for chunk 0). Unique

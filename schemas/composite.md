@@ -52,7 +52,7 @@ type: "composite"
 version: "1.0.0"
 description: "What this composite creates and who it's for"
 entry_point: "overview.md"
-schema_version: "1.0"
+schema_version: "1.2"
 
 # Required: constituent packs
 packs:
@@ -75,10 +75,15 @@ context:
       on_demand:
         - mind/tensions.md
 
-# Optional: conflict resolution
+# Optional: conflict resolution (default strategy remains flag)
 conflicts:
-  priority: [jane-doe, acme-widget, acme-sales-process]  # First pack wins ties
-  strategy: "flag"    # "flag" (ask human) | "priority" (auto-resolve by order)
+  priority: [jane-doe, acme-widget, acme-sales-process]  # First pack wins remaining ties
+  strategy: "flag"    # fail_closed | flag | priority
+  isolation:
+    voice_must_not_assert_knowledge: true
+    knowledge_must_not_override_voice: true
+    respect_access_tiers: true
+  tie_break: [authority_boundary, confidence, verified_at]
 
 # Recommended
 author: "Who created this composite"
@@ -142,31 +147,58 @@ Multiple packs means more Tier 1 content competing for the context window. Compo
 
 ## Cross-Pack Conflict Resolution
 
-When multiple packs contain information about the same topic, conflicts can arise. The composite manifest defines how to handle them:
+When multiple packs contain information about the same topic, conflicts can arise. The composite declares the rules; the consumer applies them. Executable contract: [`tools/composite/conflict.py`](../tools/composite/conflict.py) (run `python tools/composite/test_conflict.py`). Markdown in the constituent packs remains canonical — this resolver does not write packs.
 
-### Priority Order
+Resolution order is **fail-closed by construction**: isolation and authority run *before* strategy. A claim that should never have been visible must not win a priority tie.
+
+### 1. Isolation
+
+```yaml
+conflicts:
+  isolation:
+    voice_must_not_assert_knowledge: true   # default
+    knowledge_must_not_override_voice: true # default
+    respect_access_tiers: true              # default
+```
+
+| Rule | Behavior |
+|------|----------|
+| `respect_access_tiers` | Drop claims whose `access_tier` is not in the consumer's allowed set (e.g. `family` / `private` never enter a `public` composite). |
+| `voice_must_not_assert_knowledge` | A `role: voice` pack must not invent product/process facts. Tone travels; knowledge does not. |
+| `knowledge_must_not_override_voice` | A knowledge pack must not rewrite speech, values, or persona. |
+
+### 2. Authority
+
+Drop any remaining claim that is outside its pack's [`authority_boundary`](core.md#authority-boundary) (`in_authority: false`). If nothing remains, **refuse** (no-source-no-claim). Do not guess.
+
+### 3. Strategy (only after filters)
 
 ```yaml
 conflicts:
   priority: [jane-doe, acme-widget, acme-sales-process]
+  strategy: "flag"    # default; production help-bots should prefer fail_closed
+  tie_break: [authority_boundary, confidence, verified_at]
 ```
 
-The priority list determines which pack's information takes precedence. Typically:
-- Person packs rank highest (the human's word overrides documentation)
-- Product packs rank above process packs (product truth over methodology)
-
-### Resolution Strategy
+The priority list is a *remaining-claim* order, not a license to leak isolated or out-of-authority content. Typical ranking: person/voice first, then product, then process.
 
 | Strategy | Behavior |
 |----------|----------|
-| **flag** | Present both versions to the user and ask for resolution. Safest option. Default if not specified. |
-| **priority** | Automatically use the higher-priority pack's version. Faster but risks silent errors. |
+| **fail_closed** | If remaining claims disagree, refuse. Do not pick a winner. Recommended for support / public composites. |
+| **flag** | Present both versions and ask a human. Default if `strategy` is omitted (backward compatible). |
+| **priority** | Use the first remaining pack in `priority`. Same-rank ties use `tie_break`. |
 
-### Conflict Examples
+`tie_break` after isolation/authority: `confidence` rank is `expert-verified` > `crawled` > `inferred`, then newer `verified_at`.
 
-- Person pack says "we deprecated Feature X last quarter" but product pack still documents it → person pack wins (priority) or flag for review
-- Two product packs describe overlapping concepts differently → priority order or flag
-- Process pack references a product capability that the product pack doesn't document → flag as a gap
+### Worked examples
+
+These three cases are encoded in `tools/composite/test_conflict.py`.
+
+**1. Person vs product deprecation (flag).** Person pack: "Feature X was deprecated last quarter." Product pack: "Feature X is documented as current." Isolation does not apply (both are knowledge). Claims disagree → `strategy: flag` returns both; `fail_closed` refuses. Never silently merge into "supported."
+
+**2. Shared term, two products (fail_closed).** Product A: "A territory is a zip cluster." Product B: "A territory is a sales team." Neither pack is out of authority for its own product. They disagree → `fail_closed` refuses rather than invent a blended definition.
+
+**3. Family fact in a public composite (isolation).** Voice pack at `access_tier: family` asserts a health diagnosis. Knowledge pack has a public emigration date. `respect_access_tiers` with `allowed_tiers: [public]` drops the family claim *before* priority. The voice pack must not leak private facts even if it is first in `priority`.
 
 ---
 
@@ -195,7 +227,7 @@ Supplement files follow the same rules as any ExpertPack content: Markdown, one 
 2. **Assign roles.** Decide which pack (if any) defines the agent's voice.
 3. **Create the composite directory** with `manifest.yaml` and `overview.md`.
 4. **Review combined Tier 1 budget.** Sum the always-loaded content from all packs. If it exceeds ~10KB, add context overrides to demote lower-priority files to Tier 2.
-5. **Set conflict rules.** Define priority order and resolution strategy.
+5. **Set conflict rules.** Define isolation, `fail_closed` vs `flag` vs `priority`, and a remaining-claim priority list. Run `python tools/composite/test_conflict.py` against any custom cases.
 6. **Test retrieval.** Ask questions that span multiple packs to verify the agent pulls from the right sources and sounds consistent.
 7. **Write supplements** only if cross-pack bridging content is genuinely needed.
 
@@ -381,7 +413,7 @@ name: "Atlas — Full Instance Export"
 slug: "atlas-full"
 type: "composite"
 version: "1.0.0"
-schema_version: "1.0"
+schema_version: "1.2"
 description: "Complete knowledge export of the Atlas AI assistant instance"
 entry_point: "overview.md"
 
@@ -398,6 +430,11 @@ packs:
 conflicts:
   priority: [atlas, jamie-chen, acme-crm, deploy-workflow]
   strategy: "flag"
+  isolation:
+    voice_must_not_assert_knowledge: true
+    knowledge_must_not_override_voice: true
+    respect_access_tiers: true
+  tie_break: [authority_boundary, confidence, verified_at]
 
 context:
   overrides:
@@ -417,11 +454,11 @@ Composites follow all [core.md](core.md) principles:
 - Markdown-first for supplements
 - Git-versioned
 - Semantic versioning in the manifest
-- Conflict resolution defers to humans
+- Conflict resolution is fail-closed by construction (isolation + authority first); `flag` still defers remaining disagreements to humans
 
 The key difference: composites contain *references* to packs, not knowledge content. The thin orchestration layer is intentional — knowledge belongs in packs, composition belongs in composites.
 
 ---
 
-*Schema version: 1.1*
-*Last updated: 2026-03-10*
+*Schema version: 1.2*
+*Last updated: 2026-08-17*

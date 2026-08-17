@@ -9,6 +9,7 @@ chunks:
   line_range: [14, 15]
   tokenizer_tokens: 5
   chunk_summary: ''
+  context_prefix: 'From Phase 7: Hardening, opening.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--goal
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [16, 21]
   tokenizer_tokens: 90
   chunk_summary: Make your smart home **resilient, secure, and maintainable**. This phase ensures that when something breaks (and something will), you can recover quickly. It...
+  context_prefix: 'From Phase 7: Hardening, section Goal.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--prerequisites
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [22, 28]
   tokenizer_tokens: 39
   chunk_summary: '- Phases 1-6 complete (running, stable, feature-complete)'
+  context_prefix: 'From Phase 7: Hardening, section Prerequisites.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--part-1-backups
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [29, 32]
   tokenizer_tokens: 41
   chunk_summary: Your HA configuration is months of work. Losing it means starting over. Automated backups take 10 minutes to configure and could save you days.
+  context_prefix: 'From Phase 7: Hardening, section Part 1: Backups.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--what-s-in-an-ha-backup
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [33, 43]
   tokenizer_tokens: 125
   chunk_summary: 'HA backups include:'
+  context_prefix: 'From Phase 7: Hardening, section What''s in an HA Backup.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--option-a-automatic-google-drive-onedrive-backup-easiest
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [44, 57]
   tokenizer_tokens: 137
   chunk_summary: 'Install the **Samba Backup** or **Google Drive Backup** add-on:'
+  context_prefix: 'From Phase 7: Hardening, section Option A: Automatic Google Drive/OneDrive Backup (Easiest).'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--option-b-nas-network-share-backup
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [58, 65]
   tokenizer_tokens: 47
   chunk_summary: 'If you have a Synology or other NAS:'
+  context_prefix: 'From Phase 7: Hardening, section Option B: NAS/Network Share Backup.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--manual-backup-before-changes
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [66, 79]
   tokenizer_tokens: 67
   chunk_summary: '**Always create a manual backup before:**'
+  context_prefix: 'From Phase 7: Hardening, section Manual Backup Before Changes.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--test-your-backups
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [80, 88]
   tokenizer_tokens: 63
   chunk_summary: 'A backup is worthless if you can''t restore from it. Once a quarter:'
+  context_prefix: 'From Phase 7: Hardening, section Test Your Backups.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--part-2-remote-access
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [89, 92]
   tokenizer_tokens: 31
   chunk_summary: 'Accessing HA from outside your home without opening ports is the safe approach. Two main options:'
+  context_prefix: 'From Phase 7: Hardening, section Part 2: Remote Access.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--option-a-nabu-casa-recommended-for-most
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [93, 104]
   tokenizer_tokens: 95
   chunk_summary: '$7/month gets you:'
+  context_prefix: 'From Phase 7: Hardening, section Option A: Nabu Casa (Recommended for Most).'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--option-b-cloudflare-tunnel-free-self-hosted
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [105, 120]
   tokenizer_tokens: 129
   chunk_summary: 'For users who don''t want a subscription:'
+  context_prefix: 'From Phase 7: Hardening, section Option B: Cloudflare Tunnel (Free Self-Hosted).'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--what-not-to-do
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [121, 128]
   tokenizer_tokens: 80
   chunk_summary: '- **Don''t forward port 8123 directly to the internet.** HA''s web UI exposed directly is a security risk. Brute-force attacks on HA instances are common.'
+  context_prefix: 'From Phase 7: Hardening, section ⚠️ What Not to Do.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--part-3-security-hardening
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [129, 130]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: 'From Phase 7: Hardening, section Part 3: Security Hardening.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--strong-authentication
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [131, 144]
   tokenizer_tokens: 117
   chunk_summary: 1. **Enable 2FA for all admin accounts:**
+  context_prefix: 'From Phase 7: Hardening, section Strong Authentication.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--user-account-roles
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [145, 154]
   tokenizer_tokens: 86
   chunk_summary: 'Create user accounts for household members: Settings → People → Add Person → Create Login'
+  context_prefix: 'From Phase 7: Hardening, section User Account Roles.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--iot-network-isolation
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [155, 161]
   tokenizer_tokens: 86
   chunk_summary: 'If you haven''t already (from Phase 1 planning):'
+  context_prefix: 'From Phase 7: Hardening, section IoT Network Isolation.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--disable-unused-integrations
   chunk_order: 17
@@ -128,6 +145,7 @@ chunks:
   line_range: [162, 168]
   tokenizer_tokens: 45
   chunk_summary: 'Each integration is an attack surface. If you added something to try it and don''t use it:'
+  context_prefix: 'From Phase 7: Hardening, section Disable Unused Integrations.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--part-4-system-health-monitoring
   chunk_order: 18
@@ -135,6 +153,7 @@ chunks:
   line_range: [169, 172]
   tokenizer_tokens: 23
   chunk_summary: Set up automations that tell you when something is wrong.
+  context_prefix: 'From Phase 7: Hardening, section Part 4: System Health Monitoring.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--low-battery-alert
   chunk_order: 19
@@ -142,6 +161,7 @@ chunks:
   line_range: [173, 191]
   tokenizer_tokens: 117
   chunk_summary: '- alias: "Alert — Low Battery Devices"'
+  context_prefix: 'From Phase 7: Hardening, section Low Battery Alert.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--unavailable-device-alert
   chunk_order: 20
@@ -149,6 +169,7 @@ chunks:
   line_range: [192, 211]
   tokenizer_tokens: 116
   chunk_summary: '- alias: "Alert — Devices Unavailable"'
+  context_prefix: 'From Phase 7: Hardening, section Unavailable Device Alert.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--ha-update-available
   chunk_order: 21
@@ -156,6 +177,7 @@ chunks:
   line_range: [212, 228]
   tokenizer_tokens: 101
   chunk_summary: '- alias: "Alert — HA Update Available"'
+  context_prefix: 'From Phase 7: Hardening, section HA Update Available.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--part-5-maintenance-routine
   chunk_order: 22
@@ -163,6 +185,7 @@ chunks:
   line_range: [229, 244]
   tokenizer_tokens: 142
   chunk_summary: 'The "set it and forget it" smart home is a myth. Schedule regular maintenance:'
+  context_prefix: 'From Phase 7: Hardening, section Part 5: Maintenance Routine.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--hardening-checklist
   chunk_order: 23
@@ -170,6 +193,7 @@ chunks:
   line_range: [245, 258]
   tokenizer_tokens: 147
   chunk_summary: '- [ ] Automated daily backups to cloud or NAS'
+  context_prefix: 'From Phase 7: Hardening, section Hardening Checklist.'
   embedding_version: gemini-embedding-001
 - chunk_id: 07-hardening--you-re-done-for-now
   chunk_order: 24
@@ -177,4 +201,5 @@ chunks:
   line_range: [259, 269]
   tokenizer_tokens: 121
   chunk_summary: 'Completing Phase 7 means you have a smart home that:'
+  context_prefix: 'From Phase 7: Hardening, section You''re Done (For Now).'
   embedding_version: gemini-embedding-001

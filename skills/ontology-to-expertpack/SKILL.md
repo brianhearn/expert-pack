@@ -37,7 +37,7 @@ A complete ExpertPack at the output directory:
 - `overview.md` — summary of graph contents, entity/relation counts, navigation guide
 - Content organized by mapped category (relationships/, workflows/, facts/, concepts/, operational/, governance/)
 - `_index.md` in each content directory
-- `relations.yaml` — typed entity relation graph (schema 4.1 compliant)
+- Wikilinks / `related:` on atoms — then `ep-graph-export` for `_graph.yaml` (do not emit `relations.yaml`)
 - `glossary.md` — entity types and terms
 - Retriever-anchored opening definitions and `##` section headers for optimal chunking
 
@@ -47,7 +47,8 @@ Filenames use kebab-case. Concept atoms target 400–800 tokens with a 1,000-tok
 
 1. `cd` into the generated ExpertPack directory
 2. Verify content files are 400–800 tokens each (Schema 2.5 — no external chunker needed for correctly-sized files)
-3. Run EK evaluator to measure esoteric knowledge ratio
+3. Run `python tools/graph-export/ep-graph-export.py .` to write `_graph.yaml`
+4. Run EK evaluator to measure esoteric knowledge ratio
 4. Review and refine `manifest.yaml` context tiers
 5. Commit to git and share via expertpack.ai or ClawHub
 

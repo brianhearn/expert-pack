@@ -3,7 +3,7 @@ title: "Troubleshooting"
 type: index
 tags: [index, troubleshooting, pack-name]
 pack: your-pack-slug
-retrieval_strategy: standard
+retrieval_strategy: navigation
 ---
 
 # Troubleshooting

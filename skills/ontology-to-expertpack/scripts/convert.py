@@ -179,31 +179,7 @@ def build_pack(output_dir, entities, relations, schema, pack_name, pack_type):
         # Write _index.md
         (dir_path / '_index.md').write_text(''.join(index_lines), encoding='utf-8')
 
-    # Generate relations.yaml
-    rel_yaml = {
-        'entities': [],
-        'relations': []
-    }
-    for eid, (label, fpath) in entity_map.items():
-        e = next((e for e in entities.values() if e.get('id') == eid), {})
-        etype = e.get('type', 'concept').lower()
-        rel_yaml['entities'].append({
-            'id': eid,
-            'type': etype,
-            'label': label,
-            'file': fpath
-        })
-
-    for r in relations:
-        if r['from'] in entity_map and r['to'] in entity_map:
-            rel_yaml['relations'].append({
-                'from': r['from'],
-                'rel': r.get('rel', 'related_to'),
-                'to': r['to']
-            })
-
-    with open(output_dir / 'relations.yaml', 'w', encoding='utf-8') as f:
-        yaml.dump(rel_yaml, f, sort_keys=False)
+    # Graph projection is _graph.yaml via ep-graph-export — do not emit relations.yaml.
 
     # manifest.yaml
     manifest = {
@@ -218,7 +194,7 @@ def build_pack(output_dir, entities, relations, schema, pack_name, pack_type):
             'always': ['overview.md'],
             'searchable': ['relationships/', 'workflows/', 'facts/', 'concepts/'],
         },
-        'schema_version': '2.3'
+        'schema_version': '4.1'
     }
     with open(output_dir / 'manifest.yaml', 'w', encoding='utf-8') as f:
         yaml.dump(manifest, f, sort_keys=False)
@@ -235,7 +211,7 @@ Overview of the migrated ontology knowledge graph.
 
 Generated on {datetime.now().strftime('%Y-%m-%d')} by ontology-to-expertpack skill.
 
-See `relations.yaml` for the entity graph and individual content files for details.
+Run `python tools/graph-export/ep-graph-export.py .` to generate `_graph.yaml` from wikilinks and `related:` frontmatter.
 """
     (output_dir / 'overview.md').write_text(overview, encoding='utf-8')
 

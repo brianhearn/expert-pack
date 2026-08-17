@@ -9,6 +9,7 @@ chunks:
   line_range: [15, 16]
   tokenizer_tokens: 7
   chunk_summary: ''
+  context_prefix: 'From Phase 5: Dashboard Design, opening.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--goal
   chunk_order: 1
@@ -16,6 +17,7 @@ chunks:
   line_range: [17, 20]
   tokenizer_tokens: 61
   chunk_summary: Build Lovelace dashboards that make your smart home *usable at a glance* — for you, for your household members who don't want to learn HA, and for phones whe...
+  context_prefix: 'From Phase 5: Dashboard Design, section Goal.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--prerequisites
   chunk_order: 2
@@ -23,6 +25,7 @@ chunks:
   line_range: [21, 29]
   tokenizer_tokens: 46
   chunk_summary: '- Phase 4 complete (automations running)'
+  context_prefix: 'From Phase 5: Dashboard Design, section Prerequisites.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--dashboard-philosophy
   chunk_order: 3
@@ -30,6 +33,7 @@ chunks:
   line_range: [30, 39]
   tokenizer_tokens: 119
   chunk_summary: 'The best smart home dashboards follow three rules:'
+  context_prefix: 'From Phase 5: Dashboard Design, section Dashboard Philosophy.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--step-1-understand-lovelace-architecture
   chunk_order: 4
@@ -37,6 +41,7 @@ chunks:
   line_range: [40, 54]
   tokenizer_tokens: 188
   chunk_summary: 'HA''s dashboard system is called **Lovelace**. Key concepts:'
+  context_prefix: 'From Phase 5: Dashboard Design, section Step 1: Understand Lovelace Architecture.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--step-2-install-essential-cards-via-hacs
   chunk_order: 5
@@ -44,6 +49,7 @@ chunks:
   line_range: [55, 71]
   tokenizer_tokens: 198
   chunk_summary: 'Before designing, install these community cards that dramatically improve the experience:'
+  context_prefix: 'From Phase 5: Dashboard Design, section Step 2: Install Essential Cards via HACS.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--step-3-design-your-views
   chunk_order: 6
@@ -51,6 +57,7 @@ chunks:
   line_range: [72, 75]
   tokenizer_tokens: 16
   chunk_summary: 'A typical household needs 4-6 views:'
+  context_prefix: 'From Phase 5: Dashboard Design, section Step 3: Design Your Views.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--view-1-home-default
   chunk_order: 7
@@ -58,6 +65,7 @@ chunks:
   line_range: [76, 91]
   tokenizer_tokens: 118
   chunk_summary: The main view. Shows the most-used controls and high-level status.
+  context_prefix: 'From Phase 5: Dashboard Design, section View 1: Home (Default).'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--view-2-rooms-or-one-view-per-large-room
   chunk_order: 8
@@ -65,6 +73,7 @@ chunks:
   line_range: [92, 105]
   tokenizer_tokens: 94
   chunk_summary: 'Detailed control for each room: all lights with brightness, current sensor readings, devices.'
+  context_prefix: 'From Phase 5: Dashboard Design, section View 2: Rooms (or one view per large room).'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--view-3-security
   chunk_order: 9
@@ -72,6 +81,7 @@ chunks:
   line_range: [106, 129]
   tokenizer_tokens: 126
   chunk_summary: All door/window contact sensors, motion sensors, cameras (if any), lock controls, alarm panel.
+  context_prefix: 'From Phase 5: Dashboard Design, section View 3: Security.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--view-4-climate
   chunk_order: 10
@@ -79,6 +89,7 @@ chunks:
   line_range: [130, 133]
   tokenizer_tokens: 24
   chunk_summary: Thermostat controls, temperature history graphs, humidity, CO2 if monitored.
+  context_prefix: 'From Phase 5: Dashboard Design, section View 4: Climate.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--view-5-energy-after-phase-6
   chunk_order: 11
@@ -86,6 +97,7 @@ chunks:
   line_range: [134, 137]
   tokenizer_tokens: 28
   chunk_summary: Power consumption overview, solar production (if applicable), energy history.
+  context_prefix: 'From Phase 5: Dashboard Design, section View 5: Energy (After Phase 6).'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--view-6-admin
   chunk_order: 12
@@ -93,6 +105,7 @@ chunks:
   line_range: [138, 143]
   tokenizer_tokens: 32
   chunk_summary: Automations on/off toggles, system health, device battery levels (low battery alerts), HA server status.
+  context_prefix: 'From Phase 5: Dashboard Design, section View 6: Admin.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--step-4-mobile-optimization
   chunk_order: 13
@@ -100,6 +113,7 @@ chunks:
   line_range: [144, 162]
   tokenizer_tokens: 200
   chunk_summary: 'Test every view on your phone. Common mobile problems and fixes:'
+  context_prefix: 'From Phase 5: Dashboard Design, section Step 4: Mobile Optimization.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--step-5-badges-and-notifications-banner
   chunk_order: 14
@@ -107,6 +121,7 @@ chunks:
   line_range: [163, 185]
   tokenizer_tokens: 141
   chunk_summary: '**Badges** appear below the navigation and show persistent status:'
+  context_prefix: 'From Phase 5: Dashboard Design, section Step 5: Badges and Notifications Banner.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--step-6-user-specific-dashboards
   chunk_order: 15
@@ -114,6 +129,7 @@ chunks:
   line_range: [186, 198]
   tokenizer_tokens: 116
   chunk_summary: 'Give household members who don''t want to manage HA a **simplified dashboard**:'
+  context_prefix: 'From Phase 5: Dashboard Design, section Step 6: User-Specific Dashboards.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--checklist
   chunk_order: 16
@@ -121,6 +137,7 @@ chunks:
   line_range: [199, 209]
   tokenizer_tokens: 117
   chunk_summary: '- [ ] Mushroom Cards and other essential HACS cards installed'
+  context_prefix: 'From Phase 5: Dashboard Design, section Checklist.'
   embedding_version: gemini-embedding-001
 - chunk_id: 05-dashboard-design--what-s-next
   chunk_order: 17
@@ -128,4 +145,5 @@ chunks:
   line_range: [210, 212]
   tokenizer_tokens: 33
   chunk_summary: '→ [[06-advanced-features.md|Phase 6: Advanced Features]] — Voice assistant, energy monitoring, and presence detection'
+  context_prefix: 'From Phase 5: Dashboard Design, section What''s Next.'
   embedding_version: gemini-embedding-001
