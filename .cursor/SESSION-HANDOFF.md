@@ -10,7 +10,7 @@
 |------|--------|
 | **Branch** | `main` |
 | **Prior commit** | `8c5c627` — intelligence refinement + authority + composite 1.2 |
-| **This commit** | Public-pack contract + concept-split sprint; CI drops `--ignore W-V41-01` |
+| **This commit** | `a590366` — public-pack contract + concept-split sprint; CI drops `--ignore W-V41-01` |
 | **Do not commit** | `expert-pack.code-workspace` (local IDE only) |
 | **Deploy** | **Not done** — do not deploy ep-mcp or reindex without an explicit user request |
 
@@ -120,7 +120,7 @@ Expected: all four targets **0 errors** under `--strict` with no ignore.
 ## Conversation pointers
 
 - Prior wrap-up (intelligence + leftovers): [Intelligence and leftovers](ec71ad04-55d7-4623-8bf6-14929bb44199)
-- This session (public packs + concept split): continue from the current transcript after `8c5c627`
+- This session (public packs + concept split): [Public packs and concept split](ec71ad04-55d7-4623-8bf6-14929bb44199) after `8c5c627`
 
 ---
 
