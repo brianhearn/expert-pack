@@ -44,9 +44,9 @@ concept_scope: single
 
 **Comparing panels?** → `specifications/solar-panels-2026.md`
 
-**Choosing an inverter?** → `concepts/inverter-types.md` for architecture, then `process/decisions/inverter-topology.md` for the decision framework
+**Choosing an inverter?** → `concepts/inverter-optimizers.md` (choice matrix) plus `concepts/inverter-microinverters.md` / `concepts/inverter-string.md`, then `process/decisions/inverter-topology.md`
 
-**String sizing calculation?** → `concepts/system-design-fundamentals.md`
+**String sizing calculation?** → `concepts/system-design-string-sizing.md`
 
 **Code question?** → `concepts/nec-rapid-shutdown.md`
 

@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 content_hash: sha256:4b4d65f45a049ed4b682256f44843944263d712d7fac0ce95efe55ff098dd65e
+content_hash: sha256:463d135724213b023c2e0f3b3514bb27cf3158704f85577c1f533fb59ca11b56
 ---
 <!-- context: section=faq, topic=render-performance, related=shading-rendering,scene-optimization,compositing -->
 
@@ -48,6 +49,7 @@ content_hash: sha256:4b4d65f45a049ed4b682256f44843944263d712d7fac0ce95efe55ff098
 
 ## Related
 
-- [[shading-engines.md|Shading & Rendering]]
+- [[shading-eevee.md|EEVEE vs Cycles]]
+- [[shading-cycles.md|Cycles GPU and Performance]]
 - [[scene-optimization.md|Scene Optimization Workflow]]
 - [[compositing-core.md|Compositing]]

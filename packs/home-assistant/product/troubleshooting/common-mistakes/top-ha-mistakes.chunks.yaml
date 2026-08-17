@@ -1,12 +1,12 @@
 schema_version: '1.0'
 source_id: home-assistant/product/troubleshooting/common-mistakes/top-ha-mistakes
-content_hash: sha256:e0a5b8129558ab0a9c370c6c427f3dd3fbe2d968d61ae9f64bc709ac22a979fb
+content_hash: sha256:4c83fbaa3f455e4bb0098359bf57c140e3184e0a6c17e90f4606466bf2ad5834
 generated_by: ep-chunk-annotate
 chunks:
 - chunk_id: top-ha-mistakes--opening
   chunk_order: 0
   section: null
-  line_range: [18, 20]
+  line_range: [19, 21]
   tokenizer_tokens: 38
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, opening.
@@ -14,7 +14,7 @@ chunks:
 - chunk_id: top-ha-mistakes--1-using-wifi-for-everything
   chunk_order: 1
   section: 1. Using WiFi for Everything
-  line_range: [21, 22]
+  line_range: [22, 23]
   tokenizer_tokens: 8
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, section 1. Using WiFi for Everything.
@@ -22,7 +22,7 @@ chunks:
 - chunk_id: top-ha-mistakes--symptom
   chunk_order: 2
   section: Symptom
-  line_range: [23, 25]
+  line_range: [24, 26]
   tokenizer_tokens: 24
   chunk_summary: Devices randomly go offline, automations are unreliable, router struggles under load.
   context_prefix: From Top Home Assistant Mistakes, section Symptom.
@@ -30,7 +30,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-mistake
   chunk_order: 3
   section: The Mistake
-  line_range: [26, 28]
+  line_range: [27, 29]
   tokenizer_tokens: 50
   chunk_summary: Buying 40+ WiFi smart devices because "they don't need a hub." WiFi IoT devices congest your network, most depend on cloud servers, and they consume more pow...
   context_prefix: From Top Home Assistant Mistakes, section The Mistake.
@@ -38,7 +38,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-fix
   chunk_order: 4
   section: The Fix
-  line_range: [29, 31]
+  line_range: [30, 32]
   tokenizer_tokens: 52
   chunk_summary: Transition critical devices to Zigbee or Z-Wave. Keep WiFi only for high-bandwidth devices (cameras) and devices that don't exist in other protocols. A Zigbe...
   context_prefix: From Top Home Assistant Mistakes, section The Fix.
@@ -46,15 +46,15 @@ chunks:
 - chunk_id: top-ha-mistakes--how-to-avoid
   chunk_order: 5
   section: How to Avoid
-  line_range: [32, 36]
-  tokenizer_tokens: 24
-  chunk_summary: Start with Zigbee as your default protocol. See [[protocols.md|Protocols]].
+  line_range: [33, 37]
+  tokenizer_tokens: 27
+  chunk_summary: Start with Zigbee as your default protocol. See [[protocols-comparison.md|Protocols]].
   context_prefix: From Top Home Assistant Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-ha-mistakes--2-wrong-automation-mode-for-motion-lights
   chunk_order: 6
   section: 2. Wrong Automation Mode for Motion Lights
-  line_range: [37, 38]
+  line_range: [38, 39]
   tokenizer_tokens: 11
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, section 2. Wrong Automation Mode for Motion Lights.
@@ -62,7 +62,7 @@ chunks:
 - chunk_id: top-ha-mistakes--symptom-2
   chunk_order: 7
   section: Symptom
-  line_range: [39, 41]
+  line_range: [40, 42]
   tokenizer_tokens: 31
   chunk_summary: Motion-activated lights turn off while you're still in the room. The timer runs out even though you moved again.
   context_prefix: From Top Home Assistant Mistakes, section Symptom.
@@ -70,7 +70,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-mistake-2
   chunk_order: 8
   section: The Mistake
-  line_range: [42, 44]
+  line_range: [43, 45]
   tokenizer_tokens: 39
   chunk_summary: Using the default `single` automation mode. When the automation is running (waiting for the off-delay timer), new motion triggers are ignored.
   context_prefix: From Top Home Assistant Mistakes, section The Mistake.
@@ -78,7 +78,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-fix-2
   chunk_order: 9
   section: The Fix
-  line_range: [45, 64]
+  line_range: [46, 65]
   tokenizer_tokens: 112
   chunk_summary: Change the automation mode to `restart`. Every new motion event restarts the off-delay timer from zero.
   context_prefix: From Top Home Assistant Mistakes, section The Fix.
@@ -86,15 +86,15 @@ chunks:
 - chunk_id: top-ha-mistakes--how-to-avoid-2
   chunk_order: 10
   section: How to Avoid
-  line_range: [65, 69]
-  tokenizer_tokens: 58
-  chunk_summary: 'Always ask: "What should happen if this automation triggers while it''s already running?" Choose the mode deliberately. See [Automation Fundamentals](../../co...'
+  line_range: [66, 70]
+  tokenizer_tokens: 46
+  chunk_summary: 'Always ask: "What should happen if this automation triggers while it''s already running?" Choose the mode deliberately. See [[automation-modes.md|Automation m...'
   context_prefix: From Top Home Assistant Mistakes, section How to Avoid.
   embedding_version: gemini-embedding-001
 - chunk_id: top-ha-mistakes--3-using-device-id-instead-of-entity-id
   chunk_order: 11
   section: 3. Using device_id Instead of entity_id
-  line_range: [70, 71]
+  line_range: [71, 72]
   tokenizer_tokens: 10
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, section 3. Using device_id Instead of entity_id.
@@ -102,7 +102,7 @@ chunks:
 - chunk_id: top-ha-mistakes--symptom-3
   chunk_order: 12
   section: Symptom
-  line_range: [72, 74]
+  line_range: [73, 75]
   tokenizer_tokens: 38
   chunk_summary: Automation breaks after re-pairing a device, replacing hardware, or migrating Zigbee coordinators. The device_id (a hash) no longer matches.
   context_prefix: From Top Home Assistant Mistakes, section Symptom.
@@ -110,7 +110,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-mistake-3
   chunk_order: 13
   section: The Mistake
-  line_range: [75, 77]
+  line_range: [76, 78]
   tokenizer_tokens: 29
   chunk_summary: Creating automations via the UI's device trigger picker, which inserts opaque device_id references.
   context_prefix: From Top Home Assistant Mistakes, section The Mistake.
@@ -118,7 +118,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-fix-3
   chunk_order: 14
   section: The Fix
-  line_range: [78, 80]
+  line_range: [79, 81]
   tokenizer_tokens: 35
   chunk_summary: Edit the automation YAML and replace `device_id` references with `entity_id` references. Entity IDs are human-readable and stable.
   context_prefix: From Top Home Assistant Mistakes, section The Fix.
@@ -126,7 +126,7 @@ chunks:
 - chunk_id: top-ha-mistakes--how-to-avoid-3
   chunk_order: 15
   section: How to Avoid
-  line_range: [81, 85]
+  line_range: [82, 86]
   tokenizer_tokens: 41
   chunk_summary: After creating automations via the UI, check the YAML view and convert device_id to entity_id. Name your entities deliberately and consistently.
   context_prefix: From Top Home Assistant Mistakes, section How to Avoid.
@@ -134,7 +134,7 @@ chunks:
 - chunk_id: top-ha-mistakes--4-not-setting-up-backups
   chunk_order: 16
   section: 4. Not Setting Up Backups
-  line_range: [86, 87]
+  line_range: [87, 88]
   tokenizer_tokens: 7
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, section 4. Not Setting Up Backups.
@@ -142,7 +142,7 @@ chunks:
 - chunk_id: top-ha-mistakes--symptom-4
   chunk_order: 17
   section: Symptom
-  line_range: [88, 90]
+  line_range: [89, 91]
   tokenizer_tokens: 39
   chunk_summary: SD card corrupts (common with Raspberry Pi), system update breaks something, or you accidentally delete a critical automation. Everything is lost.
   context_prefix: From Top Home Assistant Mistakes, section Symptom.
@@ -150,7 +150,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-mistake-4
   chunk_order: 18
   section: The Mistake
-  line_range: [91, 93]
+  line_range: [92, 94]
   tokenizer_tokens: 16
   chunk_summary: Running HA for months without configuring backups.
   context_prefix: From Top Home Assistant Mistakes, section The Mistake.
@@ -158,7 +158,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-fix-4
   chunk_order: 19
   section: The Fix
-  line_range: [94, 98]
+  line_range: [95, 99]
   tokenizer_tokens: 48
   chunk_summary: '- HA OS/Supervised: Settings → System → Backups → Create Backup'
   context_prefix: From Top Home Assistant Mistakes, section The Fix.
@@ -166,7 +166,7 @@ chunks:
 - chunk_id: top-ha-mistakes--how-to-avoid-4
   chunk_order: 20
   section: How to Avoid
-  line_range: [99, 103]
+  line_range: [100, 104]
   tokenizer_tokens: 33
   chunk_summary: Set up automated backups in the first week. The Google Drive Backup add-on is free and handles it automatically.
   context_prefix: From Top Home Assistant Mistakes, section How to Avoid.
@@ -174,7 +174,7 @@ chunks:
 - chunk_id: top-ha-mistakes--5-overcomplicating-yaml-when-the-ui-works
   chunk_order: 21
   section: 5. Overcomplicating YAML When the UI Works
-  line_range: [104, 105]
+  line_range: [105, 106]
   tokenizer_tokens: 11
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, section 5. Overcomplicating YAML When the UI Works.
@@ -182,7 +182,7 @@ chunks:
 - chunk_id: top-ha-mistakes--symptom-5
   chunk_order: 22
   section: Symptom
-  line_range: [106, 108]
+  line_range: [107, 109]
   tokenizer_tokens: 29
   chunk_summary: Spending hours writing YAML for something the UI handles in clicks. YAML typos cause HA to fail to start.
   context_prefix: From Top Home Assistant Mistakes, section Symptom.
@@ -190,7 +190,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-mistake-5
   chunk_order: 23
   section: The Mistake
-  line_range: [109, 111]
+  line_range: [110, 112]
   tokenizer_tokens: 45
   chunk_summary: Assumption that "real" HA users do everything in YAML. The UI has improved dramatically — most automations, scenes, and integrations are easier to set up via...
   context_prefix: From Top Home Assistant Mistakes, section The Mistake.
@@ -198,7 +198,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-fix-5
   chunk_order: 24
   section: The Fix
-  line_range: [112, 114]
+  line_range: [113, 115]
   tokenizer_tokens: 57
   chunk_summary: 'Use the UI for standard automations and integrations. Reserve YAML for: template sensors, complex automations that need direct YAML editing, packages for org...'
   context_prefix: From Top Home Assistant Mistakes, section The Fix.
@@ -206,7 +206,7 @@ chunks:
 - chunk_id: top-ha-mistakes--how-to-avoid-5
   chunk_order: 25
   section: How to Avoid
-  line_range: [115, 119]
+  line_range: [116, 120]
   tokenizer_tokens: 25
   chunk_summary: Try the UI first. Drop to YAML when you hit the UI's limitations, not before.
   context_prefix: From Top Home Assistant Mistakes, section How to Avoid.
@@ -214,7 +214,7 @@ chunks:
 - chunk_id: top-ha-mistakes--6-running-ha-on-an-sd-card-long-term
   chunk_order: 26
   section: 6. Running HA on an SD Card Long-Term
-  line_range: [120, 121]
+  line_range: [121, 122]
   tokenizer_tokens: 10
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, section 6. Running HA on an SD Card Long-Term.
@@ -222,7 +222,7 @@ chunks:
 - chunk_id: top-ha-mistakes--symptom-6
   chunk_order: 27
   section: Symptom
-  line_range: [122, 124]
+  line_range: [123, 125]
   tokenizer_tokens: 41
   chunk_summary: System corruption, database errors, HA becoming unresponsive. SD cards have limited write cycles and HA writes constantly (state changes, database, logs).
   context_prefix: From Top Home Assistant Mistakes, section Symptom.
@@ -230,7 +230,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-mistake-6
   chunk_order: 28
   section: The Mistake
-  line_range: [125, 127]
+  line_range: [126, 128]
   tokenizer_tokens: 21
   chunk_summary: Running HA OS on a Raspberry Pi with an SD card as the only storage.
   context_prefix: From Top Home Assistant Mistakes, section The Mistake.
@@ -238,7 +238,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-fix-6
   chunk_order: 29
   section: The Fix
-  line_range: [128, 132]
+  line_range: [129, 133]
   tokenizer_tokens: 60
   chunk_summary: '- Best: Move to an SSD (USB boot on Pi 4/5, or use a mini-PC like N100)'
   context_prefix: From Top Home Assistant Mistakes, section The Fix.
@@ -246,7 +246,7 @@ chunks:
 - chunk_id: top-ha-mistakes--how-to-avoid-6
   chunk_order: 30
   section: How to Avoid
-  line_range: [133, 137]
+  line_range: [134, 138]
   tokenizer_tokens: 38
   chunk_summary: If starting fresh, use a mini-PC (Intel N100-based are popular — silent, low power, SSD) or a Raspberry Pi with USB-attached SSD.
   context_prefix: From Top Home Assistant Mistakes, section How to Avoid.
@@ -254,7 +254,7 @@ chunks:
 - chunk_id: top-ha-mistakes--7-ignoring-entity-naming-conventions
   chunk_order: 31
   section: 7. Ignoring Entity Naming Conventions
-  line_range: [138, 139]
+  line_range: [139, 140]
   tokenizer_tokens: 10
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, section 7. Ignoring Entity Naming Conventions.
@@ -262,7 +262,7 @@ chunks:
 - chunk_id: top-ha-mistakes--symptom-7
   chunk_order: 32
   section: Symptom
-  line_range: [140, 142]
+  line_range: [141, 143]
   tokenizer_tokens: 39
   chunk_summary: As your system grows, you can't find anything. Entity IDs are a mess of manufacturer defaults like `light.0x00158d0001a2b3c4_light` or duplicates.
   context_prefix: From Top Home Assistant Mistakes, section Symptom.
@@ -270,7 +270,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-mistake-7
   chunk_order: 33
   section: The Mistake
-  line_range: [143, 145]
+  line_range: [144, 146]
   tokenizer_tokens: 22
   chunk_summary: Accepting default entity names from integrations without renaming them.
   context_prefix: From Top Home Assistant Mistakes, section The Mistake.
@@ -278,7 +278,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-fix-7
   chunk_order: 34
   section: The Fix
-  line_range: [146, 152]
+  line_range: [147, 153]
   tokenizer_tokens: 50
   chunk_summary: 'Rename entities consistently. Common pattern: `domain.area_function`'
   context_prefix: From Top Home Assistant Mistakes, section The Fix.
@@ -286,7 +286,7 @@ chunks:
 - chunk_id: top-ha-mistakes--how-to-avoid-7
   chunk_order: 35
   section: How to Avoid
-  line_range: [153, 157]
+  line_range: [154, 158]
   tokenizer_tokens: 46
   chunk_summary: Rename every entity when you first add a device. Establish your naming convention before you have 200 entities. Include the area and the function. Be consist...
   context_prefix: From Top Home Assistant Mistakes, section How to Avoid.
@@ -294,7 +294,7 @@ chunks:
 - chunk_id: top-ha-mistakes--8-not-using-areas-and-labels
   chunk_order: 36
   section: 8. Not Using Areas and Labels
-  line_range: [158, 159]
+  line_range: [159, 160]
   tokenizer_tokens: 8
   chunk_summary: ''
   context_prefix: From Top Home Assistant Mistakes, section 8. Not Using Areas and Labels.
@@ -302,7 +302,7 @@ chunks:
 - chunk_id: top-ha-mistakes--symptom-8
   chunk_order: 37
   section: Symptom
-  line_range: [160, 162]
+  line_range: [161, 163]
   tokenizer_tokens: 53
   chunk_summary: Dashboard is a flat list of entities. Automations target entities one by one instead of by room. Voice commands don't work well because HA can't map "turn of...
   context_prefix: From Top Home Assistant Mistakes, section Symptom.
@@ -310,7 +310,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-mistake-8
   chunk_order: 38
   section: The Mistake
-  line_range: [163, 165]
+  line_range: [164, 166]
   tokenizer_tokens: 43
   chunk_summary: 'Never assigning devices to Areas. This blocks: area-based dashboard cards, area targets in automations/scripts, natural voice control, and floor plan views.'
   context_prefix: From Top Home Assistant Mistakes, section The Mistake.
@@ -318,7 +318,7 @@ chunks:
 - chunk_id: top-ha-mistakes--the-fix-8
   chunk_order: 39
   section: The Fix
-  line_range: [166, 175]
+  line_range: [167, 176]
   tokenizer_tokens: 57
   chunk_summary: 'Go to Settings → Areas → create areas for every room/zone. Assign every device to its area. Then you can target areas in automations:'
   context_prefix: From Top Home Assistant Mistakes, section The Fix.
@@ -326,7 +326,7 @@ chunks:
 - chunk_id: top-ha-mistakes--how-to-avoid-8
   chunk_order: 40
   section: How to Avoid
-  line_range: [176, 177]
+  line_range: [177, 178]
   tokenizer_tokens: 25
   chunk_summary: Create areas and assign devices from day one. It takes minutes and saves hours later.
   context_prefix: From Top Home Assistant Mistakes, section How to Avoid.

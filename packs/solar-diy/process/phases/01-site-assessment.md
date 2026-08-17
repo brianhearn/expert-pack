@@ -10,6 +10,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:7188a58c584f7b9d9b1109ec2f0c0e33d95a28ba50ba929c54814fb98b51ba0a
+content_hash: sha256:f0f23f85c6e67e9a9f2ee4dd4f5c4b95ff485776141913e118a085208d65870f
 ---
 
 # Phase 1: Site Assessment
@@ -141,6 +142,6 @@ Going into Phase 2 (System Design), you should know:
 
 ## Related
 
-- System sizing math: `../product/concepts/system-design-fundamentals.md`
+- System sizing math: `../product/concepts/system-design-fundamentals.md` and string voltage math in `../product/concepts/system-design-string-sizing.md`
 - Shading's impact on inverter selection: `../decisions/inverter-topology.md`
 - Phase 2: `02-system-design.md`

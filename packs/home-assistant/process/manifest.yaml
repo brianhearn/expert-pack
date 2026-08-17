@@ -7,7 +7,7 @@ description: "A phased, practical guide to building a reliable smart home with H
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-11"
-updated: "2026-03-11"
+updated: "2026-08-17"
 
 domain: "home-automation"
 typical_duration: "1-6 months"
@@ -21,10 +21,20 @@ sections:
   - patterns
   - gotchas
 
+authority_boundary:
+  in_scope: "Phased guidance for planning, installing, automating, and hardening a Home Assistant smart home as documented in this pack."
+  out_of_scope:
+    - "Legal, medical, or financial advice"
+    - "Home Assistant platform internals not covered here (see the product pack)"
+    - "Licensed electrical or construction work"
+  refuse_when:
+    - "No supporting atom in the pack"
+    - "Question is outside in_scope"
+  no_source_no_claim: false
+
 context:
   always:
     - overview.md
-    - manifest.yaml
   searchable:
     - phases/
     - decisions/

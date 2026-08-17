@@ -14,6 +14,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:fd7cee3ca96cca750bacd6d3e23688ae446470517b6f6141cc79f9342aec06ec
+content_hash: sha256:5bc8b92eba0034685a17adfc1f20af7fd7cf0b1eaeb668c6cd1be885ecc5730f
 ---
 <!-- context: section=faq, topic=remote-access, related=network-architecture,backup-migration -->
 
@@ -94,4 +95,4 @@ This is the single most common dangerous mistake in HA setups. If a forum post t
 | Want to support HA development | Nabu Casa |
 | Just want to try something | Tailscale (easy rollback) |
 
-→ See [[network-architecture.md]] for full security discussion
+→ See [[network-remote-access.md]] for the ranked remote-access options

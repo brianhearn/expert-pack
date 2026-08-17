@@ -10,22 +10,21 @@ pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
 schema_version: "4.1"
-verified_at: "2026-04-21"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
   - concepts/compositing.md
 related:
+  - compositing-passes-exr.md
   - compositing-color-grading.md
   - compositing-effects.md
-  - shading-engines.md
-content_hash: sha256:d1f8622dfae17fd42f10900d5e4f80c1107e820d87ce23973b30ea942f57b44c
+  - shading-cycles.md
+content_hash: sha256:fa4d2d7df6345f075d2f88faf6fbc865e49101091be9461be7dc9ea94b03a68e
 ---
 
 # Compositing — Core Setup and Denoising
 
 Blender's Compositor is a node-based post-processing system operating on render output, render passes, and imported images/video. Its power is in multi-pass compositing — separating a render into diffuse, shadow, reflection, and depth components and recombining them with independent control.
-
----
 
 ## The Compositor vs Viewport Compositor
 
@@ -99,50 +98,3 @@ Per-frame denoising can create a "swimming" look in fine details across frames. 
 
 ---
 
-## Render Passes and Multi-Pass Compositing
-
-Multi-pass compositing is the professional approach.
-
-**The classic recombination:**
-```
-Diffuse Direct + Diffuse Indirect = Total Diffuse
-Specular Direct + Specular Indirect = Total Specular
-Total Diffuse + Total Specular + Emission + Environment = Reconstructed Image
-```
-
-By separating passes, you can boost reflections without affecting diffuse, change shadow color, remove environment noise without touching character passes, and adjust AO intensity separately.
-
-### Cryptomatte — Object/Material Isolation Masks
-
-Cryptomatte generates object isolation masks directly from a render — accurate edge anti-aliasing included.
-
-**Enable:** View Layer Properties → Passes → `Cryptomatte Object` and `Cryptomatte Material`.
-
-**Usage:**
-1. Add `Cryptomatte` node (`Shift+A → Matte → Cryptomatte`)
-2. Connect Render Layers `Image` and the crypto passes
-3. Click `Pick`, then click any object in the rendered image
-4. The Cryptomatte node outputs a `Matte` with a perfect edge-antialiased mask
-
-This replaces the old manual "Object Index" pass workflow and is dramatically better at edges.
-
----
-
-## OpenEXR Multilayer — The Pro Format
-
-OpenEXR multilayer stores multiple render passes in a single file with 32-bit floating point precision. Lossless. Large files.
-
-**When to use EXR:**
-- Any project requiring compositing over multiple sessions
-- When you might need to re-composite without re-rendering
-- When client deliverables require raw passes
-
-**When PNG is fine:**
-- Personal projects, quick renders
-- Final delivery only (not meant for compositing)
-
----
-
-## GPU Compositing (4.x)
-
-Enable in `Preferences → System → GPU Compositing`. With a capable GPU, compositing can be 5–20× faster. Most core nodes (Denoise with OptiX, Blur, Glare, Color Balance, Mix) have GPU support. Some matte operations remain CPU-only.

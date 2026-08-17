@@ -1,12 +1,12 @@
 schema_version: '1.0'
 source_id: solar-diy/process/phases/02-system-design
-content_hash: sha256:2c2d7470845a7f91104ec25fe5afa1bdd4fb9457b234dcd8f2bca46362309d36
+content_hash: sha256:6a781e5b936c071624d700403d92ff840090d9fdad33076b3f9f629b88a16e6d
 generated_by: ep-chunk-annotate
 chunks:
 - chunk_id: 02-system-design--opening
   chunk_order: 0
   section: null
-  line_range: [14, 20]
+  line_range: [15, 21]
   tokenizer_tokens: 181
   chunk_summary: ''
   context_prefix: 'From Phase 2: System Design, opening.'
@@ -14,7 +14,7 @@ chunks:
 - chunk_id: 02-system-design--step-1-load-analysis-how-much-power-do-you-need
   chunk_order: 1
   section: 'Step 1: Load Analysis — How Much Power Do You Need?'
-  line_range: [21, 22]
+  line_range: [22, 23]
   tokenizer_tokens: 13
   chunk_summary: ''
   context_prefix: 'From Phase 2: System Design, section Step 1: Load Analysis — How Much Power Do You Need?.'
@@ -22,7 +22,7 @@ chunks:
 - chunk_id: 02-system-design--read-your-electric-bills
   chunk_order: 2
   section: Read Your Electric Bills
-  line_range: [23, 28]
+  line_range: [24, 29]
   tokenizer_tokens: 72
   chunk_summary: '- Collect 12 months of bills; note the kWh used each month'
   context_prefix: 'From Phase 2: System Design, section Read Your Electric Bills.'
@@ -30,7 +30,7 @@ chunks:
 - chunk_id: 02-system-design--decide-your-offset-goal
   chunk_order: 3
   section: Decide Your Offset Goal
-  line_range: [29, 33]
+  line_range: [30, 34]
   tokenizer_tokens: 105
   chunk_summary: '- **100% offset**: Size the array to produce your full annual consumption. Maximizes long-term savings but maximizes upfront cost.'
   context_prefix: 'From Phase 2: System Design, section Decide Your Offset Goal.'
@@ -38,7 +38,7 @@ chunks:
 - chunk_id: 02-system-design--adjust-for-future-load-changes
   chunk_order: 4
   section: Adjust for Future Load Changes
-  line_range: [34, 38]
+  line_range: [35, 39]
   tokenizer_tokens: 66
   chunk_summary: '- Electric vehicle: add 2,000–4,500 kWh/year per EV (home charging)'
   context_prefix: 'From Phase 2: System Design, section Adjust for Future Load Changes.'
@@ -46,7 +46,7 @@ chunks:
 - chunk_id: 02-system-design--step-2-array-sizing-how-many-panels
   chunk_order: 5
   section: 'Step 2: Array Sizing — How Many Panels'
-  line_range: [39, 40]
+  line_range: [40, 41]
   tokenizer_tokens: 10
   chunk_summary: ''
   context_prefix: 'From Phase 2: System Design, section Step 2: Array Sizing — How Many Panels.'
@@ -54,7 +54,7 @@ chunks:
 - chunk_id: 02-system-design--basic-sizing-formula
   chunk_order: 6
   section: Basic Sizing Formula
-  line_range: [41, 59]
+  line_range: [42, 60]
   tokenizer_tokens: 175
   chunk_summary: System size (kW DC) = Annual kWh target ÷ (Peak sun hours/day × 365 × System efficiency)
   context_prefix: 'From Phase 2: System Design, section Basic Sizing Formula.'
@@ -62,7 +62,7 @@ chunks:
 - chunk_id: 02-system-design--sanity-check-with-pvwatts
   chunk_order: 7
   section: Sanity-Check with PVWatts
-  line_range: [60, 62]
+  line_range: [61, 63]
   tokenizer_tokens: 69
   chunk_summary: NREL's PVWatts Calculator (pvwatts.nrel.gov) is the industry standard for production estimates. Enter your location, array size, tilt, azimuth, and losses — ...
   context_prefix: 'From Phase 2: System Design, section Sanity-Check with PVWatts.'
@@ -70,7 +70,7 @@ chunks:
 - chunk_id: 02-system-design--match-array-size-to-available-roof-area
   chunk_order: 8
   section: Match Array Size to Available Roof Area
-  line_range: [63, 66]
+  line_range: [64, 67]
   tokenizer_tokens: 63
   chunk_summary: '- If available roof area limits panel count below your target system size, revisit offset goal or consider ground mount'
   context_prefix: 'From Phase 2: System Design, section Match Array Size to Available Roof Area.'
@@ -78,7 +78,7 @@ chunks:
 - chunk_id: 02-system-design--step-3-inverter-architecture-selection
   chunk_order: 9
   section: 'Step 3: Inverter Architecture Selection'
-  line_range: [67, 77]
+  line_range: [68, 78]
   tokenizer_tokens: 189
   chunk_summary: At this stage you need to commit to your inverter topology. This decision shapes everything about the wiring design.
   context_prefix: 'From Phase 2: System Design, section Step 3: Inverter Architecture Selection.'
@@ -86,7 +86,7 @@ chunks:
 - chunk_id: 02-system-design--step-4-string-sizing-string-and-optimizer-systems
   chunk_order: 10
   section: 'Step 4: String Sizing (String and Optimizer Systems)'
-  line_range: [78, 83]
+  line_range: [79, 84]
   tokenizer_tokens: 85
   chunk_summary: '**Skip this section if using microinverters** — each panel is independent, no string sizing needed.'
   context_prefix: 'From Phase 2: System Design, section Step 4: String Sizing (String and Optimizer Systems).'
@@ -94,7 +94,7 @@ chunks:
 - chunk_id: 02-system-design--why-temperature-matters
   chunk_order: 11
   section: Why Temperature Matters
-  line_range: [84, 88]
+  line_range: [85, 89]
   tokenizer_tokens: 81
   chunk_summary: 'Panel voltage rises in cold weather and falls in hot weather. You must calculate both limits:'
   context_prefix: 'From Phase 2: System Design, section Why Temperature Matters.'
@@ -102,7 +102,7 @@ chunks:
 - chunk_id: 02-system-design--required-data
   chunk_order: 12
   section: Required Data
-  line_range: [89, 103]
+  line_range: [90, 104]
   tokenizer_tokens: 141
   chunk_summary: 'From the panel datasheet:'
   context_prefix: 'From Phase 2: System Design, section Required Data.'
@@ -110,7 +110,7 @@ chunks:
 - chunk_id: 02-system-design--maximum-string-length-cold-limit
   chunk_order: 13
   section: Maximum String Length (Cold Limit)
-  line_range: [104, 110]
+  line_range: [105, 111]
   tokenizer_tokens: 62
   chunk_summary: Voc_adj = Voc × [1 + ((T_min - 25°C) × TempCoef_Voc / 100)]
   context_prefix: 'From Phase 2: System Design, section Maximum String Length (Cold Limit).'
@@ -118,7 +118,7 @@ chunks:
 - chunk_id: 02-system-design--minimum-string-length-hot-limit
   chunk_order: 14
   section: Minimum String Length (Hot Limit)
-  line_range: [111, 118]
+  line_range: [112, 119]
   tokenizer_tokens: 66
   chunk_summary: T_panel = T_max_ambient + mounting_adder
   context_prefix: 'From Phase 2: System Design, section Minimum String Length (Hot Limit).'
@@ -126,7 +126,7 @@ chunks:
 - chunk_id: 02-system-design--practical-example
   chunk_order: 15
   section: Practical Example
-  line_range: [119, 134]
+  line_range: [120, 135]
   tokenizer_tokens: 148
   chunk_summary: 'Panel: 450W (Voc=49.2V, Vmp=41.3V, TempCoef_Voc=-0.27%/°C, TempCoef_Vmp=-0.34%/°C)'
   context_prefix: 'From Phase 2: System Design, section Practical Example.'
@@ -134,7 +134,7 @@ chunks:
 - chunk_id: 02-system-design--number-of-strings
   chunk_order: 16
   section: Number of Strings
-  line_range: [135, 141]
+  line_range: [136, 142]
   tokenizer_tokens: 77
   chunk_summary: Number of strings = Total panel count ÷ Panels per string (round appropriately)
   context_prefix: 'From Phase 2: System Design, section Number of Strings.'
@@ -142,7 +142,7 @@ chunks:
 - chunk_id: 02-system-design--step-5-battery-sizing
   chunk_order: 17
   section: 'Step 5: Battery Sizing'
-  line_range: [142, 145]
+  line_range: [143, 146]
   tokenizer_tokens: 29
   chunk_summary: Batteries add backup capability and, in some rate structures, significant economic value.
   context_prefix: 'From Phase 2: System Design, section Step 5: Battery Sizing.'
@@ -150,7 +150,7 @@ chunks:
 - chunk_id: 02-system-design--define-your-backup-goal-first
   chunk_order: 18
   section: Define Your Backup Goal First
-  line_range: [146, 150]
+  line_range: [147, 151]
   tokenizer_tokens: 107
   chunk_summary: '- **Essential loads backup (common)**: Refrigerator, lights, phone charging, internet router, medical equipment — roughly 1.5–3 kW of continuous draw, 10–20 ...'
   context_prefix: 'From Phase 2: System Design, section Define Your Backup Goal First.'
@@ -158,7 +158,7 @@ chunks:
 - chunk_id: 02-system-design--battery-selection-math
   chunk_order: 19
   section: Battery Selection Math
-  line_range: [151, 159]
+  line_range: [152, 160]
   tokenizer_tokens: 100
   chunk_summary: Required capacity (kWh) = Daily energy need × Backup days target ÷ DoD limit
   context_prefix: 'From Phase 2: System Design, section Battery Selection Math.'
@@ -166,7 +166,7 @@ chunks:
 - chunk_id: 02-system-design--motor-start-surge-critical-check
   chunk_order: 20
   section: Motor Start Surge — Critical Check
-  line_range: [160, 167]
+  line_range: [161, 168]
   tokenizer_tokens: 152
   chunk_summary: Air conditioners, well pumps, and refrigerators draw 3–7× their running current for the first few seconds on startup (called Locked Rotor Amperage, LRA). Man...
   context_prefix: 'From Phase 2: System Design, section Motor Start Surge — Critical Check.'
@@ -174,7 +174,7 @@ chunks:
 - chunk_id: 02-system-design--battery-sizing-for-economics-rate-arbitrage
   chunk_order: 21
   section: Battery Sizing for Economics (Rate Arbitrage)
-  line_range: [168, 175]
+  line_range: [169, 176]
   tokenizer_tokens: 108
   chunk_summary: 'Some utilities have time-of-use (TOU) rates with high peak-hour prices (typically 4–9pm). Sizing for daily charge/discharge cycles requires:'
   context_prefix: 'From Phase 2: System Design, section Battery Sizing for Economics (Rate Arbitrage).'
@@ -182,7 +182,7 @@ chunks:
 - chunk_id: 02-system-design--phase-2-outputs
   chunk_order: 22
   section: Phase 2 Outputs
-  line_range: [176, 186]
+  line_range: [177, 187]
   tokenizer_tokens: 116
   chunk_summary: 'Before moving to Phase 3 (Component Selection), document:'
   context_prefix: 'From Phase 2: System Design, section Phase 2 Outputs.'
@@ -190,8 +190,8 @@ chunks:
 - chunk_id: 02-system-design--related
   chunk_order: 23
   section: Related
-  line_range: [187, 192]
+  line_range: [188, 193]
   tokenizer_tokens: 70
-  chunk_summary: '- Full string sizing worked examples: `../../product/concepts/system-design-fundamentals.md`'
+  chunk_summary: '- Full string sizing worked examples: `../../product/concepts/system-design-string-sizing.md`'
   context_prefix: 'From Phase 2: System Design, section Related.'
   embedding_version: gemini-embedding-001

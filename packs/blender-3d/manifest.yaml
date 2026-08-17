@@ -7,7 +7,7 @@ description: "Deep practitioner knowledge pack for Blender (blender.org) — the
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-11"
-updated: "2026-04-21"
+updated: "2026-08-17"
 
 product_version: "5.0+ (4.2 LTS also supported)"
 vendor: "Blender Foundation"
@@ -43,13 +43,25 @@ scope:
 index_files: "_index.md"
 dependencies: []
 
+authority_boundary:
+  in_scope: "Blender 3D modeling, sculpting, shading, rendering, animation, rigging, Geometry Nodes, compositing, VSE, Grease Pencil, physics, and bpy scripting as documented in this pack."
+  out_of_scope:
+    - "Legal, medical, or financial advice"
+    - "Other DCC or editing tools (Maya, Cinema 4D, 3ds Max, Photoshop, Premiere) except as brief contrast"
+    - "Unrelated software plugins and non-Blender production pipelines"
+  refuse_when:
+    - "No supporting atom in the pack"
+    - "Question is outside in_scope"
+  no_source_no_claim: false
+
 context:
   always:
     - overview.md
-    - glossary.md
   searchable:
     - concepts/
     - workflows/
     - troubleshooting/
+    - faq/
+    - glossary.md
+  on_demand:
     - sources/
-  on_demand: []

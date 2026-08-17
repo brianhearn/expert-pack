@@ -1,29 +1,29 @@
 ---
 id: blender-3d/concepts/modeling-topology
-title: "Modeling — Topology Principles and Edit Mode Operations"
+title: "Modeling — Topology Principles and Edit Mode"
 type: concept
 tags:
   - modeling
   - topology
   - edit-mode
-  - retopology
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
 schema_version: "4.1"
-verified_at: "2026-04-21"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
   - concepts/modeling-fundamentals.md
 related:
-  - modeling-modifiers.md
-  - sculpting-paradigms.md
-content_hash: sha256:c28c27fdfd0d721f78005911031a65863580521e5fe0dfbf86688c4e470250ec
+  - modeling-retopology.md
+  - modeling-modifier-stack.md
+  - sculpting-dyntopo.md
+content_hash: sha256:7fddbbd63732381991e921cc2a69f9b87d30246f6cfaeb4165a8a107d480e8c2
 ---
 
-# Modeling — Topology Principles and Edit Mode Operations
+# Modeling — Topology Principles and Edit Mode
 
----
+Topology is the arrangement of vertices, edges, and faces. Quad edge loops that follow surface contours subdivide and deform cleanly; poles, n-gons, and unapplied scale are the usual sources of pinching and modifier or physics bugs.
 
 ## Why Topology Matters
 
@@ -81,43 +81,3 @@ The art of topology is routing edge loops so that poles end up in "safe" locatio
 
 ---
 
-## Common Modeling Mistakes
-
-### Unapplied Scale (The #1 Gotcha)
-**Symptom:** Subdivision Surface creates uneven smoothing, physics behaves oddly, textures scale inconsistently.
-**Cause:** Scaled the object in Object Mode without applying the scale. Modifiers and physics use the object's scale — a scale of (1, 1, 3) means physics thinks the object is 3x taller.
-**Fix:** `Ctrl+A → Scale` to apply the scale, baking it into the mesh. Do this before applying modifiers or setting up physics.
-
-### N-Gons Under Subdivision Surface
-N-gons (5+ sided faces) create unpredictable smoothing. Use `Overlay → Mesh Analysis → N-Gons` to check.
-
-### Overlapping Vertices
-Fix with `Mesh → Merge by Distance` (select all in Edit Mode). Set the merge distance appropriately for your scale.
-
-### Non-Manifold Geometry
-A manifold mesh is one where every edge is shared by exactly 2 faces. Non-manifold geometry causes issues with Solidify modifier, 3D printing, Boolean operations, and physics simulation.
-Check: `Select → Select All by Trait → Non-Manifold`.
-
----
-
-## Retopology
-
-Retopology creates new, clean topology over existing high-resolution geometry (usually a sculpt).
-
-**When you need it:**
-- After sculpting a character (sculpt mesh = millions of tris, useless for animation)
-- After importing CAD or scan data (non-quads, excessive density)
-
-**Manual retopo workflow:**
-1. Add a new empty mesh object on top of the sculpt
-2. Enable `Snap to Face` with `Project Individual Elements`
-3. Use `LoopTools` add-on (built-in) for evenly-spaced loops
-4. Draw quads with `F` (face creation)
-5. Use `Shrinkwrap` modifier (Nearest Surface mode) for real-time snapping
-
-**Automated retopo:**
-- **QuadriFlow** (built-in, `Mesh → Remesh → QuadriFlow`) — creates all-quad mesh
-- **Instant Meshes** (external free tool) — often better results than QuadriFlow for complex shapes
-- **Remesh modifier** (Voxel mode) — for uniform density mesh for further sculpting
-
-**After retopology:** Bake normal maps from the high-res sculpt onto the low-res retopo mesh using Blender's bake system (`Properties → Render → Bake`, type `Normal`, `Selected to Active`).

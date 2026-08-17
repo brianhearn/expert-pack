@@ -3,7 +3,7 @@ title: "Phases Index"
 type: "index"
 tags: [phases]
 pack: "solar-diy-process"
-retrieval_strategy: "standard"
+retrieval_strategy: navigation
 id: solar-diy/process/phases/_index
 verified_at: "2026-04-21"
 verified_by: agent

@@ -7,7 +7,7 @@ description: "Phased guide for planning and executing a residential solar + batt
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-11"
-updated: "2026-03-11"
+updated: "2026-08-17"
 
 domain: "residential construction / renewable energy"
 typical_duration: "3-9 months (from decision to grid-tied operation)"
@@ -22,6 +22,17 @@ sections:
   - gotchas
 
 index_files: "_index.md"
+
+authority_boundary:
+  in_scope: "Phased guidance for planning, permitting, installing, commissioning, and maintaining a residential solar + battery system as documented in this pack."
+  out_of_scope:
+    - "Legal, medical, or financial/investment advice"
+    - "Equipment internals not covered here (see the product pack)"
+    - "Performing licensed electrical work or signing off an inspection"
+  refuse_when:
+    - "No supporting atom in the pack"
+    - "Question is outside in_scope"
+  no_source_no_claim: false
 
 context:
   always:

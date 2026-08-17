@@ -725,7 +725,7 @@ TAC is the response layer; fragment provenance is the retrieval layer. In `retri
 
 `tools/validator/ep-validate.py --strict` turns the frontmatter contract into a **hard gate** before content enters an index or export pipeline. It implies `--provenance` and promotes missing-field, hash-drift, and size rules from warnings to errors. Required under `--strict`: `title`, `type`, `tags`, `pack`, `id`, `schema_version`, `retrieval_strategy`, `verified_at`, `content_hash`, plus manifest `schema_version`.
 
-CI (`.github/workflows/validate.yml`), pre-commit (`.pre-commit-config.yaml`), and `tools/ingest-gate.py` (validate → strip → export) enforce this gate. Use `--ignore CODE` only for tracked backlog categories (demo packs currently ignore `W-V41-01` oversized-concept debt). Machine-readable contract: `schemas/registry/frontmatter.schema.json`.
+CI (`.github/workflows/validate.yml`), pre-commit (`.pre-commit-config.yaml`), and `tools/ingest-gate.py` (validate → strip → export) enforce this gate. Use `--ignore CODE` only for a tracked backlog. Machine-readable contract: `schemas/registry/frontmatter.schema.json`.
 
 ### Pack-Level Freshness (manifest.yaml)
 

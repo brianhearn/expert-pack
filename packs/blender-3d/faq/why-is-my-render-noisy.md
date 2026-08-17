@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 content_hash: sha256:43417663c91c6192fd0175d7cd51611cf124206e3ddeb75ba8b903cf9dfbf34b
+content_hash: sha256:f809f9a8d66ea2990478be971ec6bc6dfdf52c129a3fdbc7f4740af01617cb67
 ---
 <!-- context: section=faq, topic=render-noise, related=shading-rendering,compositing,troubleshooting/common-mistakes -->
 
@@ -130,4 +131,4 @@ If your scene doesn't require Cycles' physical accuracy, switch to EEVEE:
 
 EEVEE is appropriate for: product visualization (many studios), motion graphics, stylized art, Grease Pencil work.
 
-→ See: [[shading-engines.md]] for EEVEE vs Cycles decision guide.
+→ See: [[shading-eevee.md]] for EEVEE vs Cycles decision guide.

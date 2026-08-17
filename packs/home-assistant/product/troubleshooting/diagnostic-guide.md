@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 content_hash: sha256:b9a82edb54784f78d43a81f77dff54c1398d1131eae5b50a96cbaf774dfbc1eb
+content_hash: sha256:27beef146fcf711d2d687a9637485812094f0160e2c055fa708472277a8fa8d4
 ---
 <!-- context: section=troubleshooting, topic=diagnostic-guide, related=core-architecture,yaml-configuration,integrations-guide -->
 ---
@@ -411,9 +412,9 @@ Sometimes the correct answer is a clean install. Triggers:
 ## Related
 
 - [[core-architecture.md|Core Architecture]] — Understanding what you're troubleshooting
-- [[yaml-configuration.md|YAML Configuration]] — Config validation workflow
+- [[yaml-validation.md|YAML validation]] — Config validation workflow
 - [[top-ha-mistakes.md|Top HA Mistakes]] — Avoid the most common problems
-- [[integrations-guide.md|Integrations Guide]] — Integration-specific troubleshooting
+- [[integrations-troubleshooting.md|Integration troubleshooting]] — Reload, debug, monthly breaks
 
 ---
 

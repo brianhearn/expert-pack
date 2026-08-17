@@ -1,6 +1,6 @@
 ---
 title: Top DIY Solar Installation Mistakes
-type: troubleshooting
+type: gotcha
 tags:
 - common-mistakes
 - inspection-commissioning
@@ -16,6 +16,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 content_hash: sha256:32237e534d3fed8fd491ae2729c76b1c4d3f6db1b2d838a9491e8f0f08659fbe
+content_hash: sha256:ccd3d92d43ccbec06a91eccea787b6c433b92b100fac13b69f6ccfcdc9971e73
 ---
 <!-- context: section=product, topic=troubleshooting-mistakes, related=system-design-fundamentals,installation,permitting,inspection-commissioning,common-mistakes -->
 
@@ -32,7 +33,7 @@ Inverter displays overvoltage error on cold winter mornings, or system produces 
 Not accounting for temperature effects on panel voltage. Panels produce MORE voltage in cold weather and LESS in hot weather. If you size your strings at room temperature, you'll exceed inverter limits in winter or fall below minimum in summer.
 
 ### The Fix
-Run proper string sizing calculations using your site's ASHRAE temperature extremes, not average temperatures. See [[system-design-fundamentals.md|System Design Fundamentals]] for the math.
+Run proper string sizing calculations using your site's ASHRAE temperature extremes, not average temperatures. See [[system-design-string-sizing.md|String sizing]] for the math.
 
 ### How to Avoid
 Always use the coldest recorded temperature (or ASHRAE 2% low) for maximum string size and the hottest temperature plus mounting adder for minimum string size. Never guess.

@@ -73,9 +73,8 @@ files fail before they can enter an index:
 `--fail-on-warn` additionally fails the run if any warning remains.
 
 `--ignore CODE` demotes a specific check code back to WARN so it does not fail
-the run — useful for a tracked backlog. For example, the bundled demo packs pass
-`--strict --ignore W-V41-01` while their oversized concept files await the
-atomic-split backfill.
+the run — useful for a tracked backlog. The public demo packs no longer need
+`--ignore W-V41-01` after the 2026-08-17 concept-split sprint.
 
 ### Chunk sidecars (RFC-004)
 

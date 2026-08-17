@@ -1,32 +1,27 @@
 ---
-title: Core Architecture — The HA Mental Model
+title: "Core Architecture — The HA Hierarchy"
 type: concept
 tags:
-- automation-fundamentals
-- concepts
-- core-architecture
-- integrations-guide
-- protocols
+  - core-architecture
+  - integrations
+  - devices
+  - entities
+  - areas
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/core-architecture
-verified_at: "2026-04-21"
-verified_by: agent
 schema_version: "4.1"
-concept_scope: single
-content_hash: sha256:36fd783b6f1be008537e19b42c05ee81496e4c5bd9e24fe778fb440746be3750
+verified_at: "2026-08-17"
+verified_by: agent
+related:
+  - core-state-machine.md
+  - core-services-install.md
+  - protocols-comparison.md
+content_hash: sha256:297e2c0e801af6cbaabc39b4a8c6f5090556f55e21fe79ab43916e786312ae33
 ---
-<!-- context: section=concepts, topic=core-architecture, related=automation-fundamentals,protocols,integrations-guide -->
----
-sources:
-  - type: documentation
-    url: "https://www.home-assistant.io/getting-started/concepts-terminology/"
-    date: "2026-03"
----
+# Core Architecture — The HA Hierarchy
 
-# Core Architecture — The HA Mental Model
-
-> **Lead summary:** Home Assistant is a state machine. Everything revolves around **entities** (the atomic unit — a sensor, switch, light, etc.), which belong to **devices** (physical or logical groupings), which connect through **integrations** (the software bridges to hardware and services). Entities have states that change over time. Automations react to state changes. Dashboards display states. Understanding this hierarchy — integration → device → entity → state — is the single most important concept in HA.
+Home Assistant is organized as integration → device → entity → state → attributes. An integration is the software bridge, a device groups related entities, and the entity is the atomic unit automations and dashboards actually read. Understanding this hierarchy is the pack's entry concept.
 
 ## The Hierarchy
 
@@ -77,47 +72,10 @@ The atomic unit of HA. An entity represents one measurable or controllable thing
 
 Organizational grouping for devices and entities by physical location (room, floor, zone). Areas are optional but highly recommended — they enable floor plans, area-based automations ("turn off all lights in the bedroom"), and dashboard organization.
 
-## The State Machine
+## Related Concepts
 
-HA is fundamentally a **state machine** — it tracks the current state of every entity and reacts when states change.
+- [[core-state-machine.md|core state machine]]
+- [[core-services-install.md|core services install]]
+- [[protocols-comparison.md|protocols comparison]]
 
-**The event loop:**
-1. An integration reports a state change (sensor reads new temperature, light is turned on)
-2. HA records the new state in its database
-3. The state change fires a `state_changed` event
-4. Any automation with a matching trigger evaluates its conditions
-5. If conditions pass, the automation executes its actions
-6. Actions may change other entity states, which fire more events
-
-This is why understanding entities and states is foundational — every automation, dashboard card, and template ultimately reads or writes entity states.
-
-## Services (Actions)
-
-Services are the verbs of HA — the things you can ask entities to do. Examples:
-- `light.turn_on` — turn on a light (with optional brightness, color)
-- `climate.set_temperature` — set thermostat target temperature
-- `notify.mobile_app` — send a push notification
-
-**Key facts:**
-- Services are called with a target (which entity/device/area) and optional data (parameters)
-- The UI calls them "Actions" (renamed from "Services" in recent versions)
-- You can test services in Developer Tools → Services
-- Custom integrations can register their own services
-
-## Installation Types
-
-HA can be installed four ways, with significant differences:
-
-| Type | What It Is | Supervisor | Add-ons | Best For |
-|------|-----------|------------|---------|----------|
-| **HA Operating System** | Dedicated OS on bare metal or VM | ✅ | ✅ | Most users — recommended default |
-| **HA Container** | Docker container (just Core) | ❌ | ❌ | Users comfortable with Docker |
-| **HA Core** | Python venv installation | ❌ | ❌ | Developers, advanced users |
-| **HA Supervised** | HA + Supervisor on existing Linux | ✅ | ✅ | Advanced users wanting add-ons on existing OS |
-
-The **Supervisor** provides: add-on store (like Mosquitto MQTT broker, Node-RED, file editors), backup management, snapshot/restore, and update management. Without it, you manage all supporting services yourself.
-
-## Related
-
-- [[protocols.md|Smart Home Protocols]] — How devices actually communicate with HA
-- [[automation-fundamentals.md|Automation Fundamentals]] — Using the state machine for automation
+Sources: [HA concepts and terminology](https://www.home-assistant.io/getting-started/concepts-terminology/).

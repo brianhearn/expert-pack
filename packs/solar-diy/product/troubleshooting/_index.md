@@ -3,7 +3,7 @@ title: "Troubleshooting"
 type: "index"
 tags: [troubleshooting]
 pack: "solar-diy-product"
-retrieval_strategy: "standard"
+retrieval_strategy: navigation
 id: solar-diy/product/troubleshooting/_index
 verified_at: "2026-04-21"
 verified_by: agent

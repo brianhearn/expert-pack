@@ -1,6 +1,6 @@
 ---
 title: Community-Sourced Gotchas and Practitioner Knowledge
-type: troubleshooting
+type: gotcha
 tags: [gotcha, community, practitioner-knowledge, home-assistant-product, troubleshooting]
 pack: home-assistant-product
 retrieval_strategy: atomic

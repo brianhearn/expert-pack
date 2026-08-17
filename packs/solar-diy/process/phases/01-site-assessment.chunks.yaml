@@ -1,12 +1,12 @@
 schema_version: '1.0'
 source_id: solar-diy/process/phases/01-site-assessment
-content_hash: sha256:7188a58c584f7b9d9b1109ec2f0c0e33d95a28ba50ba929c54814fb98b51ba0a
+content_hash: sha256:f0f23f85c6e67e9a9f2ee4dd4f5c4b95ff485776141913e118a085208d65870f
 generated_by: ep-chunk-annotate
 chunks:
 - chunk_id: 01-site-assessment--opening
   chunk_order: 0
   section: null
-  line_range: [14, 20]
+  line_range: [15, 21]
   tokenizer_tokens: 157
   chunk_summary: ''
   context_prefix: 'From Phase 1: Site Assessment, opening.'
@@ -14,7 +14,7 @@ chunks:
 - chunk_id: 01-site-assessment--what-you-re-evaluating
   chunk_order: 1
   section: What You're Evaluating
-  line_range: [21, 22]
+  line_range: [22, 23]
   tokenizer_tokens: 6
   chunk_summary: ''
   context_prefix: 'From Phase 1: Site Assessment, section What You''re Evaluating.'
@@ -22,7 +22,7 @@ chunks:
 - chunk_id: 01-site-assessment--1-roof-condition-and-orientation
   chunk_order: 2
   section: 1. Roof Condition and Orientation
-  line_range: [23, 53]
+  line_range: [24, 54]
   tokenizer_tokens: 483
   chunk_summary: '**Age and condition first.** Solar panels have 25–30 year lifespans. If your roof is 15+ years old or showing wear, re-roof before installing solar. Removing...'
   context_prefix: 'From Phase 1: Site Assessment, section 1. Roof Condition and Orientation.'
@@ -30,7 +30,7 @@ chunks:
 - chunk_id: 01-site-assessment--2-shading-analysis
   chunk_order: 3
   section: 2. Shading Analysis
-  line_range: [54, 79]
+  line_range: [55, 80]
   tokenizer_tokens: 373
   chunk_summary: Shading is the single biggest performance killer and the most commonly underestimated factor.
   context_prefix: 'From Phase 1: Site Assessment, section 2. Shading Analysis.'
@@ -38,7 +38,7 @@ chunks:
 - chunk_id: 01-site-assessment--3-structural-evaluation
   chunk_order: 4
   section: 3. Structural Evaluation
-  line_range: [80, 100]
+  line_range: [81, 101]
   tokenizer_tokens: 283
   chunk_summary: Roof structure must support the additional load of panels and racking.
   context_prefix: 'From Phase 1: Site Assessment, section 3. Structural Evaluation.'
@@ -46,7 +46,7 @@ chunks:
 - chunk_id: 01-site-assessment--4-utility-interconnection-research
   chunk_order: 5
   section: 4. Utility Interconnection Research
-  line_range: [101, 118]
+  line_range: [102, 119]
   tokenizer_tokens: 391
   chunk_summary: Before finalizing your design, understand your utility's requirements and limitations. This is the most overlooked part of site assessment.
   context_prefix: 'From Phase 1: Site Assessment, section 4. Utility Interconnection Research.'
@@ -54,7 +54,7 @@ chunks:
 - chunk_id: 01-site-assessment--site-assessment-checklist
   chunk_order: 6
   section: Site Assessment Checklist
-  line_range: [119, 131]
+  line_range: [120, 132]
   tokenizer_tokens: 164
   chunk_summary: '- [ ] Roof age and condition confirmed (replace if >15 years, any signs of wear)'
   context_prefix: 'From Phase 1: Site Assessment, section Site Assessment Checklist.'
@@ -62,7 +62,7 @@ chunks:
 - chunk_id: 01-site-assessment--outputs-of-this-phase
   chunk_order: 7
   section: Outputs of This Phase
-  line_range: [132, 141]
+  line_range: [133, 142]
   tokenizer_tokens: 95
   chunk_summary: 'Going into Phase 2 (System Design), you should know:'
   context_prefix: 'From Phase 1: Site Assessment, section Outputs of This Phase.'
@@ -70,8 +70,8 @@ chunks:
 - chunk_id: 01-site-assessment--related
   chunk_order: 8
   section: Related
-  line_range: [142, 146]
-  tokenizer_tokens: 49
-  chunk_summary: '- System sizing math: `../product/concepts/system-design-fundamentals.md`'
+  line_range: [143, 147]
+  tokenizer_tokens: 69
+  chunk_summary: '- System sizing math: `../product/concepts/system-design-fundamentals.md` and string voltage math in `../product/concepts/system-design-string-sizing.md`'
   context_prefix: 'From Phase 1: Site Assessment, section Related.'
   embedding_version: gemini-embedding-001

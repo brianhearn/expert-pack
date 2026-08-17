@@ -2,12 +2,12 @@ name: "Residential Solar & Battery DIY Guide"
 slug: "solar-diy"
 type: "composite"
 version: "2.0.0"
-schema_version: "4.1"
+schema_version: "1.2"
 description: "Complete guide to planning, selecting, installing, and maintaining a residential solar + battery system. Combines a solar technology reference pack (what the equipment IS) with a phased installation process pack (how to PLAN and DO it)."
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-10"
-updated: "2026-03-11"
+updated: "2026-08-17"
 
 packs:
   - path: "product"
@@ -15,16 +15,31 @@ packs:
   - path: "process"
     role: knowledge
 
+authority_boundary:
+  in_scope: "Topics covered by the solar technology and residential installation process packs in this composite."
+  out_of_scope:
+    - "Legal, medical, or financial/investment advice"
+    - "Commercial or utility-scale systems not covered by the constituent packs"
+    - "Performing licensed electrical work or signing off an inspection"
+  refuse_when:
+    - "No supporting atom in either constituent pack"
+    - "Question is outside in_scope"
+  no_source_no_claim: false
+
 conflicts:
   priority: [product, process]
-  strategy: "flag"
+  strategy: "fail_closed"
+  isolation:
+    voice_must_not_assert_knowledge: true
+    knowledge_must_not_override_voice: true
+    respect_access_tiers: true
+  tie_break: [authority_boundary, confidence, verified_at]
 
 context:
   overrides:
     "product":
       always:
         - overview.md
-        - glossary.md
     "process":
       always:
         - overview.md

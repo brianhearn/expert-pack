@@ -7,7 +7,7 @@ description: "Technology reference for residential solar and battery storage sys
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-10"
-updated: "2026-03-11"
+updated: "2026-08-17"
 
 product_version: "2026 market"
 vendor: "Multi-vendor (industry-wide)"
@@ -36,14 +36,25 @@ scope:
 index_files: "_index.md"
 dependencies: []
 
+authority_boundary:
+  in_scope: "Residential solar and battery technology, NEC-related requirements documented here, product selection, and troubleshooting as covered in this pack."
+  out_of_scope:
+    - "Legal, medical, or financial/investment advice"
+    - "Commercial or utility-scale systems not covered by this pack"
+    - "Performing licensed electrical work or signing off an inspection"
+  refuse_when:
+    - "No supporting atom in the pack"
+    - "Question is outside in_scope"
+  no_source_no_claim: false
+
 context:
   always:
     - overview.md
-    - glossary.md
   searchable:
     - concepts/
     - specifications/
     - troubleshooting/
     - faq/
+    - glossary.md
   on_demand:
     - sources/

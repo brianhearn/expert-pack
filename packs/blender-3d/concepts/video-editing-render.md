@@ -1,6 +1,6 @@
 ---
 id: blender-3d/concepts/video-editing-render
-title: "Video Editing — Rendering, Audio, and VSE Limitations"
+title: "Video Editing — Rendering and Audio"
 type: concept
 tags:
   - video-editing
@@ -11,18 +11,19 @@ pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
 schema_version: "4.1"
-verified_at: "2026-04-21"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
   - concepts/video-editing.md
 related:
-  - video-editing-vse.md
-content_hash: sha256:3ba60ec466c31a66463ac5d36585c93e3741f91376fc16e7420a3e875d933d31
+  - video-editing-vse-editing.md
+  - video-editing-vs-external.md
+content_hash: sha256:c90346b79b915ffa1420299b8f22b447bb581aa8b5c1f2e53156f9ae6f156a36
 ---
 
-# Video Editing — Rendering, Audio, and VSE Limitations
+# Video Editing — Rendering and Audio
 
----
+Rendering from the VSE writes the timeline to an image sequence or an FFmpeg video, with audio mixed in the same encode. Match frame rate to footage, prefer image sequences over a single movie file for long jobs, and set container, codec, and CRF for the delivery target.
 
 ## Rendering from the VSE
 
@@ -102,30 +103,3 @@ In `Encoding → Audio`:
 
 ---
 
-## Stamps and Metadata Overlay
-
-`Output Properties → Metadata` allows rendering with burn-in metadata:
-- Filename, date, time, frame number
-- Camera, lens, render time
-- Note field (custom text)
-
-Useful for review cuts, WIP exports, and dailies.
-
----
-
-## VSE vs External Editors
-
-| Feature | Blender VSE | DaVinci Resolve | Premiere Pro |
-|---------|-------------|-----------------|--------------|
-| Multi-cam editing | No | Yes | Yes |
-| Professional color grading | Basic | Excellent | Good |
-| Audio mixing | Basic | DaVinci Fairlight | Adobe Audition |
-| Plugin ecosystem | Minimal | Extensive | Extensive |
-| Performance with 4K+ | Moderate | Excellent (GPU) | Good |
-| Blender render integration | Native | Via file export | Via file export |
-
-**The practical workflow:**
-- **Use Blender VSE for:** Assembling renders for quick-turnaround projects, basic color corrections and text for personal work, when you need to stay inside one app.
-- **Use DaVinci Resolve for:** Any professional delivery requiring proper color science, multi-source multi-camera editing, when audio mixing matters.
-
-The VSE is not Blender's strongest feature. For hobbyist and quick professional work it's adequate. For broadcast or film, export sequences and use a dedicated editor.

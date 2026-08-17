@@ -4,7 +4,7 @@ type: index
 tags:
 - faq
 pack: blender-3d
-retrieval_strategy: standard
+retrieval_strategy: navigation
 id: blender-3d/faq/_index
 verified_at: "2026-04-21"
 verified_by: agent

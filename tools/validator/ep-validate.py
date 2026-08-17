@@ -216,7 +216,7 @@ class Validator:
                 rel = os.path.relpath(full, self.pack_path)
                 rel_dir = os.path.dirname(rel).replace(os.sep, '/')
                 if f == '_index.md':
-                    self.index_files.add(rel)
+                    self.index_files.add(rel.replace(os.sep, '/'))
                     if rel_dir:
                         self.content_dirs.add(rel_dir)
                     continue
@@ -318,7 +318,7 @@ class Validator:
             rel_dir = os.path.dirname(rel).replace(os.sep, '/')
             if not rel_dir:
                 continue
-            parts = rel.split('/')
+            parts = rel.replace(os.sep, '/').split('/')
             top_dir = parts[0]
             leaf_key = parts[-2] if len(parts) > 2 else os.path.splitext(os.path.basename(rel))[0]
             expected_type = DIR_TYPE_MAP.get(leaf_key) or DIR_TYPE_MAP.get(top_dir)
@@ -335,7 +335,7 @@ class Validator:
     # ── Check 7: _index.md presence ──────────────────────────────────────
     def check_index_files(self):
         for d in self.content_dirs:
-            idx_path = os.path.join(d, '_index.md')
+            idx_path = f"{d}/_index.md" if d else '_index.md'
             if idx_path not in self.index_files:
                 # Only flag directories with actual content files
                 has_content = any(

@@ -1,12 +1,12 @@
 schema_version: '1.0'
 source_id: solar-diy/process/phases/03-component-selection
-content_hash: sha256:c0448a1cc76c914e2887af162d94b3b050feb316a123aa5f73b4a8a30a2993f2
+content_hash: sha256:0057be4048e59838c3b8806c7759e9a5718370c825ec5f1551628baccee5d460
 generated_by: ep-chunk-annotate
 chunks:
 - chunk_id: 03-component-selection--opening
   chunk_order: 0
   section: null
-  line_range: [14, 20]
+  line_range: [15, 21]
   tokenizer_tokens: 169
   chunk_summary: ''
   context_prefix: 'From Phase 3: Component Selection, opening.'
@@ -14,7 +14,7 @@ chunks:
 - chunk_id: 03-component-selection--procurement-timing
   chunk_order: 1
   section: Procurement Timing
-  line_range: [21, 30]
+  line_range: [22, 31]
   tokenizer_tokens: 185
   chunk_summary: 'A common mistake: ordering everything the day you make your decisions. Before placing major orders:'
   context_prefix: 'From Phase 3: Component Selection, section Procurement Timing.'
@@ -22,7 +22,7 @@ chunks:
 - chunk_id: 03-component-selection--1-solar-panels
   chunk_order: 2
   section: 1. Solar Panels
-  line_range: [31, 32]
+  line_range: [32, 33]
   tokenizer_tokens: 4
   chunk_summary: ''
   context_prefix: 'From Phase 3: Component Selection, section 1. Solar Panels.'
@@ -30,7 +30,7 @@ chunks:
 - chunk_id: 03-component-selection--selection-criteria
   chunk_order: 3
   section: Selection Criteria
-  line_range: [33, 43]
+  line_range: [34, 44]
   tokenizer_tokens: 205
   chunk_summary: ''
   context_prefix: 'From Phase 3: Component Selection, section Selection Criteria.'
@@ -38,7 +38,7 @@ chunks:
 - chunk_id: 03-component-selection--brands-and-tier
   chunk_order: 4
   section: Brands and Tier
-  line_range: [44, 55]
+  line_range: [45, 56]
   tokenizer_tokens: 214
   chunk_summary: Tier 1 refers to bankability (Bloomberg tier 1 = financially stable manufacturer). It does NOT mean best quality — it means the company is likely to honor wa...
   context_prefix: 'From Phase 3: Component Selection, section Brands and Tier.'
@@ -46,7 +46,7 @@ chunks:
 - chunk_id: 03-component-selection--what-to-avoid
   chunk_order: 5
   section: What to Avoid
-  line_range: [56, 61]
+  line_range: [57, 62]
   tokenizer_tokens: 68
   chunk_summary: '- Unknown/unverified manufacturers with no US service infrastructure'
   context_prefix: 'From Phase 3: Component Selection, section What to Avoid.'
@@ -54,7 +54,7 @@ chunks:
 - chunk_id: 03-component-selection--2-inverter
   chunk_order: 6
   section: 2. Inverter
-  line_range: [62, 65]
+  line_range: [63, 66]
   tokenizer_tokens: 24
   chunk_summary: Your inverter architecture was decided in Phase 2. Now select the specific model.
   context_prefix: 'From Phase 3: Component Selection, section 2. Inverter.'
@@ -62,7 +62,7 @@ chunks:
 - chunk_id: 03-component-selection--string-inverter-selection
   chunk_order: 7
   section: String Inverter Selection
-  line_range: [66, 77]
+  line_range: [67, 78]
   tokenizer_tokens: 173
   chunk_summary: '**Major brands:** SMA, Fronius, SolarEdge (with optimizers), Growatt (budget), Solis (budget)'
   context_prefix: 'From Phase 3: Component Selection, section String Inverter Selection.'
@@ -70,7 +70,7 @@ chunks:
 - chunk_id: 03-component-selection--microinverter-selection
   chunk_order: 8
   section: Microinverter Selection
-  line_range: [78, 83]
+  line_range: [79, 84]
   tokenizer_tokens: 83
   chunk_summary: '- Match microinverter max input power to your panel wattage (most support 125–160% panel oversizing)'
   context_prefix: 'From Phase 3: Component Selection, section Microinverter Selection.'
@@ -78,7 +78,7 @@ chunks:
 - chunk_id: 03-component-selection--battery-ready-inverters
   chunk_order: 9
   section: Battery-Ready Inverters
-  line_range: [84, 88]
+  line_range: [85, 89]
   tokenizer_tokens: 94
   chunk_summary: If you're not adding battery now but may later, consider a hybrid inverter that supports DC battery coupling. This avoids replacing the inverter when you eve...
   context_prefix: 'From Phase 3: Component Selection, section Battery-Ready Inverters.'
@@ -86,7 +86,7 @@ chunks:
 - chunk_id: 03-component-selection--3-battery-system-if-applicable
   chunk_order: 10
   section: 3. Battery System (if applicable)
-  line_range: [89, 92]
+  line_range: [90, 93]
   tokenizer_tokens: 29
   chunk_summary: See `../../product/specifications/battery-systems-2026.md` for detailed specs.
   context_prefix: 'From Phase 3: Component Selection, section 3. Battery System (if applicable).'
@@ -94,7 +94,7 @@ chunks:
 - chunk_id: 03-component-selection--selection-criteria-2
   chunk_order: 11
   section: Selection Criteria
-  line_range: [93, 103]
+  line_range: [94, 104]
   tokenizer_tokens: 188
   chunk_summary: ''
   context_prefix: 'From Phase 3: Component Selection, section Selection Criteria.'
@@ -102,7 +102,7 @@ chunks:
 - chunk_id: 03-component-selection--ac-coupled-vs-dc-coupled
   chunk_order: 12
   section: AC-Coupled vs DC-Coupled
-  line_range: [104, 109]
+  line_range: [105, 110]
   tokenizer_tokens: 116
   chunk_summary: '- **AC-coupled** (Powerwall 3, Enphase IQ): Battery connects at AC side; works with most grid-tied inverters; slightly less efficient (each DC-AC-DC conversi...'
   context_prefix: 'From Phase 3: Component Selection, section AC-Coupled vs DC-Coupled.'
@@ -110,7 +110,7 @@ chunks:
 - chunk_id: 03-component-selection--4-racking-and-mounting
   chunk_order: 13
   section: 4. Racking and Mounting
-  line_range: [110, 113]
+  line_range: [111, 114]
   tokenizer_tokens: 30
   chunk_summary: Racking is the structural system that attaches panels to your roof. Choose based on roof type.
   context_prefix: 'From Phase 3: Component Selection, section 4. Racking and Mounting.'
@@ -118,7 +118,7 @@ chunks:
 - chunk_id: 03-component-selection--comp-shingle-most-common
   chunk_order: 14
   section: Comp Shingle (Most Common)
-  line_range: [114, 120]
+  line_range: [115, 121]
   tokenizer_tokens: 101
   chunk_summary: '- L-foot mounts with flashing (penetration mounts) — industry standard'
   context_prefix: 'From Phase 3: Component Selection, section Comp Shingle (Most Common).'
@@ -126,7 +126,7 @@ chunks:
 - chunk_id: 03-component-selection--standing-seam-metal
   chunk_order: 15
   section: Standing Seam Metal
-  line_range: [121, 124]
+  line_range: [122, 125]
   tokenizer_tokens: 37
   chunk_summary: '- S-5! clamp mounts — no penetrations required, fastest install'
   context_prefix: 'From Phase 3: Component Selection, section Standing Seam Metal.'
@@ -134,7 +134,7 @@ chunks:
 - chunk_id: 03-component-selection--flat-roof
   chunk_order: 16
   section: Flat Roof
-  line_range: [125, 128]
+  line_range: [126, 129]
   tokenizer_tokens: 55
   chunk_summary: '- Ballasted racking (no penetrations) — calculate wind uplift for your zone; ballast weights are significant'
   context_prefix: 'From Phase 3: Component Selection, section Flat Roof.'
@@ -142,7 +142,7 @@ chunks:
 - chunk_id: 03-component-selection--ground-mount
   chunk_order: 17
   section: Ground Mount
-  line_range: [129, 133]
+  line_range: [130, 134]
   tokenizer_tokens: 64
   chunk_summary: '- Top-of-pole or ground-mount racking: more expensive but no roof penetrations, better shading control, easier maintenance'
   context_prefix: 'From Phase 3: Component Selection, section Ground Mount.'
@@ -150,7 +150,7 @@ chunks:
 - chunk_id: 03-component-selection--5-balance-of-system-bos-hardware
   chunk_order: 18
   section: 5. Balance of System (BOS) Hardware
-  line_range: [134, 137]
+  line_range: [135, 138]
   tokenizer_tokens: 32
   chunk_summary: The wiring, overcurrent protection, and disconnects that complete the electrical system.
   context_prefix: 'From Phase 3: Component Selection, section 5. Balance of System (BOS) Hardware.'
@@ -158,7 +158,7 @@ chunks:
 - chunk_id: 03-component-selection--dc-side-array-to-inverter
   chunk_order: 19
   section: DC Side (Array to Inverter)
-  line_range: [138, 143]
+  line_range: [139, 144]
   tokenizer_tokens: 96
   chunk_summary: '- **PV wire**: USE-2 or PV Wire, 600V or 1000V rated; minimum 10 AWG for most residential strings'
   context_prefix: 'From Phase 3: Component Selection, section DC Side (Array to Inverter).'
@@ -166,7 +166,7 @@ chunks:
 - chunk_id: 03-component-selection--ac-side-inverter-to-panel
   chunk_order: 20
   section: AC Side (Inverter to Panel)
-  line_range: [144, 149]
+  line_range: [145, 150]
   tokenizer_tokens: 102
   chunk_summary: '- **Conduit**: EMT (indoors/in conduit), PVC (outdoor/underground), or direct-burial wire'
   context_prefix: 'From Phase 3: Component Selection, section AC Side (Inverter to Panel).'
@@ -174,7 +174,7 @@ chunks:
 - chunk_id: 03-component-selection--rapid-shutdown
   chunk_order: 21
   section: Rapid Shutdown
-  line_range: [150, 154]
+  line_range: [151, 155]
   tokenizer_tokens: 92
   chunk_summary: 'Per NEC 2017/2020/2023 Section 690.12, you need a rapid shutdown system for rooftop arrays. Options:'
   context_prefix: 'From Phase 3: Component Selection, section Rapid Shutdown.'
@@ -182,7 +182,7 @@ chunks:
 - chunk_id: 03-component-selection--wire-sizing
   chunk_order: 22
   section: Wire Sizing
-  line_range: [155, 160]
+  line_range: [156, 161]
   tokenizer_tokens: 60
   chunk_summary: 'Wire sizing follows NEC 690 and 310. Key rules:'
   context_prefix: 'From Phase 3: Component Selection, section Wire Sizing.'
@@ -190,7 +190,7 @@ chunks:
 - chunk_id: 03-component-selection--phase-3-output-bill-of-materials
   chunk_order: 23
   section: 'Phase 3 Output: Bill of Materials'
-  line_range: [161, 170]
+  line_range: [162, 171]
   tokenizer_tokens: 101
   chunk_summary: 'Before submitting your permit application, you''ll have:'
   context_prefix: 'From Phase 3: Component Selection, section Phase 3 Output: Bill of Materials.'
@@ -198,8 +198,8 @@ chunks:
 - chunk_id: 03-component-selection--related
   chunk_order: 24
   section: Related
-  line_range: [171, 176]
-  tokenizer_tokens: 60
+  line_range: [172, 177]
+  tokenizer_tokens: 74
   chunk_summary: '- Panel specs: `../../product/specifications/solar-panels-2026.md`'
   context_prefix: 'From Phase 3: Component Selection, section Related.'
   embedding_version: gemini-embedding-001

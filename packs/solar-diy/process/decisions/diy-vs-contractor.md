@@ -10,6 +10,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:e9bcfcaeffd221521f043d0e5cc0a493c958c9a4480a8d7b708c6b8858d8604c
+content_hash: sha256:12dd8b3433b89592a2ad9ab225aef6578cb6c563bdce383579f0b1a5b003e3c2
 ---
 
 # Decision: DIY vs. Contractor
@@ -106,7 +107,7 @@ Before signing:
 1. **NEC 690** — the electrical code for PV systems (available free from NFPA's free reading access program)
 2. **Your AHJ's permit requirements** — call them; most are happy to explain
 3. **Racking system installation** — watch manufacturer training videos; most racking companies have excellent YouTube content
-4. **String sizing math** — covered in `../../product/concepts/system-design-fundamentals.md`
+4. **String sizing math** — covered in `../../product/concepts/system-design-string-sizing.md`
 5. **Single-line diagram drawing** — learn to read and draw the required permit diagram
 
 **Estimated learning and project time:**

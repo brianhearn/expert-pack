@@ -16,7 +16,9 @@ supersedes:
   - concepts/geometry-nodes.md
 related:
   - geometry-nodes-core.md
-  - physics-rigid-soft-cloth.md
+  - geometry-nodes-advanced-patterns.md
+  - physics-rigid-body.md
+  - physics-soft-cloth.md
 content_hash: sha256:7f2079e5ea15658854088862179cf034d39b95d07d4d01cbd24fdff8e5e17f44
 ---
 

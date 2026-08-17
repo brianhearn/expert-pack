@@ -3,7 +3,7 @@ title: "Troubleshooting"
 type: "index"
 tags: [troubleshooting]
 pack: "home-assistant-product"
-retrieval_strategy: "standard"
+retrieval_strategy: navigation
 id: home-assistant/product/troubleshooting/_index
 verified_at: "2026-04-21"
 verified_by: agent

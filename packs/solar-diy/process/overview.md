@@ -58,5 +58,5 @@ Cross-references to the technology reference pack (`../product/`) are embedded t
 
 - Technology reference: `../product/overview.md`
 - NEC code compliance: `../product/concepts/nec-rapid-shutdown.md`
-- System design calculations: `../product/concepts/system-design-fundamentals.md`
+- System design calculations: `../product/concepts/system-design-fundamentals.md` and `../product/concepts/system-design-string-sizing.md`
 - Product specifications: `../product/specifications/`

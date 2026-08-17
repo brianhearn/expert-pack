@@ -75,7 +75,7 @@ Last full review: 2026-03-10
 | Peak sun hours by region | ⚪ | N/A — long-term climate averages | Stable unless climate shifts |
 | Temperature adders for mounting | ⚪ | NEC / PV industry standard | +25°C ground, +30-35°C roof |
 
-### concepts/inverter-types.md
+### concepts/inverter-microinverters.md, inverter-string.md, inverter-optimizers.md
 
 | Data Point | Category | How to Refresh | Reference Value (2026-03) |
 |-----------|----------|----------------|--------------------------|

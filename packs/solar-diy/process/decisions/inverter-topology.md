@@ -10,6 +10,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:e46992dc83b69db71ecfd664836297ce6fb45731dc5502daeb548712d46b5b17
+content_hash: sha256:237e2c1f8ceb34b49a3728ed067403a31d963513b229275dec18fe5e7136b9f7
 ---
 
 # Decision: Inverter Topology (String vs Optimizer vs Microinverter)
@@ -39,7 +40,7 @@ content_hash: sha256:e46992dc83b69db71ecfd664836297ce6fb45731dc5502daeb548712d46
 **Weaknesses:**
 - Shading kills the whole string — one shaded panel reduces the entire string to that panel's current
 - No per-panel monitoring — you see total string production, not individual panels
-- Requires string sizing calculations (see `../../product/concepts/system-design-fundamentals.md`)
+- Requires string sizing calculations (see `../../product/concepts/system-design-string-sizing.md`)
 - Rapid shutdown requires additional devices for NEC 2017+ compliance
 - Difficult to expand (adding panels must fit into existing string configuration)
 
@@ -189,6 +190,6 @@ If using microinverters and you plan to add battery later, the Enphase ecosystem
 
 ## Related
 
-- String sizing math (for string inverter selection): `../../product/concepts/system-design-fundamentals.md`
-- Inverter types deep dive: `../../product/concepts/inverter-types.md`
+- String sizing math (for string inverter selection): `../../product/concepts/system-design-string-sizing.md`
+- Inverter types: `../../product/concepts/inverter-microinverters.md`, `inverter-string.md`, `inverter-optimizers.md`
 - Grid-tied vs hybrid decision: `grid-tied-vs-hybrid.md`

@@ -10,6 +10,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:2c2d7470845a7f91104ec25fe5afa1bdd4fb9457b234dcd8f2bca46362309d36
+content_hash: sha256:6a781e5b936c071624d700403d92ff840090d9fdad33076b3f9f629b88a16e6d
 ---
 
 # Phase 2: System Design
@@ -186,7 +187,7 @@ Before moving to Phase 3 (Component Selection), document:
 
 ## Related
 
-- Full string sizing worked examples: `../../product/concepts/system-design-fundamentals.md`
+- Full string sizing worked examples: `../../product/concepts/system-design-string-sizing.md`
 - Inverter architecture decision: `../decisions/inverter-topology.md`
 - Grid configuration decision: `../decisions/grid-tied-vs-hybrid.md`
 - Phase 3: `03-component-selection.md`

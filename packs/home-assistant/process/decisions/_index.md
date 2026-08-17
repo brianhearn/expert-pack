@@ -3,7 +3,7 @@ title: "Decisions Index"
 type: "index"
 tags: [decisions]
 pack: "home-assistant-process"
-retrieval_strategy: "standard"
+retrieval_strategy: navigation
 id: home-assistant/process/decisions/_index
 verified_at: "2026-04-21"
 verified_by: agent

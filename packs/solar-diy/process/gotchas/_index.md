@@ -3,7 +3,7 @@ title: "Gotchas Index"
 type: "index"
 tags: [gotchas]
 pack: "solar-diy-process"
-retrieval_strategy: "standard"
+retrieval_strategy: navigation
 id: solar-diy/process/gotchas/_index
 verified_at: "2026-04-21"
 verified_by: agent

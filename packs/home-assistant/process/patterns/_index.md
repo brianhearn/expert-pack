@@ -3,7 +3,7 @@ title: "Patterns Index"
 type: "index"
 tags: [patterns]
 pack: "home-assistant-process"
-retrieval_strategy: "standard"
+retrieval_strategy: navigation
 id: home-assistant/process/patterns/_index
 verified_at: "2026-04-21"
 verified_by: agent

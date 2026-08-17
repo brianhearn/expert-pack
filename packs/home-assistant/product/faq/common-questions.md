@@ -15,6 +15,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:23d8b729efd9ddf2229bc985c6e5a14a2d8ead589496062481d97e684877dc50
+content_hash: sha256:b757aa040eccd5da44f73f12ec40277dfb4989088e555c8a47d93ebda978a377
 ---
 <!-- context: section=faq, topic=common-questions, related=core-architecture,protocols,backup-migration -->
 ---
@@ -374,6 +375,7 @@ Everything. HA is fully functional locally without any subscription. All local a
 ## Related
 
 - [[core-architecture.md|Core Architecture]] — Understanding what HA is and how it works
-- [[backup-migration.md|Backup & Migration]] — HA OS vs Docker migration considerations
-- [[voice-assistant.md|Voice Assistant]] — Nabu Casa voice vs local Whisper/Piper
-- [[protocols.md|Smart Home Protocols]] — Zigbee vs Matter vs Thread deep dive
+- [[core-services-install.md|Services and install types]] — HA OS vs Docker / Core
+- [[backup-hardware-migration.md|Hardware migration]] — Restore onto new hardware
+- [[voice-assist-pipeline.md|Assist pipeline]] — Nabu Casa voice vs local Whisper/Piper
+- [[protocols-comparison.md|Smart Home Protocols]] — Zigbee vs Matter vs Thread deep dive

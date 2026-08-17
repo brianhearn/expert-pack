@@ -3,7 +3,7 @@ title: "FAQ"
 type: "index"
 tags: [faq]
 pack: "home-assistant-product"
-retrieval_strategy: "standard"
+retrieval_strategy: navigation
 id: home-assistant/product/faq/_index
 verified_at: "2026-04-21"
 verified_by: agent

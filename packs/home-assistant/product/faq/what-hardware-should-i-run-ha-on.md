@@ -14,6 +14,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:98fec7b4b38718c4856dd538e63cc053e12f094c0f165288a0daf72b0b324e53
+content_hash: sha256:01db559d3055deb97e6ef0abd3e0a58b7a0cec74076ce51ca2a53dd9a639300f
 ---
 <!-- context: section=faq, topic=hardware-selection, related=backup-migration,network-architecture -->
 
@@ -84,4 +85,4 @@ If you want to run HA alongside a NAS, media server, or other services on the sa
 
 USB passthrough in Proxmox: VM → Hardware → Add → USB Device → select coordinator by vendor:product ID.
 
-→ See [[backup-migration.md]] for migration details and hardware upgrade paths
+→ See [[backup-migration-paths.md]] for migration details and hardware upgrade paths

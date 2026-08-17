@@ -6,7 +6,7 @@ tags:
 - troubleshooting
 - common-mistakes
 pack: home-assistant-product
-retrieval_strategy: standard
+retrieval_strategy: navigation
 schema_version: "4.1"
 verified_at: "2026-04-21"
 verified_by: agent

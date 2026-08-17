@@ -15,6 +15,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:76ba142b37488c773e5d6e4d4fc59f0f83d6817be75b1e4380804b2419ead7a9
+content_hash: sha256:60e0736bc9bb28ce20652d66dee397c7a11b34948332167e9885f8dd8578dc87
 ---
 <!-- context: section=product, topic=faq-battery-decision, related=battery-systems-2026,grid-tied-vs-hybrid,system-design-fundamentals -->
 
@@ -72,4 +73,4 @@ TOU arbitrage payback in CA (charging at $0.15/kWh off-peak, discharging at $0.5
 
 - Full battery comparison: [[battery-systems-2026.md|`battery-systems-2026.md`]]
 - Grid-tied vs. hybrid decision: `grid-tied-vs-hybrid.md`
-- System design for battery sizing: [[system-design-fundamentals.md|`system-design-fundamentals.md`]]
+- System design for battery sizing: [[system-design-fundamentals]]

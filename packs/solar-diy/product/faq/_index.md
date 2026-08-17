@@ -3,7 +3,7 @@ title: "FAQ"
 type: "index"
 tags: [faq]
 pack: "solar-diy-product"
-retrieval_strategy: "standard"
+retrieval_strategy: navigation
 id: solar-diy/product/faq/_index
 verified_at: "2026-04-21"
 verified_by: agent

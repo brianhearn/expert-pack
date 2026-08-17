@@ -1,30 +1,31 @@
 ---
 id: blender-3d/concepts/animation-data-model
-title: "Animation — Data Model, Keyframing, and Graph Editor"
+title: "Animation — Data Model and Keyframing"
 type: concept
 tags:
   - animation
   - keyframes
-  - graph-editor
+  - actions
   - f-curves
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
 schema_version: "4.1"
-verified_at: "2026-04-21"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
   - concepts/animation-rigging.md
 related:
-  - animation-nla-drivers.md
+  - animation-graph-editors.md
+  - animation-nla.md
+  - animation-drivers.md
   - rigging-armatures.md
-  - animation-shape-keys.md
-content_hash: sha256:f82bb3ae5cb43731e326a4e712054ce7da76f57806c41ed4e349de09dbdbff47
+content_hash: sha256:33cdd669ecdeaba21a42380e6ee190924d557cec503516497432fbb439795989
 ---
 
-# Animation — Data Model, Keyframing, and Graph Editor
+# Animation — Data Model and Keyframing
 
----
+Blender animation is a chain: a property's F-Curve lives in an Action, and Actions become NLA strips. Keyframes record property values over time; the active Action is what the Graph Editor and auto-key actually edit.
 
 ## The Animation Data Model
 
@@ -72,54 +73,3 @@ Right-click a keyframe to change type:
 
 ---
 
-## Dope Sheet
-
-The Dope Sheet shows all keyframes across all channels as dots on a timeline.
-
-**Essential operations:**
-- `G` then `X`: slide keyframes left/right on the timeline
-- `S` then `X`: scale selected keyframes in time (stretch or compress timing)
-- `Box select`: select all keys in a range
-
-**Dope Sheet modes** (dropdown in header):
-- `Dope Sheet` — all keyframes in the scene
-- `Action Editor` — keyframes in the active Action only
-- `Shape Key Editor` — shape key values only
-
----
-
-## Graph Editor — F-Curve Editing
-
-Y axis = property value. X axis = frame number. A flat horizontal line = constant value. A bezier S-curve = smooth ease-in/ease-out.
-
-**Handle types** (toggle with `V`):
-- `Free` — both handles movable independently
-- `Aligned` — both handles stay collinear (default for bezier keys)
-- `Vector` — handles point toward adjacent keyframes (linear interpolation)
-- `Auto` — Blender automatically computes smooth handles
-- `Auto Clamped` — Auto, but prevents overshoot
-
-**Extrapolation** (what happens outside the keyframe range):
-- `Constant` — value holds at first/last keyframe value (default)
-- `Linear` — continues on the slope of the first/last segment
-- `Make Cyclic` — repeats the animation curve
-
-**The Cycle modifier:** Better than extrapolation for most cyclic animation. Add via `Modifiers → Cycles`. Lets you set repeat count and blend at loop points. Essential for walk cycles.
-
-**F-Curve Modifiers** (Sidebar `N` → Modifiers tab):
-- `Noise` — adds procedural noise (camera shake, organic variation)
-- `Cycles` — loops the curve
-- `Stepped` — quantizes values to steps (robot motion, pixel art style)
-- `Limits` — clamps output to a min/max range
-
-**Camera shake setup:** Select all camera location/rotation curves, add Noise modifier, adjust Scale (timing frequency) and Strength.
-
----
-
-## Blender 4.x Animation Changes
-
-**Bone Collections (4.0+):** Replaced the 32-layer system. Bones are now organized into named, nestable collections. The old `layer` attribute in Python is now `collections`.
-
-**Rotation Mode:** Blender 4.x encourages Quaternion rotation for rigging (no Gimbal lock) and Euler for user-facing controls.
-
-**Bake Action (for export):** Use `Object → Animation → Bake Action` to bake constraint/IK results to pure keyframes. Required before exporting to FBX/GLTF for game engines.

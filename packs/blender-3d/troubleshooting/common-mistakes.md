@@ -1,6 +1,6 @@
 ---
 title: Common Blender Mistakes
-type: troubleshooting
+type: gotcha
 tags:
 - animation-rigging
 - common-mistakes

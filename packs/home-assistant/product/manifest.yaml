@@ -7,7 +7,7 @@ description: "Deep reference knowledge for the Home Assistant platform — core 
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-10"
-updated: "2026-03-11"
+updated: "2026-08-17"
 
 product_version: "2026.3+"
 vendor: "Open Home Foundation / Nabu Casa"
@@ -36,14 +36,24 @@ scope:
 index_files: "_index.md"
 dependencies: []
 
+authority_boundary:
+  in_scope: "Home Assistant platform architecture, protocols, automations, dashboards, integrations, YAML, and troubleshooting as documented in this pack."
+  out_of_scope:
+    - "Legal, medical, or financial advice"
+    - "Other smart-home platforms not covered by this pack"
+    - "Licensed electrical or construction work"
+  refuse_when:
+    - "No supporting atom in the pack"
+    - "Question is outside in_scope"
+  no_source_no_claim: false
+
 context:
   always:
     - overview.md
-    - glossary.md
   searchable:
     - concepts/
     - troubleshooting/
     - faq/
-    - sources/
+    - glossary.md
   on_demand:
     - sources/

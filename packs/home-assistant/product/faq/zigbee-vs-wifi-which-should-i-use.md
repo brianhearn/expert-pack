@@ -14,6 +14,7 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 content_hash: sha256:3de5a680afb2b5f4a4b73ab3634e021f2a657164c100b108d3be98334362cb5a
+content_hash: sha256:f85a8a8b3bb4f41808f67b662815330d66821b0aadbafb1406ef37ecc699dd2f
 ---
 <!-- context: section=faq, topic=protocol-selection, related=protocols,integrations-guide -->
 
@@ -70,5 +71,5 @@ If you're invested in WiFi devices already:
 
 That's it. One coordinator handles 100+ devices.
 
-→ See [[protocols.md]] for the full protocol comparison
-→ See [[integrations-guide.md]] for evaluating specific WiFi integrations
+→ See [[protocols-comparison.md]] for the full protocol comparison
+→ See [[integrations-iot-class.md]] for evaluating specific WiFi integrations

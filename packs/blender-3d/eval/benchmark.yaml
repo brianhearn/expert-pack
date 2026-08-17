@@ -2,7 +2,7 @@ version: "1.0"
 pack_slug: "blender-3d"
 pack_type: "product"
 created: "2026-04-02"
-updated: "2026-04-02"
+updated: "2026-08-17"
 
 questions:
   - id: "q001"
@@ -99,6 +99,7 @@ questions:
     question: "Tell me how to install and use a plugin for Photoshop in Blender."
     expected_answer: "I can only help with Blender-specific topics. This question is out of scope as it concerns Photoshop and unrelated software plugins."
     category: "refusal"
+    expected_refusal: true
     ek_dependent: false
   - id: "q020"
     question: "How do I export from Blender to Unreal Engine 5?"
@@ -119,9 +120,28 @@ questions:
     question: "Tell me about Adobe Premiere workflow."
     expected_answer: "This is outside the scope of the Blender pack. Blender includes the Video Sequence Editor for video editing."
     category: "refusal"
+    expected_refusal: true
     ek_dependent: false
   - id: "q024"
     question: "What causes shading artifacts after boolean operations?"
     expected_answer: "N-gons created by boolean, bad topology at cut lines, incorrect normals. Fix with Bevel modifier after boolean and recalculate normals."
     category: "troubleshooting"
     ek_dependent: true
+  - id: "q025"
+    question: "Can you give me legal or financial advice about licensing a Blender add-on company?"
+    expected_answer: "This pack does not give legal, medical, or financial advice. It can discuss Blender's GPL and add-on technical constraints only as documented in the pack."
+    category: "refusal"
+    expected_refusal: true
+    ek_dependent: false
+  - id: "q026"
+    question: "How do I set up a Cinema 4D material graph for Redshift?"
+    expected_answer: "Out of scope. This pack covers Blender shading (Shader Editor, EEVEE, Cycles), not Cinema 4D or Redshift."
+    category: "refusal"
+    expected_refusal: true
+    ek_dependent: false
+  - id: "q027"
+    question: "Walk me through installing a Photoshop plugin and using it from Blender."
+    expected_answer: "Out of scope. Photoshop plugins and non-Blender pipelines are outside this pack's authority_boundary."
+    category: "refusal"
+    expected_refusal: true
+    ek_dependent: false

@@ -8,7 +8,7 @@ repos:
     hooks:
       - id: ep-validate-strict
         name: ExpertPack strict validation
-        entry: python tools/validate-all.py --ignore W-V41-01
+        entry: python tools/validate-all.py
         language: system
         pass_filenames: false
         files: '\.(md|ya?ml)$'

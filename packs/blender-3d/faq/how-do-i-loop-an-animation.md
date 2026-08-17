@@ -14,6 +14,7 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 content_hash: sha256:ada6c6f5f3ae5581daf1c03eddf72e4e4c3000c7eb1870439e23f1fe76d9cf11
+content_hash: sha256:cd0dfff8ee8ea08f49b142b62c428e900200143ba98d40698bb4ad52185f85ec
 ---
 <!-- context: section=faq, topic=animation-looping, related=animation-rigging,character-animation,motion-graphics -->
 
@@ -59,6 +60,8 @@ For a walk cycle that moves forward:
 
 ## Related
 
-- [[animation-data-model.md|Animation & Rigging]]
+- [[animation-data-model.md|Animation Data Model]]
+- [[animation-nla.md|NLA Editor]]
+- [[animation-graph-editors.md|Graph Editor]]
 - [[character-animation.md|Character Animation Workflow]]
 - [[motion-graphics.md|Motion Graphics Workflow]]
