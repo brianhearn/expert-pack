@@ -73,9 +73,9 @@ Open-source ExpertPacks built from real documentation, community forums, and sou
 
 | Pack | Type | Files | Size | EK Ratio | Description |
 |------|------|-------|------|----------|-------------|
-| [**Home Assistant**](packs/home-assistant/) | Composite | 61 | 684 KB | 54% | Smart home automation — protocols, automations, presence detection, ESPHome, voice, energy, community gotchas |
-| [**Blender 3D**](packs/blender-3d/) | Product | 36 | 480 KB | 42% | 3D modeling, animation, sculpting, physics, rendering, Geometry Nodes, Python scripting, production workflows |
-| [**Solar & Battery DIY**](packs/solar-diy/) | Composite | 46 | 428 KB | 52% | Residential solar — system design, panels, batteries, NEC code, permitting, installation, troubleshooting |
+| [**Home Assistant**](packs/home-assistant/) | Composite | 132 | 600 KB | 54% | Smart home automation — protocols, automations, presence detection, ESPHome, voice, energy, community gotchas |
+| [**Blender 3D**](packs/blender-3d/) | Product | 83 | 392 KB | 42% | 3D modeling, animation, sculpting, physics, rendering, Geometry Nodes, Python scripting, production workflows |
+| [**Solar & Battery DIY**](packs/solar-diy/) | Composite | 53 | 291 KB | 52% | Residential solar — system design, panels, batteries, NEC code, permitting, installation, troubleshooting |
 
 > 💡 These packs demonstrate the framework with substantive, practitioner-level content. Browse them to see what a well-built ExpertPack looks like.
 
