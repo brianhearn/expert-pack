@@ -6,7 +6,7 @@
 
 ## Philosophy
 
-**The goal of hydration is not to document everything — it's to document what only this pack can provide.** An ExpertPack is valued by its esoteric knowledge (EK) ratio: the proportion of content that frontier LLMs cannot produce on their own (see [AXIOMS.md](../AXIOMS.md) and [core.md — EK Ratio](../schemas/core.md#esoteric-knowledge-ek-ratio)). Every hydration decision should be filtered through this lens: *Does the model already know this? If yes, minimize. If no, maximize.*
+**The goal of hydration is not to document everything — it's to document what only this pack can provide.** An ExpertPack is valued by its esoteric knowledge (EK) ratio: the proportion of content that frontier LLMs cannot produce on their own (see [AXIOMS.md](../../../AXIOMS.md) and [core.md — EK Ratio](../../../schemas/core.md#esoteric-knowledge-ek-ratio)). Every hydration decision should be filtered through this lens: *Does the model already know this? If yes, minimize. If no, maximize.*
 
 **EK ratio is a north star, not a deletion rule.** The goal is to make the pack's *substance* esoteric — not to strip out every piece of general knowledge. GK scaffolding that makes EK content retrievable or intelligible belongs in the pack; see [EK Triage](#ek-triage--the-default-hydration-filter) for when to compress vs. skip. Similarly, explanatory context that helps a model reason from EK — not just retrieve it — has value even if the explanation itself isn't esoteric. The failure mode to avoid is a pack so aggressively pruned that EK atoms become isolated facts the model can retrieve but can't reason from.
 
@@ -618,7 +618,7 @@ The most common hydration mistake is spending equal effort on general and esoter
 
 Hydrating content is half the job. The other half is structuring each concept file so the retriever can find it precisely. Schema v4.1 consolidates that into a single pattern: **one concept = one self-contained file** carrying definition, body, FAQs, related terms, and explicit dependencies via `requires:`.
 
-This supersedes the v3.x pattern of separate `summaries/`, `propositions/`, per-domain `glossary-*.md`, and standalone `faq/` directories. Those aggregator files were empirically shown to score broadly on every query and displace specific content — the opposite of what hierarchical retrieval theory predicted. See [`schemas/rfcs/RFC-001-atomic-conceptual-chunks.md`](../schemas/rfcs/RFC-001-atomic-conceptual-chunks.md) for the validation data and [`schemas/references/granularity-guide.md`](../schemas/references/granularity-guide.md) for embed-vs-promote authoring decisions.
+This supersedes the v3.x pattern of separate `summaries/`, `propositions/`, per-domain `glossary-*.md`, and standalone `faq/` directories. Those aggregator files were empirically shown to score broadly on every query and displace specific content — the opposite of what hierarchical retrieval theory predicted. See [`schemas/rfcs/RFC-001-atomic-conceptual-chunks.md`](../../../schemas/rfcs/RFC-001-atomic-conceptual-chunks.md) for the validation data and [`schemas/references/granularity-guide.md`](../../../schemas/references/granularity-guide.md) for embed-vs-promote authoring decisions.
 
 ### The concept file structure
 
@@ -677,7 +677,7 @@ Content stays with the account, not the user. When an Editor is removed, their t
 
 - **Size target:** 500–800 tokens per concept file; hard ceiling 1,000 (schema v4.1). Files below ~250 tokens are almost always better embedded as related terms in a parent concept. Concepts that exceed the ceiling split into independent atoms linked by `requires:`, not into numbered parts.
 - **Co-locate, don't spread.** If something is about this concept, it belongs in this file. Don't split the concept's definition, its FAQs, and its glossary entries across three files.
-- **Granularity.** Err toward embedding when in doubt. Promotion to a standalone concept file is cheap later; demotion creates broken wikilinks and orphan files. See the [granularity guide](../schemas/references/granularity-guide.md) for the full decision procedure with worked examples.
+- **Granularity.** Err toward embedding when in doubt. Promotion to a standalone concept file is cheap later; demotion creates broken wikilinks and orphan files. See the [granularity guide](../../../schemas/references/granularity-guide.md) for the full decision procedure with worked examples.
 - **Vocabulary bridging.** The old pattern of a separate glossary mapping user language to technical terms is replaced by inline anti-hallucination language in the opening paragraph ("There is NO Admin role…"), user-phrased FAQ questions, and Related Terms entries. If a pack has a cross-cutting optional `glossary.md` at the root for product-name-style terms, keep it lean — it's an author/agent navigation aid, not a retrieval layer.
 
 ### Workflow vs. concept
@@ -788,7 +788,7 @@ Build an eval set of 30+ questions covering the pack's key scenarios. Include:
 - **Out-of-scope** — Questions the agent should decline (tests refusal)
 - **Adversarial** — Questions designed to induce hallucination
 
-Run the eval set against the deployed pack + model configuration. Save results as a baseline. See the [eval schema](../schemas/eval.md) for the full format and methodology.
+Run the eval set against the deployed pack + model configuration. Save results as a baseline. See the [eval schema](../../../schemas/eval.md) for the full format and methodology.
 
 ### Content Gap Analysis
 
@@ -803,7 +803,7 @@ Eval failures point directly to hydration gaps:
 
 ### EK Ratio Measurement
 
-After hydration, measure the pack's EK ratio via proposition-level blind probing. This tells you what proportion of the pack's content is genuinely esoteric — knowledge the model can't produce alone. See [core.md — EK Ratio](../schemas/core.md#esoteric-knowledge-ek-ratio) for the full measurement protocol.
+After hydration, measure the pack's EK ratio via proposition-level blind probing. This tells you what proportion of the pack's content is genuinely esoteric — knowledge the model can't produce alone. See [core.md — EK Ratio](../../../schemas/core.md#esoteric-knowledge-ek-ratio) for the full measurement protocol.
 
 Target EK ratios:
 - **0.80+** — Exceptional. Almost entirely esoteric knowledge.
@@ -880,7 +880,7 @@ The Tesla Powerwall 3 is priced at approximately $10,500-14,000 installed.
 -->
 ```
 
-**The critical rule: refresh instructions travel with the data.** When a consuming agent encounters a volatile fact, it needs the refresh method right there — not a pointer to a freshness guide it may not load. See [core.md — Time Variance](../schemas/core.md#time-variance) for the full annotation format and decay categories.
+**The critical rule: refresh instructions travel with the data.** When a consuming agent encounters a volatile fact, it needs the refresh method right there — not a pointer to a freshness guide it may not load. See [core.md — Time Variance](../../../schemas/core.md#time-variance) for the full annotation format and decay categories.
 
 Maintain a supplementary `freshness.md` at the pack root for maintainers reviewing overall freshness at a glance.
 
@@ -904,7 +904,7 @@ EK ratio naturally **decreases** over time as frontier models absorb more knowle
 
 ### Research Coverage Tracking
 
-Every pack should include a `meta/source-coverage.md` that honestly documents what knowledge sources were checked, what was extracted, and what remains untouched. This makes the pack's depth and limitations transparent. See [core.md — Research Coverage](../schemas/core.md#research-coverage-metasource-coveragemd) for the format and status key.
+Every pack should include a `meta/source-coverage.md` that honestly documents what knowledge sources were checked, what was extracted, and what remains untouched. This makes the pack's depth and limitations transparent. See [core.md — Research Coverage](../../../schemas/core.md#research-coverage-metasource-coveragemd) for the format and status key.
 
 Update coverage status as you deepen the pack: ⬜ Identified → 🟡 Sampled → ✅ Mined. Known gaps should be specific and actionable — "More research needed" is useless; "Installer forum threads about firmware failure modes not yet mined" tells the next hydrator exactly what to do.
 

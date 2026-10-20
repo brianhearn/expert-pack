@@ -55,6 +55,22 @@
     },
     "valid_from": { "type": "string", "format": "date" },
     "recorded_at": { "type": "string", "format": "date" },
+    "refresh": {
+      "description": "Volatile TTL (Core 4.2): ISO 8601 duration after fetched_at when the content should be refreshed. Overrides manifest freshness.refresh_cycle for age staleness. Inline <!-- refresh --> blocks in the body are a separate, per-fact mechanism.",
+      "type": "string",
+      "pattern": "^P(?:[0-9]+Y)?(?:[0-9]+M)?(?:[0-9]+W)?(?:[0-9]+D)?$"
+    },
+    "fetched_at": {
+      "description": "Volatile (Core 4.2): ISO date the source was last fetched.",
+      "type": "string",
+      "format": "date"
+    },
+    "expires_at": {
+      "description": "Volatile (Core 4.2): ISO date after which consumers treat the content as expired.",
+      "type": "string",
+      "format": "date"
+    },
+    "source": { "type": "string" },
     "related": {
       "type": ["array", "null"],
       "items": { "type": "string" }

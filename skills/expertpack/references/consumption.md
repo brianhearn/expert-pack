@@ -163,7 +163,7 @@ Not all content should be authored to the standard size target. Procedural conte
 
 ### Pack–Consumer Coordination Contract
 
-The pack author and consumer config form a two-party contract. The pack commits to a hard ceiling (1,000 tokens for concept files in schema v4.1; atomic files may be larger). The consumer sets `chunking.tokens` ≥ that ceiling so nothing gets split. If you're consuming a pack you didn't author, verify its file sizes before assuming the default 1,000-token budget applies. See [core.md — Pack–Consumer Coordination Contract](../schemas/core.md#packconsumer-coordination-contract) for details.
+The pack author and consumer config form a two-party contract. The pack commits to a hard ceiling (1,000 tokens for concept files in schema v4.1; atomic files may be larger). The consumer sets `chunking.tokens` ≥ that ceiling so nothing gets split. If you're consuming a pack you didn't author, verify its file sizes before assuming the default 1,000-token budget applies. See [core.md — Pack–Consumer Coordination Contract](../../../schemas/core.md#packconsumer-coordination-contract) for details.
 
 ### Platform Configuration - The Three-Knob Model
 
@@ -238,7 +238,7 @@ These results come from 6 controlled experiments on a deployed product pack (EZT
 
 ## Context Tier Loading
 
-ExpertPacks declare a three-tier context strategy in `manifest.yaml`. The consuming agent should respect these tiers to balance depth with token efficiency. See [core.md — Context Strategy](../schemas/core.md#context-strategy) for the full specification.
+ExpertPacks declare a three-tier context strategy in `manifest.yaml`. The consuming agent should respect these tiers to balance depth with token efficiency. See [core.md — Context Strategy](../../../schemas/core.md#context-strategy) for the full specification.
 
 ### Tier 1 — Always
 
@@ -384,7 +384,7 @@ Consumption quality is measurable. Don't optimize blind — run evals, identify 
 ### The Improvement Loop
 
 1. **Deploy** pack with initial config (chunking, model, SOUL.md)
-2. **Build eval set** — 30+ questions covering key scenarios (see [eval schema](../schemas/eval.md))
+2. **Build eval set** — 30+ questions covering key scenarios (see [eval schema](../../../schemas/eval.md))
 3. **Run baseline eval** — save results for comparison
 4. **Identify failure patterns** — categorize failures by type (see table below)
 5. **Fix one dimension at a time** — structure, model, or agent training

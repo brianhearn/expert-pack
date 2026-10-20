@@ -2,7 +2,7 @@
 
 *Shared principles and conventions that apply to every ExpertPack, regardless of type. Type-specific schemas (person, product, process) extend these rules — they don't replace them.*
 
-**Schema version:** 4.1 (2026-04-19; additive extensions 2026-07-06)
+**Schema version:** 4.2 (2026-10-20; additive over 4.1 — 2026-04-19, extensions 2026-07-06)
 
 ---
 
@@ -638,6 +638,30 @@ SHA-256 hash of the file body (everything below the closing `---` of the frontma
 
 ISO date when the content was last confirmed accurate. This is NOT the same as the git commit date — a file can be committed without being reviewed. Agents should caveat answers from files where `verified_at` is older than the pack's `manifest.yaml freshness.refresh_cycle`.
 
+**Computing freshness (Core 4.2).** Consumers derive two age signals per file and keep them separate from index drift:
+
+| Signal | Definition |
+|--------|------------|
+| `verified_age_days` | `today − verified_at` in whole days (absent when `verified_at` is missing). |
+| `age_stale` | `verified_age_days` > the refresh cycle, where the cycle is the file's `refresh` (ISO 8601 duration) when present, else `manifest.yaml freshness.refresh_cycle`. Undefined (null) when either input is missing or the cycle is not a duration (e.g. `per-release`). Durations convert as `Y = 365d`, `M = 30d`, `W = 7d`. |
+| `expired` | The file declares `expires_at` and `expires_at` < today. |
+| *index drift* | The file changed since the consumer indexed it (span hash mismatch). This is an indexing concern, not content age; EP MCP reports it as `stale` in Reconstruct Mode. |
+
+Consumers SHOULD surface `age_stale` and `expired` with results and caveat answers that rely on them. Down-ranking is optional and consumer-configured (EP MCP: `retrieval.freshness_penalty`, off by default).
+
+#### Volatile TTL fields — `refresh`, `fetched_at`, `expires_at` *(optional, Core 4.2)*
+
+Files whose facts decay quickly (usually under `volatile/`, or `type: volatile`) declare a machine-readable TTL in frontmatter:
+
+```yaml
+refresh: P30D            # ISO 8601 duration; overrides refresh_cycle for this file
+fetched_at: "2026-10-01" # when the source was last fetched
+expires_at: "2026-10-31" # after this date consumers treat the file as expired
+source: "https://example.com/pricing"
+```
+
+These are the file-level counterpart of the inline `<!-- refresh -->` blocks in [Time Variance](#time-variance): inline blocks describe *how* to refresh a single fact; the frontmatter TTL tells consumers *when* the whole file stops being trustworthy. A file may use both. Validator: `W-VOL-01` (volatile file missing `refresh` or `expires_at`), `W-VOL-02` (`expires_at` in the past), `W-VOL-03` (malformed duration/date, or `expires_at` before `fetched_at`).
+
 - `verified_by: "human"` — an SME or pack owner reviewed the content
 - `verified_by: "agent"` — an agent performed a structured review pass
 
@@ -741,6 +765,9 @@ Maintain a `freshness` block in `manifest.yaml` (see manifest spec above). Updat
 | `W-PROV-04` | Content file missing `id` field | Warning | Error |
 | `W-PROV-05` | `valid_from` is later than `verified_at` (world truth can't postdate verification) | Warning | Error |
 | `W-PROV-06` | `confidence` present but not one of `expert-verified` / `crawled` / `inferred` | Warning | Warning |
+| `W-VOL-01` | Volatile file (`volatile/` or `type: volatile`) missing `refresh` or `expires_at` (`volatile/history/` snapshots and index/navigation files exempt) | Warning | Warning |
+| `W-VOL-02` | `expires_at` is in the past | Warning | Warning |
+| `W-VOL-03` | `refresh` not an ISO 8601 duration, `fetched_at`/`expires_at` not ISO dates, or `expires_at` < `fetched_at` | Warning | Warning |
 
 **Chunk sidecar checks** (RFC-004): `W-CHUNK-01` (oversized atomic/reference file missing sidecar), `W-CHUNK-02` (sidecar `content_hash` mismatch), `W-CHUNK-03` (chunk order/id consistency).
 
@@ -1217,6 +1244,20 @@ mcp:
 **Default behavior:** When `include_always_tier: true` (the default), all files listed in `context.always` are exposed as MCP Resources with URI scheme `ep://{slug}/{path}`. The agent can read them at registration to establish the foundational context the pack author determined every session needs.
 
 **`manifest.yaml` and `overview.md` are always exposed** as Resources regardless of this setting — they are the identity and entry point of every pack.
+
+### `mcp.skills` *(optional, Core 4.2)*
+
+Opt-in exposure of the pack as an [MCP Skill](https://modelcontextprotocol.io/extensions/skills/overview) (extension `io.modelcontextprotocol/skills`, SEP-2640). Host support is still thin, so the search/read tools remain the primary consumption path; skills are an additional, standards-based way for a host to discover and load the pack.
+
+```yaml
+mcp:
+  skills:
+    enabled: false        # Default false. When true, the server declares the skills extension.
+    ttl_ms: 3600000       # Optional ttlMs cache hint. Default 1h, or the shortest volatile `refresh` if smaller.
+    description: null     # Optional override for the generated SKILL.md description (≤ 1,024 chars).
+```
+
+**Consumer contract (EP MCP 0.7.0+):** one skill per pack, named after the pack slug, at `skill://{slug}/SKILL.md`. The server generates `SKILL.md` (frontmatter `name` + `description` from `description` and `authority_boundary.in_scope`; body = consume loop, authority/refusal rules, and a path map) and serves every pack Markdown file that is not in `context.on_demand` verbatim at `skill://{slug}/{path}`. `skills/list` publishes the complete file manifest (`uri`, `digest: "sha256:<hex>"` over the exact bytes served, `size`) with `ttlMs` and `cacheScope` (`public`, or `private` when the pack requires API keys). Packs SHOULD stay within the extension's 512-file / 16 MiB per-skill limit.
 
 ### Validator Rules
 
@@ -1807,7 +1848,10 @@ The `canonical_statement` is the one field that may require human or LLM authori
 
 ---
 
-*Schema version: 4.1*
+*Schema version: 4.2*
+
+*Changes in 4.2 (2026-10-20, additive): computed freshness (`age_stale`, `verified_age_days`, `expired`) distinct from index drift; volatile TTL frontmatter (`refresh`, `fetched_at`, `expires_at`) with `W-VOL-01..03`; optional `heading_path` in chunk sidecars; `mcp.skills` (Skills over MCP). Packs declaring `schema_version: "4.1"` remain valid.*
+
 *Last updated: 2026-08-17*
 *Changes in 2026-07-06 (additive, still 4.1): Fragment Provenance / Reconstruct Mode; chunk metadata sidecars (RFC-004); Typed Answer Contract; `--strict` validation gate and registry JSON Schemas.*
 *Changes in 3.4: bi-temporal provenance fields (`valid_from`, `recorded_at`) added to frontmatter spec; W-PROV-05 validator rule added.*

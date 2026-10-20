@@ -8,7 +8,21 @@ Schema versions use the format `core.X.Y` for core schema and `type.X.Y` for typ
 
 ## [Unreleased]
 
-### Added
+## [Core 4.2] — 2026-10-20 — Freshness, volatile TTL, heading paths, Skills over MCP
+
+Additive over 4.1; packs declaring `schema_version: "4.1"` remain valid. Cuts everything previously listed under [Unreleased] (authority boundary, composite 1.2, confidence grade, TAC, RFC-003/004, strict gate, …) together with the 4.2 additions below. Runtime: [ep-mcp](https://github.com/brianhearn/ep-mcp) 0.7.0.
+
+### Added (4.2)
+- **Computed freshness** — `schemas/core.md` defines `verified_age_days`, `age_stale` (`verified_at` vs the file's `refresh` or `freshness.refresh_cycle`) and `expired` (`expires_at` < today), and names the old "changed since indexing" signal *index drift*. Down-ranking is consumer-optional.
+- **Volatile TTL frontmatter** — `refresh` (ISO 8601 duration), `fetched_at`, `expires_at` (+ `source`) added to `schemas/registry/frontmatter.schema.json` and `frontmatter.spec.yaml`; ties the `volatile/` folder TTL to the inline refresh-block mechanism.
+- **Validator `W-VOL-01..03`** — volatile file missing TTL fields, expired content, malformed TTL dates/durations. Warnings only, always on, not promoted by `--strict`. `volatile/history/` snapshots and index/navigation files exempt.
+- **Chunk sidecar `heading_path`** — optional ancestor heading path per chunk in `chunk-sidecar.spec.yaml`.
+- **`mcp.skills`** — opt-in Skills over MCP (`io.modelcontextprotocol/skills`, SEP-2640): one skill per pack at `skill://{slug}/SKILL.md`, non-`on_demand` files served verbatim, manifest digests over served bytes.
+
+### Fixed (4.2)
+- **Broken links in `skills/expertpack/references`** — 12 `../schemas/…` / `../AXIOMS.md` links in `consumption.md` and `hydration.md` now resolve (`../../../`).
+
+### Added (since 4.1, previously Unreleased)
 - **Authority boundary + refusal evals** — optional `authority_boundary` on `manifest.yaml` (`in_scope`, `out_of_scope`, `refuse_when`, `no_source_no_claim`). Template ships the block plus three `refusal` questions; `expertpack init` substitutes type-specific defaults. Validator `W-AUTH-01` / `W-AUTH-02` / `W-EVAL-01` are WARN only (not `--strict`). Eval schema **1.4**.
 - **Composite conflict resolver (schema 1.2)** — `fail_closed` / isolation / authority / `tie_break` contract in `schemas/composite.md`; executable in `tools/composite/conflict.py` with fail-closed unit tests. Isolation and authority run before strategy.
 - **Intelligence Refinement cycle** — `guides/intelligence-refinement.md` + `skills/expertpack-intelligence/` (`sweep` / `refine`). Bounded research, schema-vs-objectives review, context-schema standing work, SDLC sync, human gate. Run logs in `logs/intelligence/`. Replaces the weekly GPT-5 Mini sweep as the framework intelligence source of truth.

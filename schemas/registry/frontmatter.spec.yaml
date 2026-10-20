@@ -96,6 +96,29 @@ optional:
     type: string
     format: date
 
+  refresh:
+    type: string
+    pattern: ^P(?:[0-9]+Y)?(?:[0-9]+M)?(?:[0-9]+W)?(?:[0-9]+D)?$
+    description: >-
+      Core 4.2 volatile TTL (ISO 8601 duration). Overrides manifest
+      freshness.refresh_cycle for this file. Validator W-VOL-01/03.
+
+  fetched_at:
+    type: string
+    format: date
+    description: Core 4.2 volatile — ISO date the source was last fetched.
+
+  expires_at:
+    type: string
+    format: date
+    description: >-
+      Core 4.2 volatile — ISO date after which consumers MUST treat the file as
+      expired (caveat or refresh). Validator W-VOL-02 when in the past.
+
+  source:
+    type: string
+    description: Origin URL or reference for volatile data.
+
   related:
     type: array
     items: string

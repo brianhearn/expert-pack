@@ -172,7 +172,10 @@ ExpertPack is an actively evolving framework. The table below shows which featur
 | `requires:` dependency frontmatter | ✅ Full | Spec + EP MCP runtime expansion live (depth 2, count 3 cap) |
 | EK triage during hydration | ✅ Full | Spec + tooling (`eval-ek.py`) |
 | Provenance frontmatter | ✅ Full | Spec defined; authoring + micro-record tooling honors it |
-| Volatile data isolation | ✅ Full | `volatile/` convention + frontmatter TTL |
+| Volatile data isolation | ✅ Full | `volatile/` convention + frontmatter TTL (`refresh` / `fetched_at` / `expires_at`, schema + W-VOL-01..03 in Core 4.2) |
+| Computed freshness (`age_stale` / `expired`) | ✅ Full | Core 4.2 definition; EP MCP 0.7.0 returns `verified_age_days`, `age_stale`, `expired` on every hit |
+| Heading paths | ✅ Full | Optional sidecar `heading_path` (Core 4.2); EP MCP 0.7.0 returns `heading_path` per hit and `ep_read(section=…)` |
+| Skills over MCP | ✅ Opt-in | `mcp.skills.enabled` (Core 4.2); EP MCP 0.7.0 serves each pack as `skill://{slug}/SKILL.md` (SEP-2640). Host support is still limited |
 | Automated eval runner | ✅ Full | `eval-runner/` with LLM-as-judge scoring |
 | Graph export | ✅ Full | `ep-graph-export.py`; `_graph.yaml` output incl. accepted ontology/entity edges |
 | Agent Knowledge Schema (AKS) export | ✅ Full | `ep-micro-record-export.py --compact`; compact provenance-first JSONL for agent pipelines |
@@ -195,7 +198,7 @@ The canonical compatibility matrix lives in [`schemas/schema-index.yaml`](schema
 
 | Schema | Version | What It Covers |
 |--------|---------|---------------|
-| [core.md](schemas/core.md) | 4.1 | Shared principles: MD-canonical, atomic-conceptual model, `requires:`, provenance, Reconstruct Mode, chunk sidecars, TAC, `--strict` gate, graph export, registry projections |
+| [core.md](schemas/core.md) | 4.2 | Shared principles: MD-canonical, atomic-conceptual model, `requires:`, provenance, Reconstruct Mode, chunk sidecars, TAC, `--strict` gate, graph export, registry projections |
 | [product.md](schemas/product.md) | 4.1 | Product packs: concepts, workflows, interfaces, troubleshooting, commercial, customers |
 | [person.md](schemas/person.md) | 4.1 | Person packs: stories, reflections, opinions, conversations, mind taxonomy, relationships, presentation |
 | [agent.md](schemas/agent.md) | 1.7 | Agent extension: persona, capabilities, tool access, behavioral rules |
@@ -244,7 +247,7 @@ ExpertPack/
 ├── LICENSE                  ← Apache 2.0
 │
 ├── schemas/                 ← Pack blueprints (the framework)
-│   ├── core.md              ← Shared principles (v4.1)
+│   ├── core.md              ← Shared principles (v4.2)
 │   ├── schema-index.yaml    ← Compatibility matrix (source for README table)
 │   ├── registry/            ← frontmatter, AKS, chunk-sidecar, TAC specs
 │   ├── rfcs/                ← RFC-003 Reconstruct Mode, RFC-004 sidecars, …

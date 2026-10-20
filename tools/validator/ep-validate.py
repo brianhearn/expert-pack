@@ -34,6 +34,7 @@ Checks (21):
  24. W-GRAPH-01: retired relations.yaml present at pack root
  25. W-AUTH-01/02: authority_boundary missing or incomplete (WARN; not --strict)
  26. W-EVAL-01: eval set exists but has fewer than 3 refusal/out-of-scope questions
+ 27. W-VOL-01..03: volatile TTL frontmatter (refresh / fetched_at / expires_at) [Core 4.2]
 
 Provenance checks (17-19) are opt-in via --provenance flag.
 AKS readiness checks are opt-in via --aks and imply provenance checks.
@@ -1003,6 +1004,66 @@ class Validator:
                 self._add('WARN', 'W-CHUNK-03', sidecar_rel,
                            f"duplicate chunk_id: {', '.join(sorted(dupes))}")
 
+    def check_volatile(self):
+        """Core 4.2 volatile TTL contract (warnings only; not promoted by --strict).
+
+        W-VOL-01: volatile file (under volatile/ or type: volatile) missing refresh or expires_at.
+                  volatile/history/ snapshots without TTL fields are exempt.
+        W-VOL-02: expires_at is in the past (content expired; refresh it).
+        W-VOL-03: malformed refresh (ISO 8601 duration) / fetched_at / expires_at,
+                  or expires_at earlier than fetched_at.
+        """
+        dur_re = re.compile(r'^P(?:\d+Y)?(?:\d+M)?(?:\d+W)?(?:\d+D)?$')
+        today = date.today()
+
+        def _d(v):
+            if v is None or v == '':
+                return None
+            try:
+                return date.fromisoformat(str(v)[:10])
+            except ValueError:
+                return False
+
+        for rel, fm in self.fm.items():
+            if not isinstance(fm, dict):
+                continue
+            posix = rel.replace('\\', '/')
+            base = posix.rsplit('/', 1)[-1]
+            # volatile/history/ holds superseded snapshots (archival) and index/
+            # navigation hubs describe the folder: neither needs a TTL.
+            archival = posix.startswith('volatile/history/') or base in ('index.md', '_index.md') \
+                or fm.get('type') == 'index' or fm.get('retrieval_strategy') == 'navigation'
+            is_volatile = not archival and ((posix.startswith('volatile/') and base not in SKIP_BASENAMES)
+                or fm.get('type') == 'volatile')
+            has_ttl = any(k in fm for k in ('refresh', 'expires_at', 'fetched_at'))
+            if not is_volatile and not has_ttl:
+                continue
+            refresh = fm.get('refresh')
+            if is_volatile:
+                missing = [k for k in ('refresh', 'expires_at') if not fm.get(k)]
+                if missing:
+                    self._add('WARN', 'W-VOL-01', rel,
+                               f"volatile file missing {', '.join(missing)} "
+                               f"(declare refresh: P30D and expires_at: YYYY-MM-DD)")
+            if refresh is not None and not isinstance(refresh, (dict, list)):
+                r = str(refresh).strip()
+                if r in ('P', '') or not dur_re.match(r):
+                    self._add('WARN', 'W-VOL-03', rel,
+                               f"refresh {refresh!r} is not an ISO 8601 duration (e.g. P30D)")
+            fetched = _d(fm.get('fetched_at'))
+            expires = _d(fm.get('expires_at'))
+            for key, val in (('fetched_at', fetched), ('expires_at', expires)):
+                if val is False:
+                    self._add('WARN', 'W-VOL-03', rel,
+                               f"{key} {fm.get(key)!r} is not an ISO date (YYYY-MM-DD)")
+            if fetched and expires and expires < fetched:
+                self._add('WARN', 'W-VOL-03', rel,
+                           f"expires_at {expires} is earlier than fetched_at {fetched}")
+            if expires and expires < today:
+                self._add('WARN', 'W-VOL-02', rel,
+                           f"expired: expires_at {expires} is {(today - expires).days}d in the past "
+                           f"-- refresh the content and bump fetched_at/expires_at")
+
     def check_context_tiers(self):
         """W-TIER-01: context.always exceeds the 5KB budget.
         W-TIER-02: navigation-shaped file is indexed as standard/atomic.
@@ -1168,6 +1229,7 @@ class Validator:
         self.check_retired_graph()
         self.check_authority_boundary()
         self.check_eval_refusals()
+        self.check_volatile()
         if self.check_provenance:
             self.check_provenance_fields()
         if self.check_aks:

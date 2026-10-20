@@ -1,12 +1,12 @@
 # ExpertPack schema compatibility index
 # Generated/maintained as the single source for README schema tables.
 
-expertpack_schema_family: "4.1"
-updated: "2026-08-17"
+expertpack_schema_family: "4.2"
+updated: "2026-10-20"
 schemas:
   core:
     file: schemas/core.md
-    version: "4.1"
+    version: "4.2"
     description: "Shared principles: MD-canonical, atomic-conceptual model, `requires:`, provenance, Reconstruct Mode, chunk sidecars, TAC, `--strict` gate, graph export, registry projections"
   product:
     file: schemas/product.md

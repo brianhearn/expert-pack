@@ -45,6 +45,9 @@ Use `--provenance` to check stable citation/freshness fields:
 | `W-PROV-04` | Content file missing `id` |
 | `W-PROV-05` | `valid_from` is later than `verified_at` |
 | `W-PROV-06` | `confidence` is not `expert-verified` / `crawled` / `inferred` |
+| `W-VOL-01` | Volatile file (`volatile/` or `type: volatile`) missing `refresh` or `expires_at` (history snapshots and index/navigation files exempt) — Core 4.2, always on |
+| `W-VOL-02` | `expires_at` is in the past — Core 4.2, always on |
+| `W-VOL-03` | Malformed `refresh` duration / `fetched_at` / `expires_at`, or `expires_at` < `fetched_at` — Core 4.2, always on |
 
 Use `--aks` (implies `--provenance`) when a pack must produce complete compact
 Agent Knowledge Schema JSONL for retrieval pipelines:
