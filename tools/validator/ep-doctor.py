@@ -16,11 +16,14 @@ Fix operations:
          — add reverse related: links (bidirectional enforcement)
   fm     — add missing frontmatter fields (title, type, tags, pack)
          — fix legacy canonical_verbatim paths to bare filenames
-  hash   — backfill provenance contract fields for --strict:
-             id, schema_version, retrieval_strategy, verified_at, content_hash
-  size   — (report only) flag files over the char ceiling
-  prefix — suggest prefix map for packs without file_prefixes
-         — rename files with prefixes (--apply required, transactional)
+  hash      — backfill provenance contract fields for --strict:
+                id, schema_version, retrieval_strategy, verified_at, content_hash
+              (also refreshes manifest integrity.pack_digest when already present)
+  integrity — compute and write integrity.pack_digest + integrity.pack_version
+              in manifest.yaml (also triggered by --seal)
+  size      — (report only) flag files over the char ceiling
+  prefix    — suggest prefix map for packs without file_prefixes
+              — rename files with prefixes (--apply required, transactional)
 
 Always runs ep-validate before and after, showing the diff.
 """
@@ -30,10 +33,14 @@ from datetime import date
 from collections import defaultdict
 
 SKIP_DIRS = {'.obsidian', '.git', 'node_modules', 'eval', '__pycache__', '.venv'}
+INTEGRITY_SKIP_DIRS = {'.obsidian', '.git', '.ep-mcp', 'node_modules', '__pycache__', '.venv'}
+INTEGRITY_SKIP_FILES = {'manifest.yaml', '.DS_Store', 'Thumbs.db'}
+TEXT_EXTS = {'.md', '.yaml', '.yml', '.json', '.txt', '.csv'}
 SKIP_BASENAMES = {'_index.md', '_access.json', '_index.json'}
 ROOT_EXEMPT = {
     'README.md', 'SCHEMA.md', 'STATUS.md', 'LEGACY.md',
     'glossary.md', 'overview.md', 'freshness.md',
+    'DESIGN.md', 'TOOLS.md',
 }
 
 RE_FM = re.compile(r'^---\n(.*?)\n---', re.DOTALL)
@@ -99,11 +106,12 @@ def strip_fm_body(content):
 
 
 class Doctor:
-    def __init__(self, pack_path, apply=False, fix_scope='all'):
+    def __init__(self, pack_path, apply=False, fix_scope='all', seal=False):
         self.pack_path = os.path.abspath(pack_path)
         self.pack_name = os.path.basename(self.pack_path)
         self.apply = apply
-        self.fix_scope = fix_scope  # 'all', 'links', 'fm', 'prefix'
+        self.fix_scope = fix_scope  # 'all', 'links', 'fm', 'hash', 'integrity', 'prefix'
+        self.seal = seal
         self.manifest = {}
         self.pack_type = 'unknown'
         self.pack_slug = ''
@@ -469,6 +477,115 @@ class Doctor:
             with open(full, 'w', encoding='utf-8', newline='\n') as f:
                 f.write(self.files[rel])
 
+    def _compute_effective_pack_digest(self):
+        """Compute canonical SHA-256 pack digest reflecting in-memory fixes."""
+        records = []
+        mem_by_posix = {}
+        for rel in self.files:
+            rel_u = rel.replace(os.sep, '/')
+            if rel in self.modified:
+                mem_by_posix[rel_u] = rebuild_content(
+                    self.fm[rel], self.bodies[rel], self.files[rel]
+                ).encode('utf-8')
+            elif rel in self.text_modified:
+                mem_by_posix[rel_u] = self.files[rel].encode('utf-8')
+
+        for root, dirs, files in os.walk(self.pack_path):
+            rel_root = os.path.relpath(root, self.pack_path).replace(os.sep, '/')
+            if rel_root == '.':
+                rel_root = ''
+            dirs[:] = sorted(
+                d for d in dirs
+                if d not in INTEGRITY_SKIP_DIRS
+                and not (rel_root == 'eval' and d == 'results')
+            )
+            for fname in sorted(files):
+                if fname in INTEGRITY_SKIP_FILES and not rel_root:
+                    continue
+                if fname in {'.DS_Store', 'Thumbs.db'}:
+                    continue
+                full = os.path.join(root, fname)
+                rel_u = os.path.relpath(full, self.pack_path).replace(os.sep, '/')
+                if rel_u.startswith('eval/results/'):
+                    continue
+                ext = os.path.splitext(fname)[1].lower()
+                if rel_u in mem_by_posix:
+                    raw = mem_by_posix[rel_u]
+                else:
+                    try:
+                        with open(full, 'rb') as fh:
+                            raw = fh.read()
+                    except OSError:
+                        continue
+                if ext in TEXT_EXTS:
+                    raw = raw.replace(b'\r\n', b'\n')
+                file_hash = hashlib.sha256(raw).hexdigest()
+                records.append((rel_u, file_hash))
+        records.sort(key=lambda item: item[0])
+        manifest_lines = ''.join(f"{rel}\tsha256:{h}\n" for rel, h in records)
+        return 'sha256:' + hashlib.sha256(manifest_lines.encode('utf-8')).hexdigest()
+
+    # ── Fix: seal / refresh manifest.yaml integrity block ────────────────
+    def fix_integrity(self):
+        """Compute and write/update integrity.pack_digest and integrity.pack_version
+        when --fix integrity / --seal is requested, or when manifest.yaml already
+        declares an integrity block and --fix hash / all is run."""
+        mp = os.path.join(self.pack_path, 'manifest.yaml')
+        if not os.path.exists(mp) or not self.manifest:
+            return
+        has_block = isinstance(self.manifest.get('integrity'), dict)
+        should_run = (
+            self.seal
+            or self.fix_scope == 'integrity'
+            or (self.fix_scope in ('all', 'hash') and has_block)
+        )
+        if not should_run:
+            return
+
+        new_digest = self._compute_effective_pack_digest()
+        pack_ver = str(self.manifest.get('version') or '1.0.0').strip()
+        cur_block = self.manifest.get('integrity') if has_block else {}
+        old_digest = str(cur_block.get('pack_digest') or '').strip()
+        old_ver = str(cur_block.get('pack_version') or '').strip()
+
+        if has_block and old_digest == new_digest and old_ver == pack_ver:
+            return
+
+        with open(mp, encoding='utf-8') as fh:
+            raw_manifest = fh.read()
+        if has_block:
+            updated = raw_manifest
+            if re.search(r'(?m)^(\s*pack_digest:\s*).*$', updated):
+                updated = re.sub(
+                    r'(?m)^(\s*pack_digest:\s*).*$',
+                    f'\\g<1>"{new_digest}"',
+                    updated,
+                    count=1,
+                )
+            if re.search(r'(?m)^(\s*pack_version:\s*).*$', updated):
+                updated = re.sub(
+                    r'(?m)^(\s*pack_version:\s*).*$',
+                    f'\\g<1>"{pack_ver}"',
+                    updated,
+                    count=1,
+                )
+            desc = f"Refreshed integrity: pack_version={pack_ver}, pack_digest={new_digest[:23]}..."
+        else:
+            block_str = (
+                "\nintegrity:\n"
+                '  algorithm: "sha256"\n'
+                f'  pack_digest: "{new_digest}"\n'
+                f'  pack_version: "{pack_ver}"\n'
+            )
+            updated = raw_manifest.rstrip('\n') + '\n' + block_str
+            desc = f"Sealed integrity: pack_version={pack_ver}, pack_digest={new_digest[:23]}..."
+
+        self.changes.append(('manifest.yaml', desc))
+        self.text_modified.add('manifest.yaml')
+        if self.apply:
+            with open(mp, 'w', encoding='utf-8', newline='\n') as f:
+                f.write(updated)
+
     # ── Main run ─────────────────────────────────────────────────────────
     def run(self):
         self.scan()
@@ -481,6 +598,7 @@ class Doctor:
         self.fix_canonical_verbatim()
         self.fix_provenance()
         self.write_all()
+        self.fix_integrity()
         return self.changes
 
     def report(self):
@@ -525,8 +643,10 @@ def main():
     parser.add_argument('pack', help='Path to pack directory')
     parser.add_argument('--apply', action='store_true',
                         help='Write changes (default is dry-run)')
-    parser.add_argument('--fix', choices=['all', 'links', 'fm', 'hash', 'prefix'],
+    parser.add_argument('--fix', choices=['all', 'links', 'fm', 'hash', 'integrity', 'prefix'],
                         default='all', help='Which fixes to apply')
+    parser.add_argument('--seal', action='store_true',
+                        help='Compute and write/update manifest.yaml integrity block')
     args = parser.parse_args()
 
     if not os.path.isdir(args.pack):
@@ -538,7 +658,7 @@ def main():
     _run_validator(args.pack)
 
     # Run doctor
-    doc = Doctor(args.pack, apply=args.apply, fix_scope=args.fix)
+    doc = Doctor(args.pack, apply=args.apply, fix_scope=args.fix, seal=args.seal)
     doc.run()
     doc.report()
 

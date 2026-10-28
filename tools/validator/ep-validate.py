@@ -3,9 +3,10 @@
 
 Usage: python3 ep-validate.py /path/to/pack [--verbose] [--json]
                                             [--provenance] [--aks]
-                                            [--strict] [--fail-on-warn]
+                                            [--strict] [--security]
+                                            [--skillspector] [--fail-on-warn]
 
-Checks (21):
+Checks (29):
   1. manifest.yaml exists and has required fields
   2. manifest.yaml field validation (type, slug format, entry_point exists)
   3. Duplicate basenames across the vault
@@ -35,6 +36,8 @@ Checks (21):
  25. W-AUTH-01/02: authority_boundary missing or incomplete (WARN; not --strict)
  26. W-EVAL-01: eval set exists but has fewer than 3 refusal/out-of-scope questions
  27. W-VOL-01..03: volatile TTL frontmatter (refresh / fetched_at / expires_at) [Core 4.2]
+ 28. W-INT-01..02: pack-level manifest integrity digest, version, and optional signature
+ 29. W-SEC-01..04: security lint (hidden/bidi Unicode, outbound/override prose instructions, secret leaks, optional SkillSpector pass)
 
 Provenance checks (17-19) are opt-in via --provenance flag.
 AKS readiness checks are opt-in via --aks and imply provenance checks.
@@ -51,15 +54,19 @@ that non-conforming files fail the run before they can enter an index:
 --fail-on-warn additionally makes any remaining warning fail the run (exit 1).
 """
 
-import os, re, sys, yaml, json, hashlib
+import os, re, sys, yaml, json, hashlib, base64, shutil, subprocess, tempfile
 from collections import Counter, defaultdict
 from datetime import date, timedelta
 
 SKIP_DIRS = {'.obsidian', '.git', 'node_modules', 'eval', '__pycache__', '.venv'}
+INTEGRITY_SKIP_DIRS = {'.obsidian', '.git', '.ep-mcp', 'node_modules', '__pycache__', '.venv'}
+INTEGRITY_SKIP_FILES = {'manifest.yaml', '.DS_Store', 'Thumbs.db'}
+TEXT_EXTS = {'.md', '.yaml', '.yml', '.json', '.txt', '.csv'}
 SKIP_BASENAMES = {'_index.md', '_access.json', '_index.json'}
 ROOT_EXEMPT = {
     'README.md', 'SCHEMA.md', 'STATUS.md', 'LEGACY.md',
     'glossary.md', 'overview.md', 'freshness.md',
+    'DESIGN.md', 'TOOLS.md',
 }
 
 PERSON_PACK_PREFIXES = {
@@ -83,6 +90,13 @@ STRICT_PROMOTE = {
     'no-frontmatter', 'missing-fm-field',
     'W-PROV-01', 'W-PROV-02', 'W-PROV-04', 'W-PROV-05',
     'W-V41-01',
+    'W-SEC-01', 'W-SEC-03',
+    'W-INT-01',
+}
+
+SECURITY_PROMOTE = {
+    'W-SEC-01', 'W-SEC-02', 'W-SEC-03', 'W-SEC-04',
+    'W-INT-01', 'W-INT-02',
 }
 
 # --strict: contract fields with no standalone rule (id/verified_at are already
@@ -162,14 +176,233 @@ def _has_canonical_statement_surface(body):
     return len(' '.join(paragraph_lines).strip()) >= 30
 
 
+# ── Pack-level integrity helpers ─────────────────────────────────────────────
+
+def compute_pack_digest(pack_path):
+    """Compute canonical SHA-256 digest over all distributed pack files.
+
+    Excludes manifest.yaml itself (which stores the digest), non-distribution
+    dirs (.obsidian, .git, .ep-mcp, node_modules, __pycache__, .venv), and
+    eval/results/. Normalizes CRLF -> LF on text files so digests are identical
+    across Windows and POSIX checkouts.
+    """
+    pack_path = os.path.abspath(pack_path)
+    records = []
+    for root, dirs, files in os.walk(pack_path):
+        rel_root = os.path.relpath(root, pack_path).replace(os.sep, '/')
+        if rel_root == '.':
+            rel_root = ''
+        dirs[:] = sorted(
+            d for d in dirs
+            if d not in INTEGRITY_SKIP_DIRS
+            and not (rel_root == 'eval' and d == 'results')
+        )
+        for fname in sorted(files):
+            if fname in INTEGRITY_SKIP_FILES and not rel_root:
+                continue
+            if fname in {'.DS_Store', 'Thumbs.db'}:
+                continue
+            full = os.path.join(root, fname)
+            rel = os.path.relpath(full, pack_path).replace(os.sep, '/')
+            if rel.startswith('eval/results/'):
+                continue
+            ext = os.path.splitext(fname)[1].lower()
+            try:
+                with open(full, 'rb') as fh:
+                    raw = fh.read()
+            except OSError:
+                continue
+            if ext in TEXT_EXTS:
+                raw = raw.replace(b'\r\n', b'\n')
+            file_hash = hashlib.sha256(raw).hexdigest()
+            records.append((rel, file_hash))
+    records.sort(key=lambda item: item[0])
+    manifest_lines = ''.join(f"{rel}\tsha256:{h}\n" for rel, h in records)
+    return 'sha256:' + hashlib.sha256(manifest_lines.encode('utf-8')).hexdigest()
+
+
+def verify_pack_signature(payload_bytes, signature_str, public_key_str=None,
+                          signed_by_str=None, pack_path=None):
+    """Verify an optional signature over '<slug>@<pack_version>:<pack_digest>'.
+
+    Supports:
+      1. Ed25519 verification via 'public_key' (raw base64/hex 'ed25519:<key>',
+         OpenSSH 'ssh-ed25519 <b64>', or PEM) when 'cryptography' is installed.
+      2. OpenSSH armored signature ('-----BEGIN SSH SIGNATURE-----') via
+         ssh-keygen -Y verify when 'public_key' is an ssh-ed25519 key.
+    Returns (verified: bool, reason: str).
+    """
+    sig_s = str(signature_str or '').strip()
+    pub_s = str(public_key_str or '').strip()
+    if not sig_s:
+        return False, 'empty signature'
+    if not pub_s:
+        return False, 'missing public_key (cannot verify signature without public key)'
+
+    # 1. OpenSSH armored signature via ssh-keygen -Y verify
+    if '-----BEGIN SSH SIGNATURE-----' in sig_s and pub_s.startswith('ssh-'):
+        ssh_keygen = shutil.which('ssh-keygen')
+        if not ssh_keygen:
+            return False, 'ssh-keygen not found on PATH to verify SSH signature'
+        signer_id = str(signed_by_str or 'expertpack').strip() or 'expertpack'
+        try:
+            with tempfile.TemporaryDirectory(prefix='ep-sig-') as tmp:
+                allowed = os.path.join(tmp, 'allowed_signers')
+                sig_file = os.path.join(tmp, 'pack.sig')
+                with open(allowed, 'w', encoding='utf-8') as f:
+                    f.write(f"{signer_id} {pub_s}\n")
+                with open(sig_file, 'w', encoding='utf-8') as f:
+                    f.write(sig_s + '\n')
+                proc = subprocess.run(
+                    [ssh_keygen, '-Y', 'verify', '-f', allowed, '-I', signer_id,
+                     '-n', 'expertpack', '-s', sig_file],
+                    input=payload_bytes,
+                    capture_output=True,
+                    timeout=10,
+                )
+                if proc.returncode == 0:
+                    return True, 'verified via ssh-keygen'
+                err = (proc.stderr or proc.stdout or b'').decode('utf-8', errors='replace').strip()
+                return False, f"ssh-keygen verification failed: {err or 'invalid signature'}"
+        except Exception as exc:
+            return False, f"ssh-keygen verification error: {exc}"
+
+    # 2. Ed25519 raw/base64/hex signature via cryptography (if available)
+    try:
+        from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+        from cryptography.hazmat.primitives import serialization
+    except ImportError:
+        return False, 'cryptography package not installed to verify Ed25519 signature'
+
+    try:
+        raw_sig = sig_s
+        if raw_sig.startswith('ed25519:'):
+            raw_sig = raw_sig[len('ed25519:'):].strip()
+        try:
+            sig_bytes = bytes.fromhex(raw_sig) if re.fullmatch(r'[0-9a-fA-F]{128}', raw_sig) else base64.b64decode(raw_sig, validate=True)
+        except Exception:
+            return False, 'malformed signature encoding (expected hex or base64)'
+
+        if pub_s.startswith('ed25519:'):
+            key_body = pub_s[len('ed25519:'):].strip()
+            pub_bytes = bytes.fromhex(key_body) if re.fullmatch(r'[0-9a-fA-F]{64}', key_body) else base64.b64decode(key_body, validate=True)
+            pub_key = Ed25519PublicKey.from_public_bytes(pub_bytes)
+        elif pub_s.startswith('ssh-ed25519 '):
+            pub_key = serialization.load_ssh_public_key(pub_s.encode('utf-8'))
+        elif '-----BEGIN PUBLIC KEY-----' in pub_s:
+            pub_key = serialization.load_pem_public_key(pub_s.encode('utf-8'))
+        else:
+            pub_bytes = bytes.fromhex(pub_s) if re.fullmatch(r'[0-9a-fA-F]{64}', pub_s) else base64.b64decode(pub_s, validate=True)
+            pub_key = Ed25519PublicKey.from_public_bytes(pub_bytes)
+
+        pub_key.verify(sig_bytes, payload_bytes)
+        return True, 'verified via Ed25519'
+    except Exception as exc:
+        return False, f"signature verification failed: {exc}"
+
+
+# ── Security lint patterns (W-SEC-01..03) ────────────────────────────────────
+
+RE_FENCED_BLOCK = re.compile(r'^(?:```|~~~).*?^(?:```|~~~)\s*$', re.MULTILINE | re.DOTALL)
+RE_INLINE_CODE = re.compile(r'`[^`\n]+`')
+
+# W-SEC-01: zero-width spaces/joiners, bidi override/isolate controls, mid-file BOM, Unicode Tags
+RE_HIDDEN_UNICODE = re.compile(
+    r'[\u200b-\u200f\u202a-\u202e\u2066-\u2069\ufeff\U000e0000-\U000e007f]'
+)
+
+# W-SEC-02: plain-language prompt override / exfiltration directives in prose
+SEC_OVERRIDE_PATTERNS = [
+    (
+        'prompt-override',
+        re.compile(
+            r'\b(?:ignore|disregard|forget)\s+(?:all\s+|any\s+)?'
+            r'(?:previous|prior|above|earlier|system|developer|safety)\s+'
+            r'(?:instructions|prompts|rules|directives|constraints|guardrails)\b',
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        'role-hijack',
+        re.compile(
+            r'\b(?:you\s+must\s+now\s+act\s+as|override\s+system\s+prompt|'
+            r'new\s+system\s+instructions\s*:|enter\s+developer\s+mode)\b',
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        'outbound-exfil',
+        re.compile(
+            r'\b(?:exfiltrate|send|post|upload|transmit|forward|curl|wget|fetch)\s+'
+            r'(?:the\s+|all\s+|any\s+|user\s+|your\s+|session\s+)?'
+            r'(?:api[_ -]?keys?|secrets?|tokens?|passwords?|credentials?|'
+            r'ssh[_ -]?keys?|env(?:ironment)?\s+variables?|system\s+prompt|'
+            r'conversation\s+history|session\s+state)\s+'
+            r'(?:to|via)\s+(?:https?://|\S*webhook|\S*endpoint)',
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        'image-beacon',
+        re.compile(
+            r'!\[[^\]]*\]\(https?://[^)\s]+\?[^)\s]*'
+            r'(?:\$\{[^}]+\}|\{\{[^}]+\}\}|\$[A-Z_][A-Z0-9_]{2,}|'
+            r'(?:api[_-]?key|secret|token|password|env)=)',
+            re.IGNORECASE,
+        ),
+    ),
+]
+
+DANGEROUS_ACTIVATION_TOOLS = {
+    'bash', 'sh', 'zsh', 'powershell', 'pwsh', 'cmd', 'cmd.exe',
+    'curl', 'wget', 'nc', 'netcat', 'ncat', 'socat', 'invoke-webrequest',
+    'ssh', 'scp',
+}
+
+# W-SEC-03: secret / credential patterns
+SECRET_PATTERNS = [
+    ('openai-or-anthropic-key', re.compile(r'\bsk-(?:proj-|ant-)?[A-Za-z0-9_\-]{20,}\b')),
+    ('github-pat', re.compile(r'\bgh[pousr]_[A-Za-z0-9]{36,}\b')),
+    ('slack-token', re.compile(r'\bxox[baprs]-[A-Za-z0-9\-]{10,}\b')),
+    ('aws-access-key', re.compile(r'\bAKIA[0-9A-Z]{16}\b')),
+    ('private-key-block', re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH |DSA |PRIVATE )?PRIVATE KEY-----')),
+    (
+        'credential-assignment',
+        re.compile(
+            r'(?:api[_-]?key|secret[_-]?key|access[_-]?token|auth[_-]?token|'
+            r'client[_-]?secret|private[_-]?key)\s*[:=]\s*'
+            r'["\']?(?!(?:<REDACTED>|REDACTED|YOUR_|your_|example|placeholder|'
+            r'xxxx|XXXX|\*\*\*\*|\.\.\.|null|none|true|false|\$\{?))[A-Za-z0-9_\-\.~+/]{20,}["\']?',
+            re.IGNORECASE,
+        ),
+    ),
+]
+
+PLACEHOLDER_SECRET_RE = re.compile(
+    r'^(?:sk-[xX0-9]+|sk-(?:proj-|ant-)?(?:your|example|test|dummy|placeholder|xxxx)[A-Za-z0-9_\-]*|'
+    r'gh[pousr]_[xX0]+|AKIA[0X]+|.*(?:example|placeholder|redacted|dummy|sample|test_key|your_key|X{4,}|x{4,}|0{6,}|\*{4,}).*)$',
+    re.IGNORECASE,
+)
+
+
+def _strip_code_for_prose_scan(text):
+    """Remove fenced code blocks and inline code spans so prose checks do not
+    false-positive on technical CLI/code examples."""
+    without_fences = RE_FENCED_BLOCK.sub('\n', text)
+    return RE_INLINE_CODE.sub(' ', without_fences)
+
+
 class Validator:
     def __init__(self, pack_path, verbose=False, check_provenance=False,
-                 check_aks=False, strict=False, fail_on_warn=False, ignore=None):
+                 check_aks=False, strict=False, security=False,
+                 skillspector=False, fail_on_warn=False, ignore=None):
         self.pack_path = os.path.abspath(pack_path)
         self.pack_name = os.path.basename(self.pack_path)
         self.verbose = verbose
         self.check_aks = check_aks
         self.strict = strict
+        self.security = security
+        self.skillspector = skillspector
         self.fail_on_warn = fail_on_warn
         # Category codes demoted from ERROR to WARN (e.g. a tracked backlog).
         self.ignore = set(ignore or ())
@@ -178,6 +411,7 @@ class Validator:
         self.manifest = {}
         self.pack_type = 'unknown'
         self.pack_slug = ''
+        self.integrity_status = 'unsigned'
         self.files = {}           # rel_path -> content
         self.fm = {}              # rel_path -> frontmatter dict
         self.bodies = {}          # rel_path -> body (post-frontmatter)
@@ -191,6 +425,8 @@ class Validator:
         if cat in self.ignore:
             sev = 'WARN'  # tracked/allowlisted: never fail the run on this code
         elif self.strict and sev == 'WARN' and cat in STRICT_PROMOTE:
+            sev = 'ERROR'
+        elif self.security and sev == 'WARN' and cat in SECURITY_PROMOTE:
             sev = 'ERROR'
         self.issues.append((sev, cat, f, msg))
 
@@ -1182,6 +1418,212 @@ class Validator:
                        f"Eval set has {n} refusal/out-of-scope question(s); "
                        "need at least 3 that sit outside authority_boundary")
 
+    # ── Check 28: Pack-level integrity & signing (W-INT-01..02) ──────────
+    def check_integrity(self):
+        """Verify optional manifest.yaml integrity block (unsigned / verified / unverifiable)."""
+        self.integrity_status = 'unsigned'
+        if not self.manifest:
+            return
+        block = self.manifest.get('integrity')
+        if block is None:
+            return
+        if not isinstance(block, dict):
+            self.integrity_status = 'unverifiable'
+            self._add('WARN', 'W-INT-01', 'manifest.yaml',
+                       "integrity block must be a mapping with pack_digest and pack_version")
+            return
+
+        algo = str(block.get('algorithm') or 'sha256').strip().lower()
+        if algo != 'sha256':
+            self.integrity_status = 'unverifiable'
+            self._add('WARN', 'W-INT-01', 'manifest.yaml',
+                       f"Unsupported integrity.algorithm '{algo}' (expected 'sha256')")
+            return
+
+        manifest_ver = str(self.manifest.get('version') or '').strip()
+        sealed_ver = str(block.get('pack_version') or '').strip()
+        declared_digest = str(block.get('pack_digest') or '').strip()
+        actual_digest = compute_pack_digest(self.pack_path)
+
+        digest_ok = True
+        if not sealed_ver:
+            digest_ok = False
+            self._add('WARN', 'W-INT-01', 'manifest.yaml',
+                       "integrity.pack_version is missing")
+        elif manifest_ver and sealed_ver != manifest_ver:
+            digest_ok = False
+            self._add('WARN', 'W-INT-01', 'manifest.yaml',
+                       f"integrity.pack_version '{sealed_ver}' does not match "
+                       f"manifest.version '{manifest_ver}'")
+
+        if not declared_digest:
+            digest_ok = False
+            self._add('WARN', 'W-INT-01', 'manifest.yaml',
+                       "integrity.pack_digest is missing")
+        elif declared_digest != actual_digest:
+            digest_ok = False
+            self._add('WARN', 'W-INT-01', 'manifest.yaml',
+                       f"integrity.pack_digest mismatch: manifest has {declared_digest[:23]}..., "
+                       f"actual pack is {actual_digest[:23]}... "
+                       "(run `ep-doctor --fix integrity --apply` to re-seal)")
+
+        signature = str(block.get('signature') or '').strip()
+        if not signature:
+            self.integrity_status = 'unsigned' if digest_ok else 'unverifiable'
+            return
+
+        if not digest_ok:
+            self.integrity_status = 'unverifiable'
+            return
+
+        slug = self.pack_slug or str(self.manifest.get('slug') or '').strip()
+        payload = f"{slug}@{sealed_ver}:{declared_digest}".encode('utf-8')
+        ok, reason = verify_pack_signature(
+            payload,
+            signature_str=signature,
+            public_key_str=block.get('public_key'),
+            signed_by_str=block.get('signed_by'),
+            pack_path=self.pack_path,
+        )
+        if ok:
+            self.integrity_status = 'verified'
+        else:
+            self.integrity_status = 'unverifiable'
+            self._add('WARN', 'W-INT-02', 'manifest.yaml',
+                       f"integrity.signature is unverifiable: {reason}")
+
+    # ── Check 29: Security lint (W-SEC-01..04) ───────────────────────────
+    def check_security(self):
+        """W-SEC-01: hidden/bidi/tag Unicode characters outside code fences.
+        W-SEC-02: plain-language prompt-override or outbound exfiltration directives.
+        W-SEC-03: leaked secrets or credentials in pack files.
+        """
+        tools_md_text = ''
+        tools_md_path = os.path.join(self.pack_path, 'TOOLS.md')
+        if os.path.isfile(tools_md_path):
+            try:
+                with open(tools_md_path, encoding='utf-8') as fh:
+                    tools_md_text = fh.read().lower()
+            except OSError:
+                tools_md_text = ''
+
+        # Scan all text files in the pack (including manifest.yaml, _index.md, content .md)
+        scan_targets = []
+        for root, dirs, files in os.walk(self.pack_path):
+            dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS)
+            for fname in sorted(files):
+                ext = os.path.splitext(fname)[1].lower()
+                if ext not in {'.md', '.yaml', '.yml', '.json', '.txt'}:
+                    continue
+                full = os.path.join(root, fname)
+                rel = os.path.relpath(full, self.pack_path).replace(os.sep, '/')
+                try:
+                    with open(full, encoding='utf-8') as fh:
+                        text = fh.read()
+                except (OSError, UnicodeDecodeError):
+                    continue
+                scan_targets.append((rel, ext, text))
+
+        for rel, ext, text in scan_targets:
+            # 1. W-SEC-01: Hidden / Bidi / Tag Unicode outside fenced code blocks
+            non_fenced = RE_FENCED_BLOCK.sub('\n', text)
+            # Strip leading BOM at char 0 if present; mid-file U+FEFF is still flagged
+            check_unicode_text = non_fenced[1:] if non_fenced.startswith('\ufeff') else non_fenced
+            m_uni = RE_HIDDEN_UNICODE.search(check_unicode_text)
+            if m_uni:
+                ch = m_uni.group(0)
+                codepoint = f"U+{ord(ch):04X}"
+                self._add('WARN', 'W-SEC-01', rel,
+                           f"Hidden, bidirectional-override, or tag Unicode character "
+                           f"({codepoint}) detected outside code fences")
+
+            # 2. W-SEC-02: Outbound-action / prompt-override instructions in prose
+            prose = _strip_code_for_prose_scan(text) if ext == '.md' else ''
+            if prose:
+                for kind, pat in SEC_OVERRIDE_PATTERNS:
+                    m_sec = pat.search(prose)
+                    if m_sec:
+                        snippet = ' '.join(m_sec.group(0).split())[:80]
+                        self._add('WARN', 'W-SEC-02', rel,
+                                   f"Suspicious {kind} directive in prose: '{snippet}'")
+                        break
+
+            # 3. W-SEC-03: Secret / credential leak scan
+            for kind, pat in SECRET_PATTERNS:
+                m_secret = pat.search(text)
+                if m_secret:
+                    matched_val = m_secret.group(0).strip()
+                    if PLACEHOLDER_SECRET_RE.match(matched_val):
+                        continue
+                    preview = matched_val[:24] + ('...' if len(matched_val) > 24 else '')
+                    self._add('WARN', 'W-SEC-03', rel,
+                               f"Potential secret ({kind}) detected: '{preview}'")
+                    break
+
+        # Also check manifest mcp.instructions and file-level activation blocks for W-SEC-02
+        mcp_block = (self.manifest.get('mcp') or {}) if isinstance(self.manifest, dict) else {}
+        if isinstance(mcp_block, dict):
+            instr = str(mcp_block.get('instructions') or '')
+            for kind, pat in SEC_OVERRIDE_PATTERNS:
+                m_sec = pat.search(instr)
+                if m_sec:
+                    snippet = ' '.join(m_sec.group(0).split())[:80]
+                    self._add('WARN', 'W-SEC-02', 'manifest.yaml',
+                               f"Suspicious {kind} directive in mcp.instructions: '{snippet}'")
+                    break
+
+        for rel, fm in self.fm.items():
+            if not isinstance(fm, dict):
+                continue
+            act = fm.get('activation')
+            if not isinstance(act, dict):
+                continue
+            act_tools = act.get('tools') or []
+            if isinstance(act_tools, list):
+                for tool_name in act_tools:
+                    t_norm = str(tool_name or '').strip().lower()
+                    if t_norm in DANGEROUS_ACTIVATION_TOOLS:
+                        if not tools_md_text or t_norm not in tools_md_text:
+                            self._add('WARN', 'W-SEC-02', rel,
+                                       f"activation.tools requests shell/network tool "
+                                       f"'{tool_name}' not declared in TOOLS.md")
+            for key in ('constraints', 'next'):
+                items = act.get(key) or []
+                if isinstance(items, list):
+                    joined = '\n'.join(str(x) for x in items)
+                    for kind, pat in SEC_OVERRIDE_PATTERNS:
+                        m_sec = pat.search(joined)
+                        if m_sec:
+                            snippet = ' '.join(m_sec.group(0).split())[:80]
+                            self._add('WARN', 'W-SEC-02', rel,
+                                       f"Suspicious {kind} directive in activation.{key}: '{snippet}'")
+                            break
+
+    def check_skillspector(self):
+        """Optional external NVIDIA SkillSpector scan (--skillspector)."""
+        if not self.skillspector:
+            return
+        exe = shutil.which('skillspector') or shutil.which('skillspector.exe')
+        if not exe:
+            self._add('WARN', 'W-SEC-04', 'manifest.yaml',
+                       "skillspector binary not found on PATH (--skillspector requested)")
+            return
+        try:
+            proc = subprocess.run(
+                [exe, self.pack_path],
+                capture_output=True,
+                text=True,
+                timeout=120,
+            )
+            if proc.returncode != 0:
+                detail = (proc.stdout or proc.stderr or '').strip().splitlines()
+                first_line = detail[0] if detail else f"exit code {proc.returncode}"
+                self._add('WARN', 'W-SEC-04', 'manifest.yaml',
+                           f"SkillSpector reported findings: {first_line[:160]}")
+        except Exception as exc:
+            self._add('WARN', 'W-SEC-04', 'manifest.yaml',
+                       f"SkillSpector execution failed: {exc}")
+
     # -- Strict contract: extra required fields (opt-in via --strict) -------
     def check_strict_required(self):
         """--strict: require the remaining contract fields as ERROR.
@@ -1230,6 +1672,10 @@ class Validator:
         self.check_authority_boundary()
         self.check_eval_refusals()
         self.check_volatile()
+        self.check_integrity()
+        self.check_security()
+        if self.skillspector:
+            self.check_skillspector()
         if self.check_provenance:
             self.check_provenance_fields()
         if self.check_aks:
@@ -1250,6 +1696,8 @@ class Validator:
                 'errors': len(errors),
                 'warnings': len(warns),
                 'strict': self.strict,
+                'security': self.security,
+                'integrity_status': self.integrity_status,
                 'fail_on_warn': self.fail_on_warn,
                 'passed': not fail,
                 'issues': [
@@ -1331,7 +1779,13 @@ def main():
     parser.add_argument('--strict', action='store_true',
                         help='Enforce the frontmatter contract as a hard gate: '
                              'implies --provenance and promotes required-field, '
-                             'hash, and size rules from WARN to ERROR')
+                             'hash, security (W-SEC-01/03), integrity (W-INT-01), '
+                             'and size rules from WARN to ERROR')
+    parser.add_argument('--security', action='store_true',
+                        help='Promote all security and signature warnings '
+                             '(W-SEC-01..04, W-INT-01..02) to ERROR')
+    parser.add_argument('--skillspector', action='store_true',
+                        help='Run external NVIDIA SkillSpector scan if installed on PATH')
     parser.add_argument('--fail-on-warn', action='store_true',
                         help='Exit nonzero if any warning remains (in addition to errors)')
     parser.add_argument('--ignore', action='append', metavar='CODE', default=[],
@@ -1368,6 +1822,7 @@ def main():
         for sub in subs:
             v = Validator(sub, verbose=args.verbose, check_provenance=args.provenance,
                           check_aks=args.aks, strict=args.strict,
+                          security=args.security, skillspector=args.skillspector,
                           fail_on_warn=args.fail_on_warn, ignore=args.ignore)
             v.validate()
             rc = v.report(as_json=args.json)
@@ -1376,6 +1831,7 @@ def main():
     else:
         v = Validator(pack_path, verbose=args.verbose, check_provenance=args.provenance,
                       check_aks=args.aks, strict=args.strict,
+                      security=args.security, skillspector=args.skillspector,
                       fail_on_warn=args.fail_on_warn, ignore=args.ignore)
         v.validate()
         exit_code = v.report(as_json=args.json)

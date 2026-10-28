@@ -41,6 +41,10 @@ def main():
                         help='AKS JSONL output path (default: build/<pack-name>.aks.jsonl)')
     parser.add_argument('--ignore', action='append', metavar='CODE', default=[],
                         help='Check codes to tolerate during validation (repeatable)')
+    parser.add_argument('--security', action='store_true',
+                        help='Promote security and signature warnings (W-SEC-01..04, W-INT-01..02) to ERROR')
+    parser.add_argument('--skillspector', action='store_true',
+                        help='Run external NVIDIA SkillSpector scan during validation')
     parser.add_argument('--skip-export', action='store_true',
                         help='Stop after validate + strip (do not run AKS export)')
     args = parser.parse_args()
@@ -54,6 +58,10 @@ def main():
     export = os.path.abspath(args.export or os.path.join(REPO_ROOT, 'build', f'{name}.aks.jsonl'))
 
     validate_cmd = [sys.executable, VALIDATOR, pack, '--strict']
+    if args.security:
+        validate_cmd.append('--security')
+    if args.skillspector:
+        validate_cmd.append('--skillspector')
     for code in args.ignore:
         validate_cmd += ['--ignore', code]
     if step('1/3 validate (--strict)', validate_cmd) != 0:

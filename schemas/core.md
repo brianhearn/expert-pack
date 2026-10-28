@@ -89,6 +89,14 @@ authority_boundary:
     - "Question is outside in_scope"
   no_source_no_claim: false   # true = do not assert without a retrieved atom
 
+# Pack-level integrity and optional signing (optional — see Pack-Level Integrity section)
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:..."      # SHA-256 over sorted "<rel_path>\t<sha256-of-raw-bytes>\n" entries
+  pack_version: "1.0.0"          # Must match manifest.version at seal time
+  signed_by: ""                  # Optional signer identity (key ID, fingerprint, or URI)
+  signature: ""                  # Optional signature over "<slug>@<pack_version>:<pack_digest>"
+
 # Type-specific fields are defined in each type schema
 ```
 
@@ -755,7 +763,49 @@ CI (`.github/workflows/validate.yml`), pre-commit (`.pre-commit-config.yaml`), a
 
 Maintain a `freshness` block in `manifest.yaml` (see manifest spec above). Update `verified_file_count`, `total_file_count`, and `coverage_pct` after each review pass. This is a manually maintained summary — it gives consuming agents a single-glance freshness signal without scanning every file.
 
-### Validator Warnings for Provenance
+### Pack-Level Integrity and Signing (`manifest.yaml`)
+
+Per-file `content_hash` detects accidental drift between a file's frontmatter and its body, and MCP Skills (`skills/list`) serves per-resource byte digests. For whole-pack tamper detection and distribution trust, `manifest.yaml` MAY declare an `integrity` block:
+
+```yaml
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:4f8a..."
+  pack_version: "1.2.0"
+  signed_by: "key-id-or-uri"     # optional
+  signature: "base64-or-armored" # optional
+  public_key: "ssh-ed25519 ..."  # optional inline public key for offline verification
+```
+
+**Canonical `pack_digest` calculation:**
+1. Enumerate all files in the pack directory excluding `manifest.yaml` itself and non-distribution directories (`.obsidian/`, `.git/`, `.ep-mcp/`, `node_modules/`, `__pycache__/`, `.venv/`, `eval/results/`).
+2. Normalize each path to forward-slash pack-relative form (`rel_path`) and sort lexicographically by UTF-8 code point.
+3. For each file, normalize CRLF to LF (`\r\n` → `\n`) on text files (`.md`, `.yaml`, `.yml`, `.json`, `.txt`) or hash raw bytes for binary files, and compute `file_sha256 = sha256(bytes).hexdigest()`.
+4. Join all records as `f"{rel_path}\tsha256:{file_sha256}\n"` and compute `"sha256:" + sha256(joined.encode("utf-8")).hexdigest()`.
+
+**Three verification states** (reported by `ep-validate --json` as `integrity_status`):
+
+| Status | Meaning |
+|--------|---------|
+| `unsigned` | No `integrity` block is present, or `integrity.pack_digest` and `integrity.pack_version` match current pack files with no `signature` field. |
+| `verified` | `integrity.pack_digest` and `integrity.pack_version` match current pack state, and `integrity.signature` verifies against the signer's public key over `<slug>@<pack_version>:<pack_digest>`. |
+| `unverifiable` | `integrity.pack_digest` or `integrity.pack_version` does not match current pack state (`W-INT-01`), or `integrity.signature` is present without a resolvable/valid public key or fails verification (`W-INT-02`). |
+
+Seal or refresh a pack's `integrity` block with `ep-doctor.py <pack> --fix integrity --apply` (or `ep-doctor.py <pack> --seal --apply`).
+
+### Security Lint (`W-SEC-01..03`)
+
+Because ExpertPack files and `skill://` projections load directly into agent context, `ep-validate.py` scans all pack files for prompt-injection and credential-leak hazards:
+
+| Code | Condition | Severity (default) | Under `--strict` / `--security` |
+|------|-----------|-------------------|---------------------------------|
+| `W-SEC-01` | Hidden, bidirectional-override, or Unicode Tag characters (`U+200B`–`U+200F`, `U+202A`–`U+202E`, `U+2066`–`U+2069`, mid-file `U+FEFF`, `U+E0000`–`U+E007F`) outside code fences | Warning | Error |
+| `W-SEC-02` | Plain-language instruction-override (`ignore previous instructions`, `disregard system prompt`, etc.) or outbound data-exfiltration directives (`curl`/`wget`/POST of secrets or session state, dynamic query-string image beacons) in prose or `mcp.instructions` / `activation` | Warning | Error (with `--security`) |
+| `W-SEC-03` | Secret or credential pattern (API keys, `sk-...`, `ghp_...`, `xoxb-...`, private keys, bearer tokens) in pack files | Warning | Error |
+
+When publishing or indexing untrusted packs, pass `--skillspector` to `ep-validate.py` or `tools/ingest-gate.py` to run an external NVIDIA SkillSpector scan alongside the built-in checks.
+
+### Validator Warnings for Provenance & Integrity
 
 | Code | Condition | Severity (default) | Under `--strict` |
 |------|-----------|-------------------|------------------|
@@ -768,6 +818,8 @@ Maintain a `freshness` block in `manifest.yaml` (see manifest spec above). Updat
 | `W-VOL-01` | Volatile file (`volatile/` or `type: volatile`) missing `refresh` or `expires_at` (`volatile/history/` snapshots and index/navigation files exempt) | Warning | Warning |
 | `W-VOL-02` | `expires_at` is in the past | Warning | Warning |
 | `W-VOL-03` | `refresh` not an ISO 8601 duration, `fetched_at`/`expires_at` not ISO dates, or `expires_at` < `fetched_at` | Warning | Warning |
+| `W-INT-01` | `manifest.yaml` `integrity.pack_digest` or `integrity.pack_version` does not match current pack state | Warning | Error |
+| `W-INT-02` | `manifest.yaml` `integrity.signature` is present but unverifiable or invalid | Warning | Warning |
 
 **Chunk sidecar checks** (RFC-004): `W-CHUNK-01` (oversized atomic/reference file missing sidecar), `W-CHUNK-02` (sidecar `content_hash` mismatch), `W-CHUNK-03` (chunk order/id consistency).
 

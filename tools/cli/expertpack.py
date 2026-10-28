@@ -165,6 +165,10 @@ def cmd_validate(args) -> int:
     passthru = []
     if args.strict:
         passthru.append("--strict")
+    if args.security:
+        passthru.append("--security")
+    if args.skillspector:
+        passthru.append("--skillspector")
     if args.fail_on_warn:
         passthru.append("--fail-on-warn")
     if args.json:
@@ -178,6 +182,8 @@ def cmd_validate(args) -> int:
 
 def cmd_doctor(args) -> int:
     passthru = ["--fix", args.fix]
+    if args.seal:
+        passthru.append("--seal")
     if args.apply:
         passthru.append("--apply")
     return run(DOCTOR, args.path, *passthru)
@@ -249,6 +255,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_val.add_argument("path", nargs="?", default=".", help="Pack path (default: .)")
     p_val.add_argument("--strict", action=argparse.BooleanOptionalAction, default=True,
                        help="Enforce the hard frontmatter gate (default: on)")
+    p_val.add_argument("--security", action="store_true",
+                       help="Promote all security and signature warnings (W-SEC-01..04, W-INT-01..02) to ERROR")
+    p_val.add_argument("--skillspector", action="store_true",
+                       help="Run external NVIDIA SkillSpector scan if installed on PATH")
     p_val.add_argument("--fail-on-warn", action="store_true", help="Any warning fails the run")
     p_val.add_argument("--ignore", action="append", metavar="CODE",
                        help="Demote a check code to warning (repeatable, e.g. W-V41-01)")
@@ -258,8 +268,10 @@ def build_parser() -> argparse.ArgumentParser:
 
     p_doc = sub.add_parser("doctor", help="Run ep-doctor auto-fixer (dry-run by default)")
     p_doc.add_argument("path", nargs="?", default=".", help="Pack path (default: .)")
-    p_doc.add_argument("--fix", choices=["links", "fm", "hash", "prefix", "size", "all"],
+    p_doc.add_argument("--fix", choices=["links", "fm", "hash", "integrity", "prefix", "size", "all"],
                        default="all", help="Fix scope (default: all)")
+    p_doc.add_argument("--seal", action="store_true",
+                       help="Compute and write/update manifest.yaml integrity block")
     p_doc.add_argument("--apply", action="store_true", help="Write changes (omit for dry-run)")
     p_doc.set_defaults(func=cmd_doctor)
 

@@ -16,6 +16,8 @@ python3 ep-validate.py /path/to/your-pack --json
 python3 ep-validate.py /path/to/your-pack --provenance
 python3 ep-validate.py /path/to/your-pack --aks
 python3 ep-validate.py /path/to/your-pack --strict
+python3 ep-validate.py /path/to/your-pack --strict --security
+python3 ep-validate.py /path/to/your-pack --strict --skillspector
 python3 ep-validate.py /path/to/your-pack --strict --fail-on-warn
 python3 ep-validate.py /path/to/your-pack --strict --ignore W-V41-01
 ```
@@ -69,9 +71,14 @@ files fail before they can enter an index:
 - missing `id` / `verified_at` (`W-PROV-04` / `W-PROV-01`)
 - missing `content_hash` / `schema_version` / `retrieval_strategy` (`strict-missing-field`)
 - `content_hash` drift (`W-PROV-02`) and `valid_from` after `verified_at` (`W-PROV-05`)
+- hidden/bidi/tag Unicode (`W-SEC-01`), leaked secrets (`W-SEC-03`), and `integrity.pack_digest` / `pack_version` mismatch (`W-INT-01`)
 - concept files over the v4.1 token ceiling (`W-V41-01`), unless the file
   declares `retrieval_strategy: atomic` or `navigation`
 - manifest missing `schema_version`
+
+`--security` additionally promotes `W-SEC-02` (plain-language instruction override / outbound exfiltration directives) and `W-INT-02` (unverifiable signature) to ERROR.
+
+`--skillspector` invokes the external `skillspector` scanner (if installed on `PATH`) after structural and security checks.
 
 `--fail-on-warn` additionally fails the run if any warning remains.
 
@@ -111,6 +118,19 @@ Not promoted under `--strict`. Existing packs can adopt the block without breaki
 | `W-AUTH-02` | `authority_boundary` is present but missing `in_scope` or `out_of_scope` |
 | `W-EVAL-01` | `eval/benchmark.yaml` or `eval/questions.yaml` exists and has fewer than 3 `refusal` / `out-of-scope` questions |
 
+### Pack-level integrity and security lint
+
+Always active. Under `--strict`, `W-SEC-01`, `W-SEC-03`, and `W-INT-01` promote to ERROR; under `--security`, `W-SEC-02` and `W-INT-02` also promote to ERROR. JSON output (`--json`) includes `integrity_status` (`unsigned` | `verified` | `unverifiable`).
+
+| Code | Meaning |
+|------|---------|
+| `W-INT-01` | `manifest.yaml` declares `integrity`, but `pack_digest` or `pack_version` does not match current pack state |
+| `W-INT-02` | `manifest.yaml` declares `integrity.signature`, but the signature is unverifiable or invalid |
+| `W-SEC-01` | Hidden, zero-width, bidirectional override/isolate, or Unicode Tag characters outside code fences |
+| `W-SEC-02` | Plain-language instruction-override or outbound data-exfiltration directives in prose or `mcp.instructions` / `activation` |
+| `W-SEC-03` | Potential secret or credential leak (API keys, `sk-...`, `ghp_...`, `xoxb-...`, private keys) |
+| `W-SEC-04` | External `skillspector` scanner reported findings or is missing when `--skillspector` was requested |
+
 ## ep-doctor.py
 
 Auto-fixes mechanical issues found by the validator. Runs the sibling
@@ -134,7 +154,8 @@ python3 ep-doctor.py /path/to/your-pack --fix hash --apply
 | `all` | Everything below (default) |
 | `links` | Path-based `related:` → bare filenames; markdown links → wikilinks; legacy verbatim↔summary and bidirectional `related:` |
 | `fm` | Adds missing `title`/`type`/`tags`/`pack`; fixes legacy `canonical_verbatim` paths |
-| `hash` | Backfills the `--strict` provenance contract (`id`, `schema_version`, `retrieval_strategy`, `verified_at`, `content_hash`) via minimal textual inserts |
+| `hash` | Backfills the `--strict` provenance contract (`id`, `schema_version`, `retrieval_strategy`, `verified_at`, `content_hash`) via minimal textual inserts, and refreshes `integrity.pack_digest` / `integrity.pack_version` if an `integrity:` block is present |
+| `integrity` | Computes and writes (or refreshes) `integrity.pack_digest` and `integrity.pack_version` in `manifest.yaml` (can also be triggered via `--seal`) |
 | `prefix` | Renames files to match the content-type prefix convention |
 
 ## Workflow
