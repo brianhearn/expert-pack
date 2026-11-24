@@ -13,6 +13,9 @@ id: blender-3d/workflows/hard-surface-modeling
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+related:
+  - modeling-topology.md
+  - modeling-key-modifiers.md
 content_hash: sha256:dc0f4371a1a1639fc2ec16ee961248f03683fa4b14e2dc3281cb4589229b08a4
 ---
 

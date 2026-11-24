@@ -1,26 +1,27 @@
 ---
 id: blender-3d/concepts/shading-eevee
-title: "Rendering — EEVEE vs Cycles and EEVEE Next"
+title: Rendering — EEVEE vs Cycles and EEVEE Next
 type: concept
 tags:
-  - rendering
-  - eevee
-  - cycles
+- rendering
+- eevee
+- cycles
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/shading-rendering.md
+- concepts/shading-rendering.md
 related:
-  - shading-cycles.md
-  - shading-render-settings.md
-  - shading-principled-bsdf.md
+- shading-cycles.md
+- shading-render-settings.md
+- shading-principled-bsdf.md
+- shading-hdri-lighting.md
+- how-do-i-reduce-render-time.md
 content_hash: sha256:2725860c49c3a124d13213bf1119578efed039f11ea261960ccfa8ac9b66f1b5
 ---
-
 # Rendering — EEVEE vs Cycles and EEVEE Next
 
 EEVEE is Blender's real-time rasterization engine; Cycles is its path tracer. Choose EEVEE when iteration speed, stylized output, or Grease Pencil matters, and switch to Cycles when photorealism, refraction, caustics, or accurate global illumination are non-negotiable.

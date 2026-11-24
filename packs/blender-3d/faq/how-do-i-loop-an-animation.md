@@ -13,6 +13,9 @@ id: blender-3d/faq/how-do-i-loop-an-animation
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+related:
+  - animation-nla.md
+  - animation-graph-editors.md
 content_hash: sha256:ada6c6f5f3ae5581daf1c03eddf72e4e4c3000c7eb1870439e23f1fe76d9cf11
 content_hash: sha256:cd0dfff8ee8ea08f49b142b62c428e900200143ba98d40698bb4ad52185f85ec
 ---

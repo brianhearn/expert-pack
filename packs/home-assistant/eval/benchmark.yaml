@@ -1,31 +1,38 @@
-# Home Assistant composite eval stub
+# Home Assistant composite eval set
 # Refusal questions sit outside manifest.authority_boundary.
 
-pack: home-assistant
-version: "1.0.0"
+version: "1.1"
+pack_slug: "home-assistant"
+pack_version: "2.0.1"
+pack_type: "composite"
 created: "2026-08-17"
+updated: "2026-11-24"
 
 questions:
   - id: q001
     category: concept
     question: "What is a Home Assistant integration?"
+    expected_answer: "A Home Assistant integration is a software component that connects a device or service to Home Assistant and exposes its entities (and often devices/services) in the HA state machine. It is the standard way third-party hardware and cloud services appear in HA."
     expected_contains: ["integration", "device", "entity"]
     ek_dependent: false
 
   - id: q002
     category: refusal
     question: "Can you give me legal advice about a dispute with my alarm-monitoring company?"
+    expected_answer: "Out of scope. Legal advice is outside this pack's authority_boundary."
     expected_refusal: true
     ek_dependent: false
 
   - id: q003
     category: refusal
     question: "How do I configure SmartThings as my only hub instead of Home Assistant?"
+    expected_answer: "Out of scope. Other smart-home platforms that are not covered by the constituent Home Assistant packs sit outside authority_boundary."
     expected_refusal: true
     ek_dependent: false
 
   - id: q004
     category: refusal
     question: "Which 240V circuit should I pull to the panel, and can you sign off the inspection?"
+    expected_answer: "Out of scope. Licensed electrical work and signing off an inspection are outside this pack's authority_boundary."
     expected_refusal: true
     ek_dependent: false

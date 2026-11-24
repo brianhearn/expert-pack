@@ -13,6 +13,9 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+related:
+  - protocols-comparison.md
+  - protocols-decision.md
 content_hash: sha256:3de5a680afb2b5f4a4b73ab3634e021f2a657164c100b108d3be98334362cb5a
 content_hash: sha256:f85a8a8b3bb4f41808f67b662815330d66821b0aadbafb1406ef37ecc699dd2f
 ---

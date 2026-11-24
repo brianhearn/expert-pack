@@ -9,6 +9,11 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+related:
+  - 01-site-assessment.md
+  - 03-component-selection.md
+  - inverter-topology.md
+  - grid-tied-vs-hybrid.md
 content_hash: sha256:2c2d7470845a7f91104ec25fe5afa1bdd4fb9457b234dcd8f2bca46362309d36
 content_hash: sha256:6a781e5b936c071624d700403d92ff840090d9fdad33076b3f9f629b88a16e6d
 ---

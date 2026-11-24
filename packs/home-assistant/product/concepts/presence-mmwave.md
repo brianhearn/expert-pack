@@ -1,21 +1,22 @@
 ---
-title: "mmWave and Door-Sensor Presence"
+title: mmWave and Door-Sensor Presence
 type: concept
 tags:
-  - presence-detection
-  - mmwave
-  - ld2410
-  - door-sensor
+- presence-detection
+- mmwave
+- ld2410
+- door-sensor
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/presence-mmwave
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - presence-sensor-fusion.md
-  - presence-wifi-ble.md
-  - esphome-sensors-climate.md
+- presence-sensor-fusion.md
+- presence-wifi-ble.md
+- esphome-sensors-climate.md
+- presence-home-vs-room.md
 content_hash: sha256:1416f0d5754a8efae33a88969ef646197452681d56c79330dd145c9a060fa61d
 ---
 # mmWave and Door-Sensor Presence

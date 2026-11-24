@@ -1,26 +1,26 @@
 ---
 id: blender-3d/concepts/shading-principled-bsdf
-title: "Shading — The Principled BSDF"
+title: Shading — The Principled BSDF
 type: concept
 tags:
-  - shading
-  - materials
-  - principled-bsdf
+- shading
+- materials
+- principled-bsdf
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/shading-rendering.md
+- concepts/shading-rendering.md
 related:
-  - shading-procedural-textures.md
-  - shading-uv-maps.md
-  - shading-eevee.md
+- shading-procedural-textures.md
+- shading-uv-maps.md
+- shading-eevee.md
+- shading-hdri-lighting.md
 content_hash: sha256:72c924ab2730f324744491f0f8dc047fafc1bb5e752424cb66502f79f734f892
 ---
-
 # Shading — The Principled BSDF
 
 The Principled BSDF is Blender's Disney PBR shader and handles most real-world materials. Metallic is 0 or 1, roughness controls micro-surface, and texture color space (sRGB vs Non-Color) is the usual source of wrong-looking maps.

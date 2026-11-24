@@ -1,17 +1,25 @@
 ---
-title: "Solar Panel Landscape — 2026"
+title: Solar Panel Landscape — 2026
 type: specification
-tags: [specification, solar-panels, efficiency, manufacturers, solar-diy-product]
+tags:
+- specification
+- solar-panels
+- efficiency
+- manufacturers
+- solar-diy-product
 pack: solar-diy-product
 retrieval_strategy: standard
 id: solar-diy/product/specifications/solar-panels-2026
-verified_at: "2026-04-21"
+verified_at: '2026-04-21'
 verified_by: agent
-schema_version: "4.1"
+schema_version: '4.1'
 concept_scope: single
+related:
+- battery-systems-2026.md
+- system-design-fundamentals.md
+- top-diy-mistakes.md
 content_hash: sha256:0a111569778d08757a3830dfdc4d28e650375229047f08b35405b1ae25977f20
 ---
-
 ---
 sources:
   - type: documentation

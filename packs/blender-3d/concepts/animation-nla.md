@@ -1,24 +1,26 @@
 ---
 id: blender-3d/concepts/animation-nla
-title: "Animation — NLA Editor"
+title: Animation — NLA Editor
 type: concept
 tags:
-  - animation
-  - nla
+- animation
+- nla
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/animation-rigging.md
+- concepts/animation-rigging.md
 related:
-  - animation-data-model.md
-  - animation-drivers.md
+- animation-data-model.md
+- animation-drivers.md
+- animation-graph-editors.md
+- animation-shape-keys.md
+- how-do-i-loop-an-animation.md
 content_hash: sha256:01a809429a75d58ebd52b1af287c16821c2d869d1d9516c7e6cd790d441bbc5a
 ---
-
 # Animation — NLA Editor
 
 The NLA (Non-Linear Animation) Editor treats Actions as strips you can stack, scale, blend, and sequence. Push Down converts the active Action into a strip; overlapping strips mix with influence. Game exports typically ship each Action as a clip.

@@ -1,21 +1,22 @@
 ---
-title: "ESPHome Climate and mmWave Sensors"
+title: ESPHome Climate and mmWave Sensors
 type: concept
 tags:
-  - esphome-fundamentals
-  - bme280
-  - scd41
-  - ld2410
+- esphome-fundamentals
+- bme280
+- scd41
+- ld2410
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/esphome-sensors-climate
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - esphome-sensors-control.md
-  - esphome-yaml.md
-  - presence-mmwave.md
+- esphome-sensors-control.md
+- esphome-yaml.md
+- presence-mmwave.md
+- esphome-hardware-troubleshoot.md
 content_hash: sha256:0e25a989060e7f776961ed5ac23d56fe932f5a2236f013b24839e018d314ebc1
 ---
 # ESPHome Climate and mmWave Sensors

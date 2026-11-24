@@ -1,7 +1,7 @@
 name: "Residential Solar & Battery DIY Guide"
 slug: "solar-diy"
 type: "composite"
-version: "2.0.0"
+version: "2.0.1"
 schema_version: "1.2"
 description: "Complete guide to planning, selecting, installing, and maintaining a residential solar + battery system. Combines a solar technology reference pack (what the equipment IS) with a phased installation process pack (how to PLAN and DO it)."
 entry_point: "overview.md"
@@ -10,6 +10,7 @@ created: "2026-03-10"
 updated: "2026-11-24"
 license: "CC-BY-4.0"
 canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/solar-diy"
+applies_to: "residential-solar@2026"
 
 packs:
   - path: "product"
@@ -48,5 +49,5 @@ context:
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:f304dfb10bf49c444e93336091244029b7097674866de119da7954d27f03572b"
-  pack_version: "2.0.0"
+  pack_digest: "sha256:f3387cc6de537ede22f7c49b9047224c41a959555b3b266edffb836d87b279b8"
+  pack_version: "2.0.1"

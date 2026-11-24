@@ -14,6 +14,8 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+related:
+  - system-design-fundamentals.md
 content_hash: sha256:689d85a66897370591538044217251a7c2e368348c4d169c03b9b56b2016f8fb
 ---
 <!-- context: section=product, topic=faq-net-metering, related=grid-tied-vs-hybrid,inspection-commissioning,general-faq -->

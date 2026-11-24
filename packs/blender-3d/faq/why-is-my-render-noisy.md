@@ -13,6 +13,9 @@ id: blender-3d/faq/why-is-my-render-noisy
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+related:
+  - shading-cycles.md
+  - shading-render-settings.md
 content_hash: sha256:43417663c91c6192fd0175d7cd51611cf124206e3ddeb75ba8b903cf9dfbf34b
 content_hash: sha256:f809f9a8d66ea2990478be971ec6bc6dfdf52c129a3fdbc7f4740af01617cb67
 ---

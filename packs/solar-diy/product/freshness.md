@@ -1,6 +1,6 @@
 ---
 title: "Freshness Guide — Solar DIY Pack"
-type: "volatile"
+type: "reference"
 tags: []
 pack: "solar-diy-product"
 retrieval_strategy: "standard"

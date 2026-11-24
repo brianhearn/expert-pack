@@ -1,20 +1,24 @@
 ---
-title: "What ESPHome Is — ESP32 vs ESP8266"
+title: What ESPHome Is — ESP32 vs ESP8266
 type: concept
 tags:
-  - esphome-fundamentals
-  - esp32
-  - esp8266
+- esphome-fundamentals
+- esp32
+- esp8266
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/esphome-what
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - esphome-flash-ota.md
-  - esphome-yaml.md
-  - esphome-ble-proxy.md
+- esphome-flash-ota.md
+- esphome-yaml.md
+- esphome-ble-proxy.md
+- esphome-ha-integration.md
+- network-mdns.md
+- protocols-decision.md
+- voice-satellites-hardware.md
 content_hash: sha256:8c14727e0802f21c5f5b379570910073cca4995467242667aacc814db69f2478
 ---
 # What ESPHome Is — ESP32 vs ESP8266

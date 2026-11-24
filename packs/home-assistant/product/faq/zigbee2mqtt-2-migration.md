@@ -22,6 +22,10 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+related:
+  - protocols-mesh.md
+  - network-zigbee-zwave.md
+  - integrations-mqtt-cloud.md
 content_hash: sha256:204cab498a222c6afa4de2ec2e560b0ba79334f8b5b2afa74bfeb301eadb6fa3
 content_hash: sha256:590faede3e8d466706cfc0a500f70450e466247fb69f80b88c1ae4a51d3a0cf0
 ---

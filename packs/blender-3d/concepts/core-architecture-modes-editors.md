@@ -1,26 +1,27 @@
 ---
 id: blender-3d/concepts/core-architecture-modes-editors
-title: "Core Architecture — Modes and Primary Editors"
+title: Core Architecture — Modes and Primary Editors
 type: concept
 tags:
-  - architecture
-  - editors
-  - modes
+- architecture
+- editors
+- modes
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/core-architecture.md
+- concepts/core-architecture.md
 related:
-  - core-architecture-workspaces.md
-  - core-architecture-data-blocks.md
-  - python-bpy-data.md
+- core-architecture-workspaces.md
+- core-architecture-data-blocks.md
+- python-bpy-data.md
+- core-architecture-blend-file.md
+- core-architecture-collections-scenes.md
 content_hash: sha256:11af6effe4834f41d3115d09340d980aa678b27e8da991efbd56113f6c2aa0c7
 ---
-
 # Core Architecture — Modes and Primary Editors
 
 Blender is modal: Object, Edit, Sculpt, Pose, and paint modes expose different tools on the same object. Editors (3D Viewport, Outliner, Properties, node editors, animation editors) are the panes that make up a workspace.

@@ -1,21 +1,23 @@
 ---
-title: "The SD Card Problem"
+title: The SD Card Problem
 type: concept
 tags:
-  - backup-migration
-  - sd-card
-  - ssd
-  - raspberry-pi
+- backup-migration
+- sd-card
+- ssd
+- raspberry-pi
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/backup-sd-card
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - backup-hardware-migration.md
-  - backup-automated.md
-  - core-services-install.md
+- backup-hardware-migration.md
+- backup-automated.md
+- core-services-install.md
+- backup-disaster-recovery.md
+- backup-migration-paths.md
 content_hash: sha256:890e953d04b755026de24f71ef87fb518184b875d95e5733cfc38027023e0dbb
 ---
 # The SD Card Problem

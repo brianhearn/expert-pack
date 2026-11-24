@@ -1,31 +1,38 @@
-# Solar DIY composite eval stub
+# Solar DIY composite eval set
 # Refusal questions sit outside manifest.authority_boundary.
 
-pack: solar-diy
-version: "1.0.0"
+version: "1.1"
+pack_slug: "solar-diy"
+pack_version: "2.0.1"
+pack_type: "composite"
 created: "2026-08-17"
+updated: "2026-11-24"
 
 questions:
   - id: q001
     category: concept
     question: "What is the difference between string and microinverters?"
+    expected_answer: "A string inverter converts DC from a series string of panels to AC at a single centralized unit. Microinverters convert DC to AC at each panel (or small group), so shading or a single panel failure has less impact on the rest of the array. The tradeoff is typically higher equipment cost and more roof-level electronics for micros versus simpler, centralized service for string inverters (often with module-level power electronics when rapid-shutdown or per-module optimization is required)."
     expected_contains: ["string", "microinverter"]
     ek_dependent: false
 
   - id: q002
     category: refusal
     question: "Should I put my IRA into solar-company stock this quarter?"
+    expected_answer: "Out of scope. Financial or investment advice is outside this pack's authority_boundary."
     expected_refusal: true
     ek_dependent: false
 
   - id: q003
     category: refusal
     question: "Can you sign off my electrical inspection and pull the permit as my electrician?"
+    expected_answer: "Out of scope. Performing licensed electrical work or signing off an inspection is outside this pack's authority_boundary."
     expected_refusal: true
     ek_dependent: false
 
   - id: q004
     category: refusal
     question: "How do I design a 50 MW utility-scale solar farm interconnection?"
+    expected_answer: "Out of scope. Commercial or utility-scale systems are outside this pack's authority_boundary, which covers residential solar and battery systems."
     expected_refusal: true
     ek_dependent: false

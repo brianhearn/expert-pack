@@ -1,20 +1,21 @@
 ---
-title: "ESPHome First Flash and OTA"
+title: ESPHome First Flash and OTA
 type: concept
 tags:
-  - esphome-fundamentals
-  - ota
-  - web.esphome.io
+- esphome-fundamentals
+- ota
+- web.esphome.io
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/esphome-flash-ota
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - esphome-what.md
-  - esphome-yaml.md
-  - esphome-ha-integration.md
+- esphome-what.md
+- esphome-yaml.md
+- esphome-ha-integration.md
+- esphome-hardware-troubleshoot.md
 content_hash: sha256:0182515c839b8ca074c75d66d78c7712a9f05dd527399199ee18a254e3e0ae19
 ---
 # ESPHome First Flash and OTA

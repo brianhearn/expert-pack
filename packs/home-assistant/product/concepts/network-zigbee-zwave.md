@@ -1,21 +1,22 @@
 ---
-title: "Zigbee and Z-Wave Topology on the LAN"
+title: Zigbee and Z-Wave Topology on the LAN
 type: concept
 tags:
-  - network-architecture
-  - zigbee
-  - z-wave
-  - usb-interference
+- network-architecture
+- zigbee
+- z-wave
+- usb-interference
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/network-zigbee-zwave
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - network-wifi.md
-  - protocols-mesh.md
-  - backup-zigbee-coordinator.md
+- network-wifi.md
+- protocols-mesh.md
+- backup-zigbee-coordinator.md
+- zigbee2mqtt-2-migration.md
 content_hash: sha256:51695f28a10ecffa8eda31e158ada05ee023ae4ae229074f8b710e43d64ef4d8
 ---
 # Zigbee and Z-Wave Topology on the LAN

@@ -9,6 +9,9 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+related:
+  - 03-component-selection.md
+  - 05-installation.md
 content_hash: sha256:e9bcfcaeffd221521f043d0e5cc0a493c958c9a4480a8d7b708c6b8858d8604c
 content_hash: sha256:12dd8b3433b89592a2ad9ab225aef6578cb6c563bdce383579f0b1a5b003e3c2
 ---

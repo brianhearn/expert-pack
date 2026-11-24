@@ -3,8 +3,11 @@ title: Home Assistant Smart Home Guide
 type: overview
 tags: []
 pack: home-assistant
+id: home-assistant/overview
 retrieval_strategy: standard
 schema_version: "4.1"
+verified_at: "2026-11-24"
+verified_by: agent
 concept_scope: single
 ---
 # Home Assistant Smart Home Guide

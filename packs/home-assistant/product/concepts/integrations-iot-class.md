@@ -1,20 +1,22 @@
 ---
-title: "Integration IoT Class and Quality"
+title: Integration IoT Class and Quality
 type: concept
 tags:
-  - integrations-guide
-  - iot-class
-  - quality-scale
+- integrations-guide
+- iot-class
+- quality-scale
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/integrations-iot-class
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - integrations-quality-eval.md
-  - integrations-top-used.md
-  - integrations-mqtt-cloud.md
+- integrations-quality-eval.md
+- integrations-top-used.md
+- integrations-mqtt-cloud.md
+- integrations-hacs.md
+- integrations-reliability.md
 content_hash: sha256:a7143dd6905458d4179dfe77d1177bece035c3ad55d0ed3d0aa1ff1288b6aae4
 ---
 # Integration IoT Class and Quality

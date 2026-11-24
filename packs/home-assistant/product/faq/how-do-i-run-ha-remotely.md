@@ -13,6 +13,8 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+related:
+  - network-remote-access.md
 content_hash: sha256:fd7cee3ca96cca750bacd6d3e23688ae446470517b6f6141cc79f9342aec06ec
 content_hash: sha256:5bc8b92eba0034685a17adfc1f20af7fd7cf0b1eaeb668c6cd1be885ecc5730f
 ---

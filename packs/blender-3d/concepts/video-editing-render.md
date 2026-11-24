@@ -1,26 +1,26 @@
 ---
 id: blender-3d/concepts/video-editing-render
-title: "Video Editing — Rendering and Audio"
+title: Video Editing — Rendering and Audio
 type: concept
 tags:
-  - video-editing
-  - rendering
-  - audio
-  - ffmpeg
+- video-editing
+- rendering
+- audio
+- ffmpeg
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/video-editing.md
+- concepts/video-editing.md
 related:
-  - video-editing-vse-editing.md
-  - video-editing-vs-external.md
+- video-editing-vse-editing.md
+- video-editing-vs-external.md
+- video-editing-vse-interface.md
 content_hash: sha256:c90346b79b915ffa1420299b8f22b447bb581aa8b5c1f2e53156f9ae6f156a36
 ---
-
 # Video Editing — Rendering and Audio
 
 Rendering from the VSE writes the timeline to an image sequence or an FFmpeg video, with audio mixed in the same encode. Match frame rate to footage, prefer image sequences over a single movie file for long jobs, and set container, codec, and CRF for the delivery target.

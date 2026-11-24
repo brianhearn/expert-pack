@@ -1,25 +1,25 @@
 ---
 id: blender-3d/concepts/python-depsgraph
-title: "Python Scripting — Depsgraph and Evaluated Data"
+title: Python Scripting — Depsgraph and Evaluated Data
 type: concept
 tags:
-  - python
-  - depsgraph
-  - scripting
+- python
+- depsgraph
+- scripting
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/python-scripting.md
+- concepts/python-scripting.md
 related:
-  - python-batch-scripting.md
-  - python-bpy-data.md
+- python-batch-scripting.md
+- python-bpy-data.md
+- python-cli-render.md
 content_hash: sha256:a7d6b060bffe1687af6e6a248325c6e45208c3f412bf0c21245f0c90ca2aad86
 ---
-
 # Python Scripting — Depsgraph and Evaluated Data
 
 The dependency graph (depsgraph) is Blender's evaluated view of objects after modifiers, constraints, and drivers. Use `evaluated_depsgraph_get()` and `evaluated_get()` when you need the deformed mesh, not the base data-block.

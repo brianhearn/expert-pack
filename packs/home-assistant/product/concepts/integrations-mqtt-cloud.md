@@ -1,21 +1,23 @@
 ---
-title: "MQTT Bridge and Cloud vs Local"
+title: MQTT Bridge and Cloud vs Local
 type: concept
 tags:
-  - integrations-guide
-  - mqtt
-  - local-push
-  - tasmota
+- integrations-guide
+- mqtt
+- local-push
+- tasmota
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/integrations-mqtt-cloud
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - integrations-troubleshooting.md
-  - integrations-reliability.md
-  - integrations-iot-class.md
+- integrations-troubleshooting.md
+- integrations-reliability.md
+- integrations-iot-class.md
+- integrations-media-mesh.md
+- zigbee2mqtt-2-migration.md
 content_hash: sha256:eeea26a7cf74308a0bf702f227c4b8d5872d219d83993607f5c6b390b4abb8b4
 ---
 # MQTT Bridge and Cloud vs Local

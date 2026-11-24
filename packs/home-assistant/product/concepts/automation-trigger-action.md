@@ -1,21 +1,25 @@
 ---
-title: "Automation Triggers, Conditions, and Actions"
+title: Automation Triggers, Conditions, and Actions
 type: concept
 tags:
-  - automation-fundamentals
-  - triggers
-  - conditions
-  - actions
+- automation-fundamentals
+- triggers
+- conditions
+- actions
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/automation-trigger-action
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - automation-conditions-actions.md
-  - automation-modes.md
-  - core-state-machine.md
+- automation-conditions-actions.md
+- automation-modes.md
+- core-state-machine.md
+- automation-templates-blueprints.md
+- energy-automations.md
+- voice-custom-sentences.md
+- why-is-my-automation-not-firing.md
 content_hash: sha256:ce5681258b219029482f6b9abe38f4f7e173fee87d1a0b0c20a8e4d49b77ac21
 ---
 # Automation Triggers, Conditions, and Actions

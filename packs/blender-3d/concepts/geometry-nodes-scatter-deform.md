@@ -1,25 +1,25 @@
 ---
 id: blender-3d/concepts/geometry-nodes-scatter-deform
-title: "Geometry Nodes — Scatter and Curve Deform Patterns"
+title: Geometry Nodes — Scatter and Curve Deform Patterns
 type: concept
 tags:
-  - geometry-nodes
-  - patterns
-  - scatter
+- geometry-nodes
+- patterns
+- scatter
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/geometry-nodes.md
+- concepts/geometry-nodes.md
 related:
-  - geometry-nodes-parametric.md
-  - geometry-nodes-instances-attributes.md
+- geometry-nodes-parametric.md
+- geometry-nodes-instances-attributes.md
+- geometry-nodes-advanced-patterns.md
 content_hash: sha256:6591498853ff749396fe679e18a46e90aae09e77f48b06de10d770c30571957f
 ---
-
 # Geometry Nodes — Scatter and Curve Deform Patterns
 
 Two staple Geometry Nodes patterns are scattering instances on a surface and deforming geometry along a curve. Scatter uses Distribute Points on Faces plus Instance on Points; curve deform samples a curve and Set Position.

@@ -1,20 +1,22 @@
 ---
-title: "Reusable Jinja2 Templates"
+title: Reusable Jinja2 Templates
 type: concept
 tags:
-  - yaml-configuration
-  - jinja2
-  - custom-templates
+- yaml-configuration
+- jinja2
+- custom-templates
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/yaml-templates
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - yaml-template-extensions.md
-  - yaml-validation.md
-  - automation-templates-blueprints.md
+- yaml-template-extensions.md
+- yaml-validation.md
+- automation-templates-blueprints.md
+- presence-person-home.md
+- yaml-packages.md
 content_hash: sha256:db7bae8c78873793647aa4d5c053f59a45fdfbc96878039d1a6fe82c8863755b
 ---
 # Reusable Jinja2 Templates

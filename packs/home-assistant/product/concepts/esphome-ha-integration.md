@@ -1,21 +1,22 @@
 ---
-title: "ESPHome Home Assistant Integration"
+title: ESPHome Home Assistant Integration
 type: concept
 tags:
-  - esphome-fundamentals
-  - native-api
-  - mdns
-  - entities
+- esphome-fundamentals
+- native-api
+- mdns
+- entities
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/esphome-ha-integration
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - esphome-what.md
-  - esphome-ble-proxy.md
-  - esphome-hardware-troubleshoot.md
+- esphome-what.md
+- esphome-ble-proxy.md
+- esphome-hardware-troubleshoot.md
+- esphome-flash-ota.md
 content_hash: sha256:de0d64667e1db221aefa1c715579bbaed42491fa276983f96135e5f3be98648f
 ---
 # ESPHome Home Assistant Integration

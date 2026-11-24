@@ -1,7 +1,7 @@
 name: "Solar Technology Reference"
 slug: "solar-diy-product"
 type: "product"
-version: "1.0.0"
+version: "1.0.1"
 schema_version: "4.1"
 description: "Technology reference for residential solar and battery storage systems. Covers panel types, battery chemistry, inverter architectures, NEC code compliance, product specifications, and troubleshooting — the practitioner-level detail needed for informed product selection and system design."
 entry_point: "overview.md"
@@ -10,6 +10,7 @@ created: "2026-03-10"
 updated: "2026-11-24"
 license: "CC-BY-4.0"
 canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/solar-diy/product"
+applies_to: "residential-solar@2026"
 
 product_version: "2026 market"
 vendor: "Multi-vendor (industry-wide)"
@@ -63,5 +64,5 @@ context:
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:96ebec8ab369d1e76b49f7b6653c8b6eb330f06b0a612e9a232087bcf2630d64"
-  pack_version: "1.0.0"
+  pack_digest: "sha256:71381dc2649dd359aab7e7cd822f992c75bc360025426ba693fc1832dae02377"
+  pack_version: "1.0.1"

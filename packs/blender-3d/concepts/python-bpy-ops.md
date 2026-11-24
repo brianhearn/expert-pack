@@ -1,26 +1,26 @@
 ---
 id: blender-3d/concepts/python-bpy-ops
-title: "Python Scripting — bpy.ops, Gotchas, and the Info Log"
+title: Python Scripting — bpy.ops, Gotchas, and the Info Log
 type: concept
 tags:
-  - python
-  - bpy
-  - operators
-  - scripting
+- python
+- bpy
+- operators
+- scripting
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/python-scripting.md
+- concepts/python-scripting.md
 related:
-  - python-bpy-data.md
-  - python-bpy-context.md
+- python-bpy-data.md
+- python-bpy-context.md
+- python-custom-ui.md
 content_hash: sha256:2a36057f05b69c430a9007804c4ad6dfb71265066c10dc94ac0129b2367d46b0
 ---
-
 # Python Scripting — bpy.ops, Gotchas, and the Info Log
 
 `bpy.ops` exposes Blender's UI operators as Python callables — the same actions triggered by menus and shortcuts. Operators require a valid context, return a status set, and are slower and less predictable than the data API for bulk property work.

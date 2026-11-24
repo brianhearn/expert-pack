@@ -1,20 +1,22 @@
 ---
-title: "Energy Dashboard and kWh Sensors"
+title: Energy Dashboard and kWh Sensors
 type: concept
 tags:
-  - energy-management
-  - energy-dashboard
-  - state-class
+- energy-management
+- energy-dashboard
+- state-class
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/energy-dashboard
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - energy-riemann-utility.md
-  - energy-grid.md
-  - energy-gotchas.md
+- energy-riemann-utility.md
+- energy-grid.md
+- energy-gotchas.md
+- energy-device-monitoring.md
+- energy-solar-battery.md
 content_hash: sha256:2ca0f7381034c880cfe7a4ade3c93e6bd3b86d787b132376827120a09301182f
 ---
 # Energy Dashboard and kWh Sensors

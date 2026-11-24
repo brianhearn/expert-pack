@@ -1,17 +1,27 @@
 ---
-title: "Phase 6: Inspection & Commissioning"
-type: "phase"
-tags: [federal-tax-credit, installation, net-metering, operations-maintenance, permitting, phase-6-inspection-commissioning, process]
-pack: "solar-diy-process"
-retrieval_strategy: "atomic"
+title: 'Phase 6: Inspection & Commissioning'
+type: phase
+tags:
+- federal-tax-credit
+- installation
+- net-metering
+- operations-maintenance
+- permitting
+- phase-6-inspection-commissioning
+- process
+pack: solar-diy-process
+retrieval_strategy: atomic
 id: solar-diy/process/phases/06-inspection-commissioning
-verified_at: "2026-04-21"
+verified_at: '2026-04-21'
 verified_by: agent
-schema_version: "4.1"
+schema_version: '4.1'
 concept_scope: single
+related:
+- 05-installation.md
+- 07-operations-maintenance.md
+- common-mistakes.md
 content_hash: sha256:c150a578b02587abb2ed8a51ca95c04405bcc0a66f586939ff1f39c06e2fc249
 ---
-
 # Phase 6: Inspection & Commissioning
 
 <!-- context: section=process, topic=phase-6-inspection-commissioning, related=permitting,installation,operations-maintenance,net-metering,federal-tax-credit -->

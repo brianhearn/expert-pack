@@ -1,17 +1,23 @@
 ---
-title: "Home Battery Storage — 2026 Comparison"
+title: Home Battery Storage — 2026 Comparison
 type: specification
-tags: [specification, battery-storage, powerwall, enphase, solar-diy-product]
+tags:
+- specification
+- battery-storage
+- powerwall
+- enphase
+- solar-diy-product
 pack: solar-diy-product
 retrieval_strategy: standard
 id: solar-diy/product/specifications/battery-systems-2026
-verified_at: "2026-04-21"
+verified_at: '2026-04-21'
 verified_by: agent
-schema_version: "4.1"
+schema_version: '4.1'
 concept_scope: single
 content_hash: sha256:1c7d3dbf2d6638cd88ace2c9cb565a74ebb448cfbbb650387cb567918943f929
+related:
+- solar-panels-2026.md
 ---
-
 ---
 sources:
   - type: documentation

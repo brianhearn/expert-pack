@@ -1,21 +1,22 @@
 ---
-title: "Integration Reload, Debug, and Monthly Breaks"
+title: Integration Reload, Debug, and Monthly Breaks
 type: concept
 tags:
-  - integrations-guide
-  - reload
-  - logger
-  - breaking-changes
+- integrations-guide
+- reload
+- logger
+- breaking-changes
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/integrations-troubleshooting
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - integrations-mqtt-cloud.md
-  - integrations-hacs.md
-  - integrations-reliability.md
+- integrations-mqtt-cloud.md
+- integrations-hacs.md
+- integrations-reliability.md
+- integration-breaks-every-update.md
 content_hash: sha256:522ada185e320366daf3045c643e9ca476de7b33b3c406d8f32dfbe59a03e5f3
 ---
 # Integration Reload, Debug, and Monthly Breaks

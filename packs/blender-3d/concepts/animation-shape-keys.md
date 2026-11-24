@@ -1,26 +1,26 @@
 ---
 id: blender-3d/concepts/animation-shape-keys
-title: "Animation — Shape Keys"
+title: Animation — Shape Keys
 type: concept
 tags:
-  - animation
-  - shape-keys
-  - facial-rigging
+- animation
+- shape-keys
+- facial-rigging
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-04-21"
+schema_version: '4.1'
+verified_at: '2026-04-21'
 verified_by: agent
 supersedes:
-  - concepts/animation-rigging.md
+- concepts/animation-rigging.md
 related:
-  - rigging-armatures.md
-  - animation-nla.md
-  - animation-drivers.md
+- rigging-armatures.md
+- animation-nla.md
+- animation-drivers.md
+- rigging-ik-weights.md
 content_hash: sha256:e8677f86865c13a3ffb4a57d56e58636066933caa2dba19acaf5c4a019618d36
 ---
-
 # Animation — Shape Keys
 
 Shape Keys store alternative vertex positions as offsets from the Basis (rest) position.

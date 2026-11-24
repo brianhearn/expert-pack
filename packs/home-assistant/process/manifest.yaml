@@ -1,7 +1,7 @@
 name: "Building a Smart Home with Home Assistant"
 slug: "home-assistant-process"
 type: "process"
-version: "1.0.0"
+version: "1.0.1"
 schema_version: "4.1"
 description: "A phased, practical guide to building a reliable smart home with Home Assistant. Covers the complete journey: hardware selection, installation, protocol setup, automation building, dashboard design, advanced features, and hardening. Includes key decision frameworks, battle-tested automation patterns, and common gotchas to avoid."
 entry_point: "overview.md"
@@ -47,5 +47,5 @@ context:
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:fb24ac1727ad84004cd99180f1526ce3c30fbc8f362df5569c67111b798f02be"
-  pack_version: "1.0.0"
+  pack_digest: "sha256:617269f8210de10a1eb90ec69422ff7c4e3607d763bde302f99aafff4da255eb"
+  pack_version: "1.0.1"

@@ -1,21 +1,22 @@
 ---
-title: "Remote Access Ranked by Security"
+title: Remote Access Ranked by Security
 type: concept
 tags:
-  - network-architecture
-  - nabu-casa
-  - wireguard
-  - tailscale
+- network-architecture
+- nabu-casa
+- wireguard
+- tailscale
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/network-remote-access
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - network-cameras-hardware.md
-  - network-vlan.md
-  - backup-hardware-migration.md
+- network-cameras-hardware.md
+- network-vlan.md
+- backup-hardware-migration.md
+- how-do-i-run-ha-remotely.md
 content_hash: sha256:451f44c6c9eebcea4c7044a0477d1ddf712ec5073062ae4a59e3c60f5b59d02e
 ---
 # Remote Access Ranked by Security

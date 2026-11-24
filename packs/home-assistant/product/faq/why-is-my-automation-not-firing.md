@@ -13,6 +13,9 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+related:
+  - automation-trigger-action.md
+  - automation-conditions-actions.md
 content_hash: sha256:84477f87258c6837d71f4db2ccf615780892a9562e2349740c424743a67870b0
 content_hash: sha256:9c89830f78acb7c071b40b082f58a28f9936223e10d486dc08237812b15cc432
 ---

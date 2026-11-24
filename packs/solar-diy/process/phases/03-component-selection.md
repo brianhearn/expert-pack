@@ -1,18 +1,28 @@
 ---
-title: "Phase 3: Component Selection"
-type: "phase"
-tags: [battery-systems-2026, inverter-types, permitting, phase-3-component-selection, process, solar-panels-2026, system-design]
-pack: "solar-diy-process"
-retrieval_strategy: "atomic"
+title: 'Phase 3: Component Selection'
+type: phase
+tags:
+- battery-systems-2026
+- inverter-types
+- permitting
+- phase-3-component-selection
+- process
+- solar-panels-2026
+- system-design
+pack: solar-diy-process
+retrieval_strategy: atomic
 id: solar-diy/process/phases/03-component-selection
-verified_at: "2026-04-21"
+verified_at: '2026-04-21'
 verified_by: agent
-schema_version: "4.1"
+schema_version: '4.1'
 concept_scope: single
-content_hash: sha256:c0448a1cc76c914e2887af162d94b3b050feb316a123aa5f73b4a8a30a2993f2
+related:
+- 02-system-design.md
+- 04-permitting.md
+- diy-vs-contractor.md
+- inverter-topology.md
 content_hash: sha256:0057be4048e59838c3b8806c7759e9a5718370c825ec5f1551628baccee5d460
 ---
-
 # Phase 3: Component Selection
 
 <!-- context: section=process, topic=phase-3-component-selection, related=solar-panels-2026,battery-systems-2026,inverter-types,system-design,permitting -->

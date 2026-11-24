@@ -12,6 +12,9 @@ id: blender-3d/faq/why-does-my-physics-sim-explode
 verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
+related:
+  - physics-rigid-body.md
+  - physics-soft-cloth.md
 content_hash: sha256:6548caefb348a54da396db58d243c5c36c78286200b40e7cd4a33e9f14d66b28
 content_hash: sha256:ab9f3c9b3d00b2420a5acff655e4784f0425f37b7ad46bc89bcb43090dd086b9
 ---

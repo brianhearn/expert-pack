@@ -1,22 +1,24 @@
 ---
-title: "Services, Actions, and Installation Types"
+title: Services, Actions, and Installation Types
 type: concept
 tags:
-  - core-architecture
-  - services
-  - actions
-  - ha-os
-  - supervisor
+- core-architecture
+- services
+- actions
+- ha-os
+- supervisor
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/core-services-install
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - core-architecture.md
-  - core-state-machine.md
-  - backup-migration-paths.md
+- core-architecture.md
+- core-state-machine.md
+- backup-migration-paths.md
+- backup-sd-card.md
+- what-hardware-should-i-run-ha-on.md
 content_hash: sha256:1e27bdfb2957af81d8c2b8054a5ce46a0494ad54fed400033f1e1e8722bb91d5
 ---
 # Services, Actions, and Installation Types

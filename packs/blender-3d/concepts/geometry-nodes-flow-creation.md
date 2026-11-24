@@ -7,7 +7,7 @@ tags:
   - nodes
 pack: blender-3d
 retrieval_strategy: standard
-concept_scope: single
+concept_scope: multi
 schema_version: "4.1"
 verified_at: "2026-08-17"
 verified_by: agent

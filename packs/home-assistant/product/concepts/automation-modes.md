@@ -1,22 +1,23 @@
 ---
-title: "Automation Modes"
+title: Automation Modes
 type: concept
 tags:
-  - automation-fundamentals
-  - single
-  - restart
-  - queued
-  - parallel
+- automation-fundamentals
+- single
+- restart
+- queued
+- parallel
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/automation-modes
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 related:
-  - automation-trigger-action.md
-  - automation-templates-blueprints.md
-  - presence-sensor-fusion.md
+- automation-trigger-action.md
+- automation-templates-blueprints.md
+- presence-sensor-fusion.md
+- automation-conditions-actions.md
 content_hash: sha256:c63d26ce5e30d0beb5e001f5e3e201655a3998b5b899dd0d7091884899e072fe
 ---
 # Automation Modes

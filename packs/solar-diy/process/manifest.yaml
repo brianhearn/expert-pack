@@ -1,7 +1,7 @@
 name: "Residential Solar Installation Process"
 slug: "solar-diy-process"
 type: "process"
-version: "1.0.0"
+version: "1.0.1"
 schema_version: "4.1"
 description: "Phased guide for planning and executing a residential solar + battery installation from initial site assessment through long-term operations. Covers seven project phases, three major decision frameworks, and a gotchas collection with common mistakes and surprises."
 entry_point: "overview.md"
@@ -10,6 +10,7 @@ created: "2026-03-11"
 updated: "2026-11-24"
 license: "CC-BY-4.0"
 canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/solar-diy/process"
+applies_to: "residential-solar@2026"
 
 domain: "residential construction / renewable energy"
 typical_duration: "3-9 months (from decision to grid-tied operation)"
@@ -47,5 +48,5 @@ context:
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:97c8a1a1ab14e69ca90821dc15673c8b421f45135774b29b1adaf5600923f755"
-  pack_version: "1.0.0"
+  pack_digest: "sha256:d70208ce52cca9f8235d501c79b4c8719499a1db28657612e7a1e5d8b10d1d3b"
+  pack_version: "1.0.1"

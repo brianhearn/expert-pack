@@ -1,26 +1,27 @@
 ---
 id: blender-3d/concepts/shading-render-settings
-title: "Rendering — Output Settings and Common Mistakes"
+title: Rendering — Output Settings and Common Mistakes
 type: concept
 tags:
-  - rendering
-  - render-settings
-  - output
+- rendering
+- render-settings
+- output
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: "4.1"
-verified_at: "2026-08-17"
+schema_version: '4.1'
+verified_at: '2026-08-17'
 verified_by: agent
 supersedes:
-  - concepts/shading-rendering.md
+- concepts/shading-rendering.md
 related:
-  - shading-eevee.md
-  - shading-cycles.md
-  - compositing-core.md
+- shading-eevee.md
+- shading-cycles.md
+- compositing-core.md
+- how-do-i-reduce-render-time.md
+- why-is-my-render-noisy.md
 content_hash: sha256:e8bea01d0a81b8a95a878c12d4adc3085a2f4fdddbc392d16494d1e302573934
 ---
-
 # Rendering — Output Settings and Common Mistakes
 
 Film exposure, transparent background, and output format determine whether a render is usable in compositing. Fireflies, grain, pink textures, and EEVEE-vs-Cycles material mismatch each have a specific cause and fix.
