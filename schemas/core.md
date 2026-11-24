@@ -2,7 +2,7 @@
 
 *Shared principles and conventions that apply to every ExpertPack, regardless of type. Type-specific schemas (person, product, process) extend these rules — they don't replace them.*
 
-**Schema version:** 4.2 (2026-10-20; additive over 4.1 — 2026-04-19, extensions 2026-07-06)
+**Schema version:** 4.3 (2026-11-24; additive over 4.2 — pack integrity/signing W-INT-01..02, security lint W-SEC-01..05, license/canonical_url/applies_to)
 
 ---
 
