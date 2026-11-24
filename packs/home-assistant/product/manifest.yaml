@@ -7,7 +7,10 @@ description: "Deep reference knowledge for the Home Assistant platform — core 
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-10"
-updated: "2026-08-17"
+updated: "2026-11-24"
+license: "CC-BY-4.0"
+canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/home-assistant/product"
+applies_to: "home-assistant@>=2026.3"
 
 product_version: "2026.3+"
 vendor: "Open Home Foundation / Nabu Casa"
@@ -57,3 +60,8 @@ context:
     - glossary.md
   on_demand:
     - sources/
+
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:2be97f231766c2bd149559d5b5d4cd19faa36c8b52f0c458de46326f130a4c9f"
+  pack_version: "2.0.0"

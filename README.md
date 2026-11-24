@@ -150,7 +150,11 @@ The schema itself is now the chunking strategy. Author concept files as self-con
 
 ### Provenance Metadata (Schema 3.0+)
 
-Every content file can carry provenance frontmatter — `id`, `content_hash`, `verified_at`, `verified_by` — enabling auditable citations, change detection, and freshness tracking. The pack manifest includes a `freshness` block for sweep coverage metrics. See the [Citation Response Contract](schemas/core.md) for how retrieval systems should surface provenance. The micro-record exporter can now emit compact **Agent Knowledge Schema (AKS)** JSONL (`--compact`) with first-class `id`, `canonical_path`, `source_span_uri`, `content_hash`, `source_checksum`, `verified_at`, `requires`, and `related` fields for token-efficient agent pipelines.
+Every content file can carry provenance frontmatter — `id`, `content_hash`, `verified_at`, `verified_by` — enabling auditable citations, change detection, and freshness tracking. The pack manifest includes a `freshness` block for sweep coverage metrics and an optional `integrity` block (`pack_digest`, optional signature) for tamper detection. See the [Citation Response Contract](schemas/core.md) for how retrieval systems should surface provenance.
+
+> **What integrity and validation prove:** `integrity_status: verified` proves only that the pack bytes match a signature from `signed_by`. Neither schema conformance nor a digest/signature proves factual truth, completeness, or that any shipped embeddings match the Markdown text — indexers must always re-embed directly from Markdown.
+
+The micro-record exporter can now emit compact **Agent Knowledge Schema (AKS)** JSONL (`--compact`) with first-class `id`, `canonical_path`, `source_span_uri`, `content_hash`, `source_checksum`, `verified_at`, `requires`, and `related` fields for token-efficient agent pipelines.
 
 ### Graph Export (Schema 3.1+)
 
@@ -180,14 +184,15 @@ ExpertPack is an actively evolving framework. The table below shows which featur
 | Graph export | ✅ Full | `ep-graph-export.py`; `_graph.yaml` output incl. accepted ontology/entity edges |
 | Agent Knowledge Schema (AKS) export | ✅ Full | `ep-micro-record-export.py --compact`; compact provenance-first JSONL for agent pipelines |
 | Ontology suggestion CLI | ✅ Initial | `ep-ontology-suggest.py`; review-first entity/category suggestions plus accepted ontology.yaml registry |
-| Pack validation CLI | ✅ Full | `ep-validate --strict` (22+ checks), `ep-doctor`, W-CHUNK sidecar rules; CI + pre-commit |
+| Pack validation CLI | ✅ Full | `ep-validate --strict` (29+ checks incl. `W-INT-01..02` & `W-SEC-01..05`), `ep-doctor --seal`, W-CHUNK sidecar rules; CI + pre-commit |
 | Strict ingest gate | ✅ Full | `tools/ingest-gate.py` — validate → strip → export; no index without `--strict` |
+| Portable Agent Skill export | ✅ Full | `expertpack export skill <pack> <outdir>` — plain self-contained `SKILL.md` + `references/` + `assets/` + `evals/evals.json` with strict shared-profile validator (≤10k body, ≤1,024 desc) |
 | Fragment provenance / Reconstruct Mode | ✅ Full | RFC-003 in core; OpenClaw plugin sends `reconstruct`; EP MCP returns `fragment_id` / `line_range` / `stale` envelope |
 | Chunk metadata sidecars | ✅ Full | RFC-004, `ep-chunk-annotate.py`, W-CHUNK-01..03; EP MCP consumes sidecars at index time |
 | Typed Answer Contract (TAC) | ✅ Full | Spec + `validate_tac.py` + `claim_verifier --tac` + agent prompt template |
-| MCP server (EP MCP) | ✅ Full | BM25 + vector hybrid retrieval; multi-pack routing |
-| Provenance display in agent responses | ✅ Runtime-supported | EP MCP opt-in reconstruct mode; host renders fragment provenance |
-| Scaffolding CLI / guided creation | ✅ Full | `tools/cli/expertpack.py` — init, validate, doctor, migrate, chunk-annotate |
+| MCP server (EP MCP) | ✅ Full | v0.8.0: zero-config `ep-mcp serve <dir>`, zero-key lexical BM25 + Gemini/OpenAI/Azure hybrid retrieval, integrity & W-SEC index checks, `ep_list_packs`, `ep_describe_pack`, `ep_feedback`, `exact_phrase` |
+| Provenance display in agent responses | ✅ Runtime-supported | EP MCP compact `provenance_token` + `citation_markdown` + opt-in reconstruct mode |
+| Scaffolding CLI / guided creation | ✅ Full | `tools/cli/expertpack.py` — type-aware `init` (product/person/process/composite), `validate`, `doctor`, `checksum`, `chunk-annotate`, `export skill`, `migrate` |
 | Process schema (v4.1) | ✅ Full | Migrated to atomic conceptual/procedural files, `requires:` phase dependencies, and core v4.1 size rules |
 
 ---

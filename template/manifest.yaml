@@ -16,10 +16,13 @@ schema_version: "4.1"
 description: "One paragraph describing what this pack covers and who it's for."
 entry_point: "overview.md"
 
-# ── Author ────────────────────────────────────────────────────────────────────
+# ── Author & Distribution ─────────────────────────────────────────────────────
 author: "Your Name"
 created: "YYYY-MM-DD"
 updated: "YYYY-MM-DD"
+license: "CC-BY-4.0"             # SPDX identifier or license URL
+canonical_url: ""                # Optional stable upstream URL for forks/exports
+applies_to: ""                   # Optional target product/version range (e.g. "my-product@>=2.0")
 
 # ── Freshness tracking ────────────────────────────────────────────────────────
 # Update after each review pass. coverage_pct = verified_file_count / total_file_count * 100

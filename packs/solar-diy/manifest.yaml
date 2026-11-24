@@ -7,7 +7,9 @@ description: "Complete guide to planning, selecting, installing, and maintaining
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-10"
-updated: "2026-08-17"
+updated: "2026-11-24"
+license: "CC-BY-4.0"
+canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/solar-diy"
 
 packs:
   - path: "product"
@@ -43,3 +45,8 @@ context:
     "process":
       always:
         - overview.md
+
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:f304dfb10bf49c444e93336091244029b7097674866de119da7954d27f03572b"
+  pack_version: "2.0.0"

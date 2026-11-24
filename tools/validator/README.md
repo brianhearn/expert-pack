@@ -76,7 +76,9 @@ files fail before they can enter an index:
   declares `retrieval_strategy: atomic` or `navigation`
 - manifest missing `schema_version`
 
-`--security` additionally promotes `W-SEC-02` (plain-language instruction override / outbound exfiltration directives) and `W-INT-02` (unverifiable signature) to ERROR.
+`--security` additionally promotes `W-SEC-02` (plain-language instruction override / outbound exfiltration directives), `W-SEC-04` (SkillSpector findings), `W-SEC-05` (unscoped oversight-loosening directives), and `W-INT-02` (unverifiable signature) to ERROR.
+
+**Consumer posture ("warn but load, except integrity/security"):** Style, link, and advisory provenance warnings should never prevent a consumer from loading a pack; only integrity mismatches (`W-INT-01`/`W-INT-02`) and security findings (`W-SEC-01..05`) should block indexing or publishing.
 
 `--skillspector` invokes the external `skillspector` scanner (if installed on `PATH`) after structural and security checks.
 
@@ -120,7 +122,9 @@ Not promoted under `--strict`. Existing packs can adopt the block without breaki
 
 ### Pack-level integrity and security lint
 
-Always active. Under `--strict`, `W-SEC-01`, `W-SEC-03`, and `W-INT-01` promote to ERROR; under `--security`, `W-SEC-02` and `W-INT-02` also promote to ERROR. JSON output (`--json`) includes `integrity_status` (`unsigned` | `verified` | `unverifiable`).
+Always active. Under `--strict`, `W-SEC-01`, `W-SEC-03`, and `W-INT-01` promote to ERROR; under `--security`, `W-SEC-02`, `W-SEC-04`, `W-SEC-05`, and `W-INT-02` also promote to ERROR. JSON output (`--json`) includes `integrity_status` (`unsigned` | `verified` | `unverifiable`).
+
+> **Note:** `integrity_status: verified` proves only that the pack bytes match a signature from `signed_by`. It does **not** prove factual truth, completeness, or that any shipped embeddings match the Markdown text (consumers must always re-embed from Markdown).
 
 | Code | Meaning |
 |------|---------|
@@ -130,6 +134,7 @@ Always active. Under `--strict`, `W-SEC-01`, `W-SEC-03`, and `W-INT-01` promote 
 | `W-SEC-02` | Plain-language instruction-override or outbound data-exfiltration directives in prose or `mcp.instructions` / `activation` |
 | `W-SEC-03` | Potential secret or credential leak (API keys, `sk-...`, `ghp_...`, `xoxb-...`, private keys) |
 | `W-SEC-04` | External `skillspector` scanner reported findings or is missing when `--skillspector` was requested |
+| `W-SEC-05` | Unscoped oversight-loosening directive (`--no-verify`, `--yes`, "without asking", "skip confirmation") in prose or workflow instructions without a scope/guard clause |
 
 ## ep-doctor.py
 

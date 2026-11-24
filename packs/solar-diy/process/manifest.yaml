@@ -7,7 +7,9 @@ description: "Phased guide for planning and executing a residential solar + batt
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-11"
-updated: "2026-08-17"
+updated: "2026-11-24"
+license: "CC-BY-4.0"
+canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/solar-diy/process"
 
 domain: "residential construction / renewable energy"
 typical_duration: "3-9 months (from decision to grid-tied operation)"
@@ -42,3 +44,8 @@ context:
     - decisions/
     - gotchas/
   on_demand: []
+
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:97c8a1a1ab14e69ca90821dc15673c8b421f45135774b29b1adaf5600923f755"
+  pack_version: "1.0.0"

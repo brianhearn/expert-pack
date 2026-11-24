@@ -95,7 +95,7 @@ STRICT_PROMOTE = {
 }
 
 SECURITY_PROMOTE = {
-    'W-SEC-01', 'W-SEC-02', 'W-SEC-03', 'W-SEC-04',
+    'W-SEC-01', 'W-SEC-02', 'W-SEC-03', 'W-SEC-04', 'W-SEC-05',
     'W-INT-01', 'W-INT-02',
 }
 
@@ -383,6 +383,66 @@ PLACEHOLDER_SECRET_RE = re.compile(
     r'gh[pousr]_[xX0]+|AKIA[0X]+|.*(?:example|placeholder|redacted|dummy|sample|test_key|your_key|X{4,}|x{4,}|0{6,}|\*{4,}).*)$',
     re.IGNORECASE,
 )
+
+
+# W-SEC-05: unscoped oversight-loosening directives (polarity-aware)
+OVERSIGHT_LOOSENING_PATTERNS = [
+    (
+        'skip-confirmation-flag',
+        re.compile(
+            r'(?:--no-verify|--skip-verify|--force-yes|--assume-yes|'
+            r'--dangerously-skip-permissions|\b--yes\b)',
+            re.IGNORECASE,
+        ),
+    ),
+    (
+        'skip-oversight-phrase',
+        re.compile(
+            r'\b(?:without\s+(?:asking(?:\s+(?:the\s+)?user)?|confirmation|user\s+confirmation|'
+            r'confirming\s+with\s+(?:the\s+)?(?:user|human|owner|operator)|'
+            r'approval|prompting\s+(?:the\s+)?(?:user|for\s+confirmation)|human\s+review)|'
+            r'skip\s+(?:confirmation|approval|human\s+review|verification|safety\s+checks?)|'
+            r'bypass\s+(?:confirmation|approval|review|safety\s+checks?|hooks?)|'
+            r'never\s+ask\s+(?:for\s+)?(?:confirmation|permission|approval)|'
+            r'auto[- ]?approve\s+all|'
+            r'proceed\s+without\s+(?:asking|confirmation))\b',
+            re.IGNORECASE,
+        ),
+    ),
+]
+
+OVERSIGHT_GUARD_RE = re.compile(
+    r'\b(?:never\s+(?:use|pass|run|add|skip|bypass)|do\s+not|don\'t|avoid|forbid|prohibit|refuse|must\s+not|'
+    r'anti[- ]?pattern|gotcha|mistake|dangerous|unsafe|'
+    r'only\s+(?:in|when|if|after|for)|'
+    r'in\s+(?:ci|test|testing|sandbox|staging|non[- ]?prod|local\s+dev)\s+only|'
+    r'after\s+(?:tests?\s+pass|approval|confirmation|explicit\s+consent)|'
+    r'when\s+(?:explicitly\s+)?(?:approved|requested|authorized|confirmed)|'
+    r'if\s+(?:explicitly\s+)?(?:approved|requested|authorized|confirmed)|'
+    r'with\s+explicit\s+(?:user\s+)?(?:approval|permission|consent)|'
+    r'except\s+when)\b',
+    re.IGNORECASE,
+)
+
+
+def _find_unscoped_oversight_loosening(text):
+    """Return (kind, snippet) for the first unscoped oversight-loosening line, or None."""
+    stripped = RE_FENCED_BLOCK.sub('\n', text)
+    # Remove frontmatter block if present at start
+    if stripped.startswith('---'):
+        end = stripped.find('\n---', 3)
+        if end != -1:
+            stripped = stripped[end + 4:]
+    for line in stripped.splitlines():
+        s = line.strip()
+        if not s:
+            continue
+        for kind, pat in OVERSIGHT_LOOSENING_PATTERNS:
+            m = pat.search(s)
+            if m and not OVERSIGHT_GUARD_RE.search(s):
+                snippet = ' '.join(s.split())[:90]
+                return kind, snippet
+    return None
 
 
 def _strip_code_for_prose_scan(text):
@@ -1560,7 +1620,16 @@ class Validator:
                                f"Potential secret ({kind}) detected: '{preview}'")
                     break
 
-        # Also check manifest mcp.instructions and file-level activation blocks for W-SEC-02
+            # 4. W-SEC-05: Unscoped oversight-loosening directives in markdown prose
+            if ext == '.md':
+                hit = _find_unscoped_oversight_loosening(text)
+                if hit:
+                    kind, snippet = hit
+                    self._add('WARN', 'W-SEC-05', rel,
+                               f"Unscoped oversight-loosening directive ({kind}): '{snippet}' "
+                               "(add an explicit scope/guard clause or remove)")
+
+        # Also check manifest mcp.instructions and file-level activation blocks for W-SEC-02 / W-SEC-05
         mcp_block = (self.manifest.get('mcp') or {}) if isinstance(self.manifest, dict) else {}
         if isinstance(mcp_block, dict):
             instr = str(mcp_block.get('instructions') or '')
@@ -1571,6 +1640,11 @@ class Validator:
                     self._add('WARN', 'W-SEC-02', 'manifest.yaml',
                                f"Suspicious {kind} directive in mcp.instructions: '{snippet}'")
                     break
+            hit = _find_unscoped_oversight_loosening(instr)
+            if hit:
+                kind, snippet = hit
+                self._add('WARN', 'W-SEC-05', 'manifest.yaml',
+                           f"Unscoped oversight-loosening directive ({kind}) in mcp.instructions: '{snippet}'")
 
         for rel, fm in self.fm.items():
             if not isinstance(fm, dict):
@@ -1598,6 +1672,11 @@ class Validator:
                             self._add('WARN', 'W-SEC-02', rel,
                                        f"Suspicious {kind} directive in activation.{key}: '{snippet}'")
                             break
+                    hit = _find_unscoped_oversight_loosening(joined)
+                    if hit:
+                        kind, snippet = hit
+                        self._add('WARN', 'W-SEC-05', rel,
+                                   f"Unscoped oversight-loosening directive ({kind}) in activation.{key}: '{snippet}'")
 
     def check_skillspector(self):
         """Optional external NVIDIA SkillSpector scan (--skillspector)."""

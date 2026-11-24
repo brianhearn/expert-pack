@@ -84,12 +84,17 @@ def render_authority_boundary(pack_type: str) -> str:
 
 
 def find_repo_root(start: Path) -> Path:
-    """Walk up until we find the tools/ layout, so the CLI works from anywhere."""
+    """Locate the directory containing tools/ and template/ (repo checkout or wheel install)."""
     p = start
     for _ in range(6):
         if (p / "tools" / "validator" / "ep-validate.py").exists():
             return p
         p = p.parent
+    # Wheel / site-packages install via share/expertpack
+    for prefix in (Path(sys.prefix), Path(sys.base_prefix)):
+        candidate = prefix / "share" / "expertpack"
+        if (candidate / "tools" / "validator" / "ep-validate.py").exists():
+            return candidate
     return start
 
 
@@ -99,6 +104,7 @@ VALIDATE = TOOLS / "validator" / "ep-validate.py"
 DOCTOR = TOOLS / "validator" / "ep-doctor.py"
 CHUNK = TOOLS / "chunker" / "ep-chunk-annotate.py"
 MIGRATE_V4 = TOOLS / "migrate" / "ep-migrate-3-to-4.py"
+SKILL_EXPORT = TOOLS / "skill-export" / "ep-skill-export.py"
 CONVERT = REPO_ROOT / "skills" / "obsidian-to-expertpack" / "scripts" / "convert.py"
 TEMPLATE = REPO_ROOT / "template"
 
@@ -115,6 +121,217 @@ def run(script: Path, *args) -> int:
 # init
 # ---------------------------------------------------------------------------
 
+def _write_md(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as f:
+        f.write(text)
+
+
+def _copy_shared_root(dest: Path, slug: str, name: str, today: str) -> None:
+    """Copy shared root scaffolding (.obsidian, overview, DESIGN, TOOLS, eval) from template/."""
+    dest.mkdir(parents=True, exist_ok=True)
+    obs = TEMPLATE / ".obsidian"
+    if obs.is_dir():
+        shutil.copytree(obs, dest / ".obsidian", dirs_exist_ok=True)
+    for rel in ("overview.md", "DESIGN.md", "TOOLS.md", "eval/benchmark.yaml"):
+        src = TEMPLATE / rel
+        if src.is_file():
+            dst = dest / rel
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            txt = src.read_text(encoding="utf-8")
+            txt = txt.replace("your-pack-slug", slug).replace("Your Pack Name", name).replace("YYYY-MM-DD", today)
+            _write_md(dst, txt)
+
+
+def _scaffold_person(dest: Path, slug: str, name: str, today: str) -> None:
+    _copy_shared_root(dest, slug, name, today)
+    manifest = f"""name: "{name}"
+slug: "{slug}"
+type: "person"
+version: "1.0.0"
+schema_version: "4.1"
+description: "Person ExpertPack capturing {name}'s stories, perspectives, relationships, and voice."
+entry_point: "overview.md"
+author: "Your Name"
+created: "{today}"
+updated: "{today}"
+license: "CC-BY-4.0"
+
+freshness:
+  refresh_cycle: "P180D"
+  last_full_review: "{today}"
+  verified_file_count: 2
+  total_file_count: 2
+  coverage_pct: 100
+
+{render_authority_boundary("person")}
+
+context:
+  always:
+    - overview.md
+  searchable:
+    - stories/
+    - opinions/
+    - relationships/
+    - mind/
+  on_demand:
+    - meta/
+"""
+    _write_md(dest / "manifest.yaml", manifest)
+    for d, title in (
+        ("stories", "Stories"),
+        ("opinions", "Opinions"),
+        ("relationships", "Relationships"),
+        ("mind", "Mind & Mental Models"),
+        ("meta", "Meta & Coverage"),
+    ):
+        _write_md(
+            dest / d / "_index.md",
+            f"---\ntitle: \"{title}\"\ntype: index\ntags: [index, {d}]\npack: {slug}\n"
+            f"retrieval_strategy: navigation\nschema_version: \"4.1\"\nverified_at: \"{today}\"\n---\n\n"
+            f"# {title}\n\nDirectory index for `{d}/`.\n",
+        )
+    _write_md(
+        dest / "stories" / "story-example.md",
+        f"---\ntitle: \"Example Story\"\ntype: story\ntags: [story, example]\npack: {slug}\n"
+        f"retrieval_strategy: atomic\nschema_version: \"4.1\"\nverified_at: \"{today}\"\n---\n\n"
+        "# Example Story\n\nReplace this starter atom with a real first-person story or formative experience.\n",
+    )
+    _write_md(
+        dest / "meta" / "meta-source-coverage.md",
+        f"---\ntitle: \"Source Coverage\"\ntype: reference\ntags: [meta, coverage]\npack: {slug}\n"
+        f"retrieval_strategy: navigation\nschema_version: \"4.1\"\nverified_at: \"{today}\"\n---\n\n"
+        "# Source Coverage\n\nTrack interviews, journals, and notes hydrated into this person pack.\n",
+    )
+
+
+def _scaffold_process(dest: Path, slug: str, name: str, today: str) -> None:
+    _copy_shared_root(dest, slug, name, today)
+    manifest = f"""name: "{name}"
+slug: "{slug}"
+type: "process"
+version: "1.0.0"
+schema_version: "4.1"
+description: "Process ExpertPack documenting phases, decision frameworks, and practitioner gotchas for {name}."
+entry_point: "overview.md"
+author: "Your Name"
+created: "{today}"
+updated: "{today}"
+license: "CC-BY-4.0"
+
+domain: "general"
+typical_duration: "TBD"
+complexity: "medium"
+
+freshness:
+  refresh_cycle: "P90D"
+  last_full_review: "{today}"
+  verified_file_count: 2
+  total_file_count: 2
+  coverage_pct: 100
+
+{render_authority_boundary("process")}
+
+context:
+  always:
+    - overview.md
+  searchable:
+    - phases/
+    - decisions/
+    - gotchas/
+  on_demand:
+    - meta/
+"""
+    _write_md(dest / "manifest.yaml", manifest)
+    for d, title in (
+        ("phases", "Phases"),
+        ("decisions", "Decisions"),
+        ("gotchas", "Gotchas"),
+        ("meta", "Meta & Coverage"),
+    ):
+        _write_md(
+            dest / d / "_index.md",
+            f"---\ntitle: \"{title}\"\ntype: index\ntags: [index, {d}]\npack: {slug}\n"
+            f"retrieval_strategy: navigation\nschema_version: \"4.1\"\nverified_at: \"{today}\"\n---\n\n"
+            f"# {title}\n\nDirectory index for `{d}/`.\n",
+        )
+    _write_md(
+        dest / "phases" / "01-getting-started.md",
+        f"---\ntitle: \"Phase 1: Getting Started\"\ntype: phase\ntags: [phase, planning]\npack: {slug}\n"
+        f"retrieval_strategy: standard\nschema_version: \"4.1\"\nverified_at: \"{today}\"\n---\n\n"
+        "# Phase 1: Getting Started\n\nDefine the goals, entry criteria, decision gates, and common pitfalls for Phase 1.\n",
+    )
+    _write_md(
+        dest / "meta" / "source-coverage.md",
+        f"---\ntitle: \"Source Coverage\"\ntype: reference\ntags: [meta, coverage]\npack: {slug}\n"
+        f"retrieval_strategy: navigation\nschema_version: \"4.1\"\nverified_at: \"{today}\"\n---\n\n"
+        "# Source Coverage\n\nTrack SOPs, practitioner interviews, and lessons learned hydrated into this pack.\n",
+    )
+
+
+def _scaffold_product(dest: Path, slug: str, name: str, today: str, force: bool) -> None:
+    shutil.copytree(TEMPLATE, dest, dirs_exist_ok=force)
+    for fp in dest.rglob("*"):
+        if not fp.is_file() or fp.suffix.lower() not in {".md", ".yaml", ".yml"}:
+            continue
+        text = fp.read_text(encoding="utf-8")
+        new = text.replace("your-pack-slug", slug)
+        if fp.name == "manifest.yaml":
+            new = new.replace('name: "Your Pack Name"', f'name: "{name}"')
+            new = new.replace('type: "product"', 'type: "product"')
+            new = new.replace("YYYY-MM-DD", today)
+            new = AUTH_BLOCK_RE.sub(render_authority_boundary("product"), new, count=1)
+        elif fp.suffix.lower() == ".md":
+            new = re.sub(r'^verified_at:\s*["\']?\d{4}-\d{2}-\d{2}["\']?', f'verified_at: "{today}"', new, flags=re.M)
+        if new != text:
+            _write_md(fp, new)
+
+
+def _scaffold_composite(dest: Path, slug: str, name: str, today: str, force: bool) -> None:
+    _copy_shared_root(dest, slug, name, today)
+    manifest = f"""name: "{name}"
+slug: "{slug}"
+type: "composite"
+version: "1.0.0"
+schema_version: "1.2"
+description: "Composite ExpertPack combining constituent product and process packs for {name}."
+entry_point: "overview.md"
+author: "Your Name"
+created: "{today}"
+updated: "{today}"
+license: "CC-BY-4.0"
+
+packs:
+  - path: "product"
+    role: knowledge
+  - path: "process"
+    role: knowledge
+
+{render_authority_boundary("composite")}
+
+conflicts:
+  priority: [product, process]
+  strategy: "fail_closed"
+  isolation:
+    voice_must_not_assert_knowledge: true
+    knowledge_must_not_override_voice: true
+    respect_access_tiers: true
+  tie_break: [authority_boundary, confidence, verified_at]
+
+context:
+  overrides:
+    "product":
+      always:
+        - overview.md
+    "process":
+      always:
+        - overview.md
+"""
+    _write_md(dest / "manifest.yaml", manifest)
+    _scaffold_product(dest / "product", f"{slug}-product", f"{name} Reference", today, force)
+    _scaffold_process(dest / "process", f"{slug}-process", f"{name} Process", today)
+
+
 def cmd_init(args) -> int:
     slug = args.slug
     if not SLUG_RE.match(slug):
@@ -129,31 +346,30 @@ def cmd_init(args) -> int:
         print(f"error: template not found at {TEMPLATE}", file=sys.stderr)
         return 2
 
-    shutil.copytree(TEMPLATE, dest, dirs_exist_ok=args.force)
-
     name = args.name or slug.replace("-", " ").title()
     today = date.today().isoformat()
-    for fp in dest.rglob("*"):
-        if not fp.is_file() or fp.suffix.lower() not in {".md", ".yaml", ".yml"}:
-            continue
-        text = fp.read_text(encoding="utf-8")
-        new = text.replace("your-pack-slug", slug)
-        if fp.name == "manifest.yaml":
-            new = new.replace('name: "Your Pack Name"', f'name: "{name}"')
-            new = new.replace('type: "product"', f'type: "{args.type}"')
-            new = new.replace("YYYY-MM-DD", today)
-            new = AUTH_BLOCK_RE.sub(render_authority_boundary(args.type), new, count=1)
-        if new != text:
-            with open(fp, "w", encoding="utf-8", newline="\n") as f:
-                f.write(new)
 
-    print(f"Scaffolded {name} → {dest}")
+    if args.type == "product":
+        _scaffold_product(dest, slug, name, today, args.force)
+        doctor_targets = [dest]
+    elif args.type == "person":
+        _scaffold_person(dest, slug, name, today)
+        doctor_targets = [dest]
+    elif args.type == "process":
+        _scaffold_process(dest, slug, name, today)
+        doctor_targets = [dest]
+    else:
+        _scaffold_composite(dest, slug, name, today, args.force)
+        doctor_targets = [dest / "product", dest / "process"]
+
+    print(f"Scaffolded {name} ({args.type}) → {dest}")
     # Backfill provenance so the fresh pack passes --strict out of the box.
-    run(DOCTOR, dest, "--fix", "hash", "--apply")
+    for target in doctor_targets:
+        run(DOCTOR, target, "--fix", "hash", "--apply")
     print("\nValidating scaffold...")
     rc = run(VALIDATE, dest, "--strict")
     if rc == 0:
-        print(f"\nReady. Next: edit manifest.yaml + overview.md, then author concepts/ in {dest}")
+        print(f"\nReady. Next: edit manifest.yaml + overview.md, then author content in {dest}")
     return rc
 
 
@@ -232,6 +448,23 @@ def cmd_migrate_v3(args) -> int:
     return run(MIGRATE_V4, *passthru)
 
 
+def cmd_export_skill(args) -> int:
+    passthru = [args.pack]
+    if args.outdir:
+        passthru.append(args.outdir)
+    if args.validate:
+        passthru.append("--validate")
+    if args.exact_dir:
+        passthru.append("--exact-dir")
+    if args.include_scripts:
+        passthru.append("--include-scripts")
+    if args.default_license:
+        passthru += ["--license", args.default_license]
+    if args.force:
+        passthru.append("--force")
+    return run(SKILL_EXPORT, *passthru)
+
+
 # ---------------------------------------------------------------------------
 # CLI wiring
 # ---------------------------------------------------------------------------
@@ -305,6 +538,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_v3.add_argument("--plan", action="store_true", default=True, help="Read-only plan (default)")
     p_v3.add_argument("--verbose", action="store_true")
     p_v3.set_defaults(func=cmd_migrate_v3)
+
+    p_exp = sub.add_parser("export", help="Export an ExpertPack to external agent formats")
+    exp_sub = p_exp.add_subparsers(dest="export_kind", required=True)
+    p_skill = exp_sub.add_parser("skill", help="Export as a portable Agent Skill folder (SKILL.md)")
+    p_skill.add_argument("pack", help="Path to ExpertPack (or skill folder with --validate)")
+    p_skill.add_argument("outdir", nargs="?", help="Output directory (creates <outdir>/<slug>/)")
+    p_skill.add_argument("--validate", action="store_true", help="Validate an existing SKILL.md folder")
+    p_skill.add_argument("--exact-dir", action="store_true", help="Write directly into outdir")
+    p_skill.add_argument("--include-scripts", action="store_true", help="Allow executable scripts in assets/")
+    p_skill.add_argument("--license", dest="default_license", default=None, help="Fallback SPDX license")
+    p_skill.add_argument("--force", action="store_true", help="Overwrite existing output directory")
+    p_skill.set_defaults(func=cmd_export_skill)
 
     return parser
 

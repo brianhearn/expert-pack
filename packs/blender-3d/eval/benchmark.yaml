@@ -1,5 +1,6 @@
 version: "1.0"
 pack_slug: "blender-3d"
+pack_version: "1.0.0"
 pack_type: "product"
 created: "2026-04-02"
 updated: "2026-08-17"

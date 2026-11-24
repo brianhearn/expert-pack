@@ -89,6 +89,11 @@ authority_boundary:
     - "Question is outside in_scope"
   no_source_no_claim: false   # true = do not assert without a retrieved atom
 
+# Optional distribution metadata (recommended for shared/exported packs)
+license: "CC-BY-4.0"             # SPDX identifier or license URL (e.g., CC-BY-4.0, Apache-2.0, Proprietary)
+canonical_url: ""                # Stable upstream URL for drift detection across forks/exports
+applies_to: ""                   # Optional product/version range (e.g., "blender@>=4.2", "ha@2026.x")
+
 # Pack-level integrity and optional signing (optional — see Pack-Level Integrity section)
 integrity:
   algorithm: "sha256"
@@ -791,17 +796,23 @@ integrity:
 | `verified` | `integrity.pack_digest` and `integrity.pack_version` match current pack state, and `integrity.signature` verifies against the signer's public key over `<slug>@<pack_version>:<pack_digest>`. |
 | `unverifiable` | `integrity.pack_digest` or `integrity.pack_version` does not match current pack state (`W-INT-01`), or `integrity.signature` is present without a resolvable/valid public key or fails verification (`W-INT-02`). |
 
+#### What `integrity_status` does and does not prove
+
+`integrity_status: verified` proves **only** that the pack bytes match a signature created by `signed_by`. It is **not** a claim of factual truth, completeness, epistemic grounding, authorization, or operational fitness. Likewise, neither a pack digest nor a signature attests that any shipped embeddings or vector index faithfully represent the Markdown text — consuming indexers (including `ep-mcp`) must ignore prebuilt vector files inside a pack and recompute embeddings directly from the Markdown source. Conformance to the ExpertPack schema verifies structure and provenance metadata, never ground truth.
+
 Seal or refresh a pack's `integrity` block with `ep-doctor.py <pack> --fix integrity --apply` (or `ep-doctor.py <pack> --seal --apply`).
 
-### Security Lint (`W-SEC-01..03`)
+### Security Lint (`W-SEC-01..05`)
 
-Because ExpertPack files and `skill://` projections load directly into agent context, `ep-validate.py` scans all pack files for prompt-injection and credential-leak hazards:
+Because ExpertPack files and `skill://` projections load directly into agent context, `ep-validate.py` scans all pack files for prompt-injection, oversight-loosening, and credential-leak hazards:
 
 | Code | Condition | Severity (default) | Under `--strict` / `--security` |
 |------|-----------|-------------------|---------------------------------|
 | `W-SEC-01` | Hidden, bidirectional-override, or Unicode Tag characters (`U+200B`–`U+200F`, `U+202A`–`U+202E`, `U+2066`–`U+2069`, mid-file `U+FEFF`, `U+E0000`–`U+E007F`) outside code fences | Warning | Error |
 | `W-SEC-02` | Plain-language instruction-override (`ignore previous instructions`, `disregard system prompt`, etc.) or outbound data-exfiltration directives (`curl`/`wget`/POST of secrets or session state, dynamic query-string image beacons) in prose or `mcp.instructions` / `activation` | Warning | Error (with `--security`) |
 | `W-SEC-03` | Secret or credential pattern (API keys, `sk-...`, `ghp_...`, `xoxb-...`, private keys, bearer tokens) in pack files | Warning | Error |
+| `W-SEC-04` | External NVIDIA SkillSpector findings when `--skillspector` is enabled | Warning | Error (with `--security`) |
+| `W-SEC-05` | Unscoped oversight-loosening directive (e.g., `--no-verify`, `--yes`, "without asking", "skip confirmation") in prose or workflow/process instructions without a scope/guard clause | Warning | Error (with `--security`) |
 
 When publishing or indexing untrusted packs, pass `--skillspector` to `ep-validate.py` or `tools/ingest-gate.py` to run an external NVIDIA SkillSpector scan alongside the built-in checks.
 

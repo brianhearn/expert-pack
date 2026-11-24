@@ -7,7 +7,9 @@ description: "Technology reference for residential solar and battery storage sys
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-10"
-updated: "2026-08-17"
+updated: "2026-11-24"
+license: "CC-BY-4.0"
+canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/solar-diy/product"
 
 product_version: "2026 market"
 vendor: "Multi-vendor (industry-wide)"
@@ -58,3 +60,8 @@ context:
     - glossary.md
   on_demand:
     - sources/
+
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:96ebec8ab369d1e76b49f7b6653c8b6eb330f06b0a612e9a232087bcf2630d64"
+  pack_version: "1.0.0"

@@ -7,7 +7,10 @@ description: "A phased, practical guide to building a reliable smart home with H
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-11"
-updated: "2026-08-17"
+updated: "2026-11-24"
+license: "CC-BY-4.0"
+canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/home-assistant/process"
+applies_to: "home-assistant@>=2026.3"
 
 domain: "home-automation"
 typical_duration: "1-6 months"
@@ -41,3 +44,8 @@ context:
     - patterns/
     - gotchas/
   on_demand: []
+
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:fb24ac1727ad84004cd99180f1526ce3c30fbc8f362df5569c67111b798f02be"
+  pack_version: "1.0.0"

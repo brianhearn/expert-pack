@@ -7,7 +7,10 @@ description: "Complete guide to Home Assistant — combining deep platform refer
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-10"
-updated: "2026-08-17"
+updated: "2026-11-24"
+license: "CC-BY-4.0"
+canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/home-assistant"
+applies_to: "home-assistant@>=2026.3"
 
 packs:
   - path: "product"
@@ -43,3 +46,8 @@ context:
     "process":
       always:
         - overview.md
+
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:5ad07310f9423084935566d32f248b44ada635d6768b23301e29262ba5f513ac"
+  pack_version: "2.0.0"

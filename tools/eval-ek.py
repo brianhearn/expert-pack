@@ -20,9 +20,13 @@ import re
 import sys
 import time
 import yaml
-import requests
 from pathlib import Path
 from datetime import datetime, timezone
+
+try:
+    import requests
+except ImportError:
+    requests = None  # Only required for live OpenRouter probing, not --dry-run
 
 # --- Configuration ---
 
@@ -115,84 +119,177 @@ def parse_propositions(filepath: Path) -> list[dict]:
     return propositions
 
 
+V41_ATOM_DIRS = ("concepts", "workflows", "troubleshooting", "gotchas", "decisions", "phases")
+_SKIP_V41_SECTIONS = frozenset({
+    "related concepts", "related terms", "see also", "references", "sources",
+})
+
+
 def find_concept_files(pack_path: Path) -> list[Path]:
-    """Find all concept files in the pack (v4.0 schema)."""
-    return [
-        p for p in sorted(pack_path.rglob("concepts/*.md"))
-        if p.name != "_index.md"
-    ]
+    """Find v4.0/v4.1 atom files in the pack, excluding _index.md and volatile/ (Axiom 6d)."""
+    found: list[Path] = []
+    seen: set[Path] = set()
+    for dname in V41_ATOM_DIRS:
+        for p in sorted(pack_path.rglob(f"{dname}/*.md")):
+            if p.name == "_index.md" or p.name.startswith("_"):
+                continue
+            rel_parts = p.relative_to(pack_path).parts
+            if any(part in {"volatile", ".obsidian", ".git", ".ep-mcp", "eval"} for part in rel_parts):
+                continue
+            if p not in seen:
+                seen.add(p)
+                found.append(p)
+    # Also include nested troubleshooting/common-mistakes/*.md
+    for p in sorted(pack_path.rglob("troubleshooting/**/*.md")):
+        if p.name == "_index.md" or p.name.startswith("_"):
+            continue
+        rel_parts = p.relative_to(pack_path).parts
+        if any(part in {"volatile", ".obsidian", ".git", ".ep-mcp", "eval"} for part in rel_parts):
+            continue
+        if p not in seen:
+            seen.add(p)
+            found.append(p)
+    return sorted(found)
 
 
-def parse_concept_propositions(filepath: Path) -> list[dict]:
-    """Extract propositions from a v4.0 concept file.
+def _clean_md_inline(text: str) -> str:
+    s = re.sub(r"\[\[([^\]|]+)(?:\|([^\]]+))?\]\]", lambda m: m.group(2) or m.group(1), text)
+    s = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", s)
+    s = re.sub(r"[*_`]+", "", s)
+    return " ".join(s.split()).strip()
 
-    Pulls bullet-line propositions from the concept's optional
-    `## Key Propositions` section. These are the axiomatic statements
-    the author chose to surface for precise retrieval and logical
-    extraction — they are the v4.0 replacement for the deprecated
-    propositions/{section}.md aggregator files.
 
-    FAQ Q/A pairs and body-prose sentences are NOT extracted here — if
-    the author wanted them in the EK-measurement set, they should be
-    listed under Key Propositions.
+def parse_concept_propositions(filepath: Path, pack_path: Path | None = None) -> list[dict]:
+    """Extract verifiable propositions from a v4.0 or v4.1 atom file.
+
+    1. If a v4.0 `## Key Propositions` / `## Key Principles` section exists, use it.
+    2. Otherwise (Schema v4.1, which retired `## Key Propositions`), extract atomic
+       propositions from:
+       - the retriever-anchored opening paragraph (definition/core claim), and
+       - concrete bold-lead or technical bullets in body sections (skipping
+         Related Concepts / navigation sections and fenced code blocks).
     """
-    propositions = []
+    propositions: list[dict] = []
     source_name = filepath.name
+    section_name = filepath.parent.name
+    if pack_path is not None:
+        try:
+            rel = filepath.relative_to(pack_path).as_posix()
+            section_name = rel.split("/")[0] if "/" in rel else section_name
+            source_name = rel
+        except ValueError:
+            pass
 
     try:
         content = filepath.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return propositions
 
-    # Strip YAML frontmatter if present
-    if content.startswith("---\n"):
-        end = content.find("\n---\n", 4)
+    # Strip YAML frontmatter and skip navigation / volatile atoms
+    fm_text = ""
+    if content.startswith("---\n") or content.startswith("---\r\n"):
+        end = content.find("\n---", 3)
         if end != -1:
-            content = content[end + 5:]
+            fm_text = content[4:end]
+            content = content[end + 4:].lstrip("\r\n")
+    if fm_text:
+        try:
+            fm = yaml.safe_load(fm_text) or {}
+            if isinstance(fm, dict):
+                if fm.get("retrieval_strategy") == "navigation" or fm.get("type") == "volatile":
+                    return propositions
+        except yaml.YAMLError:
+            pass
 
-    # Locate the `## Key Propositions` section (case-insensitive, allow
-    # variants like 'Key Principles' for process packs)
-    import re
+    # 1. Legacy v4.0 `## Key Propositions` section (kept for backward compatibility)
     section_pat = re.compile(
         r"^##\s+(?:Key\s+Propositions|Key\s+Principles|Propositions)\s*$",
         re.IGNORECASE | re.MULTILINE,
     )
     m = section_pat.search(content)
-    if not m:
+    if m:
+        start = m.end()
+        next_h = re.search(r"^##\s", content[start:], re.MULTILINE)
+        section = content[start:start + next_h.start()] if next_h else content[start:]
+        for line in section.splitlines():
+            line = line.rstrip()
+            if line.startswith("- ") and len(line) > 10:
+                propositions.append({
+                    "text": _clean_md_inline(line[2:].strip()),
+                    "source_file": source_name,
+                    "section": section_name,
+                    "prop_file": str(filepath),
+                })
         return propositions
 
-    # Capture from the header to the next `##` heading (or EOF)
-    start = m.end()
-    next_h = re.search(r"^##\s", content[start:], re.MULTILINE)
-    section = content[start:start + next_h.start()] if next_h else content[start:]
+    # 2. Schema v4.1 extraction (no `## Key Propositions` required)
+    # Strip fenced code blocks and HTML comments (e.g. <!-- context: ... -->)
+    no_code = re.sub(r"```.*?```|~~~.*?~~~", "\n", content, flags=re.DOTALL)
+    no_code = re.sub(r"<!--.*?-->", "", no_code, flags=re.DOTALL)
 
-    for line in section.splitlines():
-        line = line.rstrip()
-        if line.startswith("- ") and len(line) > 10:
-            prop_text = line[2:].strip()
+    # 2a. Opening paragraph after optional `# Title`
+    lines = no_code.splitlines()
+    in_opening = True
+    opening_buf: list[str] = []
+    cur_section = ""
+    bullet_candidates: list[str] = []
+
+    for raw_line in lines:
+        s = raw_line.strip()
+        if s.startswith("## "):
+            in_opening = False
+            cur_section = s[3:].strip().lower()
+            continue
+        if s.startswith("# "):
+            continue
+        if in_opening:
+            if not s:
+                if opening_buf:
+                    in_opening = False
+                continue
+            if s.startswith((">", "|", "-", "*")):
+                if opening_buf:
+                    in_opening = False
+                continue
+            opening_buf.append(s)
+        else:
+            if cur_section in _SKIP_V41_SECTIONS:
+                continue
+            # Prefer concrete bold-lead bullets or factual bullets with specifics
+            if s.startswith("- ") and len(s) >= 35 and not s.startswith("- [["):
+                cleaned = _clean_md_inline(s[2:])
+                if len(cleaned) >= 30 and not cleaned.endswith("?"):
+                    bullet_candidates.append(cleaned)
+
+    if opening_buf:
+        opening = _clean_md_inline(" ".join(opening_buf))
+        if len(opening) >= 30:
             propositions.append({
-                "text": prop_text,
+                "text": opening[:320],
                 "source_file": source_name,
-                "section": "concepts",
+                "section": section_name,
                 "prop_file": str(filepath),
             })
+
+    # Keep up to 3 highest-signal bullets per atom to avoid bloating probe sets
+    for b in bullet_candidates[:3]:
+        propositions.append({
+            "text": b[:320],
+            "source_file": source_name,
+            "section": section_name,
+            "prop_file": str(filepath),
+        })
 
     return propositions
 
 
 def extract_all_propositions(pack_path: Path) -> list[dict]:
-    """Extract all propositions from the pack.
-
-    Supports both v3.x (propositions/ directory) and v4.0 (concept-file
-    `## Key Propositions` sections). Both are collected when present.
-    """
+    """Extract verifiable propositions across v3.x, v4.0, and v4.1 packs."""
     all_props = []
-    # v3.x propositions/ aggregator files
     for pf in find_proposition_files(pack_path):
         all_props.extend(parse_propositions(pf))
-    # v4.0 concept-file Key Propositions sections
     for cf in find_concept_files(pack_path):
-        all_props.extend(parse_concept_propositions(cf))
+        all_props.extend(parse_concept_propositions(cf, pack_path=pack_path))
     return all_props
 
 
@@ -617,13 +714,29 @@ def main():
         "--output", type=str, default="",
         help="Output YAML file path (default: eval/ek-ratio-{date}.yaml in pack)"
     )
+    parser.add_argument(
+        "--dry-run", action="store_true",
+        help="Extract and summarize propositions without calling any LLM API"
+    )
     
     args = parser.parse_args()
     
     if not args.pack_path.exists():
         print(f"ERROR: Pack path does not exist: {args.pack_path}", file=sys.stderr)
         sys.exit(1)
-    
+
+    if args.dry_run:
+        props = extract_all_propositions(args.pack_path)
+        by_sec: dict[str, int] = {}
+        for p in props:
+            by_sec[p["section"]] = by_sec.get(p["section"], 0) + 1
+        print(f"Dry run: extracted {len(props)} propositions from {args.pack_path}")
+        for sec, cnt in sorted(by_sec.items()):
+            print(f"  {sec}: {cnt}")
+        if props:
+            print(f"Sample: [{props[0]['source_file']}] {props[0]['text'][:100]}")
+        return {"propositions_extracted": len(props), "by_section": by_sec}
+
     models = [m.strip() for m in args.models.split(",")]
     api_key = get_api_key()
     

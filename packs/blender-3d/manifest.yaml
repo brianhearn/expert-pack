@@ -7,7 +7,10 @@ description: "Deep practitioner knowledge pack for Blender (blender.org) — the
 entry_point: "overview.md"
 author: "EasyBot / Brian Hearn"
 created: "2026-03-11"
-updated: "2026-08-17"
+updated: "2026-11-24"
+license: "CC-BY-4.0"
+canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/blender-3d"
+applies_to: "blender@>=4.2"
 
 product_version: "5.0+ (4.2 LTS also supported)"
 vendor: "Blender Foundation"
@@ -65,3 +68,8 @@ context:
     - glossary.md
   on_demand:
     - sources/
+
+integrity:
+  algorithm: "sha256"
+  pack_digest: "sha256:a3a6943cdaa96207eeffba9c38eccf71e9c72ee866402d13d2c4b550ef2cbfe7"
+  pack_version: "1.0.0"

@@ -1,0 +1,340 @@
+run_date: '2026-11-24'
+pack: packs\blender-3d
+pack_slug: blender-3d
+pack_version: 1.0.0
+pack_digest: sha256:a3a6943cdaa96207eeffba9c38eccf71e9c72ee866402d13d2c4b550ef2cbfe7
+mode: retrieval-only (local SQLite FTS5 BM25, zero LLM calls)
+eval_set: packs\blender-3d\eval\benchmark.yaml
+eval_set_version: '1.0'
+indexed_atoms: 70
+questions_total: 27
+in_scope_questions: 22
+in_scope_retrieval_coverage: 1.0
+note: Deterministic zero-key BM25 retrieval coverage only — not an LLM correctness
+  or with-vs-without accuracy claim. Run --mode compare with OPENROUTER_API_KEY for
+  full LLM with-vs-without delta.
+details:
+- id: q001
+  category: concept
+  ek_dependent: true
+  hits_count: 5
+  top_hit: concepts/python-bpy-data.md
+  top_score: 0.4851
+  retrieved_files:
+  - concepts/python-bpy-data.md
+  - concepts/core-architecture-data-blocks.md
+  - concepts/python-depsgraph.md
+  - concepts/python-batch-scripting.md
+  - concepts/core-architecture-blend-file.md
+- id: q002
+  category: concept
+  ek_dependent: true
+  hits_count: 5
+  top_hit: concepts/modeling-retopology.md
+  top_score: 11.7502
+  retrieved_files:
+  - concepts/modeling-retopology.md
+  - troubleshooting/common-mistakes.md
+  - concepts/modeling-topology.md
+  - workflows/hard-surface-modeling.md
+  - workflows/scene-optimization.md
+- id: q003
+  category: concept
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/shading-eevee.md
+  top_score: 4.8382
+  retrieved_files:
+  - concepts/shading-eevee.md
+  - concepts/shading-render-settings.md
+  - faq/why-is-my-render-noisy.md
+  - overview.md
+  - faq/how-do-i-reduce-render-time.md
+- id: q004
+  category: concept
+  ek_dependent: true
+  hits_count: 5
+  top_hit: concepts/geometry-nodes-fields.md
+  top_score: 3.0941
+  retrieved_files:
+  - concepts/geometry-nodes-fields.md
+  - concepts/physics-particles.md
+  - concepts/geometry-nodes-instances-attributes.md
+  - concepts/geometry-nodes-parametric.md
+  - concepts/geometry-nodes-scatter-deform.md
+- id: q005
+  category: concept
+  ek_dependent: false
+  hits_count: 5
+  top_hit: workflows/hard-surface-modeling.md
+  top_score: 10.2364
+  retrieved_files:
+  - workflows/hard-surface-modeling.md
+  - concepts/modeling-modifier-stack.md
+  - concepts/modeling-topology.md
+  - concepts/modeling-key-modifiers.md
+  - faq/how-do-i-loop-an-animation.md
+- id: q006
+  category: workflow
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/video-editing-vs-external.md
+  top_score: 4.4436
+  retrieved_files:
+  - concepts/video-editing-vs-external.md
+  - overview.md
+  - concepts/geometry-nodes-flow-creation.md
+  - concepts/python-cli-render.md
+  - concepts/rigging-armatures.md
+- id: q007
+  category: workflow
+  ek_dependent: false
+  hits_count: 5
+  top_hit: workflows/hard-surface-modeling.md
+  top_score: 9.6776
+  retrieved_files:
+  - workflows/hard-surface-modeling.md
+  - concepts/modeling-modifier-stack.md
+  - concepts/modeling-key-modifiers.md
+  - concepts/modeling-retopology.md
+  - concepts/modeling-shrinkwrap-lattice.md
+- id: q008
+  category: troubleshooting
+  ek_dependent: false
+  hits_count: 5
+  top_hit: faq/why-is-my-render-noisy.md
+  top_score: 8.8399
+  retrieved_files:
+  - faq/why-is-my-render-noisy.md
+  - concepts/shading-cycles.md
+  - _community-mining-2026-03-13.md
+  - overview.md
+  - workflows/scene-optimization.md
+- id: q009
+  category: troubleshooting
+  ek_dependent: true
+  hits_count: 5
+  top_hit: faq/why-does-my-physics-sim-explode.md
+  top_score: 9.5979
+  retrieved_files:
+  - faq/why-does-my-physics-sim-explode.md
+  - troubleshooting/common-mistakes.md
+  - concepts/modeling-retopology.md
+  - _community-mining-2026-03-13.md
+  - concepts/physics-soft-cloth.md
+- id: q010
+  category: concept
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/modeling-topology.md
+  top_score: 7.6748
+  retrieved_files:
+  - concepts/modeling-topology.md
+  - concepts/modeling-retopology.md
+  - workflows/hard-surface-modeling.md
+  - troubleshooting/common-mistakes.md
+  - workflows/character-animation.md
+- id: q011
+  category: workflow
+  ek_dependent: false
+  hits_count: 5
+  top_hit: faq/how-do-i-loop-an-animation.md
+  top_score: 7.528
+  retrieved_files:
+  - faq/how-do-i-loop-an-animation.md
+  - workflows/motion-graphics.md
+  - TOOLS.md
+  - workflows/character-animation.md
+  - overview.md
+- id: q012
+  category: concept
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/python-cli-render.md
+  top_score: 8.6903
+  retrieved_files:
+  - concepts/python-cli-render.md
+  - concepts/python-batch-scripting.md
+  - concepts/python-bpy-data.md
+  - concepts/python-bpy-ops.md
+  - concepts/python-bpy-context.md
+- id: q013
+  category: concept
+  ek_dependent: true
+  hits_count: 5
+  top_hit: concepts/modeling-modifier-stack.md
+  top_score: 6.9513
+  retrieved_files:
+  - concepts/modeling-modifier-stack.md
+  - concepts/modeling-key-modifiers.md
+  - troubleshooting/common-mistakes.md
+  - concepts/animation-shape-keys.md
+  - concepts/modeling-shrinkwrap-lattice.md
+- id: q014
+  category: concept
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/core-architecture-collections-scenes.md
+  top_score: 5.4131
+  retrieved_files:
+  - concepts/core-architecture-collections-scenes.md
+  - concepts/core-architecture-modes-editors.md
+  - glossary.md
+  - concepts/shading-render-settings.md
+  - troubleshooting/common-mistakes.md
+- id: q015
+  category: workflow
+  ek_dependent: false
+  hits_count: 5
+  top_hit: workflows/product-visualization.md
+  top_score: 6.0886
+  retrieved_files:
+  - workflows/product-visualization.md
+  - faq/why-is-my-render-noisy.md
+  - TOOLS.md
+  - concepts/shading-eevee.md
+  - concepts/compositing-color-grading.md
+- id: q016
+  category: troubleshooting
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/shading-principled-bsdf.md
+  top_score: 6.4792
+  retrieved_files:
+  - concepts/shading-principled-bsdf.md
+  - troubleshooting/common-mistakes.md
+  - workflows/product-visualization.md
+  - workflows/motion-graphics.md
+  - concepts/compositing-color-grading.md
+- id: q017
+  category: workflow
+  ek_dependent: false
+  hits_count: 5
+  top_hit: faq/how-do-i-reduce-render-time.md
+  top_score: 6.6957
+  retrieved_files:
+  - faq/how-do-i-reduce-render-time.md
+  - workflows/scene-optimization.md
+  - concepts/core-architecture-workspaces.md
+  - TOOLS.md
+  - faq/why-does-my-physics-sim-explode.md
+- id: q018
+  category: concept
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/sculpting-dyntopo.md
+  top_score: 6.833
+  retrieved_files:
+  - concepts/sculpting-dyntopo.md
+  - concepts/sculpting-multires-remesh.md
+  - concepts/sculpting-brushes.md
+  - troubleshooting/common-mistakes.md
+  - overview.md
+- id: q019
+  category: refusal
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/python-addon-structure.md
+  top_score: 5.8902
+  retrieved_files:
+  - concepts/python-addon-structure.md
+  - concepts/video-editing-vs-external.md
+  - overview.md
+  - concepts/rigging-ik-weights.md
+  - concepts/python-cli-render.md
+- id: q020
+  category: gotcha
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/animation-nla.md
+  top_score: 8.922
+  retrieved_files:
+  - concepts/animation-nla.md
+  - troubleshooting/common-mistakes.md
+  - _community-mining-2026-03-13.md
+  - concepts/animation-graph-editors.md
+  - concepts/geometry-nodes-instances-attributes.md
+- id: q021
+  category: concept
+  ek_dependent: false
+  hits_count: 5
+  top_hit: overview.md
+  top_score: 7.599
+  retrieved_files:
+  - overview.md
+  - concepts/modeling-topology.md
+  - concepts/python-bpy-ops.md
+  - TOOLS.md
+  - concepts/core-architecture-modes-editors.md
+- id: q022
+  category: workflow
+  ek_dependent: false
+  hits_count: 5
+  top_hit: workflows/character-animation.md
+  top_score: 8.5341
+  retrieved_files:
+  - workflows/character-animation.md
+  - concepts/animation-shape-keys.md
+  - concepts/rigging-ik-weights.md
+  - _community-mining-2026-03-13.md
+  - overview.md
+- id: q023
+  category: refusal
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/video-editing-vs-external.md
+  top_score: 10.3065
+  retrieved_files:
+  - concepts/video-editing-vs-external.md
+  - overview.md
+  - concepts/rigging-ik-weights.md
+  - concepts/video-editing-vse-interface.md
+  - TOOLS.md
+- id: q024
+  category: troubleshooting
+  ek_dependent: true
+  hits_count: 5
+  top_hit: workflows/hard-surface-modeling.md
+  top_score: 12.1249
+  retrieved_files:
+  - workflows/hard-surface-modeling.md
+  - concepts/modeling-retopology.md
+  - concepts/modeling-modifier-stack.md
+  - concepts/modeling-key-modifiers.md
+  - concepts/modeling-topology.md
+- id: q025
+  category: refusal
+  ek_dependent: false
+  hits_count: 5
+  top_hit: TOOLS.md
+  top_score: 16.1648
+  retrieved_files:
+  - TOOLS.md
+  - concepts/shading-hdri-lighting.md
+  - concepts/video-editing-vse-editing.md
+  - concepts/python-bpy-ops.md
+  - concepts/rigging-ik-weights.md
+- id: q026
+  category: refusal
+  ek_dependent: false
+  hits_count: 5
+  top_hit: overview.md
+  top_score: 5.5199
+  retrieved_files:
+  - overview.md
+  - concepts/core-architecture-modes-editors.md
+  - concepts/geometry-nodes-core.md
+  - workflows/motion-graphics.md
+  - concepts/shading-procedural-textures.md
+- id: q027
+  category: refusal
+  ek_dependent: false
+  hits_count: 5
+  top_hit: concepts/python-addon-structure.md
+  top_score: 5.8902
+  retrieved_files:
+  - concepts/python-addon-structure.md
+  - concepts/video-editing-vs-external.md
+  - workflows/character-animation.md
+  - faq/how-do-i-loop-an-animation.md
+  - concepts/animation-drivers.md

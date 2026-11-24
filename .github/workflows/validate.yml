@@ -35,13 +35,15 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install pyyaml
-      - name: Validate pack
-        run: python tools/validator/ep-validate.py packs/${{ matrix.pack }} --strict
+      - name: Validate pack (strict + security + integrity digest)
+        run: |
+          python tools/validator/ep-validate.py packs/${{ matrix.pack }} --strict --security
+          python -c "import yaml, sys; m=yaml.safe_load(open('packs/${{ matrix.pack }}/manifest.yaml', encoding='utf-8')); assert m.get('integrity', {}).get('pack_digest'), 'Missing integrity.pack_digest seal'"
       - name: Check chunk sidecars are up to date
         run: python tools/chunker/ep-chunk-annotate.py packs/${{ matrix.pack }} --check --embedding-version gemini-embedding-001
 
   docs:
-    name: schema projections + README index
+    name: schema projections + README index + tool tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -55,3 +57,11 @@ jobs:
         run: python tools/update-schema-readme.py --check
       - name: Composite conflict tests
         run: python tools/composite/test_conflict.py
+      - name: Validator security & integrity tests
+        run: python tools/validator/test_security_and_integrity.py
+      - name: Agent Skill export tests
+        run: python tools/skill-export/test_skill_export.py
+      - name: CLI init scaffolding tests (all pack types)
+        run: python tools/cli/test_cli_init.py
+      - name: Eval tools tests (v4.1 EK extraction, version pinning, local BM25 RAG)
+        run: python tools/eval-runner/test_eval_tools.py
