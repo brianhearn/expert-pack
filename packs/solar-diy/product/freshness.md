@@ -1,14 +1,18 @@
 ---
 title: "Freshness Guide — Solar DIY Pack"
-type: "reference"
+type: "volatile"
 tags: []
 pack: "solar-diy-product"
 retrieval_strategy: "standard"
 id: solar-diy/product/freshness
 verified_at: "2026-04-21"
+refresh: P90D
+fetched_at: "2026-03-10"
+expires_at: "2026-06-08"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
+content_hash: sha256:8983124dec0484f19a6c390a5aa0d6fb7923d201b0c642621e924008b0f5bb27
 ---
 
 # Freshness Guide — Solar DIY Pack

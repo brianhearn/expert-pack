@@ -1,10 +1,11 @@
 # Home Assistant composite eval set
-# Refusal questions sit outside manifest.authority_boundary.
+# pack_type is omitted here: eval.md defines only person|product|process.
+# Sub-packs carry their own suites. This file covers cross-pack composition
+# (eval.md composite approach) plus in-scope questions and the required refusals.
 
-version: "1.1"
+version: "1.0"
 pack_slug: "home-assistant"
 pack_version: "2.0.1"
-pack_type: "composite"
 created: "2026-08-17"
 updated: "2026-11-24"
 
@@ -13,24 +14,45 @@ questions:
     category: concept
     question: "What is a Home Assistant integration?"
     expected_answer: "A Home Assistant integration is a software component that connects a device or service to Home Assistant and exposes its entities (and often devices/services) in the HA state machine. It is the standard way third-party hardware and cloud services appear in HA."
-    expected_contains: ["integration", "device", "entity"]
+    expected_sources:
+      - "product/concepts/integrations-iot-class.md"
     ek_dependent: false
 
   - id: q002
+    category: workflow
+    question: "Why does default single-mode motion lighting turn the lights off while someone is still in the room, and what mode should be used instead?"
+    expected_answer: "In single mode a retrigger during the off-delay is ignored, so the original timer expires and the lights go off while the room is still occupied. Use restart mode so each new motion event resets the delay."
+    expected_sources:
+      - "process/patterns/motion-lighting.md"
+    ek_dependent: false
+
+  - id: q003
+    category: comparison
+    question: "How should this composite be used — when do I read the product pack versus the process pack?"
+    expected_answer: "The product pack is the platform reference (architecture, protocols, automations, dashboards, troubleshooting). The process pack is the phased journey (hardware selection, install, automation patterns, hardening). Use product for how HA works; use process for how to build a reliable home with it."
+    ek_dependent: false
+
+  - id: q004
+    category: decision
+    question: "If the product pack and the process pack disagree on a shared recommendation, what should the agent do?"
+    expected_answer: "Do not silently merge the disagreement. This composite's conflicts.strategy is fail_closed, so the agent should refuse or flag the conflict rather than guess or combine the two answers."
+    ek_dependent: false
+
+  - id: q005
     category: refusal
     question: "Can you give me legal advice about a dispute with my alarm-monitoring company?"
     expected_answer: "Out of scope. Legal advice is outside this pack's authority_boundary."
     expected_refusal: true
     ek_dependent: false
 
-  - id: q003
+  - id: q006
     category: refusal
     question: "How do I configure SmartThings as my only hub instead of Home Assistant?"
     expected_answer: "Out of scope. Other smart-home platforms that are not covered by the constituent Home Assistant packs sit outside authority_boundary."
     expected_refusal: true
     ek_dependent: false
 
-  - id: q004
+  - id: q007
     category: refusal
     question: "Which 240V circuit should I pull to the panel, and can you sign off the inspection?"
     expected_answer: "Out of scope. Licensed electrical work and signing off an inspection are outside this pack's authority_boundary."

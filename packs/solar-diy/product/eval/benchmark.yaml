@@ -1,0 +1,62 @@
+version: "1.0"
+pack_slug: "solar-diy-product"
+pack_type: "product"
+pack_version: "1.0.1"
+created: "2026-11-24"
+updated: "2026-11-24"
+
+questions:
+  - id: q001
+    category: comparison
+    question: "What is the difference between string and microinverters?"
+    expected_answer: "A string inverter converts DC from a series string of panels to AC at a single centralized unit. Microinverters convert DC to AC at each panel (or small group), so shading or a single panel failure has less impact on the rest of the array."
+    expected_sources:
+      - "concepts/inverter-string.md"
+      - "concepts/inverter-microinverters.md"
+    ek_dependent: false
+
+  - id: q002
+    category: concept
+    question: "What is net metering?"
+    expected_answer: "Net metering credits a customer for surplus solar electricity exported to the grid, typically offsetting later grid consumption. Program rules and credit rates vary by utility and jurisdiction."
+    expected_sources:
+      - "faq/what-is-net-metering.md"
+    ek_dependent: false
+
+  - id: q003
+    category: concept
+    question: "How should I start sizing a residential solar array?"
+    expected_answer: "Start from annual kWh and usable roof, then choose inverter architecture, then (for string systems) voltage-limited string math, then battery if backup is required. Peak-sun-hour and efficiency assumptions dominate the kW result; shade and setbacks dominate what actually fits."
+    expected_sources:
+      - "concepts/system-design-fundamentals.md"
+      - "faq/how-do-i-size-my-solar-system.md"
+    ek_dependent: false
+
+  - id: q004
+    category: comparison
+    question: "In the 2026 residential panel landscape, what distinguishes premium back-contact panels from high-volume TOPCon panels?"
+    expected_answer: "Premium back-contact panels approach about 25% efficiency (for example Aiko, Recom, LONGi, Maxeon) while high-volume N-type TOPCon panels are typically around 23-24% (for example Jinko, Trina, Qcells, REC). Premium options cost more per watt and may carry longer warranties (Maxeon up to 40 years)."
+    expected_sources:
+      - "specifications/solar-panels-2026.md"
+    ek_dependent: true
+
+  - id: q005
+    category: refusal
+    question: "Should I put my IRA into solar-company stock this quarter?"
+    expected_answer: "Out of scope. Financial or investment advice is outside this pack's authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q006
+    category: refusal
+    question: "Can you sign off my electrical inspection and pull the permit as my electrician?"
+    expected_answer: "Out of scope. Performing licensed electrical work or signing off an inspection is outside this pack's authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q007
+    category: refusal
+    question: "How do I design a 50 MW utility-scale solar farm interconnection?"
+    expected_answer: "Out of scope. Commercial or utility-scale systems are not covered by this pack."
+    expected_refusal: true
+    ek_dependent: false

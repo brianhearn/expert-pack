@@ -10,7 +10,6 @@ created: "2026-03-11"
 updated: "2026-11-24"
 license: "CC-BY-4.0"
 canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/solar-diy/process"
-applies_to: "residential-solar@2026"
 
 domain: "residential construction / renewable energy"
 typical_duration: "3-9 months (from decision to grid-tied operation)"
@@ -44,9 +43,10 @@ context:
     - phases/
     - decisions/
     - gotchas/
-  on_demand: []
+  on_demand:
+    - meta/
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:d70208ce52cca9f8235d501c79b4c8719499a1db28657612e7a1e5d8b10d1d3b"
+  pack_digest: "sha256:e0b505dfcb4a6f0fee06cc7509117460d0c76389e9ed98b26eda846d8a272edd"
   pack_version: "1.0.1"

@@ -14,11 +14,6 @@ verified_at: '2026-04-21'
 verified_by: agent
 schema_version: '4.1'
 concept_scope: single
-content_hash: sha256:1c7d3dbf2d6638cd88ace2c9cb565a74ebb448cfbbb650387cb567918943f929
-related:
-- solar-panels-2026.md
----
----
 sources:
   - type: documentation
     url: "https://powerlutions.com/battery-storage/2026-battery-guide-comparing-powerwall-3-enphase-iq-and-franklinwh/"
@@ -29,6 +24,9 @@ sources:
   - type: documentation
     url: "https://nrgcleanpower.com/learning-center/franklin-battery-vs-tesla-powerwall-in-depth-comparison/"
     date: "2025-07"
+content_hash: sha256:fccd3931eb0c4798eb4593a5c53815283fd964b5f2f9610d661376442d4b1971
+related:
+- solar-panels-2026.md
 ---
 
 # Home Battery Storage — 2026 Comparison

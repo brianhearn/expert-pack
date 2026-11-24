@@ -10,7 +10,6 @@ created: "2026-03-10"
 updated: "2026-11-24"
 license: "CC-BY-4.0"
 canonical_url: "https://github.com/brianhearn/expert-pack/tree/main/packs/solar-diy/product"
-applies_to: "residential-solar@2026"
 
 product_version: "2026 market"
 vendor: "Multi-vendor (industry-wide)"
@@ -61,8 +60,9 @@ context:
     - glossary.md
   on_demand:
     - sources/
+    - meta/
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:71381dc2649dd359aab7e7cd822f992c75bc360025426ba693fc1832dae02377"
+  pack_digest: "sha256:05af93584ef4e2886324b15c03377816cb1ff3b12a5f60ff919a5bb5f927ad65"
   pack_version: "1.0.1"

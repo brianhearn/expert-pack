@@ -39,6 +39,8 @@ conflicts:
   tie_break: [authority_boundary, confidence, verified_at]
 
 context:
+  on_demand:
+    - meta/
   overrides:
     "product":
       always:
@@ -49,5 +51,5 @@ context:
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:b21e38b2b312be37f654f8a53d7621c4ffffb5e94be243f283fb79b965cfce49"
+  pack_digest: "sha256:378011854b8e0350cb782f95ecd24e96f9136055aac7cf9be1c162ea111cd097"
   pack_version: "2.0.1"

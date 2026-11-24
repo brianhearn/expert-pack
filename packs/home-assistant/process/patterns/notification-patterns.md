@@ -10,9 +10,6 @@ verified_by: agent
 schema_version: "4.1"
 concept_scope: single
 retrieval_strategy: standard
-content_hash: sha256:8e77136c3fb4fcc12678a2af57c938a07a9b5c09028772fe8eaf90a43471cb71
----
----
 sources:
   - type: documentation
     url: "https://www.home-assistant.io/integrations/mobile_app/"
@@ -26,6 +23,7 @@ sources:
   - type: community
     url: "https://community.home-assistant.io/t/actionable-notifications-guide/360120"
     date: "2025-04"
+content_hash: sha256:da6d99b83670e26f3f1b94bda3f04ef104d0abe16b282fc76ce2f5b3400ab060
 ---
 
 # Smart Notification Patterns — Beyond "Send Me a Message"

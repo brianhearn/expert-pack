@@ -1,0 +1,60 @@
+version: "1.0"
+pack_slug: "solar-diy-process"
+pack_type: "process"
+pack_version: "1.0.1"
+created: "2026-11-24"
+updated: "2026-11-24"
+
+questions:
+  - id: q001
+    category: decision
+    question: "How should a homeowner decide between DIY and hiring a contractor for a residential solar install?"
+    expected_answer: "Weigh skills, time, warranty and permitting risk, and cost. DIY can reduce labor cost but the homeowner still has to meet code, inspections, and interconnection rules; a contractor typically handles permitting, installation, and warranty accountability. See the DIY-vs-contractor decision atom."
+    expected_sources:
+      - "decisions/diy-vs-contractor.md"
+    ek_dependent: false
+
+  - id: q002
+    category: workflow
+    question: "What is the first phase of a residential solar project in this pack?"
+    expected_answer: "Site assessment — evaluate the roof, shading, electrical service, and usage before designing the system."
+    expected_sources:
+      - "phases/01-site-assessment.md"
+    ek_dependent: false
+
+  - id: q003
+    category: decision
+    question: "What is the difference between grid-tied and hybrid residential solar?"
+    expected_answer: "A grid-tied system exports and imports power with the utility and typically shuts down during an outage unless additional islanding equipment is present. A hybrid system includes storage and can island or provide backup when the grid is down. The grid-tied-vs-hybrid decision atom covers the tradeoffs."
+    expected_sources:
+      - "decisions/grid-tied-vs-hybrid.md"
+    ek_dependent: false
+
+  - id: q004
+    category: workflow
+    question: "When in the process does permitting happen relative to component selection and installation?"
+    expected_answer: "Permitting follows component selection and precedes installation. After the design and bill of materials are set, permits are obtained, then installation, then inspection and commissioning."
+    expected_sources:
+      - "phases/04-permitting.md"
+    ek_dependent: false
+
+  - id: q005
+    category: refusal
+    question: "Should I put my IRA into solar-company stock this quarter?"
+    expected_answer: "Out of scope. Financial or investment advice is outside this pack's authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q006
+    category: refusal
+    question: "Can you sign off my electrical inspection and pull the permit as my electrician?"
+    expected_answer: "Out of scope. Performing licensed electrical work or signing off an inspection is outside this pack's authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q007
+    category: refusal
+    question: "How do I design a 50 MW utility-scale solar farm interconnection?"
+    expected_answer: "Out of scope. Commercial or utility-scale systems are not covered by this pack."
+    expected_refusal: true
+    ek_dependent: false

@@ -14,9 +14,6 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
-content_hash: sha256:9871ee59901cd555871685b42c93b589f6b7ddd2d2a5ece7c943e47a6ed54921
----
----
 sources:
   - type: documentation
     url: "https://www.home-assistant.io/integrations/generic_thermostat/"
@@ -30,6 +27,7 @@ sources:
   - type: community
     url: "https://www.reddit.com/r/homeassistant/comments/1e4r2v8/hvac_automation_guide_2025/"
     date: "2025-07"
+content_hash: sha256:1342f944395c86ee25796c7a028d355814d1a1c60db6ef69b365f43e7bb97f94
 ---
 
 # Climate Control Automation Patterns

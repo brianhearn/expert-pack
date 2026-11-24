@@ -14,9 +14,6 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
-content_hash: sha256:8144e064f3c0dc5093ee1b3adc8610181231f78c6436772e6318323decbadeea
----
----
 sources:
   - type: documentation
     url: "https://www.home-assistant.io/integrations/alarmo/"
@@ -30,6 +27,7 @@ sources:
   - type: community
     url: "https://community.home-assistant.io/t/alarmo-custom-alarm-system-megathread/424789"
     date: "2025-09"
+content_hash: sha256:8785844d2206794696a8a3aada42c8e067b96cda23fce405e8adbc49c5248b0d
 ---
 
 # Home Security Monitoring with Home Assistant

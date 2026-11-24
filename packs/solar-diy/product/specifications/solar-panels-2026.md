@@ -18,9 +18,6 @@ related:
 - battery-systems-2026.md
 - system-design-fundamentals.md
 - top-diy-mistakes.md
-content_hash: sha256:0a111569778d08757a3830dfdc4d28e650375229047f08b35405b1ae25977f20
----
----
 sources:
   - type: documentation
     url: "https://www.cleanenergyreviews.info/blog/most-efficient-solar-panels"
@@ -31,6 +28,7 @@ sources:
   - type: documentation
     url: "https://solartechonline.com/blog/best-solar-panel-brands-2025/"
     date: "2025-09"
+content_hash: sha256:f9d3530ea74f8e6020fac9ee793e8f1744acb53890b00f2eb94f4f83c402e03a
 ---
 
 # Solar Panel Landscape — 2026

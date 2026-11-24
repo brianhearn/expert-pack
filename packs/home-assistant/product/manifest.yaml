@@ -60,8 +60,9 @@ context:
     - glossary.md
   on_demand:
     - sources/
+    - meta/
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:efe2354916e51158fb282eaf4d0d8a238ce9399bbd2e7354da78826da00fc840"
+  pack_digest: "sha256:f3b5443a647d46bd5a7143196e673926c8ee651d449bd067abcfa3163dd32016"
   pack_version: "2.0.1"

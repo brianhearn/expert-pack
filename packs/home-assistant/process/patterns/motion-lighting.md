@@ -13,9 +13,6 @@ verified_at: "2026-04-21"
 verified_by: agent
 schema_version: "4.1"
 concept_scope: single
-content_hash: sha256:80bd36805284d42273adbc4ab09afcf77eccf40427292cfab3c055690ea5eaee
----
----
 sources:
   - type: documentation
     url: "https://www.home-assistant.io/docs/automation/"
@@ -26,6 +23,7 @@ sources:
   - type: community
     url: "https://www.reddit.com/r/homeassistant/comments/1dgdpxe/tips_you_wished_you_knew/"
     date: "2024-06"
+content_hash: sha256:779838d37d04f40de2a9e7f1a8679d5f6dd6c2b32c4f6e3d1b04e29244fe3602
 ---
 
 # Motion-Activated Lighting — The Definitive Pattern

@@ -1,0 +1,57 @@
+version: "1.0"
+pack_slug: "home-assistant-product"
+pack_type: "product"
+pack_version: "2.0.1"
+created: "2026-11-24"
+updated: "2026-11-24"
+
+questions:
+  - id: q001
+    category: concept
+    question: "What is a Home Assistant integration?"
+    expected_answer: "A Home Assistant integration is a software component that connects a device or service to Home Assistant and exposes its entities (and often devices/services) in the HA state machine."
+    ek_dependent: false
+
+  - id: q002
+    category: concept
+    question: "How should I access Home Assistant remotely without exposing the instance directly on the public internet?"
+    expected_answer: "Prefer a remote-access path documented in the pack such as Home Assistant Cloud / Nabu Casa, a VPN, or another tunneled access method. Do not simply port-forward the UI to the open internet."
+    expected_sources:
+      - "concepts/network-remote-access.md"
+    ek_dependent: false
+
+  - id: q003
+    category: comparison
+    question: "When should I choose Zigbee versus Wi-Fi for smart-home devices?"
+    expected_answer: "Zigbee is a mesh suited to many battery sensors and local control; Wi-Fi is common for high-bandwidth or mains-powered devices but adds more clients to the house AP. The pack's protocol comparison/decision atoms describe the tradeoffs (range, mesh vs AP load, hub requirements)."
+    expected_sources:
+      - "concepts/protocols-comparison.md"
+      - "concepts/protocols-decision.md"
+    ek_dependent: false
+
+  - id: q004
+    category: troubleshooting
+    question: "Why might a Home Assistant automation not fire?"
+    expected_answer: "Common causes include the trigger not matching (wrong entity or state), conditions blocking the run, the automation being disabled, or mode/retry behavior dropping a retrigger. Check traces and the automation's conditions and mode."
+    ek_dependent: false
+
+  - id: q005
+    category: refusal
+    question: "Can you give me legal advice about a dispute with my alarm-monitoring company?"
+    expected_answer: "Out of scope. Legal advice is outside this pack's authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q006
+    category: refusal
+    question: "How do I configure SmartThings as my only hub instead of Home Assistant?"
+    expected_answer: "Out of scope. Other smart-home platforms not covered by this pack sit outside authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q007
+    category: refusal
+    question: "Which 240V circuit should I pull to the panel, and can you sign off the inspection?"
+    expected_answer: "Out of scope. Licensed electrical or construction work is outside this pack's authority_boundary."
+    expected_refusal: true
+    ek_dependent: false

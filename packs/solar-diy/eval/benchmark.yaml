@@ -1,36 +1,59 @@
 # Solar DIY composite eval set
-# Refusal questions sit outside manifest.authority_boundary.
+# pack_type is omitted here: eval.md defines only person|product|process.
+# Sub-packs carry their own suites. This file covers cross-pack composition
+# plus in-scope questions and the required refusals.
 
-version: "1.1"
+version: "1.0"
 pack_slug: "solar-diy"
 pack_version: "2.0.1"
-pack_type: "composite"
 created: "2026-08-17"
 updated: "2026-11-24"
 
 questions:
   - id: q001
-    category: concept
+    category: comparison
     question: "What is the difference between string and microinverters?"
-    expected_answer: "A string inverter converts DC from a series string of panels to AC at a single centralized unit. Microinverters convert DC to AC at each panel (or small group), so shading or a single panel failure has less impact on the rest of the array. The tradeoff is typically higher equipment cost and more roof-level electronics for micros versus simpler, centralized service for string inverters (often with module-level power electronics when rapid-shutdown or per-module optimization is required)."
-    expected_contains: ["string", "microinverter"]
+    expected_answer: "A string inverter converts DC from a series string of panels to AC at a single centralized unit. Microinverters convert DC to AC at each panel (or small group), so shading or a single panel failure has less impact on the rest of the array. Micros typically cost more and put more electronics on the roof; string systems are simpler to service but may need module-level power electronics for rapid shutdown or per-module optimization."
+    expected_sources:
+      - "product/concepts/inverter-string.md"
+      - "product/concepts/inverter-microinverters.md"
     ek_dependent: false
 
   - id: q002
+    category: concept
+    question: "What is net metering?"
+    expected_answer: "Net metering credits a customer for surplus solar electricity exported to the grid, typically offsetting later grid consumption. Program rules and credit rates vary by utility and jurisdiction."
+    expected_sources:
+      - "product/faq/what-is-net-metering.md"
+    ek_dependent: false
+
+  - id: q003
+    category: comparison
+    question: "How should this composite be used — when do I read the product pack versus the process pack?"
+    expected_answer: "The product pack is the technology reference (panels, batteries, inverters, NEC-related requirements, troubleshooting). The process pack is the phased installation journey (site assessment through operations). Use product for what the equipment is; use process for how to plan and install."
+    ek_dependent: false
+
+  - id: q004
+    category: decision
+    question: "If the product pack and the process pack disagree on a shared recommendation, what should the agent do?"
+    expected_answer: "Do not silently merge the disagreement. This composite's conflicts.strategy is fail_closed, so the agent should refuse or flag the conflict rather than guess or combine the two answers."
+    ek_dependent: false
+
+  - id: q005
     category: refusal
     question: "Should I put my IRA into solar-company stock this quarter?"
     expected_answer: "Out of scope. Financial or investment advice is outside this pack's authority_boundary."
     expected_refusal: true
     ek_dependent: false
 
-  - id: q003
+  - id: q006
     category: refusal
     question: "Can you sign off my electrical inspection and pull the permit as my electrician?"
     expected_answer: "Out of scope. Performing licensed electrical work or signing off an inspection is outside this pack's authority_boundary."
     expected_refusal: true
     ek_dependent: false
 
-  - id: q004
+  - id: q007
     category: refusal
     question: "How do I design a 50 MW utility-scale solar farm interconnection?"
     expected_answer: "Out of scope. Commercial or utility-scale systems are outside this pack's authority_boundary, which covers residential solar and battery systems."

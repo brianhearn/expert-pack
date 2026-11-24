@@ -43,9 +43,10 @@ context:
     - decisions/
     - patterns/
     - gotchas/
-  on_demand: []
+  on_demand:
+    - meta/
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:617269f8210de10a1eb90ec69422ff7c4e3607d763bde302f99aafff4da255eb"
+  pack_digest: "sha256:ccbd685ce77e060d9d237e5c6dc67b29e0f05b68d6c3d7d9349866da92f687ef"
   pack_version: "1.0.1"

@@ -1,0 +1,60 @@
+version: "1.0"
+pack_slug: "home-assistant-process"
+pack_type: "process"
+pack_version: "1.0.1"
+created: "2026-11-24"
+updated: "2026-11-24"
+
+questions:
+  - id: q001
+    category: workflow
+    question: "Why does default single-mode motion lighting turn the lights off while someone is still in the room, and what mode should be used instead?"
+    expected_answer: "In single mode a retrigger during the off-delay is ignored, so the original timer expires and the lights go off while the room is still occupied. Use restart mode so each new motion event resets the delay."
+    expected_sources:
+      - "patterns/motion-lighting.md"
+    ek_dependent: false
+
+  - id: q002
+    category: workflow
+    question: "How can Home Assistant turn a dumb on/off heater into a thermostat?"
+    expected_answer: "Use the generic_thermostat integration with an on/off switch plus a temperature sensor. It implements a hysteresis controller around a target temperature and deadband."
+    expected_sources:
+      - "patterns/climate-control.md"
+    ek_dependent: false
+
+  - id: q003
+    category: decision
+    question: "What should I consider when choosing hardware to run Home Assistant?"
+    expected_answer: "Choose a supported install method and hardware that can run reliably (for example a dedicated mini-PC, official appliance, or well-supported SBC), with attention to storage durability, backup, and whether you need supervised add-ons. The hardware-selection decision atom covers the tradeoffs."
+    expected_sources:
+      - "decisions/hardware-selection.md"
+    ek_dependent: false
+
+  - id: q004
+    category: decision
+    question: "How should I think about protocol selection when planning a Home Assistant install?"
+    expected_answer: "Pick protocols to match device types and reliability goals: mesh radios (Zigbee/Z-Wave) for many sensors, Wi-Fi where bandwidth or existing devices require it, and avoid mixing without a plan for hubs, interference, and maintenance. See the protocol-selection decision atom."
+    expected_sources:
+      - "decisions/protocol-selection.md"
+    ek_dependent: false
+
+  - id: q005
+    category: refusal
+    question: "Can you give me legal advice about a dispute with my alarm-monitoring company?"
+    expected_answer: "Out of scope. Legal advice is outside this pack's authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q006
+    category: refusal
+    question: "How do I configure SmartThings as my only hub instead of Home Assistant?"
+    expected_answer: "Out of scope. Other smart-home platforms not covered by this pack sit outside authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
+
+  - id: q007
+    category: refusal
+    question: "Which 240V circuit should I pull to the panel, and can you sign off the inspection?"
+    expected_answer: "Out of scope. Licensed electrical or construction work is outside this pack's authority_boundary."
+    expected_refusal: true
+    ek_dependent: false
