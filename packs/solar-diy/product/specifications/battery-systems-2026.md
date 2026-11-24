@@ -1,18 +1,13 @@
 ---
-title: Home Battery Storage — 2026 Comparison
+title: "Home Battery Storage — 2026 Comparison"
 type: specification
-tags:
-- specification
-- battery-storage
-- powerwall
-- enphase
-- solar-diy-product
+tags: [specification, battery-storage, powerwall, enphase, solar-diy-product]
 pack: solar-diy-product
 retrieval_strategy: standard
 id: solar-diy/product/specifications/battery-systems-2026
-verified_at: '2026-04-21'
+verified_at: "2026-04-21"
 verified_by: agent
-schema_version: '4.1'
+schema_version: "4.1"
 concept_scope: single
 sources:
   - type: documentation
@@ -24,9 +19,9 @@ sources:
   - type: documentation
     url: "https://nrgcleanpower.com/learning-center/franklin-battery-vs-tesla-powerwall-in-depth-comparison/"
     date: "2025-07"
-content_hash: sha256:fccd3931eb0c4798eb4593a5c53815283fd964b5f2f9610d661376442d4b1971
 related:
-- solar-panels-2026.md
+  - solar-panels-2026.md
+content_hash: sha256:fccd3931eb0c4798eb4593a5c53815283fd964b5f2f9610d661376442d4b1971
 ---
 
 # Home Battery Storage — 2026 Comparison

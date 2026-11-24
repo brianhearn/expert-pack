@@ -1,26 +1,27 @@
 ---
 id: blender-3d/concepts/shading-uv-maps
-title: Shading — UV Maps, Normals, and Displacement
+title: "Shading — UV Maps, Normals, and Displacement"
 type: concept
 tags:
-- shading
-- uv-mapping
-- normals
-- displacement
+  - shading
+  - uv-mapping
+  - normals
+  - displacement
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/shading-rendering.md
+  - concepts/shading-rendering.md
 related:
-- shading-principled-bsdf.md
-- shading-hdri-lighting.md
-- shading-procedural-textures.md
+  - shading-principled-bsdf.md
+  - shading-hdri-lighting.md
+  - shading-procedural-textures.md
 content_hash: sha256:da73ab37c08c30b5ab2db44af96ce7138211f21b495e6158f987bdc967a4e9c5
 ---
+
 # Shading — UV Maps, Normals, and Displacement
 
 UV maps assign 2D texture coordinates to 3D vertices so image textures sit on a mesh. Seam placement, stretch, and the Normal Map node (never a raw image into Normal) determine whether maps look correct; Cycles can also displace geometry.

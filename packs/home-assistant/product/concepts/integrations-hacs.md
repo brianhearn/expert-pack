@@ -1,24 +1,24 @@
 ---
-title: HACS Community Store
+title: "HACS Community Store"
 type: concept
 tags:
-- integrations-guide
-- hacs
-- custom-integrations
+  - integrations-guide
+  - hacs
+  - custom-integrations
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/integrations-hacs
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- integrations-iot-class.md
-- dashboard-mushroom.md
-- integrations-reliability.md
-- dashboard-custom-cards.md
-- integrations-quality-eval.md
-- integrations-top-used.md
-- integrations-troubleshooting.md
+  - integrations-iot-class.md
+  - dashboard-mushroom.md
+  - integrations-reliability.md
+  - dashboard-custom-cards.md
+  - integrations-quality-eval.md
+  - integrations-top-used.md
+  - integrations-troubleshooting.md
 content_hash: sha256:ada03494aa413bbc496ddb61c010f7fe598bfbd1fa23442088d3105a8f22fec7
 ---
 # HACS Community Store

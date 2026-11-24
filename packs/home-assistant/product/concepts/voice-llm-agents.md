@@ -1,23 +1,23 @@
 ---
-title: LLM Conversation Agents
+title: "LLM Conversation Agents"
 type: concept
 tags:
-- voice-assistant
-- llm
-- openai
-- ollama
+  - voice-assistant
+  - llm
+  - openai
+  - ollama
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/voice-llm-agents
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- voice-limitations-2026.md
-- voice-assist-practices.md
-- voice-assist-pipeline.md
-- voice-custom-sentences.md
-- voice-local-stt-tts.md
+  - voice-limitations-2026.md
+  - voice-assist-practices.md
+  - voice-assist-pipeline.md
+  - voice-custom-sentences.md
+  - voice-local-stt-tts.md
 content_hash: sha256:dba92f2e4b77986eedae2aeaee58fa2f37bb6fee0ebf872d4df4d48989f38352
 ---
 # LLM Conversation Agents

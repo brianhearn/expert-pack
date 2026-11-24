@@ -1,26 +1,23 @@
 ---
-title: String sizing — cold Voc and hot Vmp
+title: "String sizing — cold Voc and hot Vmp"
 type: concept
-tags:
-- system-design
-- string-sizing
-- voc
-- inverter-string
+tags: [system-design, string-sizing, voc, inverter-string]
 pack: solar-diy-product
 retrieval_strategy: standard
 id: solar-diy/product/concepts/system-design-string-sizing
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 requires:
-- inverter-string.md
+  - inverter-string.md
 related:
-- system-design-fundamentals.md
-- inverter-string.md
-- nec-rapid-shutdown.md
-- how-do-i-size-my-solar-system.md
+  - system-design-fundamentals.md
+  - inverter-string.md
+  - nec-rapid-shutdown.md
+  - how-do-i-size-my-solar-system.md
 content_hash: sha256:230aea9d46fc8b326ffb68912bd1cabf92fba863ce510ce49121ee574fd0bce3
 ---
+
 # String sizing — cold Voc and hot Vmp
 
 String sizing is the voltage-limit calculation for string and string+optimizer systems. Microinverters skip it. Too many modules and cold-weather Voc exceeds the inverter maximum (damage or fire). Too few and hot-weather Vmp falls below MPPT minimum (dropout or underperformance).

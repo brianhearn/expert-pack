@@ -1,24 +1,24 @@
 ---
-title: Smart Home Protocols at a Glance
+title: "Smart Home Protocols at a Glance"
 type: concept
 tags:
-- protocols
-- zigbee
-- z-wave
-- matter
-- thread
+  - protocols
+  - zigbee
+  - z-wave
+  - matter
+  - thread
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/protocols-comparison
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- protocols-decision.md
-- protocols-mesh.md
-- core-architecture.md
-- integrations-media-mesh.md
-- zigbee-vs-wifi-which-should-i-use.md
+  - protocols-decision.md
+  - protocols-mesh.md
+  - core-architecture.md
+  - integrations-media-mesh.md
+  - zigbee-vs-wifi-which-should-i-use.md
 content_hash: sha256:a6e65074bed70b2c656bdfc2a92ed967f4bb5e846138ce6186fd343c46f88d47
 ---
 # Smart Home Protocols at a Glance

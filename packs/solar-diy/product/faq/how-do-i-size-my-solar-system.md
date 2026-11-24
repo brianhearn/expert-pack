@@ -18,7 +18,6 @@ concept_scope: single
 related:
   - system-design-fundamentals.md
   - system-design-string-sizing.md
-content_hash: sha256:5bb2e6e67cea12829f588549183d817ca90831819e32e6c8435067159e0b8852
 content_hash: sha256:1823a8d62e9fc55e640dc68d02ce3f0786f362cf37042cbeacb8bb1d5c23543d
 ---
 <!-- context: section=product, topic=faq-system-sizing, related=system-design-fundamentals,solar-panels-2026,system-design-phase,pvwatts -->

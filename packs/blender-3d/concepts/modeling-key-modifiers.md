@@ -1,27 +1,28 @@
 ---
 id: blender-3d/concepts/modeling-key-modifiers
-title: Modeling — Key Modifiers
+title: "Modeling — Key Modifiers"
 type: concept
 tags:
-- modeling
-- modifiers
-- subdivision-surface
-- boolean
+  - modeling
+  - modifiers
+  - subdivision-surface
+  - boolean
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/modeling-fundamentals.md
+  - concepts/modeling-fundamentals.md
 related:
-- modeling-modifier-stack.md
-- modeling-shrinkwrap-lattice.md
-- modeling-topology.md
-- hard-surface-modeling.md
+  - modeling-modifier-stack.md
+  - modeling-shrinkwrap-lattice.md
+  - modeling-topology.md
+  - hard-surface-modeling.md
 content_hash: sha256:d736b06e645329a2e50dfbf36842d353edc98a6d3e4f1cbf826b96715975258d
 ---
+
 # Modeling — Key Modifiers
 
 Subdivision Surface, Mirror, Boolean, Solidify, Array, and Bevel are the non-destructive modifiers used in most hard-surface and organic stacks. Each has a few settings that determine whether the result is clean or artifact-ridden.

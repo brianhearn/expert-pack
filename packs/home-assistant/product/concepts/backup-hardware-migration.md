@@ -1,23 +1,23 @@
 ---
-title: Migrating Home Assistant to New Hardware
+title: "Migrating Home Assistant to New Hardware"
 type: concept
 tags:
-- backup-migration
-- restore
-- usb-path
+  - backup-migration
+  - restore
+  - usb-path
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/backup-hardware-migration
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- backup-zigbee-coordinator.md
-- backup-migration-paths.md
-- backup-builtin.md
-- backup-sd-card.md
-- network-remote-access.md
-- what-hardware-should-i-run-ha-on.md
+  - backup-zigbee-coordinator.md
+  - backup-migration-paths.md
+  - backup-builtin.md
+  - backup-sd-card.md
+  - network-remote-access.md
+  - what-hardware-should-i-run-ha-on.md
 content_hash: sha256:1e618df58159645bc40b5eb4bc7e4fd01d772c674edb4da60dc3529a425047e8
 ---
 # Migrating Home Assistant to New Hardware

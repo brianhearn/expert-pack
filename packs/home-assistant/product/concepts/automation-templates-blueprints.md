@@ -1,23 +1,23 @@
 ---
-title: Automation Templates, Blueprints, and Entity IDs
+title: "Automation Templates, Blueprints, and Entity IDs"
 type: concept
 tags:
-- automation-fundamentals
-- jinja2
-- blueprints
-- entity-id
+  - automation-fundamentals
+  - jinja2
+  - blueprints
+  - entity-id
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/automation-templates-blueprints
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- automation-trigger-action.md
-- automation-conditions-actions.md
-- yaml-templates.md
-- automation-modes.md
-- yaml-template-extensions.md
+  - automation-trigger-action.md
+  - automation-conditions-actions.md
+  - yaml-templates.md
+  - automation-modes.md
+  - yaml-template-extensions.md
 content_hash: sha256:8c54ead80ffec10dffb8d68d257ca32e6d924d1544fc7a20f13caabbb9aa3668
 ---
 # Automation Templates, Blueprints, and Entity IDs

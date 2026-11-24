@@ -1,22 +1,22 @@
 ---
-title: ESPHome Hardware Combos and Troubleshooting
+title: "ESPHome Hardware Combos and Troubleshooting"
 type: concept
 tags:
-- esphome-fundamentals
-- troubleshooting
-- i2c
-- apollo
+  - esphome-fundamentals
+  - troubleshooting
+  - i2c
+  - apollo
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/esphome-hardware-troubleshoot
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- esphome-sensors-climate.md
-- esphome-ha-integration.md
-- esphome-flash-ota.md
-- esphome-sensors-control.md
+  - esphome-sensors-climate.md
+  - esphome-ha-integration.md
+  - esphome-flash-ota.md
+  - esphome-sensors-control.md
 content_hash: sha256:48eeaf1cc20a6181973fe1173cc3a3572d9e0cabf44753d23bfc70687ff18257
 ---
 # ESPHome Hardware Combos and Troubleshooting

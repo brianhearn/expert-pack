@@ -12,7 +12,6 @@ concept_scope: single
 related:
   - 02-system-design.md
   - 03-component-selection.md
-content_hash: sha256:e46992dc83b69db71ecfd664836297ce6fb45731dc5502daeb548712d46b5b17
 content_hash: sha256:237e2c1f8ceb34b49a3728ed067403a31d963513b229275dec18fe5e7136b9f7
 ---
 

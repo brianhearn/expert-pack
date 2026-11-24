@@ -1,25 +1,26 @@
 ---
 id: blender-3d/concepts/modeling-retopology
-title: Modeling — Retopology and Common Mistakes
+title: "Modeling — Retopology and Common Mistakes"
 type: concept
 tags:
-- modeling
-- retopology
-- topology
+  - modeling
+  - retopology
+  - topology
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/modeling-fundamentals.md
+  - concepts/modeling-fundamentals.md
 related:
-- modeling-topology.md
-- sculpting-multires-remesh.md
-- modeling-shrinkwrap-lattice.md
+  - modeling-topology.md
+  - sculpting-multires-remesh.md
+  - modeling-shrinkwrap-lattice.md
 content_hash: sha256:ef8226c46fa9b7c729722d9fc3cc51d0b92ea35c1c623f6e21d0a548e20528ac
 ---
+
 # Modeling — Retopology and Common Mistakes
 
 Retopology builds new, animation-ready quad topology over a high-resolution sculpt or scan. Unapplied scale, n-gons, overlapping verts, and non-manifold edges are the modeling mistakes that break subdivision, Booleans, and physics before you even retopo.

@@ -1,29 +1,30 @@
 ---
 id: blender-3d/concepts/shading-cycles
-title: Rendering — Cycles GPU and Performance
+title: "Rendering — Cycles GPU and Performance"
 type: concept
 tags:
-- rendering
-- cycles
-- gpu
+  - rendering
+  - cycles
+  - gpu
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/shading-rendering.md
+  - concepts/shading-rendering.md
 related:
-- shading-eevee.md
-- shading-render-settings.md
-- compositing-core.md
-- compositing-passes-exr.md
-- how-do-i-reduce-render-time.md
-- why-is-my-render-noisy.md
-- product-visualization.md
+  - shading-eevee.md
+  - shading-render-settings.md
+  - compositing-core.md
+  - compositing-passes-exr.md
+  - how-do-i-reduce-render-time.md
+  - why-is-my-render-noisy.md
+  - product-visualization.md
 content_hash: sha256:36b0be58c097036475b094e0e2df698b1f60e9d53127526e47ed3f7d8c357793
 ---
+
 # Rendering — Cycles GPU and Performance
 
 Cycles is Blender's physically based path tracer. GPU backend (OptiX, CUDA, HIP, Metal), sample count, adaptive sampling, denoising, and light-path clamps are the settings that dominate render time and firefly control.

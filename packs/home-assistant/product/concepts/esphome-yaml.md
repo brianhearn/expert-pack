@@ -1,22 +1,22 @@
 ---
-title: ESPHome YAML Structure
+title: "ESPHome YAML Structure"
 type: concept
 tags:
-- esphome-fundamentals
-- yaml
-- api
-- ota
+  - esphome-fundamentals
+  - yaml
+  - api
+  - ota
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/esphome-yaml
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- esphome-what.md
-- esphome-sensors-climate.md
-- esphome-flash-ota.md
-- esphome-sensors-control.md
+  - esphome-what.md
+  - esphome-sensors-climate.md
+  - esphome-flash-ota.md
+  - esphome-sensors-control.md
 content_hash: sha256:4e70f48b4bdd117061aa50f5420367310a29657df7a5d4acd9c6660c4d4a4d9d
 ---
 # ESPHome YAML Structure

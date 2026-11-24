@@ -1,27 +1,25 @@
 ---
-title: System design — energy, roof, and battery
+title: "System design — energy, roof, and battery"
 type: concept
-tags:
-- system-design
-- energy-needs
-- roof-assessment
+tags: [system-design, energy-needs, roof-assessment]
 pack: solar-diy-product
 retrieval_strategy: standard
 id: solar-diy/product/concepts/system-design-fundamentals
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- system-design-string-sizing.md
-- inverter-microinverters.md
-- inverter-string.md
-- general.md
-- how-do-i-size-my-solar-system.md
-- what-is-net-metering.md
-- solar-panels-2026.md
-- top-diy-mistakes.md
+  - system-design-string-sizing.md
+  - inverter-microinverters.md
+  - inverter-string.md
+  - general.md
+  - how-do-i-size-my-solar-system.md
+  - what-is-net-metering.md
+  - solar-panels-2026.md
+  - top-diy-mistakes.md
 content_hash: sha256:4e17b3c4c1d3446d2bb045963c5f1c96c4688a06053befb2ff9120a643ea3e08
 ---
+
 # System design — energy, roof, and battery
 
 Residential array sizing starts from annual kWh and usable roof, then inverter architecture, then (for string systems) voltage-limited string math, then battery if you want backup. Peak-sun-hour and efficiency assumptions dominate the kW result; shade and setbacks dominate what actually fits.

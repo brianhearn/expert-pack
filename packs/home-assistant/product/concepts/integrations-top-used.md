@@ -1,22 +1,22 @@
 ---
-title: Top Integrations — Network, Climate, Lighting, Security
+title: "Top Integrations — Network, Climate, Lighting, Security"
 type: concept
 tags:
-- integrations-guide
-- unifi
-- hue
-- frigate
+  - integrations-guide
+  - unifi
+  - hue
+  - frigate
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/integrations-top-used
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- integrations-media-mesh.md
-- integrations-iot-class.md
-- integrations-hacs.md
-- network-cameras-hardware.md
+  - integrations-media-mesh.md
+  - integrations-iot-class.md
+  - integrations-hacs.md
+  - network-cameras-hardware.md
 content_hash: sha256:df0eaecce38ee963e81055754324eb458a3850094ea274b4f381136b8df3fc3b
 ---
 # Top Integrations — Network, Climate, Lighting, Security

@@ -1,22 +1,22 @@
 ---
-title: Energy Automations
+title: "Energy Automations"
 type: concept
 tags:
-- energy-management
-- solar-excess
-- ev-charging
+  - energy-management
+  - solar-excess
+  - ev-charging
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/energy-automations
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- energy-gotchas.md
-- energy-grid.md
-- automation-trigger-action.md
-- energy-device-monitoring.md
-- energy-riemann-utility.md
+  - energy-gotchas.md
+  - energy-grid.md
+  - automation-trigger-action.md
+  - energy-device-monitoring.md
+  - energy-riemann-utility.md
 content_hash: sha256:f53d88e4cc76e894ed67159be42c337b8492b94d0e12a94226abfa5a77a2c3ea
 ---
 # Energy Automations

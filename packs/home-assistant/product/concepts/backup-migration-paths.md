@@ -1,22 +1,22 @@
 ---
-title: Common HA Hardware Upgrade Paths
+title: "Common HA Hardware Upgrade Paths"
 type: concept
 tags:
-- backup-migration
-- n100
-- proxmox
-- ha-green
+  - backup-migration
+  - n100
+  - proxmox
+  - ha-green
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/backup-migration-paths
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- backup-hardware-migration.md
-- backup-sd-card.md
-- core-services-install.md
-- backup-zigbee-coordinator.md
+  - backup-hardware-migration.md
+  - backup-sd-card.md
+  - core-services-install.md
+  - backup-zigbee-coordinator.md
 content_hash: sha256:1d1cf05c11ab5bff0d217dae5ee2cdba320de5b5a3ea8fdc8d17775dccbb2235
 ---
 # Common HA Hardware Upgrade Paths

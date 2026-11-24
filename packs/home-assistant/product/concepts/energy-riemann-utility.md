@@ -1,22 +1,22 @@
 ---
-title: Riemann Sum Energy and utility_meter
+title: "Riemann Sum Energy and utility_meter"
 type: concept
 tags:
-- energy-management
-- riemann
-- utility-meter
-- integration
+  - energy-management
+  - riemann
+  - utility-meter
+  - integration
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/energy-riemann-utility
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- energy-dashboard.md
-- energy-grid.md
-- energy-automations.md
-- energy-gotchas.md
+  - energy-dashboard.md
+  - energy-grid.md
+  - energy-automations.md
+  - energy-gotchas.md
 content_hash: sha256:b55eb3fd7723daa4a271dd68021745e989534f098f4366a31a3cd265fba32117
 ---
 # Riemann Sum Energy and utility_meter

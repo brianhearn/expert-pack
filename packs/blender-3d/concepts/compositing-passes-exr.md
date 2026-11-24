@@ -1,25 +1,26 @@
 ---
 id: blender-3d/concepts/compositing-passes-exr
-title: Compositing — Render Passes, OpenEXR, and GPU
+title: "Compositing — Render Passes, OpenEXR, and GPU"
 type: concept
 tags:
-- compositing
-- render-passes
-- openexr
+  - compositing
+  - render-passes
+  - openexr
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/compositing.md
+  - concepts/compositing.md
 related:
-- compositing-core.md
-- shading-cycles.md
-- compositing-color-grading.md
+  - compositing-core.md
+  - shading-cycles.md
+  - compositing-color-grading.md
 content_hash: sha256:27aae2cdccb8181a670cd2fc9786bcbd335e602ac277b24cabd4fe82e8eb5ea2
 ---
+
 # Compositing — Render Passes, OpenEXR, and GPU
 
 Multi-pass compositing splits a render into diffuse, specular, emission, and mask components so you can grade and isolate without re-rendering. OpenEXR multilayer stores those passes in one 32-bit file; GPU compositing speeds the node graph in 4.x.

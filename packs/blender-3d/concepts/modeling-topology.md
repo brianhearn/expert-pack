@@ -1,27 +1,28 @@
 ---
 id: blender-3d/concepts/modeling-topology
-title: Modeling — Topology Principles and Edit Mode
+title: "Modeling — Topology Principles and Edit Mode"
 type: concept
 tags:
-- modeling
-- topology
-- edit-mode
+  - modeling
+  - topology
+  - edit-mode
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/modeling-fundamentals.md
+  - concepts/modeling-fundamentals.md
 related:
-- modeling-retopology.md
-- modeling-modifier-stack.md
-- sculpting-dyntopo.md
-- modeling-key-modifiers.md
-- hard-surface-modeling.md
+  - modeling-retopology.md
+  - modeling-modifier-stack.md
+  - sculpting-dyntopo.md
+  - modeling-key-modifiers.md
+  - hard-surface-modeling.md
 content_hash: sha256:7fddbbd63732381991e921cc2a69f9b87d30246f6cfaeb4165a8a107d480e8c2
 ---
+
 # Modeling — Topology Principles and Edit Mode
 
 Topology is the arrangement of vertices, edges, and faces. Quad edge loops that follow surface contours subdivide and deform cleanly; poles, n-gons, and unapplied scale are the usual sources of pinching and modifier or physics bugs.

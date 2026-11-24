@@ -18,7 +18,6 @@ schema_version: "4.1"
 related:
   - system-design-fundamentals.md
   - solar-panels-2026.md
-content_hash: sha256:32237e534d3fed8fd491ae2729c76b1c4d3f6db1b2d838a9491e8f0f08659fbe
 content_hash: sha256:ccd3d92d43ccbec06a91eccea787b6c433b92b100fac13b69f6ccfcdc9971e73
 ---
 <!-- context: section=product, topic=troubleshooting-mistakes, related=system-design-fundamentals,installation,permitting,inspection-commissioning,common-mistakes -->

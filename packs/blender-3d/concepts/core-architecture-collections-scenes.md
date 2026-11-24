@@ -1,26 +1,27 @@
 ---
 id: blender-3d/concepts/core-architecture-collections-scenes
-title: Core Architecture — Collections, Scenes, and View Layers
+title: "Core Architecture — Collections, Scenes, and View Layers"
 type: concept
 tags:
-- architecture
-- collections
-- scenes
-- view-layers
+  - architecture
+  - collections
+  - scenes
+  - view-layers
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/core-architecture.md
+  - concepts/core-architecture.md
 related:
-- core-architecture-data-blocks.md
-- core-architecture-modes-editors.md
-- core-architecture-blend-file.md
+  - core-architecture-data-blocks.md
+  - core-architecture-modes-editors.md
+  - core-architecture-blend-file.md
 content_hash: sha256:46183c6775485bd9629e807ffa5ed1ddcd5907727df40866f1fa395f25e3eece
 ---
+
 # Core Architecture — Collections, Scenes, and View Layers
 
 Collections group objects for visibility, selection, and instancing; an object can belong to more than one collection. Scenes are top-level containers with their own camera, world, and render settings; View Layers split a scene's render into isolated passes.

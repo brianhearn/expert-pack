@@ -1,26 +1,27 @@
 ---
 id: blender-3d/concepts/shading-hdri-lighting
-title: Shading — HDRI Lighting
+title: "Shading — HDRI Lighting"
 type: concept
 tags:
-- shading
-- hdri
-- lighting
+  - shading
+  - hdri
+  - lighting
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/shading-rendering.md
+  - concepts/shading-rendering.md
 related:
-- shading-principled-bsdf.md
-- shading-eevee.md
-- shading-uv-maps.md
-- product-visualization.md
+  - shading-principled-bsdf.md
+  - shading-eevee.md
+  - shading-uv-maps.md
+  - product-visualization.md
 content_hash: sha256:b5bac7ba2858504e7e7a8a8042d89ea8e52e490930b1d7b28562bc90d4ec7a4e
 ---
+
 # Shading — HDRI Lighting
 
 HDRI lighting uses a high-dynamic-range environment image as the World background so reflections and ambient light match a real location. Setup is an Environment Texture in the World shader, with a Mapping node for rotation.

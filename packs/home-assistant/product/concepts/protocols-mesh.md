@@ -1,24 +1,24 @@
 ---
-title: Mesh Network Concepts — Zigbee, Z-Wave, Thread
+title: "Mesh Network Concepts — Zigbee, Z-Wave, Thread"
 type: concept
 tags:
-- protocols
-- mesh
-- coordinator
-- zha
-- zigbee2mqtt
+  - protocols
+  - mesh
+  - coordinator
+  - zha
+  - zigbee2mqtt
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/protocols-mesh
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- protocols-comparison.md
-- protocols-decision.md
-- network-zigbee-zwave.md
-- backup-zigbee-coordinator.md
-- zigbee2mqtt-2-migration.md
+  - protocols-comparison.md
+  - protocols-decision.md
+  - network-zigbee-zwave.md
+  - backup-zigbee-coordinator.md
+  - zigbee2mqtt-2-migration.md
 content_hash: sha256:dd7a895051a26d9463178bbaf629553ababc03315fc13f8cbdcc5636c014c138
 ---
 # Mesh Network Concepts — Zigbee, Z-Wave, Thread

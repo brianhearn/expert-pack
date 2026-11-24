@@ -1,22 +1,22 @@
 ---
-title: Zigbee Coordinator Migration
+title: "Zigbee Coordinator Migration"
 type: concept
 tags:
-- backup-migration
-- zigbee
-- zha
-- zigbee2mqtt
+  - backup-migration
+  - zigbee
+  - zha
+  - zigbee2mqtt
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/backup-zigbee-coordinator
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- backup-hardware-migration.md
-- protocols-mesh.md
-- backup-migration-paths.md
-- network-zigbee-zwave.md
+  - backup-hardware-migration.md
+  - protocols-mesh.md
+  - backup-migration-paths.md
+  - network-zigbee-zwave.md
 content_hash: sha256:e7e07fc512c778fda869a90151f23077d07360c2e4b24f33704121c84fd8f3f9
 ---
 # Zigbee Coordinator Migration

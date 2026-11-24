@@ -10,6 +10,7 @@ chunks:
   tokenizer_tokens: 151
   chunk_summary: ''
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, opening.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--overview-of-what-s-required
   chunk_order: 1
   section: Overview of What's Required
@@ -17,6 +18,7 @@ chunks:
   tokenizer_tokens: 121
   chunk_summary: 'Most residential solar projects require three approvals:'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Overview of What''s Required.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--1-building-permit
   chunk_order: 2
   section: 1. Building Permit
@@ -24,6 +26,7 @@ chunks:
   tokenizer_tokens: 5
   chunk_summary: ''
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section 1. Building Permit.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--who-issues-it
   chunk_order: 3
   section: Who Issues It
@@ -31,6 +34,7 @@ chunks:
   tokenizer_tokens: 66
   chunk_summary: Your local building department — could be a city building department, county development services, or a regional fire authority for rapid shutdown review. Lo...
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Who Issues It.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--what-they-review
   chunk_order: 4
   section: What They Review
@@ -38,6 +42,7 @@ chunks:
   tokenizer_tokens: 159
   chunk_summary: '- **Structural**: That the racking system, roof structure, and panel loading are code-compliant. Many jurisdictions accept manufacturer structural engineerin...'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section What They Review.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--what-you-ll-submit
   chunk_order: 5
   section: What You'll Submit
@@ -45,6 +50,7 @@ chunks:
   tokenizer_tokens: 217
   chunk_summary: 'Typical permit package includes:'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section What You''ll Submit.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--the-120-rule-nec-705-12
   chunk_order: 6
   section: The 120% Rule (NEC 705.12)
@@ -52,6 +58,7 @@ chunks:
   tokenizer_tokens: 191
   chunk_summary: 'NEC 705.12(B)(2) governs how solar connects to your main service panel. The key calculation:'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section The 120% Rule (NEC 705.12).'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--self-permitting-vs-permit-service
   chunk_order: 7
   section: Self-Permitting vs Permit Service
@@ -59,6 +66,7 @@ chunks:
   tokenizer_tokens: 125
   chunk_summary: '- Most jurisdictions allow homeowners to pull their own permits ("homeowner-builder" exemption)'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Self-Permitting vs Permit Service.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--permit-fees
   chunk_order: 8
   section: Permit Fees
@@ -66,6 +74,7 @@ chunks:
   tokenizer_tokens: 59
   chunk_summary: '- Typically $200–$800 for residential solar'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Permit Fees.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--2-utility-interconnection
   chunk_order: 9
   section: 2. Utility Interconnection
@@ -73,6 +82,7 @@ chunks:
   tokenizer_tokens: 7
   chunk_summary: ''
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section 2. Utility Interconnection.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--process-overview
   chunk_order: 10
   section: Process Overview
@@ -80,6 +90,7 @@ chunks:
   tokenizer_tokens: 225
   chunk_summary: The interconnection process authorizes your system to connect to and export power to the grid.
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Process Overview.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--timeline-reality
   chunk_order: 11
   section: Timeline Reality
@@ -87,6 +98,7 @@ chunks:
   tokenizer_tokens: 99
   chunk_summary: '- Fast-track (small systems, simple feeders): 4–8 weeks'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Timeline Reality.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--net-metering-and-billing
   chunk_order: 12
   section: Net Metering and Billing
@@ -94,6 +106,7 @@ chunks:
   tokenizer_tokens: 139
   chunk_summary: '- **Net metering (NEM 1.0/2.0)**: Excess solar production credited at full retail rate. Most favorable economics.'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Net Metering and Billing.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--utility-required-equipment
   chunk_order: 13
   section: Utility-Required Equipment
@@ -101,6 +114,7 @@ chunks:
   tokenizer_tokens: 136
   chunk_summary: 'Many utilities have specific equipment requirements:'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Utility-Required Equipment.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--net-metering-application
   chunk_order: 14
   section: Net Metering Application
@@ -108,6 +122,7 @@ chunks:
   tokenizer_tokens: 68
   chunk_summary: Separate from the interconnection application at some utilities. Enrolling in the correct net metering program can be easy to miss — it determines how your c...
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Net Metering Application.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--3-hoa-approval-if-applicable
   chunk_order: 15
   section: 3. HOA Approval (If Applicable)
@@ -115,6 +130,7 @@ chunks:
   tokenizer_tokens: 223
   chunk_summary: Many states have "solar rights" laws that limit HOA authority to ban solar panels. Check your state's solar rights legislation before assuming you need appro...
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section 3. HOA Approval (If Applicable).'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--permit-phase-checklist
   chunk_order: 16
   section: Permit Phase Checklist
@@ -122,6 +138,7 @@ chunks:
   tokenizer_tokens: 117
   chunk_summary: '- [ ] Building permit application submitted with complete package'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Permit Phase Checklist.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--what-can-go-wrong
   chunk_order: 17
   section: What Can Go Wrong
@@ -129,6 +146,7 @@ chunks:
   tokenizer_tokens: 117
   chunk_summary: '- **Permit rejection**: Missing documentation is the most common cause; resubmit promptly with complete package'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section What Can Go Wrong.'
+  embedding_version: gemini-embedding-001
 - chunk_id: 04-permitting--related
   chunk_order: 18
   section: Related
@@ -136,3 +154,4 @@ chunks:
   tokenizer_tokens: 49
   chunk_summary: '- NEC rapid shutdown requirements: `../../product/concepts/nec-rapid-shutdown.md`'
   context_prefix: 'From Phase 4: Permitting & Utility Interconnection, section Related.'
+  embedding_version: gemini-embedding-001

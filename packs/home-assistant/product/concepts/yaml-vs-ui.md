@@ -1,21 +1,21 @@
 ---
-title: YAML vs UI Configuration
+title: "YAML vs UI Configuration"
 type: concept
 tags:
-- yaml-configuration
-- configuration-yaml
-- ui
+  - yaml-configuration
+  - configuration-yaml
+  - ui
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/yaml-vs-ui
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- yaml-includes.md
-- yaml-packages.md
-- yaml-validation.md
-- yaml-secrets-env.md
+  - yaml-includes.md
+  - yaml-packages.md
+  - yaml-validation.md
+  - yaml-secrets-env.md
 content_hash: sha256:5231a892d86a9a8555f9b4a7085e7da568c9537fc8f5025de6382e5128a9ae0e
 ---
 # YAML vs UI Configuration

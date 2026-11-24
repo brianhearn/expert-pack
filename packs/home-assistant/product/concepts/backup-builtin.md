@@ -1,21 +1,21 @@
 ---
-title: Built-In Home Assistant Backups
+title: "Built-In Home Assistant Backups"
 type: concept
 tags:
-- backup-migration
-- backups
-- restore
+  - backup-migration
+  - backups
+  - restore
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/backup-builtin
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- backup-automated.md
-- backup-testing.md
-- backup-disaster-recovery.md
-- backup-hardware-migration.md
+  - backup-automated.md
+  - backup-testing.md
+  - backup-disaster-recovery.md
+  - backup-hardware-migration.md
 content_hash: sha256:77940b39bf87a786b846d96751a23705113dcf76c1a4b536f5cb08d82f165a07
 ---
 # Built-In Home Assistant Backups

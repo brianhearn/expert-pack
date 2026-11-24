@@ -16,7 +16,6 @@ schema_version: "4.1"
 related:
   - shading-cycles.md
   - shading-render-settings.md
-content_hash: sha256:43417663c91c6192fd0175d7cd51611cf124206e3ddeb75ba8b903cf9dfbf34b
 content_hash: sha256:f809f9a8d66ea2990478be971ec6bc6dfdf52c129a3fdbc7f4740af01617cb67
 ---
 <!-- context: section=faq, topic=render-noise, related=shading-rendering,compositing,troubleshooting/common-mistakes -->

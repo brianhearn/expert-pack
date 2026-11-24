@@ -1,29 +1,30 @@
 ---
 id: blender-3d/concepts/python-bpy-data
-title: Python Scripting — bpy Module Structure and bpy.data
+title: "Python Scripting — bpy Module Structure and bpy.data"
 type: concept
 tags:
-- python
-- bpy
-- scripting
-- api
+  - python
+  - bpy
+  - scripting
+  - api
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/python-scripting.md
+  - concepts/python-scripting.md
 related:
-- python-bpy-context.md
-- python-bpy-ops.md
-- python-addon-structure.md
-- python-batch-scripting.md
-- core-architecture-modes-editors.md
-- python-depsgraph.md
+  - python-bpy-context.md
+  - python-bpy-ops.md
+  - python-addon-structure.md
+  - python-batch-scripting.md
+  - core-architecture-modes-editors.md
+  - python-depsgraph.md
 content_hash: sha256:c84b9b760576a261811220a3ea16400d193d0e11048e8b96231a05944e2ba739
 ---
+
 # Python Scripting — bpy Module Structure and bpy.data
 
 Blender exposes virtually its entire feature set through the `bpy` Python module. The mental model that unlocks scripting is understanding the difference between the **data API** (`bpy.data` — direct property access, always works) and the **operator API** (`bpy.ops` — replicates UI actions, requires context). Almost everything visible in Blender's UI is accessible and scriptable via Python. The `bpy` module is the entry point.

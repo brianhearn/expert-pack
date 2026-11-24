@@ -1,24 +1,25 @@
 ---
 id: blender-3d/concepts/sculpting-dyntopo
-title: Sculpting — Dyntopo (Dynamic Topology)
+title: "Sculpting — Dyntopo (Dynamic Topology)"
 type: concept
 tags:
-- sculpting
-- dyntopo
+  - sculpting
+  - dyntopo
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/sculpting.md
+  - concepts/sculpting.md
 related:
-- sculpting-multires-remesh.md
-- sculpting-brushes.md
-- modeling-topology.md
+  - sculpting-multires-remesh.md
+  - sculpting-brushes.md
+  - modeling-topology.md
 content_hash: sha256:079e8f676880273d7ef53dcb8f5d5ee32f567b5c8d5c1306b030fcc7c4d911f7
 ---
+
 # Sculpting — Dyntopo (Dynamic Topology)
 
 Blender's sculpt system operates in three distinct paradigms. Choosing the wrong one for the task is the most common sculpting mistake. Dyntopo dynamically adds and removes triangles under the brush so you can explore form without a pre-subdivided mesh. It destroys UVs, vertex groups, and shape keys, so production detail belongs on Multires.

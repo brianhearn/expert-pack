@@ -1,23 +1,23 @@
 ---
-title: Local STT and TTS — Faster Whisper and Piper
+title: "Local STT and TTS — Faster Whisper and Piper"
 type: concept
 tags:
-- voice-assistant
-- whisper
-- piper
-- stt
-- tts
+  - voice-assistant
+  - whisper
+  - piper
+  - stt
+  - tts
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/voice-local-stt-tts
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- voice-wyoming.md
-- voice-assist-pipeline.md
-- voice-llm-agents.md
-- voice-limitations-2026.md
+  - voice-wyoming.md
+  - voice-assist-pipeline.md
+  - voice-llm-agents.md
+  - voice-limitations-2026.md
 content_hash: sha256:1b251f7ee3a0d25b6154d1c3f017e1dfe44c22a427055c62d4823f9545927213
 ---
 # Local STT and TTS — Faster Whisper and Piper

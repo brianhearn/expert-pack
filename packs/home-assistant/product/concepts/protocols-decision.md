@@ -1,23 +1,23 @@
 ---
-title: Protocol Decision Framework
+title: "Protocol Decision Framework"
 type: concept
 tags:
-- protocols
-- zigbee
-- matter
-- wifi
-- esphome
+  - protocols
+  - zigbee
+  - matter
+  - wifi
+  - esphome
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/protocols-decision
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- protocols-comparison.md
-- protocols-mesh.md
-- esphome-what.md
-- zigbee-vs-wifi-which-should-i-use.md
+  - protocols-comparison.md
+  - protocols-mesh.md
+  - esphome-what.md
+  - zigbee-vs-wifi-which-should-i-use.md
 content_hash: sha256:0ea59e4d8d78ff91db440605de60f1a3237c8b8d5372a66919b38dd5d8c21f43
 ---
 # Protocol Decision Framework

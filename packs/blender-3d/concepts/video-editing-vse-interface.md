@@ -1,25 +1,26 @@
 ---
 id: blender-3d/concepts/video-editing-vse-interface
-title: Video Editing — VSE Interface and Strip Types
+title: "Video Editing — VSE Interface and Strip Types"
 type: concept
 tags:
-- video-editing
-- vse
-- strips
+  - video-editing
+  - vse
+  - strips
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/video-editing.md
+  - concepts/video-editing.md
 related:
-- video-editing-vse-editing.md
-- video-editing-render.md
-- video-editing-vs-external.md
+  - video-editing-vse-editing.md
+  - video-editing-render.md
+  - video-editing-vs-external.md
 content_hash: sha256:5625108154f8a8bba1602ae8802aa153a956516118995a4553d9165bb51d8a77
 ---
+
 # Video Editing — VSE Interface and Strip Types
 
 The VSE (Video Sequence Editor) is Blender's built-in non-linear video editor. It excels at assembling Blender renders, basic color grading, and exporting final deliverables — all without leaving Blender. It's not competitive with DaVinci Resolve or Premiere for professional multi-camera or complex color work.

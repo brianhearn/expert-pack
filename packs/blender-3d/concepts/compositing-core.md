@@ -1,28 +1,29 @@
 ---
 id: blender-3d/concepts/compositing-core
-title: Compositing — Core Setup and Denoising
+title: "Compositing — Core Setup and Denoising"
 type: concept
 tags:
-- compositing
-- denoising
-- render-passes
+  - compositing
+  - denoising
+  - render-passes
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/compositing.md
+  - concepts/compositing.md
 related:
-- compositing-passes-exr.md
-- compositing-color-grading.md
-- compositing-effects.md
-- shading-cycles.md
-- shading-render-settings.md
-- product-visualization.md
+  - compositing-passes-exr.md
+  - compositing-color-grading.md
+  - compositing-effects.md
+  - shading-cycles.md
+  - shading-render-settings.md
+  - product-visualization.md
 content_hash: sha256:fa4d2d7df6345f075d2f88faf6fbc865e49101091be9461be7dc9ea94b03a68e
 ---
+
 # Compositing — Core Setup and Denoising
 
 Blender's Compositor is a node-based post-processing system operating on render output, render passes, and imported images/video. Its power is in multi-pass compositing — separating a render into diffuse, shadow, reflection, and depth components and recombining them with independent control.

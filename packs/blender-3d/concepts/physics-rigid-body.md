@@ -1,25 +1,26 @@
 ---
 id: blender-3d/concepts/physics-rigid-body
-title: Physics — Rigid Body
+title: "Physics — Rigid Body"
 type: concept
 tags:
-- physics
-- rigid-body
+  - physics
+  - rigid-body
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/physics-simulation.md
+  - concepts/physics-simulation.md
 related:
-- physics-soft-cloth.md
-- physics-mantaflow.md
-- geometry-nodes-simulation.md
-- why-does-my-physics-sim-explode.md
+  - physics-soft-cloth.md
+  - physics-mantaflow.md
+  - geometry-nodes-simulation.md
+  - why-does-my-physics-sim-explode.md
 content_hash: sha256:43414865179c9f51f10cf78fb459a353418374ab8785d4835e7fb5b053fcdeb3
 ---
+
 # Physics — Rigid Body
 
 **The fundamental rule:** Bake simulations to disk (or at minimum to RAM cache) before rendering or adjusting the timeline. Never render physics without a bake. Rigid bodies are solid, non-deforming Bullet objects that collide: active bodies simulate, passive bodies are colliders. Mesh collision on active objects is the usual performance and stability mistake.

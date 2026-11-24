@@ -1,22 +1,22 @@
 ---
-title: IoT VLANs and Why Network Design Matters
+title: "IoT VLANs and Why Network Design Matters"
 type: concept
 tags:
-- network-architecture
-- vlan
-- iot-security
+  - network-architecture
+  - vlan
+  - iot-security
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/network-vlan
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- network-mdns.md
-- network-dhcp-dns.md
-- network-wifi.md
-- network-cameras-hardware.md
-- network-remote-access.md
+  - network-mdns.md
+  - network-dhcp-dns.md
+  - network-wifi.md
+  - network-cameras-hardware.md
+  - network-remote-access.md
 content_hash: sha256:6fd1c7381bcb861a0409bbfb15da348f2927e0fbfa830f07c88edf7b335a6f82
 ---
 # IoT VLANs and Why Network Design Matters

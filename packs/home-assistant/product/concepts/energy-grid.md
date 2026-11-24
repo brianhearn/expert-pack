@@ -1,22 +1,22 @@
 ---
-title: Grid Energy and Cost Tracking
+title: "Grid Energy and Cost Tracking"
 type: concept
 tags:
-- energy-management
-- grid
-- tariff
-- nordpool
+  - energy-management
+  - grid
+  - tariff
+  - nordpool
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/energy-grid
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- energy-dashboard.md
-- energy-solar-battery.md
-- energy-riemann-utility.md
-- energy-automations.md
+  - energy-dashboard.md
+  - energy-solar-battery.md
+  - energy-riemann-utility.md
+  - energy-automations.md
 content_hash: sha256:be2046acf9a2446b7a80e050f6cc6ba1e4a41aaac9eaa901912bcf3bca87f321
 ---
 # Grid Energy and Cost Tracking

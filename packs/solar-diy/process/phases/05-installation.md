@@ -1,29 +1,22 @@
 ---
-title: 'Phase 5: Installation'
-type: phase
-tags:
-- common-mistakes
-- dc-wiring
-- inspection-commissioning
-- nec-rapid-shutdown
-- permitting
-- phase-5-installation
-- process
-- racking
-pack: solar-diy-process
-retrieval_strategy: atomic
+title: "Phase 5: Installation"
+type: "phase"
+tags: [common-mistakes, dc-wiring, inspection-commissioning, nec-rapid-shutdown, permitting, phase-5-installation, process, racking]
+pack: "solar-diy-process"
+retrieval_strategy: "atomic"
 id: solar-diy/process/phases/05-installation
-verified_at: '2026-04-21'
+verified_at: "2026-04-21"
 verified_by: agent
-schema_version: '4.1'
+schema_version: "4.1"
 concept_scope: single
 related:
-- 04-permitting.md
-- 06-inspection-commissioning.md
-- common-mistakes.md
-- diy-vs-contractor.md
+  - 04-permitting.md
+  - 06-inspection-commissioning.md
+  - common-mistakes.md
+  - diy-vs-contractor.md
 content_hash: sha256:fac4a3fd4b5f41e0e24dc2cb14572533d8bd263c0514426d9984ce2f7e540a08
 ---
+
 # Phase 5: Installation
 
 <!-- context: section=process, topic=phase-5-installation, related=nec-rapid-shutdown,permitting,inspection-commissioning,common-mistakes,racking,dc-wiring -->

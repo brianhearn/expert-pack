@@ -1,24 +1,24 @@
 ---
-title: Home Assistant Assist Pipeline
+title: "Home Assistant Assist Pipeline"
 type: concept
 tags:
-- voice-assistant
-- assist
-- pipeline
+  - voice-assistant
+  - assist
+  - pipeline
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/voice-assist-pipeline
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- voice-wyoming.md
-- voice-local-stt-tts.md
-- voice-satellites-hardware.md
-- voice-assist-practices.md
-- voice-limitations-2026.md
-- voice-llm-agents.md
-- voice-wake-words.md
+  - voice-wyoming.md
+  - voice-local-stt-tts.md
+  - voice-satellites-hardware.md
+  - voice-assist-practices.md
+  - voice-limitations-2026.md
+  - voice-llm-agents.md
+  - voice-wake-words.md
 content_hash: sha256:d069522587b8090848d99b7cc4eae7a6df4be09bde42a79f652d0d002068fdf2
 ---
 # Home Assistant Assist Pipeline

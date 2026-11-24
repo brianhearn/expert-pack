@@ -1,26 +1,27 @@
 ---
 id: blender-3d/concepts/physics-soft-cloth
-title: Physics — Soft Body, Cloth, and Bake Practice
+title: "Physics — Soft Body, Cloth, and Bake Practice"
 type: concept
 tags:
-- physics
-- soft-body
-- cloth
+  - physics
+  - soft-body
+  - cloth
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/physics-simulation.md
+  - concepts/physics-simulation.md
 related:
-- physics-rigid-body.md
-- physics-particles.md
-- geometry-nodes-simulation.md
-- why-does-my-physics-sim-explode.md
+  - physics-rigid-body.md
+  - physics-particles.md
+  - geometry-nodes-simulation.md
+  - why-does-my-physics-sim-explode.md
 content_hash: sha256:8a4bc1a7e0334a421ee7d867331bdb986b01ac3c7463705b652cecdaa24bdb84
 ---
+
 # Physics — Soft Body, Cloth, and Bake Practice
 
 Soft Body simulates volumetric squash-and-stretch; Cloth simulates thin fabric surfaces. Both need pinning or goal weights, collision objects, and a disk-cache bake. Scale (1 Blender unit = 1 meter) and baking before F12 apply to all Blender physics.

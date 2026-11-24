@@ -1,25 +1,25 @@
 ---
-title: Multi-Sensor Presence Fusion
+title: "Multi-Sensor Presence Fusion"
 type: concept
 tags:
-- presence-detection
-- sensor-fusion
-- companion-app
+  - presence-detection
+  - sensor-fusion
+  - companion-app
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/presence-sensor-fusion
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- presence-wifi-ble.md
-- presence-mmwave.md
-- presence-home-vs-room.md
-- automation-modes.md
-- presence-bayesian.md
-- presence-person-home.md
-- presence-phone-limits.md
-- presence-pitfalls.md
+  - presence-wifi-ble.md
+  - presence-mmwave.md
+  - presence-home-vs-room.md
+  - automation-modes.md
+  - presence-bayesian.md
+  - presence-person-home.md
+  - presence-phone-limits.md
+  - presence-pitfalls.md
 content_hash: sha256:678f75bbc66cd95d165112f7e1a1393e0718c6f6a0198d1b026e69ec050383c7
 ---
 # Multi-Sensor Presence Fusion

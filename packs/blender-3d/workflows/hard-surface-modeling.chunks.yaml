@@ -10,6 +10,7 @@ chunks:
   tokenizer_tokens: 261
   chunk_summary: Hard surface modeling refers to creating mechanical, manufactured, or architectural objects — things with defined sharp edges, smooth flat panels, precise ge...
   context_prefix: From Hard Surface Modeling Workflow, opening.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--the-core-philosophy
   chunk_order: 1
   section: The Core Philosophy
@@ -17,6 +18,7 @@ chunks:
   tokenizer_tokens: 168
   chunk_summary: 'Hard surface modeling in Blender revolves around one central workflow: **build a clean, low-poly control cage, then use the Subdivision Surface modifier to g...'
   context_prefix: From Hard Surface Modeling Workflow, section The Core Philosophy.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--the-subdivision-surface-workflow
   chunk_order: 2
   section: The Subdivision Surface Workflow
@@ -24,6 +26,7 @@ chunks:
   tokenizer_tokens: 9
   chunk_summary: ''
   context_prefix: From Hard Surface Modeling Workflow, section The Subdivision Surface Workflow.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--step-1-build-the-control-cage
   chunk_order: 3
   section: 'Step 1: Build the Control Cage'
@@ -31,6 +34,7 @@ chunks:
   tokenizer_tokens: 119
   chunk_summary: Model the rough shape at low resolution. A complex mechanical component might start as 50–200 polygons. Don't add detail yet — get the proportions and major ...
   context_prefix: 'From Hard Surface Modeling Workflow, section Step 1: Build the Control Cage.'
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--step-2-add-subdivision-surface-modifier
   chunk_order: 4
   section: 'Step 2: Add Subdivision Surface Modifier'
@@ -38,6 +42,7 @@ chunks:
   tokenizer_tokens: 66
   chunk_summary: '`Properties → Modifier → Add Modifier → Subdivision Surface`'
   context_prefix: 'From Hard Surface Modeling Workflow, section Step 2: Add Subdivision Surface Modifier.'
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--step-3-add-support-loops-holding-edges
   chunk_order: 5
   section: 'Step 3: Add Support Loops / Holding Edges'
@@ -45,6 +50,7 @@ chunks:
   tokenizer_tokens: 258
   chunk_summary: The Subdivision Surface rounds *everything* — which is what you want for smooth surfaces, but you need to control where sharp edges appear.
   context_prefix: 'From Hard Surface Modeling Workflow, section Step 3: Add Support Loops / Holding Edges.'
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--the-level-2-rule
   chunk_order: 6
   section: The "Level 2 Rule"
@@ -52,6 +58,7 @@ chunks:
   tokenizer_tokens: 84
   chunk_summary: Your model should look correct at Subdivision Level 2. If it doesn't — if there are lumps, pinching, or shading artifacts at Level 2 — your topology needs wo...
   context_prefix: From Hard Surface Modeling Workflow, section The "Level 2 Rule".
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--shading-artifacts-and-how-to-fix-them
   chunk_order: 7
   section: Shading Artifacts and How to Fix Them
@@ -59,6 +66,7 @@ chunks:
   tokenizer_tokens: 340
   chunk_summary: Shading artifacts — dark splotches, creases, uneven gradients on smooth surfaces — are the enemy of hard surface work. They come from bad topology, not rende...
   context_prefix: From Hard Surface Modeling Workflow, section Shading Artifacts and How to Fix Them.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--boolean-workflow
   chunk_order: 8
   section: Boolean Workflow
@@ -66,6 +74,7 @@ chunks:
   tokenizer_tokens: 40
   chunk_summary: Booleans are unavoidable for hard surface work — drilling holes, cutting complex shapes, making panel separations. Use them strategically.
   context_prefix: From Hard Surface Modeling Workflow, section Boolean Workflow.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--the-boolean-approach
   chunk_order: 9
   section: The Boolean Approach
@@ -73,6 +82,7 @@ chunks:
   tokenizer_tokens: 132
   chunk_summary: '**Fast workflow (destructive):**'
   context_prefix: From Hard Surface Modeling Workflow, section The Boolean Approach.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--boolean-solver-choice
   chunk_order: 10
   section: Boolean Solver Choice
@@ -80,6 +90,7 @@ chunks:
   tokenizer_tokens: 57
   chunk_summary: '- **Exact:** Use by default. Handles complex intersections reliably. Slower but worth it.'
   context_prefix: From Hard Surface Modeling Workflow, section Boolean Solver Choice.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--boolean-cleanup
   chunk_order: 11
   section: Boolean Cleanup
@@ -87,6 +98,7 @@ chunks:
   tokenizer_tokens: 258
   chunk_summary: 'The most time-consuming part. After a Boolean, you''ll typically have:'
   context_prefix: From Hard Surface Modeling Workflow, section Boolean Cleanup.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--key-tools-reference
   chunk_order: 12
   section: Key Tools Reference
@@ -94,6 +106,7 @@ chunks:
   tokenizer_tokens: 5
   chunk_summary: ''
   context_prefix: From Hard Surface Modeling Workflow, section Key Tools Reference.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--bevel-ctrl-b
   chunk_order: 13
   section: Bevel (`Ctrl+B`)
@@ -101,6 +114,7 @@ chunks:
   tokenizer_tokens: 236
   chunk_summary: The single most important hard surface tool. Bevels selected edges.
   context_prefix: From Hard Surface Modeling Workflow, section Bevel (`Ctrl+B`).
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--loop-cut-ctrl-r
   chunk_order: 14
   section: Loop Cut (`Ctrl+R`)
@@ -108,6 +122,7 @@ chunks:
   tokenizer_tokens: 115
   chunk_summary: Adds edge loops to the mesh.
   context_prefix: From Hard Surface Modeling Workflow, section Loop Cut (`Ctrl+R`).
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--inset-i
   chunk_order: 15
   section: Inset (`I`)
@@ -115,6 +130,7 @@ chunks:
   tokenizer_tokens: 130
   chunk_summary: Creates an inset face inside selected faces.
   context_prefix: From Hard Surface Modeling Workflow, section Inset (`I`).
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--knife-k
   chunk_order: 16
   section: Knife (`K`)
@@ -122,6 +138,7 @@ chunks:
   tokenizer_tokens: 117
   chunk_summary: Free-form cutting of the mesh. Click to start, click to add vertices, `Enter` to confirm.
   context_prefix: From Hard Surface Modeling Workflow, section Knife (`K`).
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--bridge-edge-loops
   chunk_order: 17
   section: Bridge Edge Loops
@@ -129,6 +146,7 @@ chunks:
   tokenizer_tokens: 86
   chunk_summary: Select two (or more) edge loops and `Ctrl+E → Bridge Edge Loops`. Creates faces spanning the gap between them.
   context_prefix: From Hard Surface Modeling Workflow, section Bridge Edge Loops.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--modifier-stack-patterns
   chunk_order: 18
   section: Modifier Stack Patterns
@@ -136,6 +154,7 @@ chunks:
   tokenizer_tokens: 6
   chunk_summary: ''
   context_prefix: From Hard Surface Modeling Workflow, section Modifier Stack Patterns.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--classic-hard-surface-stack
   chunk_order: 19
   section: Classic Hard Surface Stack
@@ -143,6 +162,7 @@ chunks:
   tokenizer_tokens: 89
   chunk_summary: Mirror
   context_prefix: From Hard Surface Modeling Workflow, section Classic Hard Surface Stack.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--hard-surface-with-boolean
   chunk_order: 20
   section: Hard Surface with Boolean
@@ -150,6 +170,7 @@ chunks:
   tokenizer_tokens: 55
   chunk_summary: Boolean (Difference)
   context_prefix: From Hard Surface Modeling Workflow, section Hard Surface with Boolean.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--mechanical-object-with-array
   chunk_order: 21
   section: Mechanical Object with Array
@@ -157,6 +178,7 @@ chunks:
   tokenizer_tokens: 67
   chunk_summary: Mirror
   context_prefix: From Hard Surface Modeling Workflow, section Mechanical Object with Array.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--common-hard-surface-problems
   chunk_order: 22
   section: Common Hard Surface Problems
@@ -164,6 +186,7 @@ chunks:
   tokenizer_tokens: 8
   chunk_summary: ''
   context_prefix: From Hard Surface Modeling Workflow, section Common Hard Surface Problems.
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--problem-subdivision-causes-ballooning
   chunk_order: 23
   section: 'Problem: Subdivision Causes Ballooning'
@@ -171,6 +194,7 @@ chunks:
   tokenizer_tokens: 71
   chunk_summary: '**Symptom:** Your low-poly box looks correct, but after subdivision it''s huge and round.'
   context_prefix: 'From Hard Surface Modeling Workflow, section Problem: Subdivision Causes Ballooning.'
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--problem-bumpy-surface-after-boolean
   chunk_order: 24
   section: 'Problem: Bumpy Surface After Boolean'
@@ -178,6 +202,7 @@ chunks:
   tokenizer_tokens: 70
   chunk_summary: '**Symptom:** After a boolean cut, the surrounding surface has shading artifacts.'
   context_prefix: 'From Hard Surface Modeling Workflow, section Problem: Bumpy Surface After Boolean.'
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--problem-bevel-creates-overlapping-weird-geometry
   chunk_order: 25
   section: 'Problem: Bevel Creates Overlapping/Weird Geometry'
@@ -185,6 +210,7 @@ chunks:
   tokenizer_tokens: 79
   chunk_summary: '**Symptom:** Bevel produces strange faces that overlap or fold.'
   context_prefix: 'From Hard Surface Modeling Workflow, section Problem: Bevel Creates Overlapping/Weird Geometry.'
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--problem-mirror-seam-visible
   chunk_order: 26
   section: 'Problem: Mirror Seam Visible'
@@ -192,6 +218,7 @@ chunks:
   tokenizer_tokens: 90
   chunk_summary: '**Symptom:** A visible seam or gap at the mirror center line.'
   context_prefix: 'From Hard Surface Modeling Workflow, section Problem: Mirror Seam Visible.'
+  embedding_version: gemini-embedding-001
 - chunk_id: hard-surface-modeling--problem-hard-edge-after-shade-smooth
   chunk_order: 27
   section: 'Problem: Hard Edge After Shade Smooth'
@@ -199,3 +226,4 @@ chunks:
   tokenizer_tokens: 108
   chunk_summary: '**Symptom:** A sharp crease appears on an edge that should be smooth after applying Shade Smooth.'
   context_prefix: 'From Hard Surface Modeling Workflow, section Problem: Hard Edge After Shade Smooth.'
+  embedding_version: gemini-embedding-001

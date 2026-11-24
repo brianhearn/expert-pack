@@ -1,22 +1,22 @@
 ---
-title: Bayesian Presence Sensor
+title: "Bayesian Presence Sensor"
 type: concept
 tags:
-- presence-detection
-- bayesian
-- binary-sensor
+  - presence-detection
+  - bayesian
+  - binary-sensor
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/presence-bayesian
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- presence-person-home.md
-- presence-sensor-fusion.md
-- presence-pitfalls.md
-- presence-home-vs-room.md
-- presence-phone-limits.md
+  - presence-person-home.md
+  - presence-sensor-fusion.md
+  - presence-pitfalls.md
+  - presence-home-vs-room.md
+  - presence-phone-limits.md
 content_hash: sha256:546ef8189057e748851cdd831f5df4e9edb1c8e74459376e4127b44ea5f309c1
 ---
 # Bayesian Presence Sensor

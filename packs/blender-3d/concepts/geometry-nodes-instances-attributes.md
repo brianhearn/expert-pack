@@ -1,25 +1,26 @@
 ---
 id: blender-3d/concepts/geometry-nodes-instances-attributes
-title: Geometry Nodes — Instances, Attributes, and Realize
+title: "Geometry Nodes — Instances, Attributes, and Realize"
 type: concept
 tags:
-- geometry-nodes
-- instances
-- attributes
+  - geometry-nodes
+  - instances
+  - attributes
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/geometry-nodes.md
+  - concepts/geometry-nodes.md
 related:
-- geometry-nodes-flow-creation.md
-- geometry-nodes-scatter-deform.md
-- geometry-nodes-fields.md
+  - geometry-nodes-flow-creation.md
+  - geometry-nodes-scatter-deform.md
+  - geometry-nodes-fields.md
 content_hash: sha256:46a41fe29152a202d94f9d446a51b02f5bed18a2fb199bc66371e6530ff7b4a4
 ---
+
 # Geometry Nodes — Instances, Attributes, and Realize
 
 Instances are lightweight references to geometry; attributes are named per-element data. Realize Instances only when you need real mesh operations; Set Position is per-element, Transform is a single matrix; Geometry to Instance speeds large joins.

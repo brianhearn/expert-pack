@@ -1,23 +1,23 @@
 ---
-title: Built-In Dashboard Cards
+title: "Built-In Dashboard Cards"
 type: concept
 tags:
-- dashboard-design
-- tile
-- gauge
-- conditional
+  - dashboard-design
+  - tile
+  - gauge
+  - conditional
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/dashboard-cards
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- dashboard-mushroom.md
-- dashboard-layouts.md
-- dashboard-actions-themes.md
-- dashboard-custom-cards.md
-- dashboard-organization.md
+  - dashboard-mushroom.md
+  - dashboard-layouts.md
+  - dashboard-actions-themes.md
+  - dashboard-custom-cards.md
+  - dashboard-organization.md
 content_hash: sha256:238f5a4903ff0f298fab478c32d9318174f8edf44629e456c9710d3e00750e9e
 ---
 # Built-In Dashboard Cards

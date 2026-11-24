@@ -1,24 +1,24 @@
 ---
-title: Integration Reliability Patterns
+title: "Integration Reliability Patterns"
 type: concept
 tags:
-- integrations-guide
-- myq
-- tuya
-- hacs
+  - integrations-guide
+  - myq
+  - tuya
+  - hacs
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/integrations-reliability
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- integrations-iot-class.md
-- integrations-hacs.md
-- integrations-mqtt-cloud.md
-- integrations-quality-eval.md
-- integrations-troubleshooting.md
-- integration-breaks-every-update.md
+  - integrations-iot-class.md
+  - integrations-hacs.md
+  - integrations-mqtt-cloud.md
+  - integrations-quality-eval.md
+  - integrations-troubleshooting.md
+  - integration-breaks-every-update.md
 content_hash: sha256:8bdbd5455996d896d9fd12a36e56c729b442ee32db16a4575adc5daa35434166
 ---
 # Integration Reliability Patterns

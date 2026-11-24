@@ -1,21 +1,21 @@
 ---
-title: YAML Gotchas and Config Validation
+title: "YAML Gotchas and Config Validation"
 type: concept
 tags:
-- yaml-configuration
-- validation
-- ha-core-check
+  - yaml-configuration
+  - validation
+  - ha-core-check
 pack: home-assistant-product
 retrieval_strategy: standard
 id: home-assistant/product/concepts/yaml-validation
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 related:
-- yaml-vs-ui.md
-- yaml-templates.md
-- yaml-secrets-env.md
-- yaml-template-extensions.md
+  - yaml-vs-ui.md
+  - yaml-templates.md
+  - yaml-secrets-env.md
+  - yaml-template-extensions.md
 content_hash: sha256:03140372464de6349610dc76d42f613cd7957f800e9d11f69b6b198056bce651
 ---
 # YAML Gotchas and Config Validation

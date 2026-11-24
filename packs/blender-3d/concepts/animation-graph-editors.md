@@ -1,26 +1,27 @@
 ---
 id: blender-3d/concepts/animation-graph-editors
-title: Animation — Dope Sheet, Graph Editor, and 4.x Changes
+title: "Animation — Dope Sheet, Graph Editor, and 4.x Changes"
 type: concept
 tags:
-- animation
-- graph-editor
-- dope-sheet
-- f-curves
+  - animation
+  - graph-editor
+  - dope-sheet
+  - f-curves
 pack: blender-3d
 retrieval_strategy: standard
 concept_scope: single
-schema_version: '4.1'
-verified_at: '2026-08-17'
+schema_version: "4.1"
+verified_at: "2026-08-17"
 verified_by: agent
 supersedes:
-- concepts/animation-rigging.md
+  - concepts/animation-rigging.md
 related:
-- animation-data-model.md
-- animation-nla.md
-- how-do-i-loop-an-animation.md
+  - animation-data-model.md
+  - animation-nla.md
+  - how-do-i-loop-an-animation.md
 content_hash: sha256:4d5509bd99323273631e4fde4e6f9be172d4e3dfca48664f35592e60df161277
 ---
+
 # Animation — Dope Sheet, Graph Editor, and 4.x Changes
 
 The Dope Sheet shows keyframes as dots on a timeline; the Graph Editor edits the F-Curves between them. Handle type, extrapolation, and F-Curve modifiers (Cycles, Noise) control timing and looping. Blender 4.x replaced bone layers with Bone Collections.

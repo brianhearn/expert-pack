@@ -64,5 +64,5 @@ context:
 
 integrity:
   algorithm: "sha256"
-  pack_digest: "sha256:f3b5443a647d46bd5a7143196e673926c8ee651d449bd067abcfa3163dd32016"
+  pack_digest: "sha256:2739ee40f7d70e0b755f3370bc41acdba6415bbb5224510eb0628a19b96e20b2"
   pack_version: "2.0.1"
